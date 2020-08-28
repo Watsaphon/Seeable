@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_blind"
+    android:background="@color/colorAccent"
+    android:orientation="vertical"
+    tools:context=".RegisterPerson"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+
+        <TextView
+            android:id="@+id/regis_heading_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="26dp"
+            android:fontFamily="@font/adamina"
+            android:text="@string/header_regis_person"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/regis_sub_heading_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/regis_heading_person"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="21dp"
+            android:fontFamily="@font/adamina"
+            android:text="@string/title_regis_person"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:id="@+id/name_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/regis_sub_heading_person"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="25dp"
+            android:text="@string/txt_name_register"
+            android:textSize="18sp"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/name_box"
+            android:layout_width="369dp"
+            android:layout_height="38dp"
+            android:layout_below="@id/name_heading"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:ems="10"
+            android:background="@drawable/round_corner_button"
+            android:inputType="textPersonName"
+            />
+
+        <TextView
+            android:id="@+id/surname_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name_box"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="21dp"
+            android:text="@string/txt_surname_register"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+
+        <EditText
+            android:id="@+id/surname_box"
+            android:layout_width="370dp"
+            android:layout_height="38dp"
+            android:layout_below="@id/surname_heading"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:ems="10"
+            android:background="@drawable/round_corner_button"
+            android:inputType="textPersonName"
+            />
+
+        <TextView
+            android:id="@+id/phone_heading"
+            android:layout_width="101dp"
+            android:layout_height="28dp"
+            android:layout_below="@id/surname_box"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/txt_phone"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/phone_box"
+            android:layout_width="369dp"
+            android:layout_height="38dp"
+            android:layout_below="@id/phone_heading"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:ems="10"
+            android:background="@drawable/round_corner_button"
+            android:inputType="phone"
+            />
+
+
+        <Button
+            android:id="@+id/regis_finish_button"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/phone_box"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/round_corner_button"
+            android:text="@string/finish_button"
+            android:textColor="@color/colorAccent" />
+
+
+    </RelativeLayout>
+
+</ScrollView>
+
+

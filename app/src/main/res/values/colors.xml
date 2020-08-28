@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--   Primary Color -->
+    <color name="colorPrimary">#000000</color>
+    <!--   darker variant for the status bar and contextual app bars -->
+    <color name="colorPrimaryDark">#000000</color>
+    <!--   theme UI controls like checkboxes and text fields -->
+    <color name="colorAccent">#42B0FF</color>
+    <color name="colorWhite">#FFFFFF</color>
+</resources>
