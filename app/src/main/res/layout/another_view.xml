@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#c7bf98"
+    android:padding="20dp"
+    >
+
+    <Button
+        android:id="@+id/button_popup"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="X" />
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click me to change my text color"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        />
+    <Button
+        android:id="@+id/button_popup1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="TEST 1" />
+    <Button
+        android:id="@+id/button_popup2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="TEST 2" />
+    <Button
+        android:id="@+id/button_popup3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="TEST 3" />
+
+</LinearLayout>
