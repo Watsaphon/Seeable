@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">seeable_v5</string>
+    <string name="title_register">ลงทะเบียนสำหรับคนตาบอด</string>
+    <string name="finish_button">เสร็จสิ้น</string>
+    <string name="header_regis_blind">ลงทะเบียนสำหรับคนตาบอด</string>
+    <string name="title_regis_blind">ลงทะเบียนคนตาบอดหเหกาเ่หกสเ่สหกเ</string>
+    <string name="header_regis_person">ลงทะเบียนคนดูแล</string>
+    <string name="title_regis_person">ลงทะเบียนคนดูแลกเสำสพยก</string>
+    <string name="txt_name_register">ชื่อ</string>
+    <string name="txt_surname_register">นามสกุล</string>
+    <string name="txt_phone">เบอร์โทร</string>
+    <string name="txt_name_helper">ชื่อผู้ช่วยเหลือ</string>
+    <string name="txt_phone_helper">เบอร์โทรผู้ช่วยเหลือ</string>
+    <string name="blinder_button_desc">คนตาบอด</string>
+    <string name="person_button_desc">คนดูแล</string>
+    <string name="select_register_header">เลือกผู้ลงทะเบียน</string>
+    <string name="button_main_1">ปุ่ม 1</string>
+    <string name="button_main_2">ปุ่ม 2</string>
+    <string name="button_main_3">ปุ่ม 3</string>
+    <string name="button_main_4">ปุ่ม 4</string>
+
+    <string name="action_settings">การตั้งค่า</string>
+    <string name="action_about">เกี่ยวกับ</string>
+    <string name="action_change_language">เปลี่ยนภาษา</string>
+    <string name="action_other">อื่นๆ</string>
+
+    <string name="name_box_person">กรุณากรอกชื่อผู้ดูแล</string>
+    <string name="surname_box_person">กรุณากรอกนามสกุลผู้ดูแล</string>
+    <string name="phone_box_person">กรุณากรอกเบอร์โทรผู้ดูแล</string>
+
+    <string name="name_box_blind">กรุณากรอกชื่อคนตาบอด</string>
+    <string name="surname_box_blind">กรุณากรอกนามสกุลคนตาบอด</string>
+    <string name="phone_box_blind">กรุณากรอกเบอร์โทรคนตาบอด</string>
+    <string name="helper_box_blind">กรุณากรอกชื่อผู้ดูแลคนตาบอด</string>
+    <string name="phoneHelper_box_blind">กรุณากรอกเบอร์โทรผู้ดูแลคนตาบอด</string>
+
+</resources>

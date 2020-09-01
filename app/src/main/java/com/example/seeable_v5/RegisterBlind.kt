@@ -38,28 +38,28 @@ class RegisterBlind : AppCompatActivity() {
             val inputPhoneHelper = phoneHelperBox.text
 
             if(inputName.isEmpty()&&inputSurname.isEmpty()&&inputPhone.isEmpty()&&inputHelper.isEmpty()&&inputPhoneHelper.isEmpty()){
-                nameBox.error = "Please insert blinder's name."
-                surnameBox.error = "Please insert blinder's surname."
-                phoneBox.error = "Please insert blinder's phone."
-                helperBox.error = "Please insert blinder's helper."
-                phoneHelperBox.error = "Please insert blinder's phone helper."
+                nameBox.error = getString(R.string.name_box_blind)
+                surnameBox.error = getString(R.string.surname_box_blind)
+                phoneBox.error = getString(R.string.phone_box_blind)
+                helperBox.error = getString(R.string.helper_box_blind)
+                phoneHelperBox.error = getString(R.string.phoneHelper_box_blind)
             }
             else if(inputName.isEmpty()){
-                nameBox.error = "Please insert blinder's name."
+                nameBox.error = getString(R.string.name_box_blind)
             }
             else if(inputSurname.isEmpty()){
-                surnameBox.error = "Please insert blinder's surname."
+                surnameBox.error = getString(R.string.surname_box_blind)
             }
             else if(inputPhone.isEmpty()){
-                phoneBox.error = "Please insert blinder's phone."
+                phoneBox.error = getString(R.string.phone_box_blind)
             }
             else if(inputHelper.isEmpty())
             {
-                helperBox.error = "Please insert blinder's helper."
+                helperBox.error = getString(R.string.helper_box_blind)
             }
             else if(inputPhoneHelper.isEmpty())
             {
-                phoneHelperBox.error = "Please insert blinder's phone helper."
+                phoneHelperBox.error = getString(R.string.phoneHelper_box_blind)
             }
             else{
                 val i = Intent(this@RegisterBlind, MainActivity::class.java)

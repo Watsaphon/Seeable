@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_crick"
-        android:title="@string/action_cricket"
+        android:id="@+id/action_about"
+        android:title="@string/action_about"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/action_ftbal"
-        android:title="@string/action_football"
+        android:id="@+id/action_change_language"
+        android:title="@string/action_change_language"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/action_hockey"
-        android:title="@string/action_hockey"
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
         app:showAsAction="never"/>
 </menu>

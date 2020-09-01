@@ -2,6 +2,7 @@ package com.example.seeable_v5
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -17,6 +18,7 @@ class RegisterPerson : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_person )
+        Log.i("RegisterPerson", "onCreate called")
         hideSystemUI()
         nameBox = findViewById(R.id.name_box)
         surnameBox = findViewById(R.id.surname_box)
@@ -28,18 +30,18 @@ class RegisterPerson : AppCompatActivity() {
             val inputSurname = surnameBox.text
             val inputPhone = phoneBox.text
             if(inputName.isEmpty()&&inputSurname.isEmpty()&&inputPhone.isEmpty()){
-                nameBox.error = "Please insert person's name."
-                surnameBox.error = "Please insert Person's surname."
-                phoneBox.error = "Please insert Person's phone."
+                nameBox.error =  getString(R.string.name_box_person)
+                surnameBox.error = getString(R.string.surname_box_person)
+                phoneBox.error = getString(R.string.phone_box_person)
             }
             else if(inputName.isEmpty()){
-                nameBox.error = "Please insert person's name."
+                nameBox.error =  getString(R.string.name_box_person)
             }
             else if(inputSurname.isEmpty()){
-                surnameBox.error = "Please insert person's surname."
+                surnameBox.error = getString(R.string.surname_box_person)
             }
             else if(inputPhone.isEmpty()){
-                phoneBox.error = "Please insert person's phone."
+                phoneBox.error = getString(R.string.phone_box_person)
             }
             else{
                 val i = Intent(this@RegisterPerson, MainActivity::class.java)
@@ -60,10 +62,8 @@ class RegisterPerson : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 // Hide the nav bar and status bar
-
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                )
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
 }
 

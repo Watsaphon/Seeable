@@ -9,21 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SelectRegister"></activity>
+        <activity android:name=".SettingScreen" android:screenOrientation="portrait" />
+        <activity android:name=".SelectRegister" android:screenOrientation="portrait" />
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterPerson" />
-        <activity android:name=".RegisterBlind" />
+        <activity android:name=".RegisterPerson" android:screenOrientation="portrait" />
+        <activity android:name=".RegisterBlind" android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" android:screenOrientation="portrait" />
 
         <meta-data
             android:name="preloaded_fonts"
