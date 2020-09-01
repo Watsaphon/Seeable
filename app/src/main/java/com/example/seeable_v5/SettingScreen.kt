@@ -6,6 +6,8 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import java.util.*
 
@@ -20,7 +22,8 @@ class SettingScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting_screen)
-
+        hideSystemUI()
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         sharedPreferences = getSharedPreferences("value", 0)
         var editor = sharedPreferences.edit()
         editor.commit()
@@ -39,11 +42,27 @@ class SettingScreen : AppCompatActivity() {
         closeButton.setOnClickListener {
         onBackPressed()
         }
+
+        aboutButton.setOnClickListener{
+            gotoAbout()
+        }
+
         changeLanguageButton.setOnClickListener{
             changeLanguage()
             val intent = Intent(this,SplashScreen::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        hideSystemUI()
+        Log.i("MainActivity", "onWindowFocusChanged called")
+    }
+
+    private fun gotoAbout(){
+        val intent = Intent(this,AboutScreen::class.java)
+        startActivity(intent)
     }
 
     private fun changeLanguage(){
@@ -66,4 +85,20 @@ class SettingScreen : AppCompatActivity() {
         baseContext.resources.updateConfiguration(config, null)
 //        recreate()
     }
+
+    private fun hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                // Set the content to appear under the system bars so that the
+                // content doesn't resize when the system bars hide and show.
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                // Hide the nav bar and status bar
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+
 }

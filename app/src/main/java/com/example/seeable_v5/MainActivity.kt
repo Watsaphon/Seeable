@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.action_about -> Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
+                    R.id.action_about -> gotoAbout()
                     R.id.action_change_language -> changeLanguage()
                     R.id.action_settings -> gotoSetting()
                 }
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             popupMenu.show()
         }
 
-//        fab = findViewById(R.id.floating_action_button)
+
 //        fab.setOnClickListener {
 //
 //            /** PopupWindow set gravity center */
@@ -140,7 +140,6 @@ class MainActivity : AppCompatActivity() {
 //                0, // X offset
 //                0 // Y offset
 //            )
-//
 //        }
 
     }
@@ -200,10 +199,14 @@ class MainActivity : AppCompatActivity() {
 //        recreate()
     }
 
+    private fun gotoAbout(){
+        val intent = Intent(this,AboutScreen::class.java)
+        startActivity(intent)
+    }
+
     private fun gotoSetting(){
         val intent = Intent(this,SettingScreen::class.java)
         startActivity(intent)
-
     }
 
     private fun hideSystemUI() {

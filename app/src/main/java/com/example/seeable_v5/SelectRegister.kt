@@ -1,5 +1,6 @@
 package com.example.seeable_v5
 
+
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -9,9 +10,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.Toast
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
@@ -22,6 +22,7 @@ class SelectRegister : AppCompatActivity() {
     private lateinit var personButton: Button
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +50,7 @@ class SelectRegister : AppCompatActivity() {
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.action_about -> Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
+                    R.id.action_about ->gotoAbout()
                     R.id.action_change_language -> changeLanguage()
                     R.id.action_settings -> gotoSetting()
                 }
@@ -58,6 +59,7 @@ class SelectRegister : AppCompatActivity() {
             }
             popupMenu.show()
         }
+
 
     }
 
@@ -92,7 +94,11 @@ class SelectRegister : AppCompatActivity() {
     private fun gotoSetting(){
         val intent = Intent(this,SettingScreen::class.java)
         startActivity(intent)
+    }
 
+    private fun gotoAbout(){
+        val intent = Intent(this,AboutScreen::class.java)
+        startActivity(intent)
     }
 
     private fun hideSystemUI() {
@@ -109,5 +115,6 @@ class SelectRegister : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
+
 
 }
