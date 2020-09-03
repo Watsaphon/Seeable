@@ -17,27 +17,28 @@
     <style name="CustomButton1" parent = "@android:style/Widget.Button">
         <item name="android:padding">20dp</item>
         <item name="android:drawable">@drawable/button_custom</item>
-<!--        <item name="android:background">@android:color/holo_green_light</item>-->
+        <item name="android:background">@android:color/holo_green_light</item>
     </style>
 
     <style name="CustomButton2" parent = "@android:style/Widget.Button">
         <item name="android:padding">20dp</item>
         <item name="android:drawable">@drawable/button_custom</item>
-<!--        <item name="android:background">@android:color/holo_orange_light</item>-->
+        <item name="android:background">@android:color/holo_orange_light</item>
     </style>
 
     <style name="CustomButton3" parent = "@android:style/Widget.Button">
         <item name="android:padding">20dp</item>
         <item name="android:drawable">@drawable/button_custom</item>
-<!--        <item name="android:background">@android:color/holo_red_light</item>-->
+        <item name="android:background">@android:color/holo_red_light</item>
 
     </style>
 
     <style name="CustomButton4" parent = "@android:style/Widget.Button">
         <item name="android:padding">20dp</item>
         <item name="android:drawable">@drawable/button_custom</item>
-<!--        <item name="android:background">@android:color/holo_blue_light</item>-->
+        <item name="android:background">@android:color/holo_blue_light</item>
     </style>
+
 
 
 </resources>
