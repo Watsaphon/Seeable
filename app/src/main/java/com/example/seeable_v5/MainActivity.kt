@@ -10,8 +10,6 @@ import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnLongClickListener
-import android.view.View.OnTouchListener
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
@@ -21,7 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
 
     private lateinit var button1: Button
