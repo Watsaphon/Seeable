@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
-
+//test
 
         sharedPreferences = getSharedPreferences("value", 0)
         var editor = sharedPreferences.edit()
