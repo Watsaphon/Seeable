@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "446108664849",
+    "firebase_url": "https://seeable-60548.firebaseio.com",
+    "project_id": "seeable-60548",
+    "storage_bucket": "seeable-60548.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446108664849:android:ed62cb031b3a31de68ddb0",
+        "android_client_info": {
+          "package_name": "com.estazo.project.seeable.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446108664849-iv8u11l9umhjrhc77a5jq60hakp6aoil.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.estazo.project.seeable.app",
+            "certificate_hash": "e0abc3b1ab7d296206de4efc15a8b0ffa763d251"
+          }
+        },
+        {
+          "client_id": "446108664849-at8fclqkfciah1ajua46h5m0hgf174fu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa3puzGqU2Ww7uhW5Ybn09aEMMNj2KBK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446108664849-at8fclqkfciah1ajua46h5m0hgf174fu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
