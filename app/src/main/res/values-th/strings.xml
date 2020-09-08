@@ -1,13 +1,14 @@
 <resources>
-    <string name="app_name">seeable</string>
+    <string name="app_name">Seeable</string>
     <string name="title_register">ลงทะเบียนสำหรับคนตาบอด</string>
     <string name="finish_button">เสร็จสิ้น</string>
     <string name="header_regis_blind">ลงทะเบียนสำหรับคนตาบอด</string>
     <string name="title_regis_blind">ลงทะเบียนคนตาบอดหเหกาเ่หกสเ่สหกเ</string>
     <string name="header_regis_person">ลงทะเบียนคนดูแล</string>
     <string name="title_regis_person">ลงทะเบียนคนดูแลกเสำสพยก</string>
-    <string name="txt_name_register">ชื่อ</string>
-    <string name="txt_surname_register">นามสกุล</string>
+    <string name="txt_username_register">ชื่อผู้ใช้งาน</string>
+    <string name="txt_password_register">รหัสผ่าน</string>
+    <string name="txt_fullname_register">ชื่อ-นามสกุล</string>
     <string name="txt_phone">เบอร์โทร</string>
     <string name="txt_name_helper">ชื่อผู้ช่วยเหลือ</string>
     <string name="txt_phone_helper">เบอร์โทรผู้ช่วยเหลือ</string>
@@ -19,17 +20,23 @@
     <string name="button_main_3">ปุ่ม 3</string>
     <string name="button_main_4">ปุ่ม 4</string>
 
+    <string name="Login_heading">เข้าสู่ระบบ</string>
+    <string name="Login_button">เสร็จสิ้น</string>
+
     <string name="action_settings">การตั้งค่า</string>
     <string name="action_about">เกี่ยวกับ</string>
     <string name="action_change_language">เปลี่ยนภาษา</string>
     <string name="action_other">อื่นๆ</string>
 
-    <string name="name_box_person">กรุณากรอกชื่อผู้ดูแล</string>
-    <string name="surname_box_person">กรุณากรอกนามสกุลผู้ดูแล</string>
+
+    <string name="username_box_person">กรุณากรอกชื่อผุ้ใช้งาน</string>
+    <string name="password_box_person">กรุณากรอกรหัสผ่าน</string>
+    <string name="fullname_box_person">กรุณากรอกชื่อ-นามสกุลผู้ดูแล</string>
     <string name="phone_box_person">กรุณากรอกเบอร์โทรผู้ดูแล</string>
 
-    <string name="name_box_blind">กรุณากรอกชื่อคนตาบอด</string>
-    <string name="surname_box_blind">กรุณากรอกนามสกุลคนตาบอด</string>
+    <string name="username_box_blind">กรุณากรอกชื่อผู้ใช้งานของคนตาบอด</string>
+    <string name="password_box_blind">กรุณากรอกชรหัสผ่านองคนตาบอด</string>
+    <string name="fullname_box_blind">กรุณากรอกชื่อ-นามสกุลคนตาบอด</string>
     <string name="phone_box_blind">กรุณากรอกเบอร์โทรคนตาบอด</string>
     <string name="helper_box_blind">กรุณากรอกชื่อผู้ดูแลคนตาบอด</string>
     <string name="phoneHelper_box_blind">กรุณากรอกเบอร์โทรผู้ดูแลคนตาบอด</string>
@@ -40,5 +47,7 @@
     <string name="content_1">SeeAble เป็นแอพที่ช่วยคนตาบอดในการเตือนอันตรายและอุปสรรคและทำให้คนที่มองไม่เห็นมีความปลอดภัยมากขึ้น เมื่อเราเห็นอันตรายหรืออุปสรรค. เรา "แจ้งเตือน" ด้วยเสียงถึงคุณ เมื่อคุณประสบอุบัติเหตุและล้มลงอุปกรณ์จะโทรขอความช่วยเหลือ! คนอื่น ๆ สามารถช่วยคุณได้ทันเวลา แอพพลิเคชั่นสามารถแสดงข้อมูลและติดต่อในแอพได้ แอพนพลิเคชั่นี้ยังสามารถเรียกรถพยาบาลเมื่อเกิดอุบัติเหตุฉุกเฉิน</string>
     <string name="content_2">ภาษาที่รองรับ :ไทย,อังกฤษ</string>
 
+    <string name="or">หรือ</string>
+    <string name="register_login_button">ลงทะเบียน</string>
 
 </resources>

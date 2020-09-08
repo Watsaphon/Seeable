@@ -48,13 +48,13 @@ class SplashScreen : AppCompatActivity() {
 
         if (sharedPreferences.getBoolean("FinishedInformation", false)) {
             Handler().postDelayed({
-                startActivity(Intent(this, SigninByGmail::class.java))
+                startActivity(Intent(this, LoginScreen::class.java))
                 finishAffinity()
             }, 2000)
 
         } else {
             Handler().postDelayed({
-                startActivity(Intent(this, SelectRegister::class.java))
+                startActivity(Intent(this, LoginScreen::class.java))
                 finishAffinity()
             }, 2000)
         }

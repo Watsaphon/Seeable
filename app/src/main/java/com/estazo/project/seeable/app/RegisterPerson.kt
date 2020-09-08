@@ -5,14 +5,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.FirebaseDatabase
 
 class RegisterPerson : AppCompatActivity() {
 
-    private lateinit var nameBox : EditText
-    private lateinit var surnameBox : EditText
-    private lateinit var phoneBox : EditText
+    private lateinit var userName : TextInputEditText
+    private lateinit var password : TextInputEditText
+    private lateinit var fullName : TextInputEditText
+    private lateinit var phoneBox : TextInputEditText
+
     private lateinit var finishButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,37 +24,57 @@ class RegisterPerson : AppCompatActivity() {
         setContentView(R.layout.activity_register_person )
         Log.i("RegisterPerson", "onCreate called")
         hideSystemUI()
-        nameBox = findViewById(R.id.name_box)
-        surnameBox = findViewById(R.id.surname_box)
+
+        userName = findViewById(R.id.username_box)
+        password = findViewById(R.id.password_box)
+        fullName = findViewById(R.id.fullname_box)
         phoneBox = findViewById(R.id.phone_box)
         finishButton = findViewById(R.id.regis_finish_button)
 
         finishButton.setOnClickListener {
-            val inputName = nameBox.text
-            val inputSurname = surnameBox.text
-            val inputPhone = phoneBox.text
-            if(inputName.isEmpty()&&inputSurname.isEmpty()&&inputPhone.isEmpty()){
-                nameBox.error =  getString(R.string.name_box_person)
-                surnameBox.error = getString(R.string.surname_box_person)
+            val inputUsername: String = userName.text.toString()
+            val inputPassword: String = password.text.toString()
+            val inputfullName: String = fullName.text.toString()
+            val inputPhone: String = phoneBox.text.toString()
+
+
+            if(inputUsername.isEmpty()&&inputPassword.isEmpty()&&inputfullName.isEmpty()&&inputPhone.isEmpty()){
+                userName.error =  getString(R.string.username_box_person)
+                password.error = getString(R.string.password_box_person)
+                fullName.error = getString(R.string.fullname_box_person)
                 phoneBox.error = getString(R.string.phone_box_person)
             }
-            else if(inputName.isEmpty()){
-                nameBox.error =  getString(R.string.name_box_person)
+            else if(inputUsername.isEmpty()){
+                password.error = getString(R.string.username_box_person)
             }
-            else if(inputSurname.isEmpty()){
-                surnameBox.error = getString(R.string.surname_box_person)
+            else if(inputPassword.isEmpty()){
+                password.error = getString(R.string.password_box_person)
+            }
+            else if(inputfullName.isEmpty()){
+                userName.error =  getString(R.string.fullname_box_person)
             }
             else if(inputPhone.isEmpty()){
                 phoneBox.error = getString(R.string.phone_box_person)
             }
             else{
-                val i = Intent(this@RegisterPerson, MainActivity::class.java)
-                startActivity(i)
-                finish()
+                val ref = FirebaseDatabase.getInstance().getReference("users_person")
+                val testID = ref.push().key
+                val test = UserPersonHelperClass(inputUsername, inputPassword, inputfullName, inputPhone)
+                ref.child(testID.toString()).setValue(test).addOnCompleteListener {
+                    Toast.makeText(this,"Successfully Save Database", Toast.LENGTH_SHORT).show()
+                }
+                saveRegister()
             }
         }
 
     }
+
+    private fun saveRegister(){
+        val i = Intent(this@RegisterPerson, SelectRegister::class.java)
+        startActivity(i)
+        finish()
+    }
+
     private fun hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.

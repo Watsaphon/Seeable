@@ -68,7 +68,7 @@ class SignoutByGmail : AppCompatActivity() {
                     "Successfully signed out",
                     Toast.LENGTH_SHORT
                 ).show()
-                startActivity(Intent(this, SigninByGmail::class.java))
+                startActivity(Intent(this, LoginScreen::class.java))
                 finish()
             }
     }

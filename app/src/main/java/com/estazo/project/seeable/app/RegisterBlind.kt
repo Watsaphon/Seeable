@@ -7,23 +7,22 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.database.*
-
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.database.FirebaseDatabase
 
 
 class RegisterBlind : AppCompatActivity() {
 
-    private lateinit var nameBox : TextInputEditText
-    private lateinit var surnameBox : TextInputEditText
+    private lateinit var userName : TextInputEditText
+    private lateinit var password : TextInputEditText
+    private lateinit var fullName : TextInputEditText
     private lateinit var phoneBox : TextInputEditText
     private lateinit var helperBox : TextInputEditText
     private lateinit var phoneHelperBox : TextInputEditText
     private lateinit var finishButton: Button
 
-     lateinit var rootNode : FirebaseDatabase
-    lateinit var reference : DatabaseReference
-    lateinit var helperClass : UserHelperClass2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +30,9 @@ class RegisterBlind : AppCompatActivity() {
         Log.i("RegisterBlind", "onCreate called")
         hideSystemUI()
 
-        nameBox = findViewById(R.id.name_box)
-        surnameBox = findViewById(R.id.surname_box)
+        userName = findViewById(R.id.username_box)
+        password = findViewById(R.id.password_box)
+        fullName = findViewById(R.id.fullname_box)
         phoneBox = findViewById(R.id.phone_box)
         helperBox = findViewById(R.id.helper_box)
         phoneHelperBox = findViewById(R.id.phone_helper_box)
@@ -41,29 +41,30 @@ class RegisterBlind : AppCompatActivity() {
 
 
         finishButton.setOnClickListener {
-        val inputName: String = nameBox.getText().toString()
-        val inputSurname: String = surnameBox.getText().toString()
-        val inputPhone: String = phoneBox.getText().toString()
-        val inputHelper: String = helperBox.getText().toString()
-        val inputPhoneHelper: String = phoneHelperBox.getText().toString()
-//            val inputName = nameBox.toString()
-//            val inputSurname = surnameBox.toString()
-//            val inputPhone = phoneBox.toString()
-//            val inputHelper = helperBox.toString()
-//            val inputPhoneHelper = phoneHelperBox.toString()
+        val inputUsername: String = userName.text.toString()
+        val inputPassword: String = password.text.toString()
+        val inputfullName: String = fullName.text.toString()
+        val inputPhone: String = phoneBox.text.toString()
+        val inputHelper: String = helperBox.text.toString()
+        val inputPhoneHelper: String = phoneHelperBox.text.toString()
 
-            if(inputName.isEmpty()&&inputSurname.isEmpty()&&inputPhone.isEmpty()&&inputHelper.isEmpty()&&inputPhoneHelper.isEmpty()){
-                nameBox.error = getString(R.string.name_box_blind)
-                surnameBox.error = getString(R.string.surname_box_blind)
+
+            if(inputUsername.isEmpty()&&inputPassword.isEmpty()&&inputfullName.isEmpty()&&inputPhone.isEmpty()&&inputHelper.isEmpty()&&inputPhoneHelper.isEmpty()){
+                userName.error = getString(R.string.username_box_blind)
+                password.error = getString(R.string.password_box_blind)
+                fullName.error = getString(R.string.fullname_box_blind)
                 phoneBox.error = getString(R.string.phone_box_blind)
                 helperBox.error = getString(R.string.helper_box_blind)
                 phoneHelperBox.error = getString(R.string.phoneHelper_box_blind)
             }
-            else if(inputName.isEmpty()){
-                nameBox.error = getString(R.string.name_box_blind)
+            else if(inputUsername.isEmpty()){
+                userName.error = getString(R.string.username_box_blind)
             }
-            else if(inputSurname.isEmpty()){
-                surnameBox.error = getString(R.string.surname_box_blind)
+            else if(inputPassword.isEmpty()){
+                userName.error = getString(R.string.password_box_blind)
+            }
+            else if(inputfullName.isEmpty()){
+                fullName.error = getString(R.string.fullname_box_blind)
             }
             else if(inputPhone.isEmpty()){
                 phoneBox.error = getString(R.string.phone_box_blind)
@@ -77,26 +78,27 @@ class RegisterBlind : AppCompatActivity() {
                 phoneHelperBox.error = getString(R.string.phoneHelper_box_blind)
             }
             else{
-
-                val ref = FirebaseDatabase.getInstance().getReference("users")
+                val ref = FirebaseDatabase.getInstance().getReference("users_blind")
                 val testID = ref.push().key
-                val test = UserHelperClass(inputName, inputSurname, inputPhone, inputHelper, inputPhoneHelper)
+                val test = UserBlinderHelperClass(inputUsername,inputPassword , inputfullName, inputPhone, inputHelper, inputPhoneHelper)
                 ref.child(testID.toString()).setValue(test).addOnCompleteListener {
                     Toast.makeText(this,"Successfully Save Database",Toast.LENGTH_SHORT).show()
                 }
-
                 saveRegister()
+
             }
         }
 
 
     }
 
-private fun saveRegister(){
-    val i = Intent(this@RegisterBlind, MainActivity::class.java)
+    private fun saveRegister(){
+    val i = Intent(this@RegisterBlind, SelectRegister::class.java)
     startActivity(i)
     finish()
-}
+    }
+
+
 
     private fun hideSystemUI() {
         // Enables regular immersive mode.

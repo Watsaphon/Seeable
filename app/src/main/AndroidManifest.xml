@@ -12,22 +12,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.estazo.project.seeable.app.SignoutByGmail" android:configChanges="orientation|screenSize"/>
-        <activity android:name="com.estazo.project.seeable.app.SigninByGmail" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".LoginScreen"
+            android:configChanges="orientation|screenSize"/>
         <activity
-            android:name="com.estazo.project.seeable.app.CameraTest"
+            android:name=".SignoutByGmail"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.estazo.project.seeable.app.AboutScreen"
+            android:name=".SigninByGmail"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.estazo.project.seeable.app.SettingScreen"
+            android:name=".CameraTest"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.estazo.project.seeable.app.SelectRegister"
+            android:name=".AboutScreen"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.estazo.project.seeable.app.SplashScreen"
+            android:name=".SettingScreen"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".SelectRegister"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".SplashScreen"
             android:configChanges="orientation|screenSize"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -37,13 +43,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.estazo.project.seeable.app.RegisterPerson"
+            android:name=".RegisterPerson"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.estazo.project.seeable.app.RegisterBlind"
+            android:name=".RegisterBlind"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.estazo.project.seeable.app.MainActivity"
+            android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme" />
 
