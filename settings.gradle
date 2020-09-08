@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "seeable_v5"
+rootProject.name = "seeable"

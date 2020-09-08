@@ -1,4 +1,4 @@
-package com.example.seeable_v5
+package com.estazo.project.seeable.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

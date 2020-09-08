@@ -1,73 +1,76 @@
-package com.example.seeable_v5
+package com.estazo.project.seeable.app
+
 
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.PopupMenu
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
-class SettingScreen : AppCompatActivity() {
 
-    private lateinit var closeButton: Button
-    private lateinit var aboutButton: Button
-    private lateinit var changeLanguageButton: Button
-    private lateinit var otherButton: Button
+class SelectRegister : AppCompatActivity() {
+
+    private lateinit var blindButton: Button
+    private lateinit var personButton: Button
+    private lateinit var fab: FloatingActionButton
     private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setting_screen)
+        setContentView(R.layout.activity_select_register)
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+        blindButton = findViewById(R.id.blinder_btn)
+        personButton = findViewById(R.id.person_btn)
+        fab = findViewById(R.id.floating_action_button)
+
         sharedPreferences = getSharedPreferences("value", 0)
-        var editor = sharedPreferences.edit()
-        editor.commit()
 
-
-        val stringValue = sharedPreferences.getString("stringKey", "not found!")
-        val booleanValue = sharedPreferences.getBoolean("FinishedInformation", false)
-        Log.i("SettingScreen", "String value -> change language to : $stringValue")
-        Log.i("SettingScreen ", "Boolean value: $booleanValue")
-
-        closeButton = findViewById(R.id.close_button)
-        aboutButton = findViewById(R.id.action_about)
-        changeLanguageButton = findViewById(R.id.action_change_language)
-        otherButton = findViewById(R.id.action_settings)
-
-        closeButton.setOnClickListener {
-        onBackPressed()
+        blindButton.setOnClickListener {
+            val i = Intent(this@SelectRegister, RegisterBlind::class.java)
+            startActivity(i)
+        }
+        personButton.setOnClickListener {
+            val i = Intent(this@SelectRegister, RegisterPerson::class.java)
+            startActivity(i)
+        }
+        fab.setOnClickListener {
+            /** PopupMenu dropdown */
+            val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_about ->gotoAbout()
+                    R.id.action_change_language -> changeLanguage()
+                    R.id.action_settings -> gotoSetting()
+                }
+                hideSystemUI()
+                true
+            }
+            popupMenu.show()
         }
 
-        aboutButton.setOnClickListener{
-            gotoAbout()
-        }
 
-        changeLanguageButton.setOnClickListener{
-            changeLanguage()
-            val intent = Intent(this,SplashScreen::class.java)
-            startActivity(intent)
-        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         hideSystemUI()
-        Log.i("MainActivity", "onWindowFocusChanged called")
-    }
-
-    private fun gotoAbout(){
-        val intent = Intent(this,AboutScreen::class.java)
-        startActivity(intent)
     }
 
     private fun changeLanguage(){
         val language = sharedPreferences.getString("stringKey", "not found!")
-        Log.i("MainActivity", "Now Language is :$language ")
+        Log.i("SelectRegister", "Now Language is :$language ")
         var locale: Locale? = null
         var editor = sharedPreferences.edit()
         if (language=="en") {
@@ -83,7 +86,19 @@ class SettingScreen : AppCompatActivity() {
         val config = Configuration()
         config.locale = locale
         baseContext.resources.updateConfiguration(config, null)
+        val intent = Intent(this,SplashScreen::class.java)
+        startActivity(intent)
 //        recreate()
+    }
+
+    private fun gotoSetting(){
+        val intent = Intent(this,SettingScreen::class.java)
+        startActivity(intent)
+    }
+
+    private fun gotoAbout(){
+        val intent = Intent(this,AboutScreen::class.java)
+        startActivity(intent)
     }
 
     private fun hideSystemUI() {
@@ -100,5 +115,6 @@ class SettingScreen : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
+
 
 }

@@ -1,4 +1,4 @@
-package com.example.seeable_v5
+package com.estazo.project.seeable.app
 
 import org.junit.Test
 

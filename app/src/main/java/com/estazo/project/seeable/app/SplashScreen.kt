@@ -1,7 +1,6 @@
-package com.example.seeable_v5
+package com.estazo.project.seeable.app
 
 import android.content.Intent
-import android.content.SharedPreferences.Editor
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
@@ -49,7 +48,7 @@ class SplashScreen : AppCompatActivity() {
 
         if (sharedPreferences.getBoolean("FinishedInformation", false)) {
             Handler().postDelayed({
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, SigninByGmail::class.java))
                 finishAffinity()
             }, 2000)
 
