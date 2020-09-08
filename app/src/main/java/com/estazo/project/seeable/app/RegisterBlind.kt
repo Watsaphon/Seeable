@@ -1,27 +1,36 @@
 package com.estazo.project.seeable.app
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.*
+
+
 
 class RegisterBlind : AppCompatActivity() {
 
-    private lateinit var nameBox : EditText
-    private lateinit var surnameBox : EditText
-    private lateinit var phoneBox : EditText
-    private lateinit var helperBox : EditText
-    private lateinit var phoneHelperBox : EditText
+    private lateinit var nameBox : TextInputEditText
+    private lateinit var surnameBox : TextInputEditText
+    private lateinit var phoneBox : TextInputEditText
+    private lateinit var helperBox : TextInputEditText
+    private lateinit var phoneHelperBox : TextInputEditText
     private lateinit var finishButton: Button
+
+     lateinit var rootNode : FirebaseDatabase
+    lateinit var reference : DatabaseReference
+    lateinit var helperClass : UserHelperClass2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_blind)
         Log.i("RegisterBlind", "onCreate called")
         hideSystemUI()
+
         nameBox = findViewById(R.id.name_box)
         surnameBox = findViewById(R.id.surname_box)
         phoneBox = findViewById(R.id.phone_box)
@@ -29,13 +38,19 @@ class RegisterBlind : AppCompatActivity() {
         phoneHelperBox = findViewById(R.id.phone_helper_box)
         finishButton = findViewById(R.id.regis_finish_button)
 
-        finishButton.setOnClickListener {
 
-            val inputName = nameBox.text
-            val inputSurname = surnameBox.text
-            val inputPhone = phoneBox.text
-            val inputHelper = helperBox.text
-            val inputPhoneHelper = phoneHelperBox.text
+
+        finishButton.setOnClickListener {
+        val inputName: String = nameBox.getText().toString()
+        val inputSurname: String = surnameBox.getText().toString()
+        val inputPhone: String = phoneBox.getText().toString()
+        val inputHelper: String = helperBox.getText().toString()
+        val inputPhoneHelper: String = phoneHelperBox.getText().toString()
+//            val inputName = nameBox.toString()
+//            val inputSurname = surnameBox.toString()
+//            val inputPhone = phoneBox.toString()
+//            val inputHelper = helperBox.toString()
+//            val inputPhoneHelper = phoneHelperBox.toString()
 
             if(inputName.isEmpty()&&inputSurname.isEmpty()&&inputPhone.isEmpty()&&inputHelper.isEmpty()&&inputPhoneHelper.isEmpty()){
                 nameBox.error = getString(R.string.name_box_blind)
@@ -62,13 +77,26 @@ class RegisterBlind : AppCompatActivity() {
                 phoneHelperBox.error = getString(R.string.phoneHelper_box_blind)
             }
             else{
-                val i = Intent(this@RegisterBlind, MainActivity::class.java)
-                startActivity(i)
-                finish()
+
+                val ref = FirebaseDatabase.getInstance().getReference("users")
+                val testID = ref.push().key
+                val test = UserHelperClass(inputName, inputSurname, inputPhone, inputHelper, inputPhoneHelper)
+                ref.child(testID.toString()).setValue(test).addOnCompleteListener {
+                    Toast.makeText(this,"Successfully Save Database",Toast.LENGTH_SHORT).show()
+                }
+
+                saveRegister()
             }
         }
+
+
     }
 
+private fun saveRegister(){
+    val i = Intent(this@RegisterBlind, MainActivity::class.java)
+    startActivity(i)
+    finish()
+}
 
     private fun hideSystemUI() {
         // Enables regular immersive mode.
