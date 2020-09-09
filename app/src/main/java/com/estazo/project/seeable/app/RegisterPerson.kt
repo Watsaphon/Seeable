@@ -58,9 +58,9 @@ class RegisterPerson : AppCompatActivity() {
             }
             else{
                 val ref = FirebaseDatabase.getInstance().getReference("users_person")
-                val testID = ref.push().key
-                val test = UserPersonHelperClass(inputUsername, inputPassword, inputfullName, inputPhone)
-                ref.child(testID.toString()).setValue(test).addOnCompleteListener {
+                val ID = ref.push().key
+                val test = UserPersonHelperClass(ID.toString(),inputUsername, inputPassword, inputfullName, inputPhone)
+                ref.child(ID.toString()).setValue(test).addOnCompleteListener {
                     Toast.makeText(this,"Successfully Save Database", Toast.LENGTH_SHORT).show()
                 }
                 saveRegister()

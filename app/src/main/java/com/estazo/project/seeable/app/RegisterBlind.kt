@@ -79,9 +79,9 @@ class RegisterBlind : AppCompatActivity() {
             }
             else{
                 val ref = FirebaseDatabase.getInstance().getReference("users_blind")
-                val testID = ref.push().key
-                val test = UserBlinderHelperClass(inputUsername,inputPassword , inputfullName, inputPhone, inputHelper, inputPhoneHelper)
-                ref.child(testID.toString()).setValue(test).addOnCompleteListener {
+                val ID = ref.push().key
+                val test = UserBlinderHelperClass(ID.toString(),inputUsername,inputPassword , inputfullName, inputPhone, inputHelper, inputPhoneHelper)
+                ref.child(ID.toString()).setValue(test).addOnCompleteListener {
                     Toast.makeText(this,"Successfully Save Database",Toast.LENGTH_SHORT).show()
                 }
                 saveRegister()
