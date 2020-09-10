@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Seeable</string>
+    <string name="app_name">SeeAble</string>
     <string name="title_register">ลงทะเบียนสำหรับคนตาบอด</string>
     <string name="finish_button">เสร็จสิ้น</string>
     <string name="header_regis_blind">ลงทะเบียนสำหรับคนตาบอด</string>
