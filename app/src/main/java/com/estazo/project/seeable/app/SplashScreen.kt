@@ -20,12 +20,17 @@ class SplashScreen : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("value", 0)
         val language = sharedPreferences.getString("stringKey", "en")
         var editor = sharedPreferences.edit()
+
+        val sharedPreferences2 = getSharedPreferences("value", 0)
+        val login = sharedPreferences2.getString("stringKey2","not found!")
+        var editor2 = sharedPreferences2.edit()
+
         var locale: Locale? = null
 
+        Log.i("SplashScreen", "First User ID  : $login")
         Log.i("SplashScreen", "First Language is :$language")
 
         /** Check Language in app*/
-
         if(language=="en"){
             locale = Locale("en")
             Locale.setDefault(locale)
@@ -39,25 +44,29 @@ class SplashScreen : AppCompatActivity() {
             Log.i("SplashScreen", " check else-if : Now Language :$language")
         }
         editor.apply()
+        editor2.apply()
         val config = Configuration()
         config.locale = locale
         baseContext.resources.updateConfiguration(config, null)
+        Log.i("SplashScreen", "  Second User  : $login")
         Log.i("SplashScreen", "Now Language is :$language")
 
-        /** Check First Register user in app*/
-
-        if (sharedPreferences.getBoolean("FinishedInformation", false)) {
-            Handler().postDelayed({
-                startActivity(Intent(this, LoginScreen::class.java))
-                finishAffinity()
-            }, 2000)
-
-        } else {
+        /** Check User for Login */
+        if(login=="not found!"){
+            Log.i("SplashScreen", " Current User ID  : $login")
             Handler().postDelayed({
                 startActivity(Intent(this, LoginScreen::class.java))
                 finishAffinity()
             }, 2000)
         }
+        else if(login != null){
+            Log.i("SplashScreen", "Current User ID : $login")
+            Handler().postDelayed({
+                startActivity(Intent(this, MainActivity::class.java))
+                finishAffinity()
+            }, 2000)
+        }
+
     }
 
     private fun hideSystemUI() {

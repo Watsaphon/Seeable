@@ -86,6 +86,7 @@ class SettingScreen : AppCompatActivity() {
 //        recreate()
     }
 
+    /** hide navigation and status bar in each activity */
     private fun hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.

@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClass
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.FirebaseDatabase
 
@@ -24,6 +26,7 @@ class RegisterPerson : AppCompatActivity() {
         setContentView(R.layout.activity_register_person )
         Log.i("RegisterPerson", "onCreate called")
         hideSystemUI()
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         userName = findViewById(R.id.username_box)
         password = findViewById(R.id.password_box)
@@ -59,9 +62,16 @@ class RegisterPerson : AppCompatActivity() {
             else{
                 val ref = FirebaseDatabase.getInstance().getReference("users_person")
                 val ID = ref.push().key
-                val test = UserPersonHelperClass(ID.toString(),inputUsername, inputPassword, inputfullName, inputPhone)
+                val test =
+                    UserPersonHelperClass(
+                        ID.toString(),
+                        inputUsername,
+                        inputPassword,
+                        inputfullName,
+                        inputPhone
+                    )
                 ref.child(ID.toString()).setValue(test).addOnCompleteListener {
-                    Toast.makeText(this,"Successfully Save Database", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,getString(R.string.success_regis), Toast.LENGTH_SHORT).show()
                 }
                 saveRegister()
             }
@@ -69,12 +79,38 @@ class RegisterPerson : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateUI()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        hideSystemUI()
+        Log.i("RegisterPerson", "onWindowFocusChanged called")
+    }
+
+    private fun updateUI() {
+        val decorView = window.decorView
+        decorView.setOnSystemUiVisibilityChangeListener { visibility ->
+            if (visibility and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
+                decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+            }
+        }
+    }
+
     private fun saveRegister(){
-        val i = Intent(this@RegisterPerson, SelectRegister::class.java)
+        val i = Intent(this, LoginScreen::class.java)
         startActivity(i)
         finish()
     }
 
+    /** hide navigation and status bar in each activity */
     private fun hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.

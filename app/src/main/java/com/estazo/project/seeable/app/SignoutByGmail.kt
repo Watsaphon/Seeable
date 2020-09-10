@@ -24,6 +24,7 @@ class SignoutByGmail : AppCompatActivity() {
     private lateinit var emailTV: TextView
     private lateinit var idTV: TextView
     private lateinit var photoIV: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signout_by_gmail)
@@ -33,12 +34,10 @@ class SignoutByGmail : AppCompatActivity() {
         idTV = findViewById(R.id.id)
         photoIV = findViewById(R.id.photo)
 
+
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build()
-
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         val acct = GoogleSignIn.getLastSignedInAccount(this)
@@ -53,23 +52,17 @@ class SignoutByGmail : AppCompatActivity() {
             emailTV.text = "Email: $personEmail"
             idTV.text = "ID: $personId"
             Glide.with(this).load(personPhoto).apply(RequestOptions.circleCropTransform()).into(photoIV)
-
-
-
         }
         sign_out.setOnClickListener(View.OnClickListener { signOut() })
     }
 
     private fun signOut() {
-        mGoogleSignInClient!!.signOut()
+        mGoogleSignInClient.signOut()
             .addOnCompleteListener(this) {
-                Toast.makeText(
-                    this,
-                    "Successfully signed out",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "Successfully signed out", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, LoginScreen::class.java))
                 finish()
             }
     }
+
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.*
 import android.util.Log
 import android.view.Gravity
@@ -15,12 +16,21 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.graphics.green
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-
 
     private lateinit var button1: Button
     private lateinit var button2: Button
@@ -28,7 +38,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var button4: Button
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPreferences: SharedPreferences
-
+    private lateinit var sharedPreferences2: SharedPreferences
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var personName : String
+    private lateinit var personEmail : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,24 +49,23 @@ class MainActivity : AppCompatActivity() {
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
-//test
 
         sharedPreferences = getSharedPreferences("value", 0)
-        var editor = sharedPreferences.edit()
-        editor.putBoolean("FinishedInformation", true)
-        editor.commit()
+        sharedPreferences2 = getSharedPreferences("value", 0)
 
 
         val stringValue = sharedPreferences.getString("stringKey", "not found!")
-        val booleanValue = sharedPreferences.getBoolean("FinishedInformation", false)
+        val stringValue2 = sharedPreferences2.getString("stringKey2", "not found!")
 
-        Log.i("SplashScreenMain", "MainAc now language : $stringValue")
-        Log.i("MainActivity ", "Boolean value: $booleanValue")
+       Log.i("SplashScreenMain", "Current User ID : $stringValue2")
+        Log.i("SplashScreenMain", "LoginScreen now language : $stringValue")
+
 
         button1 = findViewById(R.id.button1)
         button2 = findViewById(R.id.button2)
         button3 = findViewById(R.id.button3)
         button4 = findViewById(R.id.button4)
+        fab = findViewById(R.id.floating_action_button)
 
         button1.setOnVeryLongClickListener{
             vibrate()
@@ -71,32 +83,23 @@ class MainActivity : AppCompatActivity() {
             vibrate()
             Toast.makeText(this, getString(R.string.button_main_4), Toast.LENGTH_SHORT).show()
         }
-
-//        button1.setOnTouchListener(buttonOnTouchListener)
-//        button2.setOnTouchListener(buttonOnTouchListener)
-//        button3.setOnTouchListener(buttonOnTouchListener)
-//        button4.setOnTouchListener(buttonOnTouchListener)
-
-
-
-        fab = findViewById(R.id.floating_action_button)
         fab.setOnClickListener {
             /** PopupMenu dropdown */
             val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.menu.findItem(R.id.action_logout).isVisible = true
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_about -> gotoAbout()
                     R.id.action_change_language -> changeLanguage()
                     R.id.action_settings -> gotoSetting()
+                    R.id.action_logout -> gotoLogout()
                 }
                 hideSystemUI()
                 true
             }
             popupMenu.show()
         }
-
-
     }
 
     override fun onResume(){
@@ -165,6 +168,20 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun gotoLogout(){
+         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        val acct = GoogleSignIn.getLastSignedInAccount(this)
+        if(acct != null){
+            mGoogleSignInClient.signOut()
+            Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
+        }
+        var editor2 = sharedPreferences2.edit()
+        editor2.putString("stringKey2", "not found!")
+        editor2.apply()
+        val intent = Intent(this,LoginScreen::class.java)
+        startActivity(intent)
+    }
 
     /** hide navigation and status bar in each activity */
     private fun hideSystemUI() {

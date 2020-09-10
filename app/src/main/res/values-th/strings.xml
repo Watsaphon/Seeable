@@ -20,20 +20,21 @@
     <string name="button_main_3">ปุ่ม 3</string>
     <string name="button_main_4">ปุ่ม 4</string>
 
-    <string name="Login_heading">เข้าสู่ระบบ</string>
-    <string name="Login_button">เสร็จสิ้น</string>
-
+    <!--Settings-->
     <string name="action_settings">การตั้งค่า</string>
     <string name="action_about">เกี่ยวกับ</string>
     <string name="action_change_language">เปลี่ยนภาษา</string>
     <string name="action_other">อื่นๆ</string>
+    <string name="action_logout">ออกจากระบบ</string>
 
-
+    <!--Register Person-->
     <string name="username_box_person">กรุณากรอกชื่อผุ้ใช้งาน</string>
     <string name="password_box_person">กรุณากรอกรหัสผ่าน</string>
     <string name="fullname_box_person">กรุณากรอกชื่อ-นามสกุลผู้ดูแล</string>
     <string name="phone_box_person">กรุณากรอกเบอร์โทรผู้ดูแล</string>
+    <string name="success_regis">เก็บข้อมูลลงฐานข้อมูลเสร็จสิ้น</string>
 
+    <!--RegisterBlind-->
     <string name="username_box_blind">กรุณากรอกชื่อผู้ใช้งานของคนตาบอด</string>
     <string name="password_box_blind">กรุณากรอกชรหัสผ่านองคนตาบอด</string>
     <string name="fullname_box_blind">กรุณากรอกชื่อ-นามสกุลคนตาบอด</string>
@@ -41,12 +42,17 @@
     <string name="helper_box_blind">กรุณากรอกชื่อผู้ดูแลคนตาบอด</string>
     <string name="phoneHelper_box_blind">กรุณากรอกเบอร์โทรผู้ดูแลคนตาบอด</string>
 
-    <!--Heading-->
+    <!--About Page-->
     <string name="heading_about">SeeAble คืออะไร </string>
-    <!--Content-->
     <string name="content_1">SeeAble เป็นแอพที่ช่วยคนตาบอดในการเตือนอันตรายและอุปสรรคและทำให้คนที่มองไม่เห็นมีความปลอดภัยมากขึ้น เมื่อเราเห็นอันตรายหรืออุปสรรค. เรา "แจ้งเตือน" ด้วยเสียงถึงคุณ เมื่อคุณประสบอุบัติเหตุและล้มลงอุปกรณ์จะโทรขอความช่วยเหลือ! คนอื่น ๆ สามารถช่วยคุณได้ทันเวลา แอพพลิเคชั่นสามารถแสดงข้อมูลและติดต่อในแอพได้ แอพนพลิเคชั่นี้ยังสามารถเรียกรถพยาบาลเมื่อเกิดอุบัติเหตุฉุกเฉิน</string>
     <string name="content_2">ภาษาที่รองรับ :ไทย,อังกฤษ</string>
 
+    <!--LoginScreen-->
+    <string name="Login_heading">เข้าสู่ระบบ</string>
+    <string name="Login_button">เสร็จสิ้น</string>
+    <string name="login_success">เข้าสู่ระบบเสร็จสิ้น</string>
+    <string name="login_empty">กรุณากรอกชื่อผู้ใช้งานหรือรหัสผ่าน</string>
+    <string name="login_incorrect">ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง</string>
     <string name="or">หรือ</string>
     <string name="register_login_button">ลงทะเบียน</string>
 
