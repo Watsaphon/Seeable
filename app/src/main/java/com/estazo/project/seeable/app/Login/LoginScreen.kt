@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app
+package com.estazo.project.seeable.app.Login
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,6 +13,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import com.estazo.project.seeable.app.*
+import com.estazo.project.seeable.app.Register.SelectRegister
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -120,12 +122,12 @@ class LoginScreen : AppCompatActivity() {
 
 
     private fun gotoAbout(){
-        val intent = Intent(this,AboutScreen::class.java)
+        val intent = Intent(this, AboutScreen::class.java)
         startActivity(intent)
     }
 
     private fun gotoSetting(){
-        val intent = Intent(this,SettingScreen::class.java)
+        val intent = Intent(this, SettingScreen::class.java)
         startActivity(intent)
     }
 
@@ -200,7 +202,7 @@ class LoginScreen : AppCompatActivity() {
         val config = Configuration()
         config.locale = locale
         baseContext.resources.updateConfiguration(config, null)
-        val intent = Intent(this,SplashScreen::class.java)
+        val intent = Intent(this, SplashScreen::class.java)
         startActivity(intent)
 //        recreate()
     }
@@ -261,7 +263,7 @@ class LoginScreen : AppCompatActivity() {
                         editor2.putString("stringKey2", id)
                         editor2.apply()
 
-                        val intent = Intent(this@LoginScreen,MainActivity::class.java)
+                        val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
                         startActivity(intent)
                         break
                     }
@@ -311,7 +313,7 @@ class LoginScreen : AppCompatActivity() {
                         editor2.putString("stringKey2", id)
                         editor2.apply()
 
-                        val intent = Intent(this@LoginScreen,MainActivity::class.java)
+                        val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)
                         break
                     }

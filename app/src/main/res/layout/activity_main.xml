@@ -11,17 +11,17 @@
     >
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="90dp"
-        android:layout_gravity="top|right"
-        android:layout_margin="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        app:srcCompat="@drawable/ic_action_name"
-        tools:ignore="MissingConstraints" />
+    android:id="@+id/floating_action_button"
+    android:layout_width="wrap_content"
+    android:layout_height="90dp"
+    android:layout_gravity="top|right"
+    android:layout_margin="15dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/linearLayout"
+    app:srcCompat="@drawable/ic_action_name"
+     />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:text="@string/button_main_1" />
+                android:text="@string/button_shared_locatoin" />
 
             <Button
                 android:id="@+id/button2"
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:text="@string/button_main_2" />
+                android:text="@string/button_navigation" />
 
 
         </LinearLayout>
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:text="@string/button_main_3" />
+                android:text="@string/button_emergency_call" />
 
             <Button
                 android:id="@+id/button4"

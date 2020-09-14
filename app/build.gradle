@@ -48,7 +48,9 @@ dependencies {
 
     //Firebase
     implementation 'com.google.firebase:firebase-database-ktx:19.4.0'
-
+    //signin google
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    //shared location
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }

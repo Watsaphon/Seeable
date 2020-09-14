@@ -1,11 +1,16 @@
 package com.estazo.project.seeable.app
 
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.net.Uri
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.os.*
 import android.util.Log
 import android.view.Gravity
@@ -16,23 +21,19 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.graphics.green
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import androidx.core.app.ActivityCompat
+import com.estazo.project.seeable.app.Login.LoginScreen
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.location.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
-    private lateinit var button1: Button
+    private lateinit var sharedLocationBtn: Button
     private lateinit var button2: Button
     private lateinit var button3: Button
     private lateinit var button4: Button
@@ -40,14 +41,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var sharedPreferences2: SharedPreferences
     private lateinit var mGoogleSignInClient: GoogleSignInClient
-    private lateinit var personName : String
-    private lateinit var personEmail : String
+
+    //Declaring the needed Variables
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var locationRequest: LocationRequest
+    val PERMISSION_ID = 1010
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        CheckPermission()
 
 
         sharedPreferences = getSharedPreferences("value", 0)
@@ -60,28 +65,37 @@ class MainActivity : AppCompatActivity() {
        Log.i("SplashScreenMain", "Current User ID : $stringValue2")
         Log.i("SplashScreenMain", "LoginScreen now language : $stringValue")
 
-
-        button1 = findViewById(R.id.button1)
+        sharedLocationBtn = findViewById(R.id.button1)
         button2 = findViewById(R.id.button2)
         button3 = findViewById(R.id.button3)
         button4 = findViewById(R.id.button4)
         fab = findViewById(R.id.floating_action_button)
 
-        button1.setOnVeryLongClickListener{
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        RequestPermission()
+
+        sharedLocationBtn.setOnVeryLongClickListener{
             vibrate()
-            Toast.makeText(this,getString(R.string.button_main_1), Toast.LENGTH_SHORT).show()
+            //create method
+ //           Toast.makeText(this,getString(R.string.button_shared_locatoin), Toast.LENGTH_SHORT).show()
+            Log.d("Debug:","CheckPermission : "  + CheckPermission().toString())
+            Log.d("Debug:", "isLocationEnabled : " +  isLocationEnabled().toString())
+//            RequestPermission()
+            getLastLocation()
+
         }
         button2.setOnVeryLongClickListener{
             vibrate()
-            Toast.makeText(this, getString(R.string.button_main_2), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.button_navigation), Toast.LENGTH_SHORT).show()
         }
         button3.setOnVeryLongClickListener{
             vibrate()
-            Toast.makeText(this, getString(R.string.button_main_3), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.button_emergency_call), Toast.LENGTH_SHORT).show()
         }
         button4.setOnVeryLongClickListener{
             vibrate()
-            Toast.makeText(this, getString(R.string.button_main_4), Toast.LENGTH_SHORT).show()
+         Toast.makeText(this, getString(R.string.button_main_4), Toast.LENGTH_SHORT).show()
+
         }
         fab.setOnClickListener {
             /** PopupMenu dropdown */
@@ -100,6 +114,105 @@ class MainActivity : AppCompatActivity() {
             }
             popupMenu.show()
         }
+
+
+    }
+
+
+    /** Config location */
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation(){
+        if(CheckPermission()){
+            if(isLocationEnabled()){
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
+                    var location:Location? = task.result
+                    if(location == null){
+                        NewLocationData()
+                    }else{
+                        Log.d("Debug:" ,"Your Location:"+ location.longitude)
+                        val text = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n" + getCityName(location.latitude,location.longitude)
+                        Toast.makeText(this,"$text",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }else{
+                Toast.makeText(this,"Please Turn on Your device Location",Toast.LENGTH_SHORT).show()
+            }
+        }else{
+            RequestPermission()
+        }
+    }
+    private fun NewLocationData(){
+        var locationRequest =  LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 0
+        locationRequest.fastestInterval = 0
+        locationRequest.numUpdates = 1
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest,locationCallback,Looper.myLooper()
+        )
+    }
+    private val locationCallback = object : LocationCallback(){
+        override fun onLocationResult(locationResult: LocationResult) {
+            var lastLocation: Location = locationResult.lastLocation
+            Log.d("Debug:","your last last location: "+ lastLocation.longitude.toString())
+            val text = "You Last Location is : Long: "+ lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n" + getCityName(lastLocation.latitude,lastLocation.longitude)
+            Toast.makeText(this@MainActivity,"$text",Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun CheckPermission():Boolean{
+        //this function will return a boolean
+        //true: if we have permission
+        //false if not
+        if(
+            ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        ){
+            return true
+        }
+
+        return false
+
+    }
+    private fun RequestPermission(){
+        //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION), PERMISSION_ID)
+    }
+    private fun isLocationEnabled():Boolean{
+        //this function will return to us the state of the location service
+        //if the gps or the network provider is enabled then it will return true otherwise it will return false
+        var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if(requestCode == PERMISSION_ID){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Log.d("Debug:","You have the Permission")
+            }
+        }
+    }
+    private fun getCityName(lat: Double,long: Double):String{
+        var cityName:String = ""
+        var countryName = ""
+        var geoCoder = Geocoder(this, Locale.getDefault())
+        var Adress = geoCoder.getFromLocation(lat,long,3)
+        cityName = Adress.get(0).locality
+        countryName = Adress.get(0).countryName
+        Log.d("Debug:", "Your City: $cityName ; your Country $countryName")
+        return cityName
+    }
+
+
+
+
+    override fun onStart() {
+        super.onStart()
+        Log.i("MainActivity", "onStart called")
     }
 
     override fun onResume(){
@@ -179,7 +292,8 @@ class MainActivity : AppCompatActivity() {
         var editor2 = sharedPreferences2.edit()
         editor2.putString("stringKey2", "not found!")
         editor2.apply()
-        val intent = Intent(this,LoginScreen::class.java)
+        val intent = Intent(this,
+            LoginScreen::class.java)
         startActivity(intent)
     }
 
@@ -230,6 +344,9 @@ class MainActivity : AppCompatActivity() {
             v.vibrate(300)
         }
     }
+
+
+
 
 }
 

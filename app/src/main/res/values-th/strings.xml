@@ -15,9 +15,9 @@
     <string name="blinder_button_desc">คนตาบอด</string>
     <string name="person_button_desc">คนดูแล</string>
     <string name="select_register_header">เลือกผู้ลงทะเบียน</string>
-    <string name="button_main_1">ปุ่ม 1</string>
-    <string name="button_main_2">ปุ่ม 2</string>
-    <string name="button_main_3">ปุ่ม 3</string>
+    <string name="button_shared_locatoin">ส่งตำแหน่งที่อยู่ปัจจุบัน</string>
+    <string name="button_navigation">การนำทาง</string>
+    <string name="button_emergency_call">โทรฉุกเฉิน</string>
     <string name="button_main_4">ปุ่ม 4</string>
 
     <!--Settings-->

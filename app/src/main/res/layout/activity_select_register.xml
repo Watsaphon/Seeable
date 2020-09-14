@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:background="@color/colorAccent"
-    tools:context=".SelectRegister">
+    tools:context=".Register.SelectRegister">
 
 
     <TextView

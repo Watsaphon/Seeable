@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app
+package com.estazo.project.seeable.app.Register
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClass
+import com.estazo.project.seeable.app.Login.LoginScreen
+import com.estazo.project.seeable.app.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.FirebaseDatabase
 
@@ -23,7 +25,7 @@ class RegisterPerson : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register_person )
+        setContentView(R.layout.activity_register_person)
         Log.i("RegisterPerson", "onCreate called")
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)

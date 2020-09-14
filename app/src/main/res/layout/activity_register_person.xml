@@ -6,7 +6,7 @@
     android:id="@+id/register_blind"
     android:background="@color/colorAccent"
     android:orientation="vertical"
-    tools:context=".RegisterPerson"
+    tools:context=".Register.RegisterPerson"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"

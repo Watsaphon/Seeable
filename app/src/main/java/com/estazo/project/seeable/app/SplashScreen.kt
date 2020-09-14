@@ -6,7 +6,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.estazo.project.seeable.app.Login.LoginScreen
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
@@ -61,13 +67,21 @@ class SplashScreen : AppCompatActivity() {
         }
         else if(login != null){
             Log.i("SplashScreen", "Current User ID : $login")
-            Handler().postDelayed({
-                startActivity(Intent(this, MainActivity::class.java))
-                finishAffinity()
-            }, 2000)
+//            Handler().postDelayed({
+//                startActivity(Intent(this, MainActivity::class.java))
+//                finishAffinity()
+//            }, 2000)
+            checkLogin()
         }
 
+
     }
+
+    private fun checkLogin() {
+        val query = FirebaseDatabase.getInstance().getReference("users_person").orderByChild("id")
+        query.addListenerForSingleValueEvent(valueEventListener)
+    }
+
 
     private fun hideSystemUI() {
         /**
@@ -85,4 +99,55 @@ class SplashScreen : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
+
+    /**receive value from realtime database (user_person) and check Login */
+    private var valueEventListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val sharedPreferences2 = getSharedPreferences("value", 0)
+            val login = sharedPreferences2.getString("stringKey2","not found!")
+            if (dataSnapshot.exists()) {
+                for (snapshot in dataSnapshot.children) {
+                    val id = snapshot.child("id").value.toString()
+                    Log.i("LoginScreen_checkperson", "Username : $login")
+                    Log.i("LoginScreen_checkperson", "Database info :  $id")
+                    if (login.equals(id)){
+                        Handler().postDelayed({
+                            startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
+                            finishAffinity()
+                        }, 2000)
+                    }
+                    else{
+                        val query2 = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
+                        query2.addListenerForSingleValueEvent(valueEventListener2)
+                    }
+                }
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
+
+    /**receive value from realtime database (users_blind) and check Login */
+    private var valueEventListener2: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val sharedPreferences2 = getSharedPreferences("value", 0)
+            val login = sharedPreferences2.getString("stringKey2","not found!")
+            if (dataSnapshot.exists()) {
+                for (snapshot in dataSnapshot.children) {
+                    val id = snapshot.child("id").value.toString()
+                    Log.i("LoginScreen_checkblind", "Username : $login")
+                    Log.i("LoginScreen_checkblind", "Database info :  $id")
+
+                    if (login.equals(id)) {
+                        Handler().postDelayed({
+                            startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+                            finishAffinity()
+                        }, 2000)
+                    }
+                }
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
 }
