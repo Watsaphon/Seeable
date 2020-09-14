@@ -3,13 +3,15 @@ package com.estazo.project.seeable.app
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.estazo.project.seeable.app.Login.LoginScreen
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -18,12 +20,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
+
 class MainActivityPerson : AppCompatActivity() {
 
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var sharedPreferences2: SharedPreferences
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var webView : WebView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +41,14 @@ class MainActivityPerson : AppCompatActivity() {
         val stringValue = sharedPreferences.getString("stringKey", "not found!")
         val stringValue2 = sharedPreferences2.getString("stringKey2", "not found!")
 
-        fab = findViewById(R.id.floating_action_button)
+        webView = findViewById(R.id.webview)
+        webView.webViewClient = WebViewClient()
+        webView.loadUrl("http://maps.google.com/maps?q=loc:13.574703,100.835928")
+        val webSettings = webView.settings
+        webSettings.javaScriptEnabled = true
 
+
+        fab = findViewById(R.id.floating_action_button)
         fab.setOnClickListener {
             /** PopupMenu dropdown */
             val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
@@ -135,5 +146,6 @@ class MainActivityPerson : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
+
 
 }

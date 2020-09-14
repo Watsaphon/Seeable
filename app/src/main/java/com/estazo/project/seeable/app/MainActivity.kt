@@ -11,6 +11,7 @@ import android.content.res.Configuration
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.*
 import android.util.Log
 import android.view.Gravity
@@ -44,7 +45,6 @@ class MainActivity : AppCompatActivity(){
 
     //Declaring the needed Variables
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
     val PERMISSION_ID = 1010
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity(){
             Log.d("Debug:", "isLocationEnabled : " +  isLocationEnabled().toString())
 //            RequestPermission()
             getLastLocation()
+            sendLocation()
 
         }
         button2.setOnVeryLongClickListener{
@@ -118,6 +119,20 @@ class MainActivity : AppCompatActivity(){
 
     }
 
+    @SuppressLint("MissingPermission", "DefaultLocale")
+    private fun sendLocation(){
+        Log.d("Debug:" ,"sendLocation call" )
+        fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
+            var location:Location? = task.result
+            if(location == null){
+                NewLocationData()
+            }else{
+                val link = "http://maps.google.com/maps?q=loc:" + java.lang.String.format("%f,%f", location.latitude, location.longitude)
+                Log.d("Debug:" ,"$link" )
+            }
+        }
+
+    }
 
     /** Config location */
     @SuppressLint("MissingPermission")
@@ -129,7 +144,7 @@ class MainActivity : AppCompatActivity(){
                     if(location == null){
                         NewLocationData()
                     }else{
-                        Log.d("Debug:" ,"Your Location:"+ location.longitude)
+                        Log.d("Debug:" ,"Your Location : Long: "+ location.longitude + " , Lat: " + location.latitude )
                         val text = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n" + getCityName(location.latitude,location.longitude)
                         Toast.makeText(this,"$text",Toast.LENGTH_SHORT).show()
                     }
@@ -201,8 +216,8 @@ class MainActivity : AppCompatActivity(){
         var countryName = ""
         var geoCoder = Geocoder(this, Locale.getDefault())
         var Adress = geoCoder.getFromLocation(lat,long,3)
-        cityName = Adress.get(0).locality
-        countryName = Adress.get(0).countryName
+        cityName = Adress[0].locality
+        countryName = Adress[0].countryName
         Log.d("Debug:", "Your City: $cityName ; your Country $countryName")
         return cityName
     }
