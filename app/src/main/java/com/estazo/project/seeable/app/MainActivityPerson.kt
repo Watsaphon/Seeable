@@ -3,6 +3,7 @@ package com.estazo.project.seeable.app
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.WindowManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -27,7 +29,8 @@ class MainActivityPerson : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var sharedPreferences2: SharedPreferences
     private lateinit var mGoogleSignInClient: GoogleSignInClient
-    private lateinit var webView : WebView
+    private lateinit var mapButton : Button
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,11 +44,7 @@ class MainActivityPerson : AppCompatActivity() {
         val stringValue = sharedPreferences.getString("stringKey", "not found!")
         val stringValue2 = sharedPreferences2.getString("stringKey2", "not found!")
 
-        webView = findViewById(R.id.webview)
-        webView.webViewClient = WebViewClient()
-        webView.loadUrl("http://maps.google.com/maps?q=loc:13.574703,100.835928")
-        val webSettings = webView.settings
-        webSettings.javaScriptEnabled = true
+
 
 
         fab = findViewById(R.id.floating_action_button)
@@ -65,6 +64,19 @@ class MainActivityPerson : AppCompatActivity() {
                 true
             }
             popupMenu.show()
+        }
+
+        mapButton = findViewById(R.id.map_btn)
+        mapButton.setOnClickListener{
+            // Navigation : current place direct to gmmIntentUri
+            val gmmIntentUri = Uri.parse("google.navigation:q=13.5730731,100.8338599&mode=w&avoid=thf")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            mapIntent.resolveActivity(packageManager)?.let {
+                startActivity(mapIntent)
+            }
+//            val intent = Intent(this,GoogleMapScreen::class.java)
+//            startActivity(intent)
         }
 
     }
@@ -146,6 +158,5 @@ class MainActivityPerson : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
-
 
 }

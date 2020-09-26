@@ -78,8 +78,8 @@ class MainActivity : AppCompatActivity(){
             vibrate()
             //create method
  //           Toast.makeText(this,getString(R.string.button_shared_locatoin), Toast.LENGTH_SHORT).show()
-            Log.d("Debug:","CheckPermission : "  + CheckPermission().toString())
-            Log.d("Debug:", "isLocationEnabled : " +  isLocationEnabled().toString())
+            Log.d("Debug:","sharedLocationBtn -> CheckPermission : "  + CheckPermission().toString())
+            Log.d("Debug:", "sharedLocationBtn -> isLocationEnabled : " +  isLocationEnabled().toString())
 //            RequestPermission()
             getLastLocation()
             sendLocation()
@@ -137,6 +137,7 @@ class MainActivity : AppCompatActivity(){
     /** Config location */
     @SuppressLint("MissingPermission")
     private fun getLastLocation(){
+        Log.d("Debug:" ,"getLastLocation call" )
         if(CheckPermission()){
             if(isLocationEnabled()){
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
@@ -144,7 +145,7 @@ class MainActivity : AppCompatActivity(){
                     if(location == null){
                         NewLocationData()
                     }else{
-                        Log.d("Debug:" ,"Your Location : Long: "+ location.longitude + " , Lat: " + location.latitude )
+                        Log.d("Debug:" ,"getLastLocation() -> Your Location : Long: "+ location.longitude + " , Lat: " + location.latitude )
                         val text = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n" + getCityName(location.latitude,location.longitude)
                         Toast.makeText(this,"$text",Toast.LENGTH_SHORT).show()
                     }
@@ -175,7 +176,7 @@ class MainActivity : AppCompatActivity(){
     private val locationCallback = object : LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult) {
             var lastLocation: Location = locationResult.lastLocation
-            Log.d("Debug:","your last last location: "+ lastLocation.longitude.toString())
+            Log.d("Debug:","onLocationResult -> your last last location: "+ lastLocation.longitude.toString())
             val text = "You Last Location is : Long: "+ lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n" + getCityName(lastLocation.latitude,lastLocation.longitude)
             Toast.makeText(this@MainActivity,"$text",Toast.LENGTH_SHORT).show()
         }
@@ -190,9 +191,7 @@ class MainActivity : AppCompatActivity(){
         ){
             return true
         }
-
         return false
-
     }
     private fun RequestPermission(){
         //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
@@ -207,7 +206,7 @@ class MainActivity : AppCompatActivity(){
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if(requestCode == PERMISSION_ID){
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Log.d("Debug:","You have the Permission")
+                Log.d("Debug:","onRequestPermissionsResult -> You have the Permission")
             }
         }
     }
@@ -218,7 +217,7 @@ class MainActivity : AppCompatActivity(){
         var Adress = geoCoder.getFromLocation(lat,long,3)
         cityName = Adress[0].locality
         countryName = Adress[0].countryName
-        Log.d("Debug:", "Your City: $cityName ; your Country $countryName")
+        Log.d("Debug:", " getCityName -> Your City: $cityName ; your Country $countryName")
         return cityName
     }
 

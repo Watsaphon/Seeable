@@ -16,11 +16,14 @@ import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
+var checkSuccess : Boolean = false
+
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //      setContentView(R.layout.activity_splash_screen)
         hideSystemUI()
+
 
         /**Shared Preferences เป็นคลาสที่ใช้สำหรับเก็บข้อมูลถาวรที่เป็นค่าของตัวแปรธรรมดาๆ อย่างเช่น Boolean,Int,Float*/
         val sharedPreferences = getSharedPreferences("value", 0)
@@ -108,19 +111,19 @@ class SplashScreen : AppCompatActivity() {
             if (dataSnapshot.exists()) {
                 for (snapshot in dataSnapshot.children) {
                     val id = snapshot.child("id").value.toString()
-                    Log.i("LoginScreen_checkperson", "Username : $login")
-                    Log.i("LoginScreen_checkperson", "Database info :  $id")
+                    Log.i("Splash_checkperson", "Username : $login")
+                    Log.i("Splash_checkperson", "Database info :  $id")
                     if (login.equals(id)){
                         Handler().postDelayed({
                             startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
                             finishAffinity()
                         }, 2000)
-                    }
-                    else{
-                        val query2 = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
-                        query2.addListenerForSingleValueEvent(valueEventListener2)
+                        checkSuccess = true
+                        break
                     }
                 }
+                val query2 = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
+                query2.addListenerForSingleValueEvent(valueEventListener2)
             }
         }
         override fun onCancelled(databaseError: DatabaseError) {}
@@ -132,17 +135,19 @@ class SplashScreen : AppCompatActivity() {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val sharedPreferences2 = getSharedPreferences("value", 0)
             val login = sharedPreferences2.getString("stringKey2","not found!")
-            if (dataSnapshot.exists()) {
-                for (snapshot in dataSnapshot.children) {
-                    val id = snapshot.child("id").value.toString()
-                    Log.i("LoginScreen_checkblind", "Username : $login")
-                    Log.i("LoginScreen_checkblind", "Database info :  $id")
-
-                    if (login.equals(id)) {
-                        Handler().postDelayed({
-                            startActivity(Intent(this@SplashScreen, MainActivity::class.java))
-                            finishAffinity()
-                        }, 2000)
+            if(checkSuccess == false){
+                if (dataSnapshot.exists()) {
+                    for (snapshot in dataSnapshot.children) {
+                        val id = snapshot.child("id").value.toString()
+                        Log.i("Splash_checkblind", "Username : $login")
+                        Log.i("Splash_checkblind", "Database info :  $id")
+                        if (login.equals(id)) {
+                            Handler().postDelayed({
+                                startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+                                finishAffinity()
+                            }, 2000)
+                            break
+                        }
                     }
                 }
             }
