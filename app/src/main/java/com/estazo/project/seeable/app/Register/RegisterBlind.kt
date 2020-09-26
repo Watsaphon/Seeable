@@ -91,7 +91,9 @@ class RegisterBlind : AppCompatActivity() {
                         inputfullName,
                         inputPhone,
                         inputHelper,
-                        inputPhoneHelper
+                        inputPhoneHelper,
+                        13.0000021,
+                        22.0000001
                     )
                 ref.child(ID.toString()).setValue(test).addOnCompleteListener {
                     Toast.makeText(this,getString(R.string.success_regis),Toast.LENGTH_SHORT).show()

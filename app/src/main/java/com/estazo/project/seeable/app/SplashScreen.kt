@@ -26,13 +26,13 @@ class SplashScreen : AppCompatActivity() {
 
 
         /**Shared Preferences เป็นคลาสที่ใช้สำหรับเก็บข้อมูลถาวรที่เป็นค่าของตัวแปรธรรมดาๆ อย่างเช่น Boolean,Int,Float*/
-        val sharedPreferences = getSharedPreferences("value", 0)
-        val language = sharedPreferences.getString("stringKey", "en")
-        var editor = sharedPreferences.edit()
+        val sharedPrefLanguage = getSharedPreferences("value", 0)
+        val language = sharedPrefLanguage.getString("stringKey", "en")
+        var editor = sharedPrefLanguage.edit()
 
-        val sharedPreferences2 = getSharedPreferences("value", 0)
-        val login = sharedPreferences2.getString("stringKey2","not found!")
-        var editor2 = sharedPreferences2.edit()
+        val sharedPrefID = getSharedPreferences("value", 0)
+        val login = sharedPrefID.getString("stringKey2","not found!")
+        var editor2 = sharedPrefID.edit()
 
         var locale: Locale? = null
 
@@ -66,14 +66,14 @@ class SplashScreen : AppCompatActivity() {
             Handler().postDelayed({
                 startActivity(Intent(this, LoginScreen::class.java))
                 finishAffinity()
-            }, 2000)
+            }, 1000)
         }
         else if(login != null){
             Log.i("SplashScreen", "Current User ID : $login")
 //            Handler().postDelayed({
 //                startActivity(Intent(this, MainActivity::class.java))
 //                finishAffinity()
-//            }, 2000)
+//            }, 1000)
             checkLogin()
         }
 
@@ -106,8 +106,8 @@ class SplashScreen : AppCompatActivity() {
     /**receive value from realtime database (user_person) and check Login */
     private var valueEventListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val sharedPreferences2 = getSharedPreferences("value", 0)
-            val login = sharedPreferences2.getString("stringKey2","not found!")
+            val sharedPrefID = getSharedPreferences("value", 0)
+            val login = sharedPrefID.getString("stringKey2","not found!")
             if (dataSnapshot.exists()) {
                 for (snapshot in dataSnapshot.children) {
                     val id = snapshot.child("id").value.toString()
@@ -117,7 +117,7 @@ class SplashScreen : AppCompatActivity() {
                         Handler().postDelayed({
                             startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
                             finishAffinity()
-                        }, 2000)
+                        }, 1000)
                         checkSuccess = true
                         break
                     }
@@ -133,8 +133,8 @@ class SplashScreen : AppCompatActivity() {
     /**receive value from realtime database (users_blind) and check Login */
     private var valueEventListener2: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val sharedPreferences2 = getSharedPreferences("value", 0)
-            val login = sharedPreferences2.getString("stringKey2","not found!")
+            val sharedPrefID = getSharedPreferences("value", 0)
+            val login = sharedPrefID.getString("stringKey2","not found!")
             if(checkSuccess == false){
                 if (dataSnapshot.exists()) {
                     for (snapshot in dataSnapshot.children) {
@@ -145,7 +145,7 @@ class SplashScreen : AppCompatActivity() {
                             Handler().postDelayed({
                                 startActivity(Intent(this@SplashScreen, MainActivity::class.java))
                                 finishAffinity()
-                            }, 2000)
+                            }, 1000)
                             break
                         }
                     }

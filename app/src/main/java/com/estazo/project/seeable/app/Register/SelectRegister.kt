@@ -25,7 +25,7 @@ class SelectRegister : AppCompatActivity() {
     private lateinit var blindButton: Button
     private lateinit var personButton: Button
     private lateinit var fab: FloatingActionButton
-    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPrefLanguage: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ class SelectRegister : AppCompatActivity() {
         personButton = findViewById(R.id.person_btn)
         fab = findViewById(R.id.floating_action_button)
 
-        sharedPreferences = getSharedPreferences("value", 0)
+        sharedPrefLanguage = getSharedPreferences("value", 0)
 
         blindButton.setOnClickListener {
             val i = Intent(this@SelectRegister, RegisterBlind::class.java)
@@ -76,10 +76,10 @@ class SelectRegister : AppCompatActivity() {
     }
 
     private fun changeLanguage(){
-        val language = sharedPreferences.getString("stringKey", "not found!")
+        val language = sharedPrefLanguage.getString("stringKey", "not found!")
         Log.i("SelectRegister", "Now Language is :$language ")
         var locale: Locale? = null
-        var editor = sharedPreferences.edit()
+        var editor = sharedPrefLanguage.edit()
         if (language=="en") {
             locale = Locale("th")
             editor.putString("stringKey", "th")

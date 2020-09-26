@@ -40,9 +40,19 @@ class LoginScreen : AppCompatActivity() {
     private lateinit var signInButton: SignInButton
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var fab: FloatingActionButton
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var sharedPreferences2: SharedPreferences
+    private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var auth: FirebaseAuth
+
+    private lateinit var sharedPrefID: SharedPreferences
+    private lateinit var sharedPrefFullName: SharedPreferences
+    private lateinit var sharedPrefNameHelper: SharedPreferences
+    private lateinit var sharedPrefPassword: SharedPreferences
+    private lateinit var sharedPrefPhone: SharedPreferences
+    private lateinit var sharedPrefPhoneHelper: SharedPreferences
+    private lateinit var sharedPrefUsername: SharedPreferences
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,11 +69,17 @@ class LoginScreen : AppCompatActivity() {
         fab = findViewById(R.id.floating_action_button)
         auth = FirebaseAuth.getInstance()
 
-        sharedPreferences = getSharedPreferences("value", 0)
-        sharedPreferences2 = getSharedPreferences("value", 0)
+        sharedPrefLanguage = getSharedPreferences("value", 0)
+        sharedPrefID = getSharedPreferences("value", 0)
+        sharedPrefUsername= getSharedPreferences("value", 0)
+        sharedPrefPassword= getSharedPreferences("value", 0)
+        sharedPrefFullName= getSharedPreferences("value", 0)
+        sharedPrefNameHelper= getSharedPreferences("value", 0)
+        sharedPrefPhone= getSharedPreferences("value", 0)
+        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
 
-        val stringValue = sharedPreferences.getString("stringKey", "not found!")
-        val stringValue2 = sharedPreferences2.getString("stringKey2", "not found!")
+        val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
+        val stringValue2 = sharedPrefID.getString("stringKey2", "not found!")
 
         Log.i("LoginScreen_splash", "Current User ID  : $stringValue2")
         Log.i("LoginScreen_splash", "LoginScreen now language : $stringValue")
@@ -185,10 +201,10 @@ class LoginScreen : AppCompatActivity() {
 
     /** change Language TH and EN  */
     private fun changeLanguage(){
-        val language = sharedPreferences.getString("stringKey", "not found!")
+        val language = sharedPrefLanguage.getString("stringKey", "not found!")
         Log.i("LoginScreen_changeLang", "Now Language is :$language ")
         var locale: Locale? = null
-        var editor = sharedPreferences.edit()
+        var editor = sharedPrefLanguage.edit()
         if (language=="en") {
             locale = Locale("th")
             editor.putString("stringKey", "th")
@@ -258,10 +274,11 @@ class LoginScreen : AppCompatActivity() {
 
                     if (loginName.equals(username) && loginPassword.equals(password)){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                        sharedPreferences2 = getSharedPreferences("value", 0)
-                        var editor2 = sharedPreferences2.edit()
-                        editor2.putString("stringKey2", id)
-                        editor2.apply()
+                        //sharedPrefID = getSharedPreferences("value", 0)
+
+                        var editorID = sharedPrefID.edit()
+                        editorID.putString("stringKey2", id)
+                        editorID.apply()
 
                         val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
                         startActivity(intent)
@@ -281,7 +298,6 @@ class LoginScreen : AppCompatActivity() {
                     query2.addListenerForSingleValueEvent(valueEventListener2)
                 }
             }
-
         }
         override fun onCancelled(databaseError: DatabaseError) {}
     }
@@ -301,17 +317,40 @@ class LoginScreen : AppCompatActivity() {
                     val password = snapshot.child("password").value.toString()
                     val phone = snapshot.child("phone").value.toString()
                     val username = snapshot.child("username").value.toString()
+                    val nameHelper = snapshot.child("nameHelper").value.toString()
+                    val phoneHelper = snapshot.child("phoneHelper").value.toString()
 
                     Log.i("LoginScreen_checkLogin","In onDataChange, count=$count")
                     Log.i("LoginScreen_checkLogin", "Username : $loginName , Password : $loginPassword")
-                    Log.i("LoginScreen_checkLogin", "Database info :  $id,$password,$username,$fullname,$phone")
+                    Log.i("LoginScreen_checkLogin", "Database info :  $id,$password,$username,$fullname,$phone,$nameHelper,$phoneHelper")
 
                     if (loginName.equals(username) && loginPassword.equals(password)){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                        sharedPreferences2 = getSharedPreferences("value", 0)
-                        var editor2 = sharedPreferences2.edit()
-                        editor2.putString("stringKey2", id)
-                        editor2.apply()
+
+
+                        var editorID = sharedPrefID.edit()
+                        var editorUsername = sharedPrefUsername.edit()
+                        var editorPassword = sharedPrefPassword.edit()
+                        var editorFullName = sharedPrefFullName.edit()
+                        var editorNameHelper = sharedPrefNameHelper.edit()
+                        var editorPhone = sharedPrefPhone.edit()
+                        var editorPhoneHelper = sharedPrefPhoneHelper.edit()
+
+                        editorID.putString("stringKey2", id)
+                        editorUsername.putString("stringKeyUsername", username)
+                        editorPassword.putString("stringKeyPassword", password)
+                        editorFullName.putString("stringKeyFullName", fullname)
+                        editorNameHelper.putString("stringKeyNameHelper", nameHelper)
+                        editorPhone.putString("stringKeyPhone", phone)
+                        editorPhoneHelper.putString("stringKeyPhoneHelper", phoneHelper)
+                        editorID.apply()
+                        editorUsername.apply()
+                        editorPassword.apply()
+                        editorFullName.apply()
+                        editorNameHelper.apply()
+                        editorPhone.apply()
+                        editorPhoneHelper.apply()
+
 
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)

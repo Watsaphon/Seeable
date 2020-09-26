@@ -17,22 +17,22 @@ class SettingScreen : AppCompatActivity() {
     private lateinit var aboutButton: Button
     private lateinit var changeLanguageButton: Button
     private lateinit var otherButton: Button
-    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPrefLanguage : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting_screen)
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        sharedPreferences = getSharedPreferences("value", 0)
-        var editor = sharedPreferences.edit()
+        sharedPrefLanguage = getSharedPreferences("value", 0)
+        var editor = sharedPrefLanguage.edit()
         editor.commit()
 
 
-        val stringValue = sharedPreferences.getString("stringKey", "not found!")
-        val booleanValue = sharedPreferences.getBoolean("FinishedInformation", false)
+        val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
         Log.i("SettingScreen", "String value -> change language to : $stringValue")
-        Log.i("SettingScreen ", "Boolean value: $booleanValue")
+//        val booleanValue = sharedPreferences.getBoolean("FinishedInformation", false)
+//          Log.i("SettingScreen ", "Boolean value: $booleanValue")
 
         closeButton = findViewById(R.id.close_button)
         aboutButton = findViewById(R.id.action_about)
@@ -66,10 +66,10 @@ class SettingScreen : AppCompatActivity() {
     }
 
     private fun changeLanguage(){
-        val language = sharedPreferences.getString("stringKey", "not found!")
+        val language = sharedPrefLanguage.getString("stringKey", "not found!")
         Log.i("MainActivity", "Now Language is :$language ")
         var locale: Locale? = null
-        var editor = sharedPreferences.edit()
+        var editor = sharedPrefLanguage.edit()
         if (language=="en") {
             locale = Locale("th")
             editor.putString("stringKey", "th")

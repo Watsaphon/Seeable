@@ -20,16 +20,24 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.intellij.lang.annotations.Language
 import java.util.*
 
 
 class MainActivityPerson : AppCompatActivity() {
 
     private lateinit var fab: FloatingActionButton
-    private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var sharedPreferences2: SharedPreferences
+    private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var mapButton : Button
+    private lateinit var sharedPrefID: SharedPreferences
+    private lateinit var sharedPrefFullName: SharedPreferences
+    private lateinit var sharedPrefNameHelper: SharedPreferences
+    private lateinit var sharedPrefPassword: SharedPreferences
+    private lateinit var sharedPrefPhone: SharedPreferences
+    private lateinit var sharedPrefPhoneHelper: SharedPreferences
+    private lateinit var sharedPrefUsername: SharedPreferences
+
 
 
 
@@ -39,10 +47,19 @@ class MainActivityPerson : AppCompatActivity() {
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
-        sharedPreferences = getSharedPreferences("value", 0)
-        sharedPreferences2 = getSharedPreferences("value", 0)
-        val stringValue = sharedPreferences.getString("stringKey", "not found!")
-        val stringValue2 = sharedPreferences2.getString("stringKey2", "not found!")
+        sharedPrefLanguage = getSharedPreferences("value", 0)
+        sharedPrefID = getSharedPreferences("value", 0)
+        sharedPrefUsername= getSharedPreferences("value", 0)
+        sharedPrefPassword= getSharedPreferences("value", 0)
+        sharedPrefFullName= getSharedPreferences("value", 0)
+        sharedPrefNameHelper= getSharedPreferences("value", 0)
+        sharedPrefPhone= getSharedPreferences("value", 0)
+        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
+
+
+
+        val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
+        val stringValue2 = sharedPrefID.getString("stringKey2", "not found!")
 
 
 
@@ -89,10 +106,10 @@ class MainActivityPerson : AppCompatActivity() {
 
     /** change Language TH and EN*/
     private fun changeLanguage(){
-        val language = sharedPreferences.getString("stringKey", "not found!")
+        val language = sharedPrefLanguage.getString("stringKey", "not found!")
         Log.i("SplashScreenMain", "Now Language is :$language ")
         var locale: Locale? = null
-        var editor = sharedPreferences.edit()
+        var editor = sharedPrefLanguage.edit()
         if (language=="en") {
             locale = Locale("th")
             editor.putString("stringKey", "th")
@@ -129,9 +146,30 @@ class MainActivityPerson : AppCompatActivity() {
             mGoogleSignInClient.signOut()
             Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
         }
-        var editor2 = sharedPreferences2.edit()
-        editor2.putString("stringKey2", "not found!")
-        editor2.apply()
+        var editorID = sharedPrefID.edit()
+        var editorUsername = sharedPrefUsername.edit()
+        var editorPassword = sharedPrefPassword.edit()
+        var editorFullName = sharedPrefFullName.edit()
+        var editorNameHelper = sharedPrefNameHelper.edit()
+        var editorPhone = sharedPrefPhone.edit()
+        var editorPhoneHelper = sharedPrefPhoneHelper.edit()
+
+        editorID.putString("stringKey2", "not found!")
+        editorUsername.putString("stringKeyUsername", "not found!")
+        editorPassword.putString("stringKeyPassword", "not found!")
+        editorFullName.putString("stringKeyFullName", "not found!")
+        editorNameHelper.putString("stringKeyNameHelper", "not found!")
+        editorPhone.putString("stringKeyPhone", "not found!")
+        editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
+
+        editorID.apply()
+        editorUsername.apply()
+        editorPassword.apply()
+        editorFullName.apply()
+        editorNameHelper.apply()
+        editorPhone.apply()
+        editorPhoneHelper.apply()
+
         val intent = Intent(this,
             LoginScreen::class.java)
         startActivity(intent)
