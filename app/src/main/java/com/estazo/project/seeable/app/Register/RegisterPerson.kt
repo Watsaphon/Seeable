@@ -70,7 +70,8 @@ class RegisterPerson : AppCompatActivity() {
                         inputUsername,
                         inputPassword,
                         inputfullName,
-                        inputPhone
+                        inputPhone,
+                        "no-pairing"
                     )
                 ref.child(ID.toString()).setValue(test).addOnCompleteListener {
                     Toast.makeText(this,getString(R.string.success_regis), Toast.LENGTH_SHORT).show()

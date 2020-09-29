@@ -9,19 +9,27 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
 import com.estazo.project.seeable.app.Login.LoginScreen
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.intellij.lang.annotations.Language
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.*
+import android.widget.Button
+import android.widget.Toast
+import android.content.Context
+import android.graphics.Color
+import android.os.Build
+import android.transition.Slide
+import android.transition.TransitionManager
+import android.view.LayoutInflater
+import android.widget.*
+import kotlinx.android.synthetic.main.activity_main_person.*
 
 
 class MainActivityPerson : AppCompatActivity() {
@@ -38,8 +46,9 @@ class MainActivityPerson : AppCompatActivity() {
     private lateinit var sharedPrefPhoneHelper: SharedPreferences
     private lateinit var sharedPrefUsername: SharedPreferences
 
+    private lateinit var sharedPrefPartnerID: SharedPreferences
 
-
+    private lateinit var partnerID : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,12 +65,7 @@ class MainActivityPerson : AppCompatActivity() {
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPhoneHelper= getSharedPreferences("value", 0)
 
-
-
-        val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
-        val stringValue2 = sharedPrefID.getString("stringKey2", "not found!")
-
-
+        sharedPrefPartnerID = getSharedPreferences("value", 0)
 
 
         fab = findViewById(R.id.floating_action_button)
@@ -81,20 +85,23 @@ class MainActivityPerson : AppCompatActivity() {
                 true
             }
             popupMenu.show()
+
         }
 
+        /** Check user pair with blinder */
+        val login = sharedPrefID.getString("stringKey2","not found!")
+        val query = FirebaseDatabase.getInstance().getReference("users_person").child("$login").orderByChild("partner_id")
+        query.addListenerForSingleValueEvent(valueEventListenerCheckUser)
+
+        /** Direct Google Map */
         mapButton = findViewById(R.id.map_btn)
         mapButton.setOnClickListener{
-            // Navigation : current place direct to gmmIntentUri
-            val gmmIntentUri = Uri.parse("google.navigation:q=13.5730731,100.8338599&mode=w&avoid=thf")
-            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-            mapIntent.setPackage("com.google.android.apps.maps")
-            mapIntent.resolveActivity(packageManager)?.let {
-                startActivity(mapIntent)
-            }
-//            val intent = Intent(this,GoogleMapScreen::class.java)
-//            startActivity(intent)
+            Log.d("partnerID_main","$login")
+            Log.d("partnerID_main","$partnerID")
+            val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$partnerID").orderByChild("id")
+            query.addListenerForSingleValueEvent(valueEventListenerDirectMap)
         }
+
 
     }
 
@@ -197,4 +204,47 @@ class MainActivityPerson : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
 
-}
+    /** Direction in Google Map  */
+    private var valueEventListenerDirectMap: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                        val id = dataSnapshot.child("id").value.toString()
+                        val latitude = dataSnapshot.child("latitude").value.toString()
+                        val longtitude = dataSnapshot.child("longitude").value.toString()
+                        Log.d("Direction","partnerID  = $partnerID , id =$id")
+                        if (partnerID == id) {
+                            Log.d("test position", "$latitude")
+                            Log.d("test position", "$longtitude")
+                            // Navigation : current place direct to gmmIntentUri
+                            val gmmIntentUri = Uri.parse("google.navigation:q=$latitude,$longtitude&mode=w&avoid=thf")
+                            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                            mapIntent.setPackage("com.google.android.apps.maps")
+                            mapIntent.resolveActivity(packageManager)?.let {
+                                startActivity(mapIntent)
+                            }
+                        }
+                }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
+
+    /** Check User pair with blinder */
+    private var valueEventListenerCheckUser: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                    val partnerIDFirebase = dataSnapshot.child("partner_id").value.toString()
+                    if (partnerIDFirebase == "no-pairing") {
+                        Log.d("partnerID","$partnerIDFirebase")
+                        Toast.makeText(this@MainActivityPerson, "Pairing not success popup activate", Toast.LENGTH_SHORT).show()
+                        }
+                    else{
+                        partnerID = partnerIDFirebase
+                        Toast.makeText(this@MainActivityPerson, "Pairing success", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+        }
+
+    }

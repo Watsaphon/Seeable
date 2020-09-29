@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
+    android:id="@+id/root_layout_activity_main_person"
     tools:context=".MainActivityPerson">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

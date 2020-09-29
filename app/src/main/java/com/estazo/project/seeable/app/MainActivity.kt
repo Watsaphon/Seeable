@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity(){
                 Log.i("Debug_sendLocation","call if")
                 NewLocationData()
             }else{
-                val link = java.lang.String.format("%f,%f", location.latitude,    location.longitude)
+                val link = java.lang.String.format("%f,%f", location.latitude,location.longitude)
                 Log.i("Debug_sendLocation","call else")
                 Log.d("Debug_sendLocation:" ,"$link" )
                 val currentID = sharedPrefID.getString("stringKey2", "not found!")
