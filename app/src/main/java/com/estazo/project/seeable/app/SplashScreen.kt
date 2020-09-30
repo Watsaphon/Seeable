@@ -2,11 +2,13 @@ package com.estazo.project.seeable.app
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.Login.LoginScreen
 import com.google.firebase.database.DataSnapshot
@@ -21,9 +23,7 @@ var checkSuccess : Boolean = false
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//      setContentView(R.layout.activity_splash_screen)
         hideSystemUI()
-
 
         /**Shared Preferences เป็นคลาสที่ใช้สำหรับเก็บข้อมูลถาวรที่เป็นค่าของตัวแปรธรรมดาๆ อย่างเช่น Boolean,Int,Float*/
         val sharedPrefLanguage = getSharedPreferences("value", 0)
@@ -36,47 +36,42 @@ class SplashScreen : AppCompatActivity() {
 
         var locale: Locale? = null
 
-        Log.i("SplashScreen", "First User ID  : $login")
-        Log.i("SplashScreen", "First Language is :$language")
+        Log.i("CheckUserID_splash", "First User ID  : $login")
+        Log.i("CheckLanguage_splash", "First Language is :$language")
 
         /** Check Language in app*/
         if(language=="en"){
             locale = Locale("en")
             Locale.setDefault(locale)
             editor.putString("stringKey", "en")
-            Log.i("SplashScreen", " Language after check if :$language")
+            Log.i("CheckLanguage_splash", "  check if :  Language is$language")
         }
         else if(language=="th"){
             locale = Locale("th")
             Locale.setDefault(locale)
             editor.putString("stringKey", "th")
-            Log.i("SplashScreen", " check else-if : Now Language :$language")
+            Log.i("CheckLanguage_splash", " check else-if :  Language is $language")
         }
         editor.apply()
         editor2.apply()
         val config = Configuration()
         config.locale = locale
         baseContext.resources.updateConfiguration(config, null)
-        Log.i("SplashScreen", "  Second User  : $login")
-        Log.i("SplashScreen", "Now Language is :$language")
+        Log.i("CheckUserID_splash", "  Second User  : $login")
+        Log.i("CheckLanguage_splash", "Now Language is :$language")
 
         /** Check User for Login */
         if(login=="not found!"){
-            Log.i("SplashScreen", " Current User ID  : $login")
+            Log.i("CheckUserID_splash", " Current User ID  : $login")
             Handler().postDelayed({
                 startActivity(Intent(this, LoginScreen::class.java))
                 finishAffinity()
             }, 1000)
         }
         else if(login != null){
-            Log.i("SplashScreen", "Current User ID : $login")
-//            Handler().postDelayed({
-//                startActivity(Intent(this, MainActivity::class.java))
-//                finishAffinity()
-//            }, 1000)
+            Log.i("CheckUserID_splash", "Current User ID : $login")
             checkLogin()
         }
-
 
     }
 
@@ -111,9 +106,12 @@ class SplashScreen : AppCompatActivity() {
             if (dataSnapshot.exists()) {
                 for (snapshot in dataSnapshot.children) {
                     val id = snapshot.child("id").value.toString()
-                    Log.i("Splash_checkperson", "Username : $login")
-                    Log.i("Splash_checkperson", "Database info :  $id")
+                    Log.i("CheckUserPerson_splash", "Username : $login")
+                    Log.i("CheckUserPerson_splash", "User from Database :  $id")
                     if (login.equals(id)){
+                        /** Check user pair with blinder */
+                        val query = FirebaseDatabase.getInstance().getReference("users_person").child("$login").orderByChild("partner_id")
+                        query.addListenerForSingleValueEvent(valueEventListenerCheckUser)
                         Handler().postDelayed({
                             startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
                             finishAffinity()
@@ -139,8 +137,8 @@ class SplashScreen : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     for (snapshot in dataSnapshot.children) {
                         val id = snapshot.child("id").value.toString()
-                        Log.i("Splash_checkblind", "Username : $login")
-                        Log.i("Splash_checkblind", "Database info :  $id")
+                        Log.i("CheckUserPerson_splash", "Username : $login")
+                        Log.i("CheckUserPerson_splash", "User from Database :  $id")
                         if (login.equals(id)) {
                             Handler().postDelayed({
                                 startActivity(Intent(this@SplashScreen, MainActivity::class.java))
@@ -149,6 +147,31 @@ class SplashScreen : AppCompatActivity() {
                             break
                         }
                     }
+                }
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
+    /** Check User pair with blinder */
+    private var valueEventListenerCheckUser: ValueEventListener = object : ValueEventListener {
+        @RequiresApi(Build.VERSION_CODES.O)
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val partnerIDFirebase = dataSnapshot.child("partner_id").value.toString()
+                val sharedPrefPartnerID = getSharedPreferences("value", 0)
+                val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
+                var editorPartnerID = sharedPrefPartnerID.edit()
+                Log.i("checkPairing_splash"," Partner ID :$partnerIDFirebase")
+                if (partnerIDFirebase != "no-pairing") {
+                    Log.i("checkPairing_splash"," Partner ID :$partnerIDFirebase")
+                    editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
+                    editorPartnerID.apply()
+                }
+                else if(partnerIDFirebase== "no-pairing"){
+                    Log.i("checkPairing_splash"," Partner ID :$partnerIDFirebase")
+                    editorPartnerID.putString("stringKeyPartnerID", "no-pairing")
+                    editorPartnerID.apply()
                 }
             }
         }

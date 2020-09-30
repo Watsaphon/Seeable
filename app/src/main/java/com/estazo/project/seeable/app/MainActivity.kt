@@ -30,7 +30,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.location.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.FirebaseDatabase
-import org.intellij.lang.annotations.Language
 import java.util.*
 
 
@@ -63,9 +62,7 @@ class MainActivity : AppCompatActivity(){
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         CheckPermission()
 
-
         sharedPrefLanguage = getSharedPreferences("value", 0)
-        sharedPrefID = getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
         sharedPrefUsername= getSharedPreferences("value", 0)
         sharedPrefPassword= getSharedPreferences("value", 0)
@@ -79,8 +76,8 @@ class MainActivity : AppCompatActivity(){
         val currentUser = sharedPrefID.getString("stringKey2", "not found!")
 
 
-       Log.i("SplashScreenMain", "Current User ID : $currentUser")
-        Log.i("SplashScreenMain", "LoginScreen now language : $stringValue")
+       Log.i("CheckUserID_MainBlind", "Current User ID : $currentUser")
+       Log.i("SplashScreenMain", "LoginScreen now language : $stringValue")
 
         sharedLocationBtn = findViewById(R.id.button1)
         button2 = findViewById(R.id.button2)

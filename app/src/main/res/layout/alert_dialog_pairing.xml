@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:text="Pairing"
+        android:textSize="30dp" />
+    <TextView
+        android:id="@+id/subHeader"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:text="You don't have partner now. Before you can use this application .You have to already pair with your partner"
+        />
+    <TextView
+        android:id="@+id/text_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please Enter partner ID to pairing"
+        android:gravity="center"
+        />
+
+
+    <EditText
+        android:id="@+id/dialogPartnerID"
+        android:inputType="textPersonName"
+        android:fontFamily="sans-serif-condensed"
+        android:hint="insert your partner ID here..."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:id="@+id/dialogLoginBtn"
+            android:text="Summit"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/dialogCancelBtn"
+            android:text="Exit"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

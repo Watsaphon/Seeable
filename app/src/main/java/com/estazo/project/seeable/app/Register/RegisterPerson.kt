@@ -64,15 +64,7 @@ class RegisterPerson : AppCompatActivity() {
             else{
                 val ref = FirebaseDatabase.getInstance().getReference("users_person")
                 val ID = ref.push().key
-                val test =
-                    UserPersonHelperClass(
-                        ID.toString(),
-                        inputUsername,
-                        inputPassword,
-                        inputfullName,
-                        inputPhone,
-                        "no-pairing"
-                    )
+                val test = UserPersonHelperClass(ID.toString(), inputUsername, inputPassword, inputfullName, inputPhone, "no-pairing")
                 ref.child(ID.toString()).setValue(test).addOnCompleteListener {
                     Toast.makeText(this,getString(R.string.success_regis), Toast.LENGTH_SHORT).show()
                 }

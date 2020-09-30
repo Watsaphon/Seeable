@@ -9,5 +9,5 @@ data class UserPersonHelperClass(
     val  Password: String,
     val FullName: String,
     val Phone: String,
-    val pairingID : String)
+    val partner_id : String)
 

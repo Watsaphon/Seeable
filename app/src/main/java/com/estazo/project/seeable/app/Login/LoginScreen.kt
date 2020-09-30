@@ -3,6 +3,7 @@ package com.estazo.project.seeable.app.Login
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -11,6 +12,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.estazo.project.seeable.app.*
@@ -81,8 +83,8 @@ class LoginScreen : AppCompatActivity() {
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
         val stringValue2 = sharedPrefID.getString("stringKey2", "not found!")
 
-        Log.i("LoginScreen_splash", "Current User ID  : $stringValue2")
-        Log.i("LoginScreen_splash", "LoginScreen now language : $stringValue")
+        Log.i("CheckUserID_login", "Current User ID  : $stringValue2")
+        Log.i("CheckLanguage_splash", "LoginScreen now language : $stringValue")
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -115,7 +117,7 @@ class LoginScreen : AppCompatActivity() {
         super.onStart()
         val currentUser = auth.currentUser
 //        updateUI(currentUser)
-        Log.i("LoginScreen", "onStart currentUser is :$currentUser ")
+        Log.d("LoginScreen", "onStart currentUser is :$currentUser ")
     }
 
     override fun onResume() {
@@ -123,17 +125,16 @@ class LoginScreen : AppCompatActivity() {
         updateUI()
     }
 
-
     override fun onBackPressed() {
         super.onBackPressed()
         finishAffinity()
-        Log.i("LoginScreen", "onBackPressed called")
+        Log.d("LoginScreen", "onBackPressed called")
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         hideSystemUI()
-        Log.i("LoginScreen", "onWindowFocusChanged called")
+        Log.d("LoginScreen", "onWindowFocusChanged called")
     }
 
 
@@ -170,7 +171,7 @@ class LoginScreen : AppCompatActivity() {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!
-                Log.d("LoginScreen_onActResult", "firebaseAuthWithGoogle:" + account.id)
+                Log.i("LoginScreen_onActResult", "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
@@ -185,7 +186,7 @@ class LoginScreen : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d("LoginScreen_fbAuth", "signInWithCredential:success")
+                    Log.i("LoginScreen_fbAuth", "signInWithCredential:success")
                     val user = auth.currentUser
                     startActivity(Intent(this, MainActivity::class.java))
 //                    updateUI(user)
@@ -202,7 +203,7 @@ class LoginScreen : AppCompatActivity() {
     /** change Language TH and EN  */
     private fun changeLanguage(){
         val language = sharedPrefLanguage.getString("stringKey", "not found!")
-        Log.i("LoginScreen_changeLang", "Now Language is :$language ")
+        Log.i("CheckLanguage", "Now Language is :$language ")
         var locale: Locale? = null
         var editor = sharedPrefLanguage.edit()
         if (language=="en") {
@@ -273,15 +274,12 @@ class LoginScreen : AppCompatActivity() {
                     Log.i("LoginScreen_count", "Database info :  $id,$password,$username,$fullname,$phone")
 
                     if (loginName.equals(username) && loginPassword.equals(password)){
-                        Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                        //sharedPrefID = getSharedPreferences("value", 0)
-
                         var editorID = sharedPrefID.edit()
                         editorID.putString("stringKey2", id)
                         editorID.apply()
-
-                        val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
-                        startActivity(intent)
+                        /** Check user pair with blinder */
+                        val query = FirebaseDatabase.getInstance().getReference("users_person").child("$id").orderByChild("partner_id")
+                        query.addListenerForSingleValueEvent(valueEventListenerCheckUser)
                         break
                     }
                     else if (loginName.isEmpty()  || loginPassword.isEmpty() ) {
@@ -327,7 +325,6 @@ class LoginScreen : AppCompatActivity() {
                     if (loginName.equals(username) && loginPassword.equals(password)){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
 
-
                         var editorID = sharedPrefID.edit()
                         var editorUsername = sharedPrefUsername.edit()
                         var editorPassword = sharedPrefPassword.edit()
@@ -351,7 +348,6 @@ class LoginScreen : AppCompatActivity() {
                         editorPhone.apply()
                         editorPhoneHelper.apply()
 
-
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)
                         break
@@ -371,6 +367,37 @@ class LoginScreen : AppCompatActivity() {
                 }
             }
 
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
+    /** Check User pair with blinder */
+    private var valueEventListenerCheckUser: ValueEventListener = object : ValueEventListener {
+        @RequiresApi(Build.VERSION_CODES.O)
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val partnerIDFirebase = dataSnapshot.child("partner_id").value.toString()
+                Log.d("checkPairing_login","$partnerIDFirebase")
+                val sharedPrefPartnerID = getSharedPreferences("value", 0)
+                var editorPartnerID = sharedPrefPartnerID.edit()
+
+                if (partnerIDFirebase != "no-pairing") {
+                    Log.d("checkPairing_login","$partnerIDFirebase")
+                    Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+                    editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
+                    editorPartnerID.apply()
+                    val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
+                    startActivity(intent)
+                }
+                else if(partnerIDFirebase== "no-pairing"){
+                    Log.d("checkPairing_login","$partnerIDFirebase")
+                    Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+                    editorPartnerID.putString("stringKeyPartnerID", "no-pairing")
+                    editorPartnerID.apply()
+                    val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
+                    startActivity(intent)
+                }
+            }
         }
         override fun onCancelled(databaseError: DatabaseError) {}
     }

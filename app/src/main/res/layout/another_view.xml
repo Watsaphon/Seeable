@@ -9,36 +9,51 @@
     android:padding="20dp"
     >
 
-    <Button
-        android:id="@+id/button_popup"
-        android:layout_width="56dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="X" />
+
     <TextView
-        android:id="@+id/text_view"
+        android:id="@+id/Header"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:gravity="center"
+        android:fontFamily="@font/adamina"
+        android:text="Pairing "
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/SubHeader"
+        android:layout_width="match_parent"
+        android:layout_height="144dp"
+        android:textSize="18dp"
+        android:fontFamily="serif-monospace"
+        android:text="You don't have partner now. Before you can use this application .Please insert your Partner ID."
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+    <TextView
+        android:id="@+id/text_input_partner_id"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:fontFamily="serif-monospace"
+        android:text="Enter Partner ID to Pairing"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+    <EditText
+        android:id="@+id/partnerid_box"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/round_corner_button"
+        android:ems="30"
+        android:inputType="textPersonName">
+    </EditText>>
+
+    <Button
+        android:id="@+id/button_summit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click me to change my text color"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        />
-    <Button
-        android:id="@+id/button_popup1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="TEST 1" />
-    <Button
-        android:id="@+id/button_popup2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="TEST 2" /> 
-    <Button
-        android:id="@+id/button_popup3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="TEST 3" />
+        android:layout_gravity="center"
+        android:text="SUMMIT" />
 
 </LinearLayout>
