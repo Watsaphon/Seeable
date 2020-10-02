@@ -56,4 +56,17 @@
     <string name="or">หรือ</string>
     <string name="register_login_button">ลงทะเบียน</string>
 
+    <!--alertPairing-->
+    <string name="pairing_header">การจับคู่</string>
+    <string name="pairing_subHeader">คุณต้องจับคู่กับฝั่งคนตาบอดก่อนที่จะเริ่มใช้งานแอพพลิเคชั่นนี้</string>
+    <string name="pairing_text_box">กรุณากรอก ID ของคนตาบอดเพื่อเริ่มการจับคู่</string>
+    <string name="pairing_hint">ใส่ID ของคนตาบอดที่นี่...</string>
+    <string name="pairing_summitBtn">ยืนยัน</string>
+    <string name="pairing_logoutBtn">ออกจากระบบ</string>
+    <string name="pairing_exitBtn">ออก</string>
+
+    <!--MainPerson-->
+    <string name="main_person_header">คนดูแล</string>
+    <string name="main_mapBtn">เปิดดูแผนที่</string>
+
 </resources>

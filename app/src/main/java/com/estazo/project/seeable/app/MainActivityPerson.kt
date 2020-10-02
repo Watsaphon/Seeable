@@ -32,8 +32,6 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 import java.util.*
 
 
-var checkSuccessPartnerID : Boolean = false
-
 class MainActivityPerson : AppCompatActivity() {
 
     private lateinit var fab: FloatingActionButton
@@ -220,28 +218,21 @@ class MainActivityPerson : AppCompatActivity() {
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
         //login button click of custom layout
-        mDialogView.dialogLoginBtn.setOnClickListener {
+        mDialogView.dialogSummitBtn.setOnClickListener {
             val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
             query.addListenerForSingleValueEvent(valueEventListener)
             val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
             checkPartnerID = partnerIDBox
-//            Log.i("MainPerson_count","checkSuccessPartnerID status first : $checkSuccessPartnerID")
-//            if(checkSuccessPartnerID == true){
-//                mAlertDialog.dismiss()
-//                Toast.makeText(this, "Pairing Successfully", Toast.LENGTH_SHORT).show()
-//                Log.i("MainPerson_count","Call if ->  mAlertDialog.dismiss()")
-//            }
-//            else{
-//                mAlertDialog.show()
-//                Toast.makeText(this, "Partner ID incorrect", Toast.LENGTH_SHORT).show()
-//                Log.i("MainPerson_count","Call else ->   mAlertDialog.show()")
-//            }
-//            Log.i("MainPerson_count","checkSuccessPartnerID status last : $checkSuccessPartnerID")
+        }
+        //logout button click of custom layout
+        mDialogView.dialogLogoutBtn.setOnClickListener {
+            gotoLogout()
         }
         //exit button click of custom layout
-        mDialogView.dialogCancelBtn.setOnClickListener {
+        mDialogView.dialogExitBtn.setOnClickListener {
             finishAffinity()
         }
+
     }
 
 

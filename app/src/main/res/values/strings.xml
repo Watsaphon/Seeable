@@ -57,5 +57,17 @@
     <string name="or">OR</string>
     <string name="register_login_button">REGISTER</string>
 
+    <!--alertPairing-->
+    <string name="pairing_header">Pairing</string>
+    <string name="pairing_subHeader">You have to pair with your partner before use this application.</string>
+    <string name="pairing_text_box">Please Enter partner ID to pairing</string>
+    <string name="pairing_hint">insert your partner ID here...</string>
+    <string name="pairing_summitBtn">Summit</string>
+    <string name="pairing_logoutBtn">Log Out</string>
+    <string name="pairing_exitBtn">Exit</string>
+
+    <!--MainPerson-->
+    <string name="main_person_header">Main Person</string>
+    <string name="main_mapBtn">Open Google map</string>
 
 </resources>
