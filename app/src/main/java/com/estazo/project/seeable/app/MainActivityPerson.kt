@@ -13,9 +13,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
+import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClass
 import com.estazo.project.seeable.app.Login.LoginScreen
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -29,6 +32,7 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 import java.util.*
 
 
+var checkSuccessPartnerID : Boolean = false
 
 class MainActivityPerson : AppCompatActivity() {
 
@@ -48,7 +52,9 @@ class MainActivityPerson : AppCompatActivity() {
 
     private lateinit var partnerID : String
 
+    private lateinit var checkPartnerID : String
 
+    private lateinit var  mAlertDialog : AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +72,7 @@ class MainActivityPerson : AppCompatActivity() {
         sharedPrefPhoneHelper= getSharedPreferences("value", 0)
         sharedPrefPartnerID = getSharedPreferences("value", 0)
 
-        val
-                partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
+        val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
         Log.d("checkPairing_MainPerson","$partnerID")
         if(partnerID=="no-pairing"){
             alertDialog()
@@ -211,16 +216,27 @@ class MainActivityPerson : AppCompatActivity() {
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
         //show dialog
-        val  mAlertDialog = mBuilder.show()
+        mAlertDialog  = mBuilder.show()
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
         //login button click of custom layout
         mDialogView.dialogLoginBtn.setOnClickListener {
-            //dismiss dialog
-            mAlertDialog.dismiss()
-            //get text from EditTexts of custom layout
+            val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
+            query.addListenerForSingleValueEvent(valueEventListener)
             val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
-            Toast.makeText(applicationContext, " OK : $partnerIDBox", Toast.LENGTH_SHORT).show()
+            checkPartnerID = partnerIDBox
+//            Log.i("MainPerson_count","checkSuccessPartnerID status first : $checkSuccessPartnerID")
+//            if(checkSuccessPartnerID == true){
+//                mAlertDialog.dismiss()
+//                Toast.makeText(this, "Pairing Successfully", Toast.LENGTH_SHORT).show()
+//                Log.i("MainPerson_count","Call if ->  mAlertDialog.dismiss()")
+//            }
+//            else{
+//                mAlertDialog.show()
+//                Toast.makeText(this, "Partner ID incorrect", Toast.LENGTH_SHORT).show()
+//                Log.i("MainPerson_count","Call else ->   mAlertDialog.show()")
+//            }
+//            Log.i("MainPerson_count","checkSuccessPartnerID status last : $checkSuccessPartnerID")
         }
         //exit button click of custom layout
         mDialogView.dialogCancelBtn.setOnClickListener {
@@ -249,6 +265,62 @@ class MainActivityPerson : AppCompatActivity() {
                             }
                         }
                 }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
+    /** check users_blind to pairing */
+    private var valueEventListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            var count = 0
+            Log.i("MainPerson_count","Before adding listener, count=$count")
+            if (dataSnapshot.exists()) {
+                for (snapshot in dataSnapshot.children) {
+                    val id = snapshot.child("id").value.toString()
+                    Log.i("MainPerson_count","In onDataChange, count=$count")
+                    Log.i("MainPerson_count", " ID in checkbox : $id")
+                    Log.i("MainPerson_count", "Database info :  $id")
+                    if (checkPartnerID == id){
+                        val currentID = sharedPrefID.getString("stringKey2","not found!")
+                        Log.i("test_sharedPrefID ","$currentID")
+                        val query = FirebaseDatabase.getInstance().getReference("users_person").child("$currentID").orderByChild("id")
+                        query.addListenerForSingleValueEvent(valueEventListenerInsertPartnerID)
+                        break
+                    }
+                    ++count
+                }
+                Log.i("MainPerson_count","After adding listener, count=$count")
+                val countDatabase = dataSnapshot.childrenCount.toInt()
+                Log.i("MainPerson_count","After adding listener -> count=$count ,countDatabase=$countDatabase")
+                if(count==countDatabase){
+                    mAlertDialog.show()
+                    Toast.makeText(this@MainActivityPerson, "Partner ID incorrect", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
+    /** insert partner id to users_person */
+    private var valueEventListenerInsertPartnerID: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                    val id = dataSnapshot.child("id").value.toString()
+                    val username = dataSnapshot.child("username").value.toString()
+                    val password = dataSnapshot.child("password").value.toString()
+                    val fullname = dataSnapshot.child("fullName").value.toString()
+                    val phone = dataSnapshot.child("phone").value.toString()
+                    Log.i("MainPerson_count", " ID in checkbox : $id")
+                    Log.i("MainPerson_count", "Database info :  $id ,$username,$password,$fullname,$phone")
+                        val ref = FirebaseDatabase.getInstance().reference
+                        val post = UserPersonHelperClass("$id" ,"$username","$password","$fullname","$phone","$checkPartnerID")
+                        val postValues = post.toMap()
+                        val childUpdates = hashMapOf<String, Any>("users_person/$id" to postValues)
+                        ref.updateChildren(childUpdates)
+                        mAlertDialog.dismiss()
+                Toast.makeText(this@MainActivityPerson, "Pairing Successfully", Toast.LENGTH_SHORT).show()
+            }
         }
         override fun onCancelled(databaseError: DatabaseError) {}
     }
