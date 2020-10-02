@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:fontFamily="@font/adamina"
+        android:gravity="center"
+        android:text="@string/main_blind_header"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/blinderID"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fontFamily="@font/adamina"
+        android:gravity="center|left"
+        android:text="@string/main_blind_id"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/blinderUsername"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fontFamily="@font/adamina"
+        android:gravity="center|left"
+        android:text="@string/main_blind_username"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/blinderFullName"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fontFamily="@font/adamina"
+        android:gravity="center|left"
+        android:text="@string/main_blind_fullName"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/blinderPhone"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fontFamily="@font/adamina"
+        android:gravity="center|left"
+        android:text="@string/main_blind_phone"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/blinderNameHelper"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fontFamily="@font/adamina"
+        android:gravity="center|left"
+        android:text="@string/main_blind_name_helper"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/blinderPhoneHelper"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:fontFamily="@font/adamina"
+        android:gravity="center|left"
+        android:text="@string/main_blind_phone_helper"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/dialogCloseBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/adamina"
+        android:text="@string/main_blindBtn" />
+</LinearLayout>

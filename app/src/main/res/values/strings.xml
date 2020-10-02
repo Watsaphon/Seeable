@@ -26,7 +26,9 @@
     <string name="action_about">About</string>
     <string name="action_change_language">Change Language</string>
     <string name="action_other">Other</string>
+    <string name="action_profile">View Profile</string>
     <string name="action_logout">Log out</string>
+
 
     <!--RegisterPerson-->
     <string name="username_box_person">Please insert person Username.</string>
@@ -69,5 +71,20 @@
     <!--MainPerson-->
     <string name="main_person_header">Main Person</string>
     <string name="main_mapBtn">Open Google map</string>
+    <string name="main_toast_success">Pairing Successfully</string>
+    <string name="main_toast_failed">Partner ID incorrect</string>
+
+
+    <!--MainBlinder-->
+    <string name="main_blindBtn">Close</string>
+    <string name="main_blind_header">Profile</string>
+    <string name="main_blind_id">ID :</string>
+    <string name="main_blind_username">Username :</string>
+    <string name="main_blind_fullName">Full Name :</string>
+    <string name="main_blind_phone">Phone :</string>
+    <string name="main_blind_name_helper">Name Helper :</string>
+    <string name="main_blind_phone_helper">Phone Helper :</string>
+
+
 
 </resources>

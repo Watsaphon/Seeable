@@ -25,6 +25,7 @@
     <string name="action_about">เกี่ยวกับ</string>
     <string name="action_change_language">เปลี่ยนภาษา</string>
     <string name="action_other">อื่นๆ</string>
+    <string name="action_profile">ดูประวัติส่วนตัว</string>
     <string name="action_logout">ออกจากระบบ</string>
 
     <!--Register Person-->
@@ -68,5 +69,20 @@
     <!--MainPerson-->
     <string name="main_person_header">คนดูแล</string>
     <string name="main_mapBtn">เปิดดูแผนที่</string>
+    <string name="main_toast_success">จับคู่สำเร็จ</string>
+    <string name="main_toast_failed">ID ของคนตาบอดไม่ถูกต้อง</string>
+
+    <!--MainBlinder-->
+    <string name="main_blindBtn">ปิด</string>
+    <string name="main_blind_header">ข้อมูลส่วนตัว</string>
+    <string name="main_blind_id">ไอดี :</string>
+    <string name="main_blind_username">ผู้ใช้งาน :</string>
+    <string name="main_blind_fullName">ชื่อ-นามสกุล :</string>
+    <string name="main_blind_phone">เบอร์โทรศัพท์ :</string>
+    <string name="main_blind_name_helper">ชื่อผู้ดูแล :</string>
+    <string name="main_blind_phone_helper">เบอร์โทรศัพท์ผู้ดูแล :</string>
+
+
+
 
 </resources>

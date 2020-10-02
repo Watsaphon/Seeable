@@ -3,6 +3,7 @@ package com.estazo.project.seeable.app
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,11 +14,9 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.*
 import android.util.Log
-import android.view.Gravity
-import android.view.MotionEvent
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -30,6 +29,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.location.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.alert_dialog_profile.*
+import kotlinx.android.synthetic.main.alert_dialog_profile.view.*
 import java.util.*
 
 
@@ -49,6 +50,8 @@ class MainActivity : AppCompatActivity(){
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPhoneHelper: SharedPreferences
     private lateinit var sharedPrefUsername: SharedPreferences
+
+    private lateinit var  mAlertDialog : AlertDialog
 
 
     //Declaring the needed Variables
@@ -116,12 +119,14 @@ class MainActivity : AppCompatActivity(){
             /** PopupMenu dropdown */
             val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.menu.findItem(R.id.action_profile).isVisible = true
             popupMenu.menu.findItem(R.id.action_logout).isVisible = true
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_about -> gotoAbout()
                     R.id.action_change_language -> changeLanguage()
                     R.id.action_settings -> gotoSetting()
+                    R.id.action_profile -> alertDialogProfile()
                     R.id.action_logout -> gotoLogout()
                 }
                 hideSystemUI()
@@ -329,6 +334,10 @@ class MainActivity : AppCompatActivity(){
         startActivity(intent)
     }
 
+    private fun gotoViewProfile(){
+        alertDialogProfile()
+    }
+
     private fun gotoLogout(){
          val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
@@ -414,7 +423,47 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
+    /** AlertDialog to view profile users_blind  */
+    private fun alertDialogProfile() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_profile, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        mAlertDialog  = mBuilder.show()
+//        mAlertDialog.setCanceledOnTouchOutside(false)
+//        mAlertDialog.setCancelable(false)
+Log.i("test","mAlertDialog.show() call")
 
+        var idText : TextView =  mDialogView.findViewById(R.id.blinderID)
+        var usernameText : TextView =  mDialogView.findViewById(R.id.blinderUsername)
+        var fullNameText : TextView =  mDialogView.findViewById(R.id.blinderFullName)
+        var phoneText : TextView =  mDialogView.findViewById(R.id.blinderPhone)
+        var nameHelperText : TextView =  mDialogView.findViewById(R.id.blinderNameHelper)
+        var phoneHelperText : TextView =  mDialogView.findViewById(R.id.blinderPhoneHelper)
+
+        val id = sharedPrefID.getString("stringKey2", "not found!")
+        val username =  sharedPrefUsername.getString("stringKeyUsername", "not found!")
+        val fullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
+        val nameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
+        val phoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
+
+        idText.text = getString(R.string.main_blind_id)+" $id "
+        usernameText.text = getString(R.string.main_blind_username)+"$username "
+        phoneText.text = getString(R.string.main_blind_fullName)+"$fullName "
+        fullNameText.text = getString(R.string.main_blind_phone)+"$phone "
+        nameHelperText.text =getString(R.string.main_blind_name_helper)+ "$nameHelper "
+        phoneHelperText.text = getString(R.string.main_blind_phone_helper)+"$phoneHelper "
+
+        //login button click of custom layout
+        mDialogView.dialogCloseBtn.setOnClickListener {
+            mAlertDialog.dismiss()
+        }
+
+
+    }
 
 
 }

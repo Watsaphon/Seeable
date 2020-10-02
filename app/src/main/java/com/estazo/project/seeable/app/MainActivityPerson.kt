@@ -73,7 +73,7 @@ class MainActivityPerson : AppCompatActivity() {
         val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
         Log.d("checkPairing_MainPerson","$partnerID")
         if(partnerID=="no-pairing"){
-            alertDialog()
+            alertDialogPairing()
         }
 
         fab = findViewById(R.id.floating_action_button)
@@ -207,7 +207,7 @@ class MainActivityPerson : AppCompatActivity() {
 
 
     /** AlertDialog to pairing user with partner ID  */
-    private fun alertDialog() {
+    private fun alertDialogPairing() {
         //Inflate the dialog with custom view
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_pairing, null)
         //AlertDialogBuilder
@@ -285,7 +285,7 @@ class MainActivityPerson : AppCompatActivity() {
                 Log.i("MainPerson_count","After adding listener -> count=$count ,countDatabase=$countDatabase")
                 if(count==countDatabase){
                     mAlertDialog.show()
-                    Toast.makeText(this@MainActivityPerson, "Partner ID incorrect", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivityPerson, getString(R.string.main_toast_failed), Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -310,7 +310,7 @@ class MainActivityPerson : AppCompatActivity() {
                         val childUpdates = hashMapOf<String, Any>("users_person/$id" to postValues)
                         ref.updateChildren(childUpdates)
                         mAlertDialog.dismiss()
-                Toast.makeText(this@MainActivityPerson, "Pairing Successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivityPerson, getString(R.string.main_toast_success), Toast.LENGTH_SHORT).show()
             }
         }
         override fun onCancelled(databaseError: DatabaseError) {}
