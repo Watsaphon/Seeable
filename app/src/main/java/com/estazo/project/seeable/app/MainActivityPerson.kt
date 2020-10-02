@@ -239,6 +239,7 @@ class MainActivityPerson : AppCompatActivity() {
     /** Direction in Google Map  */
     private var valueEventListenerDirectMap: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
                 if (dataSnapshot.exists()) {
                         val id = dataSnapshot.child("id").value.toString()
                         val latitude = dataSnapshot.child("latitude").value.toString()
@@ -246,7 +247,7 @@ class MainActivityPerson : AppCompatActivity() {
                         Log.d("Direction","partnerID  = $partnerID , id =$id")
                         if (partnerID == id) {
                             Log.i("position_latitude", "$latitude")
-                            Log.i("test position_longitude", "$longtitude")
+                            Log.i("position_longitude", "$longtitude")
                             // Navigation : current place direct to gmmIntentUri
                             val gmmIntentUri = Uri.parse("google.navigation:q=$latitude,$longtitude&mode=w&avoid=thf")
                             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
