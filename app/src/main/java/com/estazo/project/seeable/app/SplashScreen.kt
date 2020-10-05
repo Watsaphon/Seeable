@@ -7,10 +7,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.Login.LoginScreen
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -20,10 +20,14 @@ import java.util.*
 
 var checkSuccess : Boolean = false
 
+//private var handler: Handler? = null
+//private var runnable: Runnable? = null
+
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hideSystemUI()
+        Log.i("test", "onCreate() call")
 
         /**Shared Preferences เป็นคลาสที่ใช้สำหรับเก็บข้อมูลถาวรที่เป็นค่าของตัวแปรธรรมดาๆ อย่างเช่น Boolean,Int,Float*/
         val sharedPrefLanguage = getSharedPreferences("value", 0)
@@ -70,10 +74,33 @@ class SplashScreen : AppCompatActivity() {
         }
         else if(login != null){
             Log.i("CheckUserID_splash", "Current User ID : $login")
+            Log.i("test", "else if checkLogin  call")
             checkLogin()
         }
 
+//        handler = Handler()
+//        runnable = Runnable {
+//            Log.i("test", "runnable call")
+//                checkLogin()
+//            }
+
+//        val user = FirebaseAuth.getInstance().currentUser
+//        if (user != null) {
+//            // User is signed in
+//            Log.i("test", " if user = $user")
+//        } else {
+//            // No user is signed in
+//            Log.i("test", " else-if user = $user")
+//        }
+
+
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        runnable?.let { handler?.postDelayed(it, 0) }
+//        Log.i("test", "onResume() call")
+//    }
 
     private fun checkLogin() {
         val query = FirebaseDatabase.getInstance().getReference("users_person").orderByChild("id")

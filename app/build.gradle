@@ -60,4 +60,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.android.support:multidex:1.0.3'
+
+    //Workmanager
+    implementation "android.arch.work:work-runtime-ktx:2.0.1"
+    androidTestImplementation "android.arch.work:work-testing:2.0.1"
 }
