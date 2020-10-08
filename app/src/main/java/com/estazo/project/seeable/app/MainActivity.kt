@@ -9,7 +9,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.*
@@ -28,8 +27,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.location.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.alert_dialog_profile.*
 import kotlinx.android.synthetic.main.alert_dialog_profile.view.*
 import java.util.*
 
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity(){
 
     private lateinit var  mAlertDialog : AlertDialog
 
+    private lateinit var sharedPrefGoogle : SharedPreferences
 
     //Declaring the needed Variables
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -64,7 +65,7 @@ class MainActivity : AppCompatActivity(){
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         CheckPermission()
-
+        sharedPrefGoogle  = getSharedPreferences("value", 0)
         sharedPrefLanguage = getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
         sharedPrefUsername= getSharedPreferences("value", 0)
@@ -73,6 +74,7 @@ class MainActivity : AppCompatActivity(){
         sharedPrefNameHelper= getSharedPreferences("value", 0)
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPhoneHelper= getSharedPreferences("value", 0)
+
 
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
@@ -185,7 +187,7 @@ class MainActivity : AppCompatActivity(){
                         NewLocationData()
                     }else{
                         Log.d("Debug:" ,"getLastLocation() -> Your Location : Long: "+ location.longitude + " , Lat: " + location.latitude )
-                        val text = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n" + getCityName(location.latitude,location.longitude)
+                        val text = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n"
                         Toast.makeText(this,"$text",Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -216,7 +218,8 @@ class MainActivity : AppCompatActivity(){
         override fun onLocationResult(locationResult: LocationResult) {
             var lastLocation: Location = locationResult.lastLocation
             Log.d("Debug:","onLocationResult -> your last last location: "+ lastLocation.longitude.toString())
-            val text = "You Last Location is : Long: "+ lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n" + getCityName(lastLocation.latitude,lastLocation.longitude)
+            val text = "You Last Location is : Long: "+ lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n"
+
             Toast.makeText(this@MainActivity,"$text",Toast.LENGTH_SHORT).show()
         }
     }
@@ -249,19 +252,6 @@ class MainActivity : AppCompatActivity(){
             }
         }
     }
-    private fun getCityName(lat: Double,long: Double):String{
-        var cityName:String = ""
-        var countryName = ""
-        var geoCoder = Geocoder(this, Locale.getDefault())
-        var Adress = geoCoder.getFromLocation(lat,long,3)
-        cityName = Adress[0].locality
-        countryName = Adress[0].countryName
-        Log.d("Debug:", " getCityName -> Your City: $cityName ; your Country $countryName")
-        return cityName
-    }
-
-
-
 
     override fun onStart() {
         super.onStart()
@@ -334,18 +324,21 @@ class MainActivity : AppCompatActivity(){
         startActivity(intent)
     }
 
-    private fun gotoViewProfile(){
-        alertDialogProfile()
-    }
+//    private fun gotoViewProfile(){
+//        alertDialogProfile()
+//    }
 
     private fun gotoLogout(){
-         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         val acct = GoogleSignIn.getLastSignedInAccount(this)
+        Log.i("testusergoogle1","$acct")
         if(acct != null){
             mGoogleSignInClient.signOut()
             Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
+            Log.i("testusergoogle2","$acct")
         }
+
         var editorID = sharedPrefID.edit()
         var editorUsername = sharedPrefUsername.edit()
         var editorPassword = sharedPrefPassword.edit()
@@ -353,6 +346,7 @@ class MainActivity : AppCompatActivity(){
         var editorNameHelper = sharedPrefNameHelper.edit()
         var editorPhone = sharedPrefPhone.edit()
         var editorPhoneHelper = sharedPrefPhoneHelper.edit()
+        var editorGoogleUser = sharedPrefGoogle.edit()
 
         editorID.putString("stringKey2", "not found!")
         editorUsername.putString("stringKeyUsername", "not found!")
@@ -361,6 +355,7 @@ class MainActivity : AppCompatActivity(){
         editorNameHelper.putString("stringKeyNameHelper", "not found!")
         editorPhone.putString("stringKeyPhone", "not found!")
         editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
+        editorGoogleUser.putString("stringKeyGoogle", "not found!")
 
         editorID.apply()
         editorUsername.apply()
@@ -369,11 +364,11 @@ class MainActivity : AppCompatActivity(){
         editorNameHelper.apply()
         editorPhone.apply()
         editorPhoneHelper.apply()
+        editorGoogleUser.apply()
 
-        val intent = Intent(this,
-            LoginScreen::class.java)
+        val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
-    }
+     }
 
     /** hide navigation and status bar in each activity */
     private fun hideSystemUI() {
@@ -432,9 +427,7 @@ class MainActivity : AppCompatActivity(){
             .setView(mDialogView)
         //show dialog
         mAlertDialog  = mBuilder.show()
-//        mAlertDialog.setCanceledOnTouchOutside(false)
-//        mAlertDialog.setCancelable(false)
-Log.i("test","mAlertDialog.show() call")
+        Log.i("test","mAlertDialog.show() call")
 
         var idText : TextView =  mDialogView.findViewById(R.id.blinderID)
         var usernameText : TextView =  mDialogView.findViewById(R.id.blinderUsername)
@@ -461,11 +454,7 @@ Log.i("test","mAlertDialog.show() call")
         mDialogView.dialogCloseBtn.setOnClickListener {
             mAlertDialog.dismiss()
         }
-
-
     }
-
-
 }
 
 

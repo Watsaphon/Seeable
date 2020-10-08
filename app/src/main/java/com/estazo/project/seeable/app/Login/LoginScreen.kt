@@ -24,6 +24,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -53,8 +54,9 @@ class LoginScreen : AppCompatActivity() {
     private lateinit var sharedPrefPhoneHelper: SharedPreferences
     private lateinit var sharedPrefUsername: SharedPreferences
 
+    private lateinit var sharedPrefUserType: SharedPreferences
 
-
+    private lateinit var sharedPrefGoogle : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +81,8 @@ class LoginScreen : AppCompatActivity() {
         sharedPrefNameHelper= getSharedPreferences("value", 0)
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPhoneHelper= getSharedPreferences("value", 0)
+        sharedPrefUserType = getSharedPreferences("value", 0)
+        sharedPrefGoogle  = getSharedPreferences("value", 0)
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
         val stringValue2 = sharedPrefID.getString("stringKey2", "not found!")
@@ -187,7 +191,18 @@ class LoginScreen : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.i("LoginScreen_fbAuth", "signInWithCredential:success")
-                    val user = auth.currentUser
+//                    val user = auth.currentUser
+
+                    val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+                    Log.i("testFirebaseUser1","$user")
+                    var editorGoogleUser = sharedPrefGoogle.edit()
+                    if (user != null) {
+                        val test = user.uid
+                        editorGoogleUser.putString("stringKeyGoogle",test)
+                        Log.i("testFirebaseUser2","$test")
+                    }
+                    editorGoogleUser.apply()
+
                     startActivity(Intent(this, MainActivity::class.java))
 //                    updateUI(user)
                 } else {
@@ -277,6 +292,11 @@ class LoginScreen : AppCompatActivity() {
                         var editorID = sharedPrefID.edit()
                         editorID.putString("stringKey2", id)
                         editorID.apply()
+
+                        var editorUserType = sharedPrefUserType.edit()
+                        editorUserType.putString("stringKeyType", "person")
+                        editorUserType.apply()
+
                         /** Check user pair with blinder */
                         val query = FirebaseDatabase.getInstance().getReference("users_person").child("$id").orderByChild("partner_id")
                         query.addListenerForSingleValueEvent(valueEventListenerCheckUser)
@@ -332,6 +352,7 @@ class LoginScreen : AppCompatActivity() {
                         var editorNameHelper = sharedPrefNameHelper.edit()
                         var editorPhone = sharedPrefPhone.edit()
                         var editorPhoneHelper = sharedPrefPhoneHelper.edit()
+                        var editorUserType = sharedPrefUserType.edit()
 
                         editorID.putString("stringKey2", id)
                         editorUsername.putString("stringKeyUsername", username)
@@ -340,6 +361,8 @@ class LoginScreen : AppCompatActivity() {
                         editorNameHelper.putString("stringKeyNameHelper", nameHelper)
                         editorPhone.putString("stringKeyPhone", phone)
                         editorPhoneHelper.putString("stringKeyPhoneHelper", phoneHelper)
+                        editorUserType.putString("stringKeyType", "blind")
+
                         editorID.apply()
                         editorUsername.apply()
                         editorPassword.apply()
@@ -347,6 +370,7 @@ class LoginScreen : AppCompatActivity() {
                         editorNameHelper.apply()
                         editorPhone.apply()
                         editorPhoneHelper.apply()
+                        editorUserType.apply()
 
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)
