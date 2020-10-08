@@ -1,59 +1,54 @@
 package com.estazo.project.seeable.app.Register
 
 import android.content.Intent
+import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClass
 import com.estazo.project.seeable.app.Login.LoginScreen
+import com.estazo.project.seeable.app.MainActivityPerson
 import com.estazo.project.seeable.app.R
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 
-class RegisterPerson : AppCompatActivity() {
+class GoogleRegisterPerson : AppCompatActivity() {
 
-    private lateinit var userName : TextInputEditText
-    private lateinit var password : TextInputEditText
     private lateinit var fullName : TextInputEditText
     private lateinit var phoneBox : TextInputEditText
-
     private lateinit var finishButton: Button
+
+    private lateinit var sharedPrefGoogle : SharedPreferences
+    private lateinit var sharedPrefUserType: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register_person)
-        Log.i("RegisterPerson", "onCreate called")
+        setContentView(R.layout.activity_google_register_person)
+        Log.i("GoogleRegisterPerson", "onCreate called")
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
-        userName = findViewById(R.id.username_box)
-        password = findViewById(R.id.password_box)
+        sharedPrefGoogle  = getSharedPreferences("value", 0)
+        sharedPrefUserType = getSharedPreferences("value", 0)
+
         fullName = findViewById(R.id.fullname_box)
         phoneBox = findViewById(R.id.phone_box)
         finishButton = findViewById(R.id.regis_finish_button)
 
         finishButton.setOnClickListener {
-            val inputUsername: String = userName.text.toString()
-            val inputPassword: String = password.text.toString()
+
             val inputfullName: String = fullName.text.toString()
             val inputPhone: String = phoneBox.text.toString()
 
-
-            if(inputUsername.isEmpty()&&inputPassword.isEmpty()&&inputfullName.isEmpty()&&inputPhone.isEmpty()){
-                userName.error =  getString(R.string.username_box_person)
-                password.error = getString(R.string.password_box_person)
+            if(inputfullName.isEmpty()&&inputPhone.isEmpty()){
                 fullName.error = getString(R.string.fullname_box_person)
                 phoneBox.error = getString(R.string.phone_box_person)
-            }
-            else if(inputUsername.isEmpty()){
-                userName.error = getString(R.string.username_box_person)
-            }
-            else if(inputPassword.isEmpty()){
-                password.error = getString(R.string.password_box_person)
             }
             else if(inputfullName.isEmpty()){
                 fullName.error =  getString(R.string.fullname_box_person)
@@ -63,9 +58,20 @@ class RegisterPerson : AppCompatActivity() {
             }
             else{
                 val ref = FirebaseDatabase.getInstance().getReference("users_person")
+                val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+                var UID  = ""
+                if (user != null) {
+                    UID = user.uid
+                }
                 val ID = ref.push().key
-                val test = UserPersonHelperClass(ID.toString(), inputUsername, inputPassword, inputfullName, inputPhone, "no-pairing")
-                ref.child(ID.toString()).setValue(test).addOnCompleteListener {
+                val test = UserPersonHelperClass(
+                    UID,
+                    "-",
+                    "-",
+                    inputfullName,
+                    inputPhone,
+                    "no-pairing")
+                ref.child(UID).setValue(test).addOnCompleteListener {
                     Toast.makeText(this,getString(R.string.success_regis), Toast.LENGTH_SHORT).show()
                 }
                 saveRegister()
@@ -73,7 +79,6 @@ class RegisterPerson : AppCompatActivity() {
         }
 
     }
-
     override fun onResume() {
         super.onResume()
         updateUI()
@@ -100,7 +105,19 @@ class RegisterPerson : AppCompatActivity() {
     }
 
     private fun saveRegister(){
-        val i = Intent(this, LoginScreen::class.java)
+        val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        var UID  = ""
+        if (user != null) {
+            UID = user.uid
+        }
+        var editorGoogleUser = sharedPrefGoogle.edit()
+        editorGoogleUser.putString("stringKeyGoogle","$UID")
+        editorGoogleUser.apply()
+        var editorUserType = sharedPrefUserType.edit()
+        editorUserType.putString("stringKeyType", "person")
+        editorUserType.apply()
+
+        val i = Intent(this, MainActivityPerson::class.java)
         startActivity(i)
         finish()
     }
@@ -121,4 +138,3 @@ class RegisterPerson : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
 }
-

@@ -55,7 +55,6 @@ class LoginScreen : AppCompatActivity() {
     private lateinit var sharedPrefUsername: SharedPreferences
 
     private lateinit var sharedPrefUserType: SharedPreferences
-
     private lateinit var sharedPrefGoogle : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -191,25 +190,37 @@ class LoginScreen : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.i("LoginScreen_fbAuth", "signInWithCredential:success")
-//                    val user = auth.currentUser
 
+//                    val user = auth.currentUser
                     val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
                     Log.i("testFirebaseUser1","$user")
                     var editorGoogleUser = sharedPrefGoogle.edit()
-                    if (user != null) {
-                        val test = user.uid
-                        editorGoogleUser.putString("stringKeyGoogle",test)
-                        Log.i("testFirebaseUser2","$test")
-                    }
-                    editorGoogleUser.apply()
 
-                    startActivity(Intent(this, MainActivity::class.java))
-//                    updateUI(user)
+                    val userGoogle = sharedPrefGoogle.getString("stringKeyGoogle","not found!")
+                    val userType = sharedPrefUserType.getString("stringKeyType","not found!")
+                    Log.i("checkloginlast","user : $user , userGoogle : $userGoogle , userType : $userType")
+                    if (user != null && userGoogle == "not found!" && userType == "not found!") {
+                        val test = user.uid
+                        editorGoogleUser.putString("stringKeyGoogle","not register!!")
+                        Log.i("testFirebaseUser2","$test")
+                        editorGoogleUser.apply()
+                        startActivity(Intent(this, SelectRegister::class.java))
+                    }
+//                    else if(user != null && userGoogle == "not found!" && userType == "not register!!"){
+//                        startActivity(Intent(this, SelectRegister::class.java))
+//                    }
+//                    else if(user != null && userGoogle != "not found!" && userType == "person"){
+//                        startActivity(Intent(this, MainActivityPerson::class.java))
+//                    }
+//                    else if(user != null && userGoogle != "not found!" && userType == "blind"){
+//                        startActivity(Intent(this, MainActivity::class.java))
+//                    }
+
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("LoginScreen_fbAuth", "signInWithCredential:failure", task.exception)
                     Toast.makeText(applicationContext, "Authentication Failed.", Toast.LENGTH_SHORT).show()
-//                    updateUI(null)
+
                 }
             }
     }

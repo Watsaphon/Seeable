@@ -24,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -54,6 +55,7 @@ class MainActivityPerson : AppCompatActivity() {
 
     private lateinit var  mAlertDialog : AlertDialog
 
+    private lateinit var sharedPrefUserType : SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_person)
@@ -69,6 +71,8 @@ class MainActivityPerson : AppCompatActivity() {
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPhoneHelper= getSharedPreferences("value", 0)
         sharedPrefPartnerID = getSharedPreferences("value", 0)
+        sharedPrefUserType = getSharedPreferences("value", 0)
+
 
         val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
         Log.d("checkPairing_MainPerson","$partnerID")
@@ -152,6 +156,8 @@ class MainActivityPerson : AppCompatActivity() {
             mGoogleSignInClient.signOut()
             Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
         }
+        FirebaseAuth.getInstance().signOut()
+
         var editorID = sharedPrefID.edit()
         var editorPartnerID = sharedPrefPartnerID.edit()
         var editorUsername = sharedPrefUsername.edit()
@@ -160,15 +166,17 @@ class MainActivityPerson : AppCompatActivity() {
         var editorNameHelper = sharedPrefNameHelper.edit()
         var editorPhone = sharedPrefPhone.edit()
         var editorPhoneHelper = sharedPrefPhoneHelper.edit()
+        var editorUserType = sharedPrefUserType.edit()
 
         editorID.putString("stringKey2", "not found!")
-        editorPartnerID.putString("stringKey2", "not found!")
+        editorPartnerID.putString("stringKeyPartnerID", "not found!")
         editorUsername.putString("stringKeyUsername", "not found!")
         editorPassword.putString("stringKeyPassword", "not found!")
         editorFullName.putString("stringKeyFullName", "not found!")
         editorNameHelper.putString("stringKeyNameHelper", "not found!")
         editorPhone.putString("stringKeyPhone", "not found!")
         editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
+        editorUserType.putString("stringKeyType", "not found!")
 
         editorID.apply()
         editorPartnerID.apply()
@@ -178,6 +186,7 @@ class MainActivityPerson : AppCompatActivity() {
         editorNameHelper.apply()
         editorPhone.apply()
         editorPhoneHelper.apply()
+        editorUserType.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)

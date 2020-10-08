@@ -11,12 +11,19 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.AboutScreen
+import com.estazo.project.seeable.app.Login.LoginScreen
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.SettingScreen
 import com.estazo.project.seeable.app.SplashScreen
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import java.util.*
 
 
@@ -24,8 +31,13 @@ class SelectRegister : AppCompatActivity() {
 
     private lateinit var blindButton: Button
     private lateinit var personButton: Button
+    private lateinit var blindGoogleButton: Button
+    private lateinit var personGoogleButton: Button
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPrefLanguage: SharedPreferences
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var sharedPrefID: SharedPreferences
+    private lateinit var sharedPrefGoogle : SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,11 +46,37 @@ class SelectRegister : AppCompatActivity() {
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
+        sharedPrefLanguage = getSharedPreferences("value", 0)
+        sharedPrefID = getSharedPreferences("value", 0)
+        sharedPrefGoogle  = getSharedPreferences("value", 0)
+
+        val userNormal = sharedPrefID.getString("stringKey2", "not found!")
+        val userGoogle = sharedPrefGoogle.getString("stringKeyGoogle","not found!")
+
+        val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+        Log.i("deejaa","$user")
+        if (user != null) {
+            val test = user.uid
+            Log.i("deejaa","$test")
+        }
+
+        Log.i("deejaa","userNormal = $userNormal ,userGoogle = $userGoogle")
+
         blindButton = findViewById(R.id.blinder_btn)
         personButton = findViewById(R.id.person_btn)
-        fab = findViewById(R.id.floating_action_button)
+        blindGoogleButton = findViewById(R.id.blinderGoogle_btn)
+        personGoogleButton = findViewById(R.id.personGoogle_btn)
 
-        sharedPrefLanguage = getSharedPreferences("value", 0)
+        if(userGoogle == "not register!!" && userNormal == "not found!" ){
+            blindGoogleButton.visibility = View.VISIBLE
+            personGoogleButton.visibility = View.VISIBLE
+        }
+        else if(userGoogle == "not found!" && userNormal == "not found!"){
+            blindButton.visibility = View.VISIBLE
+            personButton.visibility = View.VISIBLE
+        }
+
+        fab = findViewById(R.id.floating_action_button)
 
         blindButton.setOnClickListener {
             val i = Intent(this@SelectRegister, RegisterBlind::class.java)
@@ -48,21 +86,44 @@ class SelectRegister : AppCompatActivity() {
             val i = Intent(this@SelectRegister, RegisterPerson::class.java)
             startActivity(i)
         }
+        blindGoogleButton.setOnClickListener {
+            val i = Intent(this@SelectRegister, GoogleRegisterBlind::class.java)
+            startActivity(i)
+        }
+        personGoogleButton.setOnClickListener {
+            val i = Intent(this@SelectRegister, GoogleRegisterPerson::class.java)
+            startActivity(i)
+        }
+
         fab.setOnClickListener {
             /** PopupMenu dropdown */
             val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            if(userGoogle == "not register!!" && userNormal == "not found!" ){
+                popupMenu.menu.findItem(R.id.action_logout).isVisible = true
+            }
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_about ->gotoAbout()
                     R.id.action_change_language -> changeLanguage()
                     R.id.action_settings -> gotoSetting()
+                    R.id.action_logout -> gotoLogout()
                 }
                 hideSystemUI()
                 true
             }
             popupMenu.show()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val userNormal = sharedPrefID.getString("stringKey2", "not found!")
+        val userGoogle = sharedPrefGoogle.getString("stringKeyGoogle","not found!")
+        if(userGoogle == "not register!!" && userNormal == "not found!" ){
+            finishAffinity()
+        }
+        Log.i("SelectRegister", "onBackPressed called")
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -95,7 +156,6 @@ class SelectRegister : AppCompatActivity() {
         baseContext.resources.updateConfiguration(config, null)
         val intent = Intent(this, SplashScreen::class.java)
         startActivity(intent)
-//        recreate()
     }
 
     private fun gotoSetting(){
@@ -105,6 +165,25 @@ class SelectRegister : AppCompatActivity() {
 
     private fun gotoAbout(){
         val intent = Intent(this, AboutScreen::class.java)
+        startActivity(intent)
+    }
+
+    private fun gotoLogout(){
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        val acct = GoogleSignIn.getLastSignedInAccount(this)
+        if(acct != null){
+            mGoogleSignInClient.signOut()
+            Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
+        }
+
+        FirebaseAuth.getInstance().signOut()
+
+        var editorGoogleUser = sharedPrefGoogle.edit()
+        editorGoogleUser.putString("stringKeyGoogle", "not found!")
+        editorGoogleUser.apply()
+
+        val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
     }
 

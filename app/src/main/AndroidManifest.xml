@@ -15,8 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GoogleMapScreen"
-            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".Register.GoogleRegisterPerson"></activity>
+        <activity android:name=".Register.GoogleRegisterBlind" />
+        <activity
+            android:name=".GoogleMapScreen"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".MainActivityPerson"
             android:configChanges="orientation|screenSize" />

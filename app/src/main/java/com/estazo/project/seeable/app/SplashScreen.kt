@@ -10,6 +10,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.Login.LoginScreen
+import com.estazo.project.seeable.app.Register.SelectRegister
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -79,7 +80,7 @@ class SplashScreen : AppCompatActivity() {
         Log.i("CheckLanguage_splash", "Now Language is :$language")
         Log.i("CheckUserTypes_plash", "Now User Type is :$userType")
 
-
+        Log.i("checkStatus","userGoogle : $userGoogle ,userType : $userType ,login : $login ")
         if(login != "not found!"){
             if(userType== "person"){
                 Handler().postDelayed({
@@ -93,14 +94,30 @@ class SplashScreen : AppCompatActivity() {
                     finishAffinity()
                 }, 1000)
             }
-
         }
         else if(userGoogle != "not found!"){
-            Log.i("testusergoogle","$userGoogle")
-            Handler().postDelayed({
-                startActivity(Intent(this@SplashScreen, MainActivity::class.java))
-                finishAffinity()
-            }, 1000)
+            if(userGoogle != "not found!" && userGoogle == "not register!!"){
+                Log.i("testusergoogle","userGoogle : $userGoogle ,userType : $userType ")
+                Handler().postDelayed({
+                    startActivity(Intent(this@SplashScreen, SelectRegister::class.java))
+                    finishAffinity()
+                }, 1000)
+            }
+            else{
+                Log.i("testusergoogle","userGoogle : $userGoogle ,userType : $userType ")
+                if(userType== "person"){
+                    Handler().postDelayed({
+                        startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
+                        finishAffinity()
+                    }, 1000)
+                }
+                else if (userType== "blind"){
+                    Handler().postDelayed({
+                        startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+                        finishAffinity()
+                    }, 1000)
+                }
+            }
         }
         else{
             Handler().postDelayed({
@@ -109,13 +126,9 @@ class SplashScreen : AppCompatActivity() {
             }, 1000)
         }
 
+
+
     }
-
-//    private fun checkLogin() {
-//        val query = FirebaseDatabase.getInstance().getReference("users_person").orderByChild("id")
-//        query.addListenerForSingleValueEvent(valueEventListener)
-//    }
-
 
     private fun hideSystemUI() {
         /**
@@ -133,6 +146,11 @@ class SplashScreen : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
+
+    //    private fun checkLogin() {
+//        val query = FirebaseDatabase.getInstance().getReference("users_person").orderByChild("id")
+//        query.addListenerForSingleValueEvent(valueEventListener)
+//    }
 
 //    /**receive value from realtime database (user_person) and check Login */
 //    private var valueEventListener: ValueEventListener = object : ValueEventListener {

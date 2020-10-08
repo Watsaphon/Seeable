@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity(){
     private lateinit var  mAlertDialog : AlertDialog
 
     private lateinit var sharedPrefGoogle : SharedPreferences
+    private lateinit var sharedPrefUserType : SharedPreferences
+
 
     //Declaring the needed Variables
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity(){
         sharedPrefNameHelper= getSharedPreferences("value", 0)
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPhoneHelper= getSharedPreferences("value", 0)
-
+        sharedPrefUserType = getSharedPreferences("value", 0)
 
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
@@ -339,6 +341,8 @@ class MainActivity : AppCompatActivity(){
             Log.i("testusergoogle2","$acct")
         }
 
+        FirebaseAuth.getInstance().signOut()
+
         var editorID = sharedPrefID.edit()
         var editorUsername = sharedPrefUsername.edit()
         var editorPassword = sharedPrefPassword.edit()
@@ -347,6 +351,7 @@ class MainActivity : AppCompatActivity(){
         var editorPhone = sharedPrefPhone.edit()
         var editorPhoneHelper = sharedPrefPhoneHelper.edit()
         var editorGoogleUser = sharedPrefGoogle.edit()
+        var editorUserType = sharedPrefUserType.edit()
 
         editorID.putString("stringKey2", "not found!")
         editorUsername.putString("stringKeyUsername", "not found!")
@@ -356,6 +361,7 @@ class MainActivity : AppCompatActivity(){
         editorPhone.putString("stringKeyPhone", "not found!")
         editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
         editorGoogleUser.putString("stringKeyGoogle", "not found!")
+        editorUserType.putString("stringKeyType", "not found!")
 
         editorID.apply()
         editorUsername.apply()
@@ -365,6 +371,7 @@ class MainActivity : AppCompatActivity(){
         editorPhone.apply()
         editorPhoneHelper.apply()
         editorGoogleUser.apply()
+        editorUserType.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
