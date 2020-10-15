@@ -13,6 +13,8 @@ import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
 import android.os.*
+import android.speech.tts.TextToSpeech
+import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log
 import android.view.*
 import android.widget.Button
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity(){
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
 
+    var textToSpeech: TextToSpeech? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -93,6 +96,13 @@ class MainActivity : AppCompatActivity(){
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         RequestPermission()
 
+
+        textToSpeech = TextToSpeech(applicationContext, OnInitListener { status ->
+                if (status != TextToSpeech.ERROR) {
+                    textToSpeech!!.language = Locale.US
+                } })
+        textToSpeech!!.setSpeechRate(0.9f)
+
         sharedLocationBtn.setOnVeryLongClickListener{
             vibrate()
             //create method
@@ -100,22 +110,26 @@ class MainActivity : AppCompatActivity(){
             Log.d("Debug:","sharedLocationBtn -> CheckPermission : "  + CheckPermission().toString())
             Log.d("Debug:", "sharedLocationBtn -> isLocationEnabled : " +  isLocationEnabled().toString())
 //            RequestPermission()
+            textToSpeech!!.speak("shared Location Activate", TextToSpeech.QUEUE_FLUSH, null)
             getLastLocation()
             sendLocation()
 
         }
         button2.setOnVeryLongClickListener{
             vibrate()
+            textToSpeech!!.speak("Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             Toast.makeText(this, getString(R.string.button_navigation), Toast.LENGTH_SHORT).show()
         }
         button3.setOnVeryLongClickListener{
             vibrate()
+           textToSpeech!!.speak("Emergency Call Activate", TextToSpeech.QUEUE_FLUSH, null)
             emergencyCall()
             Toast.makeText(this, getString(R.string.button_emergency_call), Toast.LENGTH_SHORT).show()
         }
 
         button4.setOnVeryLongClickListener{
             vibrate()
+            textToSpeech!!.speak("Helper Call Activate", TextToSpeech.QUEUE_FLUSH, null)
             helperCall()
          Toast.makeText(this, getString(R.string.button_helper_call), Toast.LENGTH_SHORT).show()
 
