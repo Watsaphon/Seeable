@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -14,7 +13,6 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.estazo.project.seeable.app.*
@@ -32,7 +30,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 import java.util.*
 
 
@@ -207,8 +204,8 @@ class LoginScreen : AppCompatActivity() {
                     val userType = sharedPrefUserType.getString("stringKeyType","not found!")
 
                     val googleUserType = sharedGooglePrefUserType.getString("stringKeyGoogleType","not found!")
-                    var editorGoogleUser  = sharedPrefGoogle.edit()
-                    var editorGoogleUserType  = sharedGooglePrefUserType.edit()
+                    val editorGoogleUser  = sharedPrefGoogle.edit()
+                    val editorGoogleUserType  = sharedGooglePrefUserType.edit()
 
                     Log.i("checkloginlast","user : $user , userGoogle : $userGoogle , userType : $userType")
 
@@ -239,7 +236,7 @@ class LoginScreen : AppCompatActivity() {
         val language = sharedPrefLanguage.getString("stringKey", "not found!")
         Log.i("CheckLanguage", "Now Language is :$language ")
         var locale: Locale? = null
-        var editor = sharedPrefLanguage.edit()
+        val editor = sharedPrefLanguage.edit()
         if (language=="en") {
             locale = Locale("th")
             editor.putString("stringKey", "th")
@@ -392,14 +389,14 @@ class LoginScreen : AppCompatActivity() {
 
                     if (loginName.equals(username) && loginPassword.equals(password)){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                        var editorID = sharedPrefID.edit()
-                        var editorUsername = sharedPrefUsername.edit()
-                        var editorPassword = sharedPrefPassword.edit()
-                        var editorFullName = sharedPrefFullName.edit()
-                        var editorNameHelper = sharedPrefNameHelper.edit()
-                        var editorPhone = sharedPrefPhone.edit()
-                        var editorPhoneHelper = sharedPrefPhoneHelper.edit()
-                        var editorUserType = sharedPrefUserType.edit()
+                        val editorID = sharedPrefID.edit()
+                        val editorUsername = sharedPrefUsername.edit()
+                        val editorPassword = sharedPrefPassword.edit()
+                        val editorFullName = sharedPrefFullName.edit()
+                        val editorNameHelper = sharedPrefNameHelper.edit()
+                        val editorPhone = sharedPrefPhone.edit()
+                        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
+                        val editorUserType = sharedPrefUserType.edit()
 
                         editorID.putString("stringKey2", id)
                         editorUsername.putString("stringKeyUsername", username)
@@ -418,14 +415,15 @@ class LoginScreen : AppCompatActivity() {
                         editorPhone.apply()
                         editorPhoneHelper.apply()
                         editorUserType.apply()
-                        dismissAlertDialogLoading()
+
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)
+                        dismissAlertDialogLoading()
                         break
                     }
                     else if (loginName.isEmpty()  || loginPassword.isEmpty() ) {
-                        dismissAlertDialogLoading()
                         Toast.makeText(applicationContext, getString(R.string.login_empty), Toast.LENGTH_SHORT).show()
+                        dismissAlertDialogLoading()
                         break
                     }
                     ++count
@@ -435,8 +433,8 @@ class LoginScreen : AppCompatActivity() {
                 if(count==countDatabase){
                     Log.i("LoginScreen_checkLogin","check count database, count=$countDatabase")
                     Log.i("LoginScreen_checkLogin","check count for loop, count=$count")
-                    dismissAlertDialogLoading()
                     Toast.makeText(applicationContext, getString(R.string.login_incorrect), Toast.LENGTH_SHORT).show()
+                    dismissAlertDialogLoading()
                 }
             }
 
@@ -451,25 +449,25 @@ class LoginScreen : AppCompatActivity() {
                 val partnerIDFirebase = dataSnapshot.child("partner_id").value.toString()
                 Log.d("checkPairing_login","$partnerIDFirebase")
                 val sharedPrefPartnerID = getSharedPreferences("value", 0)
-                var editorPartnerID = sharedPrefPartnerID.edit()
+                val editorPartnerID = sharedPrefPartnerID.edit()
 
                 if (partnerIDFirebase != "no-pairing") {
                     Log.d("checkPairing_login","$partnerIDFirebase")
                     Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                     editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
                     editorPartnerID.apply()
-                    dismissAlertDialogLoading()
                     val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
                     startActivity(intent)
+                    dismissAlertDialogLoading()
                 }
                 else if(partnerIDFirebase== "no-pairing"){
                     Log.d("checkPairing_login","$partnerIDFirebase")
                     Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                     editorPartnerID.putString("stringKeyPartnerID", "no-pairing")
                     editorPartnerID.apply()
-                    dismissAlertDialogLoading()
                     val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
                     startActivity(intent)
+                    dismissAlertDialogLoading()
                 }
             }
         }
@@ -488,8 +486,8 @@ class LoginScreen : AppCompatActivity() {
                     if (UID == id){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
 
-                        var editorGoogleUser = sharedPrefGoogle.edit()
-                        var editorGoogleUserType = sharedGooglePrefUserType.edit()
+                        val editorGoogleUser = sharedPrefGoogle.edit()
+                        val editorGoogleUserType = sharedGooglePrefUserType.edit()
 
                         editorGoogleUser.putString("stringKeyGoogle","$UID")
                         editorGoogleUserType.putString("stringKeyGoogleType", "person")
@@ -533,13 +531,13 @@ class LoginScreen : AppCompatActivity() {
                     Log.i("LoginScreen_checkLogin","In onDataChange, count=$count")
                     if (UID == id){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                        var editorID = sharedPrefID.edit()
-                        var editorFullName = sharedPrefFullName.edit()
-                        var editorNameHelper = sharedPrefNameHelper.edit()
-                        var editorPhone = sharedPrefPhone.edit()
-                        var editorPhoneHelper = sharedPrefPhoneHelper.edit()
-                        var editorGoogleUser = sharedPrefGoogle.edit()
-                        var editorGoogleUserType = sharedGooglePrefUserType.edit()
+                        val editorID = sharedPrefID.edit()
+                        val editorFullName = sharedPrefFullName.edit()
+                        val editorNameHelper = sharedPrefNameHelper.edit()
+                        val editorPhone = sharedPrefPhone.edit()
+                        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
+                        val editorGoogleUser = sharedPrefGoogle.edit()
+                        val editorGoogleUserType = sharedGooglePrefUserType.edit()
 
 
                         editorID.putString("stringKey2", id)
@@ -560,6 +558,7 @@ class LoginScreen : AppCompatActivity() {
 
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)
+                        dismissAlertDialogLoading()
                         break
                     }
                     ++count
@@ -571,6 +570,7 @@ class LoginScreen : AppCompatActivity() {
                     Log.i("LoginScreen_checkLogin","check count for loop, count=$count")
                     val intent = Intent(this@LoginScreen, SelectRegister::class.java)
                     startActivity(intent)
+                    dismissAlertDialogLoading()
                 }
             }
 

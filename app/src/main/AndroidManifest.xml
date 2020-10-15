@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:allowBackup="true"
@@ -15,8 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Register.GoogleRegisterPerson"></activity>
-        <activity android:name=".Register.GoogleRegisterBlind" />
+        <activity
+            android:name=".Register.GoogleRegisterPerson"
+            android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".Register.GoogleRegisterBlind"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".GoogleMapScreen"
             android:configChanges="orientation|screenSize" />

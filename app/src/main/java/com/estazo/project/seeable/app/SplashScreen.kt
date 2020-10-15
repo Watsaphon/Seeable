@@ -37,15 +37,15 @@ class SplashScreen : AppCompatActivity() {
         /**Shared Preferences เป็นคลาสที่ใช้สำหรับเก็บข้อมูลถาวรที่เป็นค่าของตัวแปรธรรมดาๆ อย่างเช่น Boolean,Int,Float*/
         val sharedPrefLanguage = getSharedPreferences("value", 0)
         val language = sharedPrefLanguage.getString("stringKey", "en")
-        var editor = sharedPrefLanguage.edit()
+        val editor = sharedPrefLanguage.edit()
 
         val sharedPrefID = getSharedPreferences("value", 0)
         val login = sharedPrefID.getString("stringKey2","not found!")
-        var editor2 = sharedPrefID.edit()
+        val editor2 = sharedPrefID.edit()
 
         val sharedPrefUserType = getSharedPreferences("value", 0)
         val userType = sharedPrefUserType.getString("stringKeyType","not found!")
-        var editor3 = sharedPrefUserType.edit()
+        val editor3 = sharedPrefUserType.edit()
 
         val sharedPrefGoogle = getSharedPreferences("value", 0)
         val userGoogle = sharedPrefGoogle.getString("stringKeyGoogle","not found!")

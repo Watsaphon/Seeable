@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.*
 import android.util.Log
 import android.view.*
@@ -28,11 +29,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.location.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.alert_dialog_profile.view.*
 import java.util.*
-
 
 class MainActivity : AppCompatActivity(){
 
@@ -56,9 +55,8 @@ class MainActivity : AppCompatActivity(){
     private lateinit var sharedPrefGoogle : SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
     private lateinit var sharedGooglePrefUserType : SharedPreferences
-
     //Declaring the needed Variables
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,11 +110,14 @@ class MainActivity : AppCompatActivity(){
         }
         button3.setOnVeryLongClickListener{
             vibrate()
+            emergencyCall()
             Toast.makeText(this, getString(R.string.button_emergency_call), Toast.LENGTH_SHORT).show()
         }
+
         button4.setOnVeryLongClickListener{
             vibrate()
-         Toast.makeText(this, getString(R.string.button_main_4), Toast.LENGTH_SHORT).show()
+            helperCall()
+         Toast.makeText(this, getString(R.string.button_helper_call), Toast.LENGTH_SHORT).show()
 
         }
         fab.setOnClickListener {
@@ -138,6 +139,7 @@ class MainActivity : AppCompatActivity(){
             }
             popupMenu.show()
         }
+
 
 
     }
@@ -231,7 +233,8 @@ class MainActivity : AppCompatActivity(){
         //false if not
         if(
             ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-            ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED||
+            ActivityCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED
         ){
             return true
         }
@@ -239,7 +242,8 @@ class MainActivity : AppCompatActivity(){
     }
     private fun RequestPermission(){
         //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION), PERMISSION_ID)
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE), PERMISSION_ID)
+
     }
     private fun isLocationEnabled():Boolean{
         //this function will return to us the state of the location service
@@ -292,6 +296,19 @@ class MainActivity : AppCompatActivity(){
         Log.i("MainActivity", "onWindowFocusChanged called")
     }
 
+    private fun emergencyCall(){
+        val phone = "1112"
+        val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phone, null))
+        startActivity(intent)
+    }
+
+    private fun helperCall(){
+        val phoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
+        val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phoneHelper, null))
+        startActivity(intent)
+    }
+
+
     /** change Language TH and EN*/
     private fun changeLanguage(){
         val language = sharedPrefLanguage.getString("stringKey", "not found!")
@@ -341,16 +358,16 @@ class MainActivity : AppCompatActivity(){
 
         FirebaseAuth.getInstance().signOut()
 
-        var editorID = sharedPrefID.edit()
-        var editorUsername = sharedPrefUsername.edit()
-        var editorPassword = sharedPrefPassword.edit()
-        var editorFullName = sharedPrefFullName.edit()
-        var editorNameHelper = sharedPrefNameHelper.edit()
-        var editorPhone = sharedPrefPhone.edit()
-        var editorPhoneHelper = sharedPrefPhoneHelper.edit()
-        var editorGoogleUser = sharedPrefGoogle.edit()
-        var editorUserType = sharedPrefUserType.edit()
-        var editorGoogleUserType = sharedGooglePrefUserType.edit()
+        val editorID = sharedPrefID.edit()
+        val editorUsername = sharedPrefUsername.edit()
+        val editorPassword = sharedPrefPassword.edit()
+        val editorFullName = sharedPrefFullName.edit()
+        val editorNameHelper = sharedPrefNameHelper.edit()
+        val editorPhone = sharedPrefPhone.edit()
+        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
+        val editorGoogleUser = sharedPrefGoogle.edit()
+        val editorUserType = sharedPrefUserType.edit()
+        val editorGoogleUserType = sharedGooglePrefUserType.edit()
 
         editorID.putString("stringKey2", "not found!")
         editorUsername.putString("stringKeyUsername", "not found!")

@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
-                android:text="@string/button_main_4" />
+                android:text="@string/button_helper_call" />
 
         </LinearLayout>
     </LinearLayout>

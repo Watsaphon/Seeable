@@ -18,7 +18,8 @@
     <string name="button_shared_locatoin">ส่งตำแหน่งที่อยู่ปัจจุบัน</string>
     <string name="button_navigation">การนำทาง</string>
     <string name="button_emergency_call">โทรฉุกเฉิน</string>
-    <string name="button_main_4">ปุ่ม 4</string>
+    <string name="button_helper_call">โทรหาผู้ดูแล</string>
+    <string name="loading_spinner">กำลังโหลด...</string>
 
     <!--Settings-->
     <string name="action_settings">การตั้งค่า</string>

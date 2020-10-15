@@ -15,11 +15,11 @@
     <string name="blinder_button_desc">Blinder</string>
     <string name="person_button_desc">Person</string>
     <string name="select_register_header">SELECT YOUR REGISTER</string>
-
     <string name="button_shared_locatoin">Shared Location</string>
     <string name="button_navigation">Navigation</string>
     <string name="button_emergency_call">Emergency Call</string>
-    <string name="button_main_4">Button 4</string>
+    <string name="button_helper_call">Helper Call</string>
+    <string name="loading_spinner">Loading...</string>
 
     <!--Settings-->
     <string name="action_settings">Settings</string>
