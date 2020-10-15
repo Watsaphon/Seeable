@@ -31,7 +31,9 @@
         android:fontFamily="@font/adamina"
         android:gravity="center|left"
         android:text="@string/main_blind_username"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/blinderFullName"

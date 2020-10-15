@@ -26,8 +26,15 @@ class GoogleRegisterBlind : AppCompatActivity() {
     private lateinit var phoneHelperBox : TextInputEditText
     private lateinit var finishButton: Button
 
+    private lateinit var sharedPrefID: SharedPreferences
+    private lateinit var sharedPrefFullName: SharedPreferences
+    private lateinit var sharedPrefNameHelper: SharedPreferences
+    private lateinit var sharedPrefPhone: SharedPreferences
+    private lateinit var sharedPrefPhoneHelper: SharedPreferences
+
     private lateinit var sharedPrefGoogle : SharedPreferences
     private lateinit var sharedPrefUserType: SharedPreferences
+    private lateinit var sharedGooglePrefUserType : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +43,15 @@ class GoogleRegisterBlind : AppCompatActivity() {
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
+        sharedPrefID = getSharedPreferences("value", 0)
+        sharedPrefFullName= getSharedPreferences("value", 0)
+        sharedPrefNameHelper= getSharedPreferences("value", 0)
+        sharedPrefPhone= getSharedPreferences("value", 0)
+        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
+        sharedPrefUserType = getSharedPreferences("value", 0)
         sharedPrefGoogle  = getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
+        sharedGooglePrefUserType = getSharedPreferences("value", 0)
 
         fullName = findViewById(R.id.fullname_box)
         phoneBox = findViewById(R.id.phone_box)
@@ -95,14 +109,29 @@ class GoogleRegisterBlind : AppCompatActivity() {
                 ref.child(UID).setValue(test).addOnCompleteListener {
                     Toast.makeText(this,getString(R.string.success_regis), Toast.LENGTH_SHORT).show()
                 }
+                var editorID = sharedPrefID.edit()
+                var editorFullName = sharedPrefFullName.edit()
+                var editorNameHelper = sharedPrefNameHelper.edit()
+                var editorPhone = sharedPrefPhone.edit()
+                var editorPhoneHelper = sharedPrefPhoneHelper.edit()
                 var editorGoogleUser = sharedPrefGoogle.edit()
-                var editorUserType = sharedPrefUserType.edit()
+                var editorGoogleUserType = sharedGooglePrefUserType.edit()
 
+                editorID.putString("stringKey2", UID)
+                editorFullName.putString("stringKeyFullName", inputfullName)
+                editorNameHelper.putString("stringKeyNameHelper", inputHelper)
+                editorPhone.putString("stringKeyPhone", inputPhone)
+                editorPhoneHelper.putString("stringKeyPhoneHelper", inputPhoneHelper)
                 editorGoogleUser.putString("stringKeyGoogle","$UID")
-                editorUserType.putString("stringKeyType", "blind")
+                editorGoogleUserType.putString("stringKeyGoogleType", "blind")
 
+                editorID.apply()
+                editorFullName.apply()
+                editorNameHelper.apply()
+                editorPhone.apply()
+                editorPhoneHelper.apply()
                 editorGoogleUser.apply()
-                editorUserType.apply()
+                editorGoogleUserType.apply()
 
                 saveRegister()
 

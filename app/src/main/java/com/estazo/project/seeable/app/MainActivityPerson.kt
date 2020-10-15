@@ -50,12 +50,13 @@ class MainActivityPerson : AppCompatActivity() {
     private lateinit var sharedPrefPartnerID: SharedPreferences
 
     private lateinit var partnerID : String
-
     private lateinit var checkPartnerID : String
-
     private lateinit var  mAlertDialog : AlertDialog
 
+    private lateinit var sharedPrefGoogle : SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
+    private lateinit var sharedGooglePrefUserType : SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_person)
@@ -71,8 +72,9 @@ class MainActivityPerson : AppCompatActivity() {
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPhoneHelper= getSharedPreferences("value", 0)
         sharedPrefPartnerID = getSharedPreferences("value", 0)
+        sharedPrefGoogle  = getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
-
+        sharedGooglePrefUserType = getSharedPreferences("value", 0)
 
         val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
         Log.d("checkPairing_MainPerson","$partnerID")
@@ -166,7 +168,9 @@ class MainActivityPerson : AppCompatActivity() {
         var editorNameHelper = sharedPrefNameHelper.edit()
         var editorPhone = sharedPrefPhone.edit()
         var editorPhoneHelper = sharedPrefPhoneHelper.edit()
+        var editorGoogleUser = sharedPrefGoogle.edit()
         var editorUserType = sharedPrefUserType.edit()
+        var editorGoogleUserType = sharedGooglePrefUserType.edit()
 
         editorID.putString("stringKey2", "not found!")
         editorPartnerID.putString("stringKeyPartnerID", "not found!")
@@ -176,7 +180,9 @@ class MainActivityPerson : AppCompatActivity() {
         editorNameHelper.putString("stringKeyNameHelper", "not found!")
         editorPhone.putString("stringKeyPhone", "not found!")
         editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
+        editorGoogleUser.putString("stringKeyGoogle", "not found!")
         editorUserType.putString("stringKeyType", "not found!")
+        editorGoogleUserType.putString("stringKeyGoogleType", "not found!")
 
         editorID.apply()
         editorPartnerID.apply()
@@ -186,7 +192,9 @@ class MainActivityPerson : AppCompatActivity() {
         editorNameHelper.apply()
         editorPhone.apply()
         editorPhoneHelper.apply()
+        editorGoogleUser.apply()
         editorUserType.apply()
+        editorGoogleUserType.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)

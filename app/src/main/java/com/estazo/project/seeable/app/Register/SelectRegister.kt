@@ -38,7 +38,7 @@ class SelectRegister : AppCompatActivity() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefGoogle : SharedPreferences
-
+    private lateinit var sharedGooglePrefUserType : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +49,12 @@ class SelectRegister : AppCompatActivity() {
         sharedPrefLanguage = getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
         sharedPrefGoogle  = getSharedPreferences("value", 0)
+        sharedGooglePrefUserType = getSharedPreferences("value", 0)
 
         val userNormal = sharedPrefID.getString("stringKey2", "not found!")
         val userGoogle = sharedPrefGoogle.getString("stringKeyGoogle","not found!")
+
+        val googleUserType = sharedGooglePrefUserType.getString("stringKeyGoogleType","not found!")
 
         val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
         Log.i("deejaa","$user")
@@ -60,18 +63,18 @@ class SelectRegister : AppCompatActivity() {
             Log.i("deejaa","$test")
         }
 
-        Log.i("deejaa","userNormal = $userNormal ,userGoogle = $userGoogle")
+        Log.i("deejaa","userNormal = $userNormal ,userGoogle = $userGoogle , GoogleuserType : $googleUserType")
 
         blindButton = findViewById(R.id.blinder_btn)
         personButton = findViewById(R.id.person_btn)
         blindGoogleButton = findViewById(R.id.blinderGoogle_btn)
         personGoogleButton = findViewById(R.id.personGoogle_btn)
 
-        if(userGoogle == "not register!!" && userNormal == "not found!" ){
+        if(googleUserType == "noRegister"){
             blindGoogleButton.visibility = View.VISIBLE
             personGoogleButton.visibility = View.VISIBLE
         }
-        else if(userGoogle == "not found!" && userNormal == "not found!"){
+        else{
             blindButton.visibility = View.VISIBLE
             personButton.visibility = View.VISIBLE
         }
@@ -99,7 +102,7 @@ class SelectRegister : AppCompatActivity() {
             /** PopupMenu dropdown */
             val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
-            if(userGoogle == "not register!!" && userNormal == "not found!" ){
+            if(googleUserType == "noRegister" && userNormal == "not found!" ){
                 popupMenu.menu.findItem(R.id.action_logout).isVisible = true
             }
             popupMenu.setOnMenuItemClickListener { item ->
@@ -116,11 +119,37 @@ class SelectRegister : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.i("SelectRegister", "onStart called")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateUI()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("SelectRegister", "onPause called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        Log.i("SelectRegister", "onStop called")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("SelectRegister", "onDestroy called")
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
         val userNormal = sharedPrefID.getString("stringKey2", "not found!")
-        val userGoogle = sharedPrefGoogle.getString("stringKeyGoogle","not found!")
-        if(userGoogle == "not register!!" && userNormal == "not found!" ){
+        val googleUserType = sharedGooglePrefUserType.getString("stringKeyGoogleType","not found!")
+        if(googleUserType == "noRegister" && userNormal == "not found!" ){
             finishAffinity()
         }
         Log.i("SelectRegister", "onBackPressed called")
@@ -131,10 +160,8 @@ class SelectRegister : AppCompatActivity() {
         hideSystemUI()
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateUI()
-    }
+
+
 
     private fun changeLanguage(){
         val language = sharedPrefLanguage.getString("stringKey", "not found!")
@@ -180,8 +207,13 @@ class SelectRegister : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
 
         var editorGoogleUser = sharedPrefGoogle.edit()
+        var editorGoogleUserType = sharedPrefGoogle.edit()
+
         editorGoogleUser.putString("stringKeyGoogle", "not found!")
+        editorGoogleUserType.putString("stringKeyGoogleType", "not found!")
+
         editorGoogleUser.apply()
+        editorGoogleUserType.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)

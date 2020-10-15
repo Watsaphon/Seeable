@@ -26,6 +26,7 @@ class GoogleRegisterPerson : AppCompatActivity() {
 
     private lateinit var sharedPrefGoogle : SharedPreferences
     private lateinit var sharedPrefUserType: SharedPreferences
+    private lateinit var sharedGooglePrefUserType : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,7 @@ class GoogleRegisterPerson : AppCompatActivity() {
 
         sharedPrefGoogle  = getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
+        sharedGooglePrefUserType = getSharedPreferences("value", 0)
 
         fullName = findViewById(R.id.fullname_box)
         phoneBox = findViewById(R.id.phone_box)
@@ -110,12 +112,15 @@ class GoogleRegisterPerson : AppCompatActivity() {
         if (user != null) {
             UID = user.uid
         }
+
         var editorGoogleUser = sharedPrefGoogle.edit()
+        var editorGoogleUserType = sharedGooglePrefUserType.edit()
+
         editorGoogleUser.putString("stringKeyGoogle","$UID")
+        editorGoogleUserType.putString("stringKeyGoogleType", "blind")
+
         editorGoogleUser.apply()
-        var editorUserType = sharedPrefUserType.edit()
-        editorUserType.putString("stringKeyType", "person")
-        editorUserType.apply()
+        editorGoogleUserType.apply()
 
         val i = Intent(this, MainActivityPerson::class.java)
         startActivity(i)

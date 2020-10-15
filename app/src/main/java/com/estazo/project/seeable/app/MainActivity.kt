@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(){
 
     private lateinit var sharedPrefGoogle : SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
-
+    private lateinit var sharedGooglePrefUserType : SharedPreferences
 
     //Declaring the needed Variables
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(){
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPhoneHelper= getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
-
+        sharedGooglePrefUserType = getSharedPreferences("value", 0)
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
         val currentUser = sharedPrefID.getString("stringKey2", "not found!")
@@ -326,9 +326,7 @@ class MainActivity : AppCompatActivity(){
         startActivity(intent)
     }
 
-//    private fun gotoViewProfile(){
-//        alertDialogProfile()
-//    }
+
 
     private fun gotoLogout(){
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
@@ -352,6 +350,7 @@ class MainActivity : AppCompatActivity(){
         var editorPhoneHelper = sharedPrefPhoneHelper.edit()
         var editorGoogleUser = sharedPrefGoogle.edit()
         var editorUserType = sharedPrefUserType.edit()
+        var editorGoogleUserType = sharedGooglePrefUserType.edit()
 
         editorID.putString("stringKey2", "not found!")
         editorUsername.putString("stringKeyUsername", "not found!")
@@ -362,6 +361,7 @@ class MainActivity : AppCompatActivity(){
         editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
         editorGoogleUser.putString("stringKeyGoogle", "not found!")
         editorUserType.putString("stringKeyType", "not found!")
+        editorGoogleUserType.putString("stringKeyGoogleType", "not found!")
 
         editorID.apply()
         editorUsername.apply()
@@ -372,6 +372,7 @@ class MainActivity : AppCompatActivity(){
         editorPhoneHelper.apply()
         editorGoogleUser.apply()
         editorUserType.apply()
+        editorGoogleUserType.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
@@ -436,6 +437,8 @@ class MainActivity : AppCompatActivity(){
         mAlertDialog  = mBuilder.show()
         Log.i("test","mAlertDialog.show() call")
 
+        val googleUserType = sharedGooglePrefUserType.getString("stringKeyGoogleType","not found!")
+
         var idText : TextView =  mDialogView.findViewById(R.id.blinderID)
         var usernameText : TextView =  mDialogView.findViewById(R.id.blinderUsername)
         var fullNameText : TextView =  mDialogView.findViewById(R.id.blinderFullName)
@@ -450,12 +453,23 @@ class MainActivity : AppCompatActivity(){
         val nameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
         val phoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
 
-        idText.text = getString(R.string.main_blind_id)+" $id "
-        usernameText.text = getString(R.string.main_blind_username)+"$username "
-        phoneText.text = getString(R.string.main_blind_fullName)+"$fullName "
-        fullNameText.text = getString(R.string.main_blind_phone)+"$phone "
-        nameHelperText.text =getString(R.string.main_blind_name_helper)+ "$nameHelper "
-        phoneHelperText.text = getString(R.string.main_blind_phone_helper)+"$phoneHelper "
+        if(googleUserType == "blind"){
+            idText.text = getString(R.string.main_blind_id)+" $id "
+            phoneText.text = getString(R.string.main_blind_fullName)+"$fullName "
+            fullNameText.text = getString(R.string.main_blind_phone)+"$phone "
+            nameHelperText.text =getString(R.string.main_blind_name_helper)+ "$nameHelper "
+            phoneHelperText.text = getString(R.string.main_blind_phone_helper)+"$phoneHelper "
+        }
+        else{
+            usernameText.visibility = View.VISIBLE
+            idText.text = getString(R.string.main_blind_id)+" $id "
+            usernameText.text = getString(R.string.main_blind_username)+"$username "
+            phoneText.text = getString(R.string.main_blind_fullName)+"$fullName "
+            fullNameText.text = getString(R.string.main_blind_phone)+"$phone "
+            nameHelperText.text =getString(R.string.main_blind_name_helper)+ "$nameHelper "
+            phoneHelperText.text = getString(R.string.main_blind_phone_helper)+"$phoneHelper "
+        }
+
 
         //login button click of custom layout
         mDialogView.dialogCloseBtn.setOnClickListener {

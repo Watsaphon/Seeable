@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.Login.LoginScreen
@@ -26,8 +27,7 @@ import java.util.*
 var checkSuccess : Boolean = false
 
 class SplashScreen : AppCompatActivity() {
-
-//    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,18 @@ class SplashScreen : AppCompatActivity() {
         val userGoogle = sharedPrefGoogle.getString("stringKeyGoogle","not found!")
         var editorGoogleUser = sharedPrefGoogle.edit()
 
+        val sharedGooglePrefUserType = getSharedPreferences("value", 0)
+        val googleUserType = sharedGooglePrefUserType.getString("stringKeyGoogleType","not found!")
+        var editorGoogleUserType = sharedPrefGoogle.edit()
+
         var locale: Locale? = null
+
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail().build()
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         Log.i("CheckUserID_splash", "First User ID  : $login")
         Log.i("CheckLanguage_splash", "First Language is :$language")
@@ -80,8 +91,8 @@ class SplashScreen : AppCompatActivity() {
         Log.i("CheckLanguage_splash", "Now Language is :$language")
         Log.i("CheckUserTypes_plash", "Now User Type is :$userType")
 
-        Log.i("checkStatus","userGoogle : $userGoogle ,userType : $userType ,login : $login ")
-        if(login != "not found!"){
+        Log.i("checkStatus"," login : $login , userType : $userType , userGoogle : $userGoogle , googleUserType : $googleUserType ")
+        if(login != "not found!" && userType != "not found!" ){
             if(userType== "person"){
                 Handler().postDelayed({
                     startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
@@ -95,25 +106,23 @@ class SplashScreen : AppCompatActivity() {
                 }, 1000)
             }
         }
-        else if(userGoogle != "not found!"){
-            if(userGoogle != "not found!" && userGoogle == "not register!!"){
-                Log.i("testusergoogle","userGoogle : $userGoogle ,userType : $userType ")
-                Handler().postDelayed({
-                    startActivity(Intent(this@SplashScreen, SelectRegister::class.java))
-                    finishAffinity()
-                }, 1000)
-            }
-            else{
-                Log.i("testusergoogle","userGoogle : $userGoogle ,userType : $userType ")
-                if(userType== "person"){
+        else if(userGoogle != "not found!" && googleUserType != "not found!" ){
+            when (googleUserType) {
+                "person" -> {
                     Handler().postDelayed({
                         startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
                         finishAffinity()
                     }, 1000)
                 }
-                else if (userType== "blind"){
+                "blind" -> {
                     Handler().postDelayed({
                         startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+                        finishAffinity()
+                    }, 1000)
+                }
+                "noRegister" -> {
+                    Handler().postDelayed({
+                        startActivity(Intent(this@SplashScreen, SelectRegister::class.java))
                         finishAffinity()
                     }, 1000)
                 }
@@ -146,91 +155,5 @@ class SplashScreen : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
-
-    //    private fun checkLogin() {
-//        val query = FirebaseDatabase.getInstance().getReference("users_person").orderByChild("id")
-//        query.addListenerForSingleValueEvent(valueEventListener)
-//    }
-
-//    /**receive value from realtime database (user_person) and check Login */
-//    private var valueEventListener: ValueEventListener = object : ValueEventListener {
-//        override fun onDataChange(dataSnapshot: DataSnapshot) {
-//            val sharedPrefID = getSharedPreferences("value", 0)
-//            val login = sharedPrefID.getString("stringKey2","not found!")
-//            //if(!dataSnapshot.child("users").child("email").exist)
-//            if (dataSnapshot.exists()) {
-//                for (snapshot in dataSnapshot.children) {
-//                    val id = snapshot.child("id").value.toString()
-//                    Log.i("CheckUserPerson_splash", "Username : $login")
-//                    Log.i("CheckUserPerson_splash", "User from Database :  $id")
-//                    if (login.equals(id)){
-//                        /** Check user pair with blinder */
-//                        val query = FirebaseDatabase.getInstance().getReference("users_person").child("$login").orderByChild("partner_id")
-//                        query.addListenerForSingleValueEvent(valueEventListenerCheckUser)
-//                        Handler().postDelayed({
-//                            startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
-//                            finishAffinity()
-//                        }, 1000)
-//                        checkSuccess = true
-//                        break
-//                    }
-//                }
-//                val query2 = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
-//                query2.addListenerForSingleValueEvent(valueEventListener2)
-//            }
-//        }
-//        override fun onCancelled(databaseError: DatabaseError) {}
-//    }
-
-
-//    /**receive value from realtime database (users_blind) and check Login */
-//    private var valueEventListener2: ValueEventListener = object : ValueEventListener {
-//        override fun onDataChange(dataSnapshot: DataSnapshot) {
-//            val sharedPrefID = getSharedPreferences("value", 0)
-//            val login = sharedPrefID.getString("stringKey2","not found!")
-//            if(checkSuccess == false){
-//                if (dataSnapshot.exists()) {
-//                    for (snapshot in dataSnapshot.children) {
-//                        val id = snapshot.child("id").value.toString()
-//                        Log.i("CheckUserPerson_splash", "Username : $login")
-//                        Log.i("CheckUserPerson_splash", "User from Database :  $id")
-//                        if (login.equals(id)) {
-//                            Handler().postDelayed({
-//                                startActivity(Intent(this@SplashScreen, MainActivity::class.java))
-//                                finishAffinity()
-//                            }, 1000)
-//                            break
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        override fun onCancelled(databaseError: DatabaseError) {}
-//    }
-
-//    /** Check User pair with blinder */
-//    private var valueEventListenerCheckUser: ValueEventListener = object : ValueEventListener {
-//        @RequiresApi(Build.VERSION_CODES.O)
-//        override fun onDataChange(dataSnapshot: DataSnapshot) {
-//            if (dataSnapshot.exists()) {
-//                val partnerIDFirebase = dataSnapshot.child("partner_id").value.toString()
-//                val sharedPrefPartnerID = getSharedPreferences("value", 0)
-//                val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
-//                var editorPartnerID = sharedPrefPartnerID.edit()
-//                Log.i("checkPairing_splash"," Partner ID :$partnerIDFirebase")
-//                if (partnerIDFirebase != "no-pairing") {
-//                    Log.i("checkPairing_splash"," Partner ID :$partnerIDFirebase")
-//                    editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
-//                    editorPartnerID.apply()
-//                }
-//                else if(partnerIDFirebase== "no-pairing"){
-//                    Log.i("checkPairing_splash"," Partner ID :$partnerIDFirebase")
-//                    editorPartnerID.putString("stringKeyPartnerID", "no-pairing")
-//                    editorPartnerID.apply()
-//                }
-//            }
-//        }
-//        override fun onCancelled(databaseError: DatabaseError) {}
-//    }
 
 }
