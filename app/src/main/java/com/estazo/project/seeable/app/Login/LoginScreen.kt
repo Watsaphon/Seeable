@@ -1,6 +1,7 @@
 package com.estazo.project.seeable.app.Login
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -10,6 +11,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -53,6 +55,7 @@ class LoginScreen : AppCompatActivity() {
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPhoneHelper: SharedPreferences
     private lateinit var sharedPrefUsername: SharedPreferences
+    private lateinit var sharedPrefHomeLocation: SharedPreferences
 
     private lateinit var sharedPrefUserType: SharedPreferences
     private lateinit var sharedPrefGoogle : SharedPreferences
@@ -87,6 +90,7 @@ class LoginScreen : AppCompatActivity() {
         sharedPrefUserType = getSharedPreferences("value", 0)
         sharedPrefGoogle  = getSharedPreferences("value", 0)
         sharedGooglePrefUserType = getSharedPreferences("value", 0)
+        sharedPrefHomeLocation = getSharedPreferences("value", 0)
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
         val stringValue2 = sharedPrefID.getString("stringKey2", "not found!")
@@ -308,9 +312,15 @@ class LoginScreen : AppCompatActivity() {
             .setView(mDialogView)
         //show dialog
         mAlertDialog.dismiss()
-
     }
 
+    private fun closeKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
 
     /**receive value from realtime database (user_person) and check Login */
     private var valueEventListener: ValueEventListener = object : ValueEventListener {
@@ -365,7 +375,6 @@ class LoginScreen : AppCompatActivity() {
         override fun onCancelled(databaseError: DatabaseError) {}
     }
 
-
     /**receive value from realtime database (users_blind) and check Login */
     private var valueEventListener2: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -382,6 +391,7 @@ class LoginScreen : AppCompatActivity() {
                     val username = snapshot.child("username").value.toString()
                     val nameHelper = snapshot.child("nameHelper").value.toString()
                     val phoneHelper = snapshot.child("phoneHelper").value.toString()
+                    val homeLocation = snapshot.child("homeLocation").value.toString()
 
                     Log.i("LoginScreen_checkLogin","In onDataChange, count=$count")
                     Log.i("LoginScreen_checkLogin", "Username : $loginName , Password : $loginPassword")
@@ -389,6 +399,7 @@ class LoginScreen : AppCompatActivity() {
 
                     if (loginName.equals(username) && loginPassword.equals(password)){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+                        closeKeyboard()
                         val editorID = sharedPrefID.edit()
                         val editorUsername = sharedPrefUsername.edit()
                         val editorPassword = sharedPrefPassword.edit()
@@ -397,6 +408,7 @@ class LoginScreen : AppCompatActivity() {
                         val editorPhone = sharedPrefPhone.edit()
                         val editorPhoneHelper = sharedPrefPhoneHelper.edit()
                         val editorUserType = sharedPrefUserType.edit()
+                        val editorHomeLocation = sharedPrefHomeLocation.edit()
 
                         editorID.putString("stringKey2", id)
                         editorUsername.putString("stringKeyUsername", username)
@@ -406,6 +418,7 @@ class LoginScreen : AppCompatActivity() {
                         editorPhone.putString("stringKeyPhone", phone)
                         editorPhoneHelper.putString("stringKeyPhoneHelper", phoneHelper)
                         editorUserType.putString("stringKeyType", "blind")
+                        editorHomeLocation.putString("stringKeyHomeLocation", "no-home")
 
                         editorID.apply()
                         editorUsername.apply()
@@ -415,6 +428,7 @@ class LoginScreen : AppCompatActivity() {
                         editorPhone.apply()
                         editorPhoneHelper.apply()
                         editorUserType.apply()
+                        editorHomeLocation.apply()
 
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)
@@ -527,6 +541,7 @@ class LoginScreen : AppCompatActivity() {
                     val username = snapshot.child("username").value.toString()
                     val nameHelper = snapshot.child("nameHelper").value.toString()
                     val phoneHelper = snapshot.child("phoneHelper").value.toString()
+                    val homeLocation = snapshot.child("homeLocation").value.toString()
 
                     Log.i("LoginScreen_checkLogin","In onDataChange, count=$count")
                     if (UID == id){
@@ -538,7 +553,7 @@ class LoginScreen : AppCompatActivity() {
                         val editorPhoneHelper = sharedPrefPhoneHelper.edit()
                         val editorGoogleUser = sharedPrefGoogle.edit()
                         val editorGoogleUserType = sharedGooglePrefUserType.edit()
-
+                        val editorHomeLocation = sharedPrefHomeLocation.edit()
 
                         editorID.putString("stringKey2", id)
                         editorFullName.putString("stringKeyFullName", fullname)
@@ -547,6 +562,7 @@ class LoginScreen : AppCompatActivity() {
                         editorPhoneHelper.putString("stringKeyPhoneHelper", phoneHelper)
                         editorGoogleUser.putString("stringKeyGoogle","$UID")
                         editorGoogleUserType.putString("stringKeyGoogleType", "blind")
+                        editorHomeLocation.putString("stringKeyHomeLocation", homeLocation)
 
                         editorID.apply()
                         editorFullName.apply()
@@ -555,6 +571,7 @@ class LoginScreen : AppCompatActivity() {
                         editorPhoneHelper.apply()
                         editorGoogleUser.apply()
                         editorGoogleUserType.apply()
+                        editorHomeLocation.apply()
 
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)

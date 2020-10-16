@@ -104,34 +104,35 @@ class GoogleRegisterBlind : AppCompatActivity() {
                         inputHelper,
                         inputPhoneHelper,
                         13.0000021,
-                        22.0000001
+                        22.0000001,
+                    "no-home"
                     )
                 ref.child(UID).setValue(test).addOnCompleteListener {
                     Toast.makeText(this,getString(R.string.success_regis), Toast.LENGTH_SHORT).show()
                 }
-                var editorID = sharedPrefID.edit()
-                var editorFullName = sharedPrefFullName.edit()
-                var editorNameHelper = sharedPrefNameHelper.edit()
-                var editorPhone = sharedPrefPhone.edit()
-                var editorPhoneHelper = sharedPrefPhoneHelper.edit()
-                var editorGoogleUser = sharedPrefGoogle.edit()
-                var editorGoogleUserType = sharedGooglePrefUserType.edit()
-
-                editorID.putString("stringKey2", UID)
-                editorFullName.putString("stringKeyFullName", inputfullName)
-                editorNameHelper.putString("stringKeyNameHelper", inputHelper)
-                editorPhone.putString("stringKeyPhone", inputPhone)
-                editorPhoneHelper.putString("stringKeyPhoneHelper", inputPhoneHelper)
-                editorGoogleUser.putString("stringKeyGoogle","$UID")
-                editorGoogleUserType.putString("stringKeyGoogleType", "blind")
-
-                editorID.apply()
-                editorFullName.apply()
-                editorNameHelper.apply()
-                editorPhone.apply()
-                editorPhoneHelper.apply()
-                editorGoogleUser.apply()
-                editorGoogleUserType.apply()
+//                val editorID = sharedPrefID.edit()
+//                val editorFullName = sharedPrefFullName.edit()
+//                val editorNameHelper = sharedPrefNameHelper.edit()
+//                val editorPhone = sharedPrefPhone.edit()
+//                val editorPhoneHelper = sharedPrefPhoneHelper.edit()
+//                val editorGoogleUser = sharedPrefGoogle.edit()
+//                val editorGoogleUserType = sharedGooglePrefUserType.edit()
+//
+//                editorID.putString("stringKey2", UID)
+//                editorFullName.putString("stringKeyFullName", inputfullName)
+//                editorNameHelper.putString("stringKeyNameHelper", inputHelper)
+//                editorPhone.putString("stringKeyPhone", inputPhone)
+//                editorPhoneHelper.putString("stringKeyPhoneHelper", inputPhoneHelper)
+//                editorGoogleUser.putString("stringKeyGoogle","$UID")
+//                editorGoogleUserType.putString("stringKeyGoogleType", "blind")
+//
+//                editorID.apply()
+//                editorFullName.apply()
+//                editorNameHelper.apply()
+//                editorPhone.apply()
+//                editorPhoneHelper.apply()
+//                editorGoogleUser.apply()
+//                editorGoogleUserType.apply()
 
                 saveRegister()
 

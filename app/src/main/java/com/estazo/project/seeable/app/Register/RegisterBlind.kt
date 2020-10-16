@@ -93,7 +93,8 @@ class RegisterBlind : AppCompatActivity() {
                         inputHelper,
                         inputPhoneHelper,
                         13.0000021,
-                        22.0000001
+                        22.0000001,
+                        "no-home"
                     )
                 ref.child(ID.toString()).setValue(test).addOnCompleteListener {
                     Toast.makeText(this,getString(R.string.success_regis),Toast.LENGTH_SHORT).show()

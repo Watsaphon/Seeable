@@ -43,9 +43,9 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var sharedLocationBtn: Button
-    private lateinit var button2: Button
-    private lateinit var button3: Button
-    private lateinit var button4: Button
+    private lateinit var navigationBtn: Button
+    private lateinit var emergencyCallBtn: Button
+    private lateinit var helperCallBtn: Button
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -91,11 +91,9 @@ class MainActivity : AppCompatActivity() {
 
         val homeLocation = sharedPrefHomeLocation.getString("stringKeyHomeLocation","not found!")
         Log.d("checkHome_MainActivity","$homeLocation")
-        if(homeLocation=="not found!"){
+        if(homeLocation=="no-home"){
             alertDialogHomeLocation()
         }
-
-
 
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
@@ -105,9 +103,9 @@ class MainActivity : AppCompatActivity() {
        Log.i("SplashScreenMain", "LoginScreen now language : $stringValue")
 
         sharedLocationBtn = findViewById(R.id.button1)
-        button2 = findViewById(R.id.button2)
-        button3 = findViewById(R.id.button3)
-        button4 = findViewById(R.id.button4)
+        navigationBtn = findViewById(R.id.button2)
+        emergencyCallBtn = findViewById(R.id.button3)
+        helperCallBtn = findViewById(R.id.button4)
         fab = findViewById(R.id.floating_action_button)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -133,19 +131,20 @@ class MainActivity : AppCompatActivity() {
             sendLocation()
 
         }
-        button2.setOnVeryLongClickListener{
+        navigationBtn.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
+            navigation()
             Toast.makeText(this, getString(R.string.button_navigation), Toast.LENGTH_SHORT).show()
         }
-        button3.setOnVeryLongClickListener{
+       emergencyCallBtn.setOnVeryLongClickListener{
             vibrate()
            textToSpeech!!.speak("Emergency Call Activate", TextToSpeech.QUEUE_FLUSH, null)
             emergencyCall()
             Toast.makeText(this, getString(R.string.button_emergency_call), Toast.LENGTH_SHORT).show()
         }
 
-        button4.setOnVeryLongClickListener{
+        helperCallBtn.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Helper Call Activate", TextToSpeech.QUEUE_FLUSH, null)
             helperCall()
@@ -195,12 +194,16 @@ class MainActivity : AppCompatActivity() {
                 val currentNameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
                 val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
                 val currentPhoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
-                Log.d("Debug_sendLocation","$currentID, $currentUsername, $currentPassword , $currentFullName,$currentPhone,$currentNameHelper,$currentPhoneHelper")
+                val currentHomeLocation = sharedPrefHomeLocation.getString("stringKeyHomeLocation", "not found!")
+                Log.d("Debug_sendLocation","$currentID, $currentUsername, $currentPassword , $currentFullName,$currentPhone" +
+                        ",$currentNameHelper,$currentPhoneHelper ,$currentHomeLocation")
+
+
                 val ref = FirebaseDatabase.getInstance().reference
 
                 val post = UserBlinderHelperClass("$currentID", "$currentUsername", "$currentPassword",
                     "$currentFullName","$currentPhone","$currentNameHelper",
-                    "$currentPhoneHelper",location.latitude,location.longitude)
+                    "$currentPhoneHelper",location.latitude,location.longitude,"$currentHomeLocation")
                 val postValues = post.toMap()
                 val childUpdates = hashMapOf<String, Any>("users_blind/$currentID" to postValues)
                 ref.updateChildren(childUpdates)
@@ -329,6 +332,10 @@ class MainActivity : AppCompatActivity() {
         Log.i("MainActivity", "onWindowFocusChanged called")
     }
 
+    private fun navigation() {
+    //do something here
+    }
+
     private fun emergencyCall(){
         val phone = "1112"
         val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phone, null))
@@ -400,6 +407,7 @@ class MainActivity : AppCompatActivity() {
         val editorGoogleUser = sharedPrefGoogle.edit()
         val editorUserType = sharedPrefUserType.edit()
         val editorGoogleUserType = sharedGooglePrefUserType.edit()
+        val editorHomeLocation = sharedPrefHomeLocation.edit()
 
         editorID.putString("stringKey2", "not found!")
         editorUsername.putString("stringKeyUsername", "not found!")
@@ -411,6 +419,7 @@ class MainActivity : AppCompatActivity() {
         editorGoogleUser.putString("stringKeyGoogle", "not found!")
         editorUserType.putString("stringKeyType", "not found!")
         editorGoogleUserType.putString("stringKeyGoogleType", "not found!")
+        editorHomeLocation.putString("stringKeyHomeLocation", "no-home")
 
         editorID.apply()
         editorUsername.apply()
@@ -422,6 +431,7 @@ class MainActivity : AppCompatActivity() {
         editorGoogleUser.apply()
         editorUserType.apply()
         editorGoogleUserType.apply()
+        editorHomeLocation.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
