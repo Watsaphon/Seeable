@@ -14,14 +14,13 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.*
 import android.speech.tts.TextToSpeech
-import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log
 import android.view.*
 import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.ActivityCompat
 import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
 import com.estazo.project.seeable.app.Login.LoginScreen
@@ -29,13 +28,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.location.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 import kotlinx.android.synthetic.main.alert_dialog_profile.view.*
 import java.util.*
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     private lateinit var sharedLocationBtn: Button
     private lateinit var button2: Button
@@ -51,17 +56,19 @@ class MainActivity : AppCompatActivity(){
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPhoneHelper: SharedPreferences
     private lateinit var sharedPrefUsername: SharedPreferences
-
     private lateinit var  mAlertDialog : AlertDialog
-
     private lateinit var sharedPrefGoogle : SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
     private lateinit var sharedGooglePrefUserType : SharedPreferences
+
     //Declaring the needed Variables
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
 
     var textToSpeech: TextToSpeech? = null
+
+    private lateinit var sharedPrefHomeLocation : SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -79,10 +86,20 @@ class MainActivity : AppCompatActivity(){
         sharedPrefPhoneHelper= getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
         sharedGooglePrefUserType = getSharedPreferences("value", 0)
+        sharedPrefHomeLocation = getSharedPreferences("value", 0)
+
+
+        val homeLocation = sharedPrefHomeLocation.getString("stringKeyHomeLocation","not found!")
+        Log.d("checkHome_MainActivity","$homeLocation")
+        if(homeLocation=="not found!"){
+            alertDialogHomeLocation()
+        }
+
+
+
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
         val currentUser = sharedPrefID.getString("stringKey2", "not found!")
-
 
        Log.i("CheckUserID_MainBlind", "Current User ID : $currentUser")
        Log.i("SplashScreenMain", "LoginScreen now language : $stringValue")
@@ -97,10 +114,11 @@ class MainActivity : AppCompatActivity(){
         RequestPermission()
 
 
-        textToSpeech = TextToSpeech(applicationContext, OnInitListener { status ->
-                if (status != TextToSpeech.ERROR) {
-                    textToSpeech!!.language = Locale.US
-                } })
+        textToSpeech = TextToSpeech(applicationContext, TextToSpeech.OnInitListener { status ->
+            if (status != TextToSpeech.ERROR) {
+                textToSpeech!!.language = Locale.US
+            }
+        })
         textToSpeech!!.setSpeechRate(0.9f)
 
         sharedLocationBtn.setOnVeryLongClickListener{
@@ -133,7 +151,7 @@ class MainActivity : AppCompatActivity(){
             helperCall()
          Toast.makeText(this, getString(R.string.button_helper_call), Toast.LENGTH_SHORT).show()
 
-        }
+    }
         fab.setOnClickListener {
             /** PopupMenu dropdown */
             val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
@@ -154,9 +172,8 @@ class MainActivity : AppCompatActivity(){
             popupMenu.show()
         }
 
-
-
     }
+
 
     @SuppressLint("MissingPermission", "DefaultLocale")
     private fun sendLocation(){
@@ -265,6 +282,7 @@ class MainActivity : AppCompatActivity(){
         var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if(requestCode == PERMISSION_ID){
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
@@ -275,6 +293,7 @@ class MainActivity : AppCompatActivity(){
 
     override fun onStart() {
         super.onStart()
+
         Log.i("MainActivity", "onStart called")
     }
 
@@ -356,7 +375,6 @@ class MainActivity : AppCompatActivity(){
         val intent = Intent(this,SettingScreen::class.java)
         startActivity(intent)
     }
-
 
 
     private fun gotoLogout(){
@@ -457,6 +475,39 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
+
+    /** AlertDialog to check Home Location in user_bind  */
+    private fun alertDialogHomeLocation() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_home_location, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        mAlertDialog  = mBuilder.show()
+        mAlertDialog.setCanceledOnTouchOutside(false)
+        mAlertDialog.setCancelable(false)
+        //login button click of custom layout
+        mDialogView.dialogSummitBtn.setOnClickListener {
+//            val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
+//            query.addListenerForSingleValueEvent(valueEventListener)
+//            val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
+//            checkPartnerID = partnerIDBox
+            val intent = Intent(this,SearchLocation::class.java)
+            startActivity(intent)
+        }
+        //logout button click of custom layout
+        mDialogView.dialogLogoutBtn.setOnClickListener {
+            gotoLogout()
+        }
+        //exit button click of custom layout
+        mDialogView.dialogExitBtn.setOnClickListener {
+            finishAffinity()
+        }
+
+    }
+
+
     /** AlertDialog to view profile users_blind  */
     private fun alertDialogProfile() {
         //Inflate the dialog with custom view
@@ -507,6 +558,7 @@ class MainActivity : AppCompatActivity(){
             mAlertDialog.dismiss()
         }
     }
+
 }
 
 

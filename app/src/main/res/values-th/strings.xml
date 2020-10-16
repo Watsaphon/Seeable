@@ -67,6 +67,15 @@
     <string name="pairing_logoutBtn">ออกจากระบบ</string>
     <string name="pairing_exitBtn">ออก</string>
 
+    <!--alertHomeLocation-->
+    <string name="homeLocation_header">ที่อยู่บ้าน</string>
+    <string name="homeLocation_subHeader">เพื่อให้คุณสามารถใช้งานแอพพลิเคชั่นนี้ได้อย่างมีประสิทธิภาพสูงสุด กรุณาตั้งค่าที่อยู่บ้านของคุณก่อนที่จะเริ่มการใช้งานแอพพลิเคชั่นในส่วนที่เหลือทั้งหมด</string>
+    <string name="homeLocation_text_box">กรุณาตั้งค่าที่อยู่บ้านเพื่อเริ่มการใช้งาน</string>
+    <string name="homeLocation_setup">ตั้งค่า</string>
+    <string name="homeLocation_logoutBtn">ออกจากระบบ</string>
+    <string name="homeLocation_exitBtn">ออก</string>
+
+
     <!--MainPerson-->
     <string name="main_person_header">คนดูแล</string>
     <string name="main_mapBtn">เปิดดูแผนที่</string>
@@ -83,7 +92,8 @@
     <string name="main_blind_name_helper">ชื่อผู้ดูแล :</string>
     <string name="main_blind_phone_helper">เบอร์โทรศัพท์ผู้ดูแล :</string>
 
-
+    <string name="search_box">ค้นหา...</string>
+    <string name="search_btn">ยืนยันที่อยู่</string>
 
 
 </resources>

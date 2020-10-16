@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">SeeAble</string>
+    <string name="map_key" translatable="false">AIzaSyBsTGyPIQmdXk_SqIa5q-DkBDvakeqv6-E</string>
     <string name="title_register">Register for Blind</string>
     <string name="finish_button">Finish</string>
     <string name="header_regis_blind">Register for Blind</string>
@@ -68,6 +69,17 @@
     <string name="pairing_logoutBtn">Log Out</string>
     <string name="pairing_exitBtn">Exit</string>
 
+    <!--alertHomeLocation-->
+    <string name="homeLocation_header">Home Location</string>
+    <string name="homeLocation_subHeader">So that you can use this application most effectively.
+        Please set up your home address before starting to use the rest of the app.
+    </string>
+    <string name="homeLocation_text_box">Please set up home address to get started.</string>
+    <string name="homeLocation_setup">Set up</string>
+    <string name="homeLocation_logoutBtn">Log Out</string>
+    <string name="homeLocation_exitBtn">Exit</string>
+
+
     <!--MainPerson-->
     <string name="main_person_header">Main Person</string>
     <string name="main_mapBtn">Open Google map</string>
@@ -85,5 +97,7 @@
     <string name="main_blind_name_helper">Name Helper :</string>
     <string name="main_blind_phone_helper">Phone Helper :</string>
 
-
+    <!--SearchLocation-->
+    <string name="search_box">Search...</string>
+    <string name="search_btn">Confirm Location</string>
 </resources>
