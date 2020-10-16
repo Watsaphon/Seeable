@@ -161,8 +161,6 @@ class SelectRegister : AppCompatActivity() {
     }
 
 
-
-
     private fun changeLanguage(){
         val language = sharedPrefLanguage.getString("stringKey", "not found!")
         Log.i("SelectRegister", "Now Language is :$language ")

@@ -35,7 +35,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 import kotlinx.android.synthetic.main.alert_dialog_profile.view.*
 import java.util.*
@@ -333,7 +336,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigation() {
-    //do something here
+        val currentUser = sharedPrefID.getString("stringKey2", "not found!")
+        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$currentUser").orderByChild("id")
+        query.addListenerForSingleValueEvent(valueEventListenerNavigation)
     }
 
     private fun emergencyCall(){
@@ -567,6 +572,27 @@ class MainActivity : AppCompatActivity() {
         mDialogView.dialogCloseBtn.setOnClickListener {
             mAlertDialog.dismiss()
         }
+    }
+
+    /** Navigation to home in Google Map  */
+    private var valueEventListenerNavigation: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val homeLocation = sharedPrefHomeLocation.getString("stringKeyHomeLocation","not found!")
+            if (dataSnapshot.exists()) {
+                val homeLocationFB = dataSnapshot.child("homeLocation").value.toString()
+                Log.d("Direction","homeLocationFB  = $homeLocationFB ")
+                if (homeLocation == homeLocationFB) {
+                    // Navigation : current place direct to gmmIntentUri
+                    val gmmIntentUri = Uri.parse("google.navigation:q=$homeLocation&mode=w&avoid=thf")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                    mapIntent.setPackage("com.google.android.apps.maps")
+                    mapIntent.resolveActivity(packageManager)?.let {
+                        startActivity(mapIntent)
+                    }
+                }
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
     }
 
 }
