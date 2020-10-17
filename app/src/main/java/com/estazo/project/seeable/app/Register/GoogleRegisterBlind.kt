@@ -97,14 +97,14 @@ class GoogleRegisterBlind : AppCompatActivity() {
             Log.i("comeiei"," ID : $ID , UID : $UID")
                 val test = UserBlinderHelperClass(
                         UID,
-                        "-",
-                        "-",
+                        "not found!",
+                        "not found!",
                         inputfullName,
                         inputPhone,
                         inputHelper,
                         inputPhoneHelper,
-                        13.0000021,
-                        22.0000001,
+                    13.7267346,
+                    100.7751312,
                     "no-home"
                     )
                 ref.child(UID).setValue(test).addOnCompleteListener {

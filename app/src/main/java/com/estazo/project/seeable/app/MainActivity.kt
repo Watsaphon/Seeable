@@ -159,6 +159,7 @@ class MainActivity : AppCompatActivity() {
             val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.menu.findItem(R.id.action_profile).isVisible = true
+            popupMenu.menu.findItem(R.id.action_delete_home_location).isVisible = true
             popupMenu.menu.findItem(R.id.action_logout).isVisible = true
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
@@ -166,6 +167,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.action_change_language -> changeLanguage()
                     R.id.action_settings -> gotoSetting()
                     R.id.action_profile -> alertDialogProfile()
+                    R.id.action_delete_home_location -> gotoChangeHomeLocation()
                     R.id.action_logout -> gotoLogout()
                 }
                 hideSystemUI()
@@ -299,7 +301,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
         Log.i("MainActivity", "onStart called")
     }
 
@@ -388,6 +389,30 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun gotoChangeHomeLocation(){
+        val currentID = sharedPrefID.getString("stringKey2", "not found!")
+        val currentUsername = sharedPrefUsername.getString("stringKeyUsername", "not found!")
+        val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
+        val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
+        val currentNameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
+        val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
+        val currentPhoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
+
+        val ref = FirebaseDatabase.getInstance().reference
+
+        val post = UserBlinderHelperClass("$currentID", "$currentUsername", "$currentPassword",
+            "$currentFullName","$currentPhone","$currentNameHelper",
+            "$currentPhoneHelper",13.7267346,100.7751312,"no-home")
+        val postValues = post.toMap()
+        val childUpdates = hashMapOf<String, Any>("users_blind/$currentID" to postValues)
+        ref.updateChildren(childUpdates)
+
+        val editorHomeLocation = sharedPrefHomeLocation.edit()
+        editorHomeLocation.putString("stringKeyHomeLocation", "no-home")
+        editorHomeLocation.apply()
+
+        alertDialogHomeLocation()
+    }
 
     private fun gotoLogout(){
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()

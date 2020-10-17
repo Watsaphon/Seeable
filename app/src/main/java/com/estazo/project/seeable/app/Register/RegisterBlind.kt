@@ -92,8 +92,8 @@ class RegisterBlind : AppCompatActivity() {
                         inputPhone,
                         inputHelper,
                         inputPhoneHelper,
-                        13.0000021,
-                        22.0000001,
+                        13.7267346,
+                        100.7751312,
                         "no-home"
                     )
                 ref.child(ID.toString()).setValue(test).addOnCompleteListener {

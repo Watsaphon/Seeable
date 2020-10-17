@@ -56,6 +56,7 @@ class LoginScreen : AppCompatActivity() {
     private lateinit var sharedPrefPhoneHelper: SharedPreferences
     private lateinit var sharedPrefUsername: SharedPreferences
     private lateinit var sharedPrefHomeLocation: SharedPreferences
+    private lateinit var sharedPrefPartnerID: SharedPreferences
 
     private lateinit var sharedPrefUserType: SharedPreferences
     private lateinit var sharedPrefGoogle : SharedPreferences
@@ -91,6 +92,7 @@ class LoginScreen : AppCompatActivity() {
         sharedPrefGoogle  = getSharedPreferences("value", 0)
         sharedGooglePrefUserType = getSharedPreferences("value", 0)
         sharedPrefHomeLocation = getSharedPreferences("value", 0)
+        sharedPrefPartnerID = getSharedPreferences("value", 0)
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
         val stringValue2 = sharedPrefID.getString("stringKey2", "not found!")
@@ -166,6 +168,7 @@ class LoginScreen : AppCompatActivity() {
     }
 
     private fun login() {
+        closeKeyboard()
         alertDialogLoading()
         val query = FirebaseDatabase.getInstance().getReference("users_person").orderByChild("id")
         query.addListenerForSingleValueEvent(valueEventListener)
@@ -336,24 +339,46 @@ class LoginScreen : AppCompatActivity() {
                     val password = snapshot.child("password").value.toString()
                     val phone = snapshot.child("phone").value.toString()
                     val username = snapshot.child("username").value.toString()
+                    val partnerIDFirebase = snapshot.child("partner_id").value.toString()
 
                     Log.i("LoginScreen_count","In onDataChange, count=$count")
                     Log.i("LoginScreen_count", "Username : $loginName , Password : $loginPassword")
-                    Log.i("LoginScreen_count", "Database info :  $id,$password,$username,$fullname,$phone")
+                    Log.i("LoginScreen_count", "Database info :  $id,$password,$username,$fullname,$phone ,$partnerIDFirebase")
 
                     if (loginName.equals(username) && loginPassword.equals(password)){
                         var editorID = sharedPrefID.edit()
-                        editorID.putString("stringKey2", id)
-                        editorID.apply()
-
+                        val editorUsername = sharedPrefUsername.edit()
+                        val editorPassword = sharedPrefPassword.edit()
+                        val editorFullName = sharedPrefFullName.edit()
+                        val editorPhone = sharedPrefPhone.edit()
                         var editorUserType = sharedPrefUserType.edit()
+                        val editorPartnerID = sharedPrefPartnerID.edit()
+
+                        editorID.putString("stringKey2", id)
+                        editorUsername.putString("stringKeyUsername", username)
+                        editorPassword.putString("stringKeyPassword", password)
+                        editorFullName.putString("stringKeyFullName", fullname)
+                        editorPhone.putString("stringKeyPhone", phone)
                         editorUserType.putString("stringKeyType", "person")
+                        editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
+
+                        editorID.apply()
+                        editorUsername.apply()
+                        editorPassword.apply()
+                        editorFullName.apply()
+                        editorPhone.apply()
                         editorUserType.apply()
+                        editorPartnerID.apply()
 
                         dismissAlertDialogLoading()
-                        /** Check user pair with blinder */
-                        val query = FirebaseDatabase.getInstance().getReference("users_person").child("$id").orderByChild("partner_id")
-                        query.addListenerForSingleValueEvent(valueEventListenerCheckUserPairing)
+
+                        val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
+                        startActivity(intent)
+                        dismissAlertDialogLoading()
+
+//                        /** Check user pair with blinder */
+//                        val query = FirebaseDatabase.getInstance().getReference("users_person").child("$id").orderByChild("partner_id")
+//                        query.addListenerForSingleValueEvent(valueEventListenerCheckUserPairing)
                         break
                     }
                     else if (loginName.isEmpty()  || loginPassword.isEmpty() ) {
@@ -399,7 +424,6 @@ class LoginScreen : AppCompatActivity() {
 
                     if (loginName.equals(username) && loginPassword.equals(password)){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                        closeKeyboard()
                         val editorID = sharedPrefID.edit()
                         val editorUsername = sharedPrefUsername.edit()
                         val editorPassword = sharedPrefPassword.edit()
@@ -418,7 +442,7 @@ class LoginScreen : AppCompatActivity() {
                         editorPhone.putString("stringKeyPhone", phone)
                         editorPhoneHelper.putString("stringKeyPhoneHelper", phoneHelper)
                         editorUserType.putString("stringKeyType", "blind")
-                        editorHomeLocation.putString("stringKeyHomeLocation", "no-home")
+                        editorHomeLocation.putString("stringKeyHomeLocation", homeLocation)
 
                         editorID.apply()
                         editorUsername.apply()
@@ -456,37 +480,6 @@ class LoginScreen : AppCompatActivity() {
         override fun onCancelled(databaseError: DatabaseError) {}
     }
 
-    /** Check User pair with blinder */
-    private var valueEventListenerCheckUserPairing: ValueEventListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            if (dataSnapshot.exists()) {
-                val partnerIDFirebase = dataSnapshot.child("partner_id").value.toString()
-                Log.d("checkPairing_login","$partnerIDFirebase")
-                val sharedPrefPartnerID = getSharedPreferences("value", 0)
-                val editorPartnerID = sharedPrefPartnerID.edit()
-
-                if (partnerIDFirebase != "no-pairing") {
-                    Log.d("checkPairing_login","$partnerIDFirebase")
-                    Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                    editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
-                    editorPartnerID.apply()
-                    val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
-                    startActivity(intent)
-                    dismissAlertDialogLoading()
-                }
-                else if(partnerIDFirebase== "no-pairing"){
-                    Log.d("checkPairing_login","$partnerIDFirebase")
-                    Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-                    editorPartnerID.putString("stringKeyPartnerID", "no-pairing")
-                    editorPartnerID.apply()
-                    val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
-                    startActivity(intent)
-                    dismissAlertDialogLoading()
-                }
-            }
-        }
-        override fun onCancelled(databaseError: DatabaseError) {}
-    }
 
     /**receive value from realtime database (user_person) and check Login Google User*/
     private var valueEventListenerCheckGoogleUserPerson : ValueEventListener = object : ValueEventListener {
@@ -496,23 +489,28 @@ class LoginScreen : AppCompatActivity() {
             if (dataSnapshot.exists()) {
                 for (snapshot in dataSnapshot.children) {
                     val id = snapshot.child("id").value.toString()
+                    val partnerIDFirebase = snapshot.child("partner_id").value.toString()
                     Log.i("LoginScreen_countG","In onDataChange, count=$count")
                     if (UID == id){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
 
                         val editorGoogleUser = sharedPrefGoogle.edit()
                         val editorGoogleUserType = sharedGooglePrefUserType.edit()
+                        val editorPartnerID = sharedPrefPartnerID.edit()
 
                         editorGoogleUser.putString("stringKeyGoogle","$UID")
                         editorGoogleUserType.putString("stringKeyGoogleType", "person")
+                        editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
 
                         editorGoogleUser.apply()
                         editorGoogleUserType.apply()
+                        editorPartnerID.apply()
 
-                        /** Check user pair with blinder */
-                        val query = FirebaseDatabase.getInstance().getReference("users_person").child("$id").orderByChild("partner_id")
-                        query.addListenerForSingleValueEvent(valueEventListenerCheckUserPairing)
-                        break
+                    val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
+                    startActivity(intent)
+                    dismissAlertDialogLoading()
+
+                    break
                     }
                     ++count
                 }
@@ -594,5 +592,43 @@ class LoginScreen : AppCompatActivity() {
         }
         override fun onCancelled(databaseError: DatabaseError) {}
     }
+
+
+    /** Check user pair with blinder */
+//    val query = FirebaseDatabase.getInstance().getReference("users_person").child("$id").orderByChild("partner_id")
+//    query.addListenerForSingleValueEvent(valueEventListenerCheckUserPairing)
+
+    /** Check User pair with blinder ( check at only one user not all ) */
+//    private var valueEventListenerCheckUserPairing: ValueEventListener = object : ValueEventListener {
+//        override fun onDataChange(dataSnapshot: DataSnapshot) {
+//            if (dataSnapshot.exists()) {
+//                val partnerIDFirebase = dataSnapshot.child("partner_id").value.toString()
+//                Log.d("checkPairing_login","$partnerIDFirebase")
+//                val sharedPrefPartnerID = getSharedPreferences("value", 0)
+//                val editorPartnerID = sharedPrefPartnerID.edit()
+//
+//                if (partnerIDFirebase != "no-pairing") {
+//                    Log.d("checkPairing_login","$partnerIDFirebase")
+//                    Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+//                    editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
+//                    editorPartnerID.apply()
+//                    val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
+//                    startActivity(intent)
+//                    dismissAlertDialogLoading()
+//                }
+//                else if(partnerIDFirebase== "no-pairing"){
+//                    Log.d("checkPairing_login","$partnerIDFirebase")
+//                    Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+//                    editorPartnerID.putString("stringKeyPartnerID", "no-pairing")
+//                    editorPartnerID.apply()
+//                    val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
+//                    startActivity(intent)
+//                    dismissAlertDialogLoading()
+//                }
+//            }
+//        }
+//        override fun onCancelled(databaseError: DatabaseError) {}
+//    }
+
 }
 

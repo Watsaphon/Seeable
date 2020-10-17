@@ -87,12 +87,14 @@ class MainActivityPerson : AppCompatActivity() {
             /** PopupMenu dropdown */
             val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.menu.findItem(R.id.action_delete_partnerID).isVisible = true
             popupMenu.menu.findItem(R.id.action_logout).isVisible = true
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_about -> gotoAbout()
                     R.id.action_change_language -> changeLanguage()
                     R.id.action_settings -> gotoSetting()
+                    R.id.action_delete_partnerID -> gotoChangePartnerID()
                     R.id.action_logout -> gotoLogout()
                 }
                 hideSystemUI()
@@ -148,6 +150,30 @@ class MainActivityPerson : AppCompatActivity() {
     private fun gotoSetting(){
         val intent = Intent(this,SettingScreen::class.java)
         startActivity(intent)
+    }
+
+    private fun gotoChangePartnerID(){
+
+        val currentID = sharedPrefID.getString("stringKey2", "not found!")
+        val currentUsername = sharedPrefUsername.getString("stringKeyUsername", "not found!")
+        val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
+        val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
+        val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
+
+        val ref = FirebaseDatabase.getInstance().reference
+
+        val post = UserPersonHelperClass("$currentID", "$currentUsername", "$currentPassword",
+            "$currentFullName","$currentPhone","no-pairing")
+        val postValues = post.toMap()
+        val childUpdates = hashMapOf<String, Any>("users_person/$currentID" to postValues)
+        ref.updateChildren(childUpdates)
+
+        val editorPartnerID = sharedPrefPartnerID.edit()
+        editorPartnerID.putString("stringKeyPartnerID", "no-pairing")
+        editorPartnerID.apply()
+
+        alertDialogPairing()
+
     }
 
     private fun gotoLogout(){

@@ -27,8 +27,11 @@
     <string name="action_about">About</string>
     <string name="action_change_language">Change Language</string>
     <string name="action_other">Other</string>
+    <string name="action_delete_home_location">Delete Home Location</string>
+    <string name="action_delete_partnerID">Delete Partner ID</string>
     <string name="action_profile">View Profile</string>
     <string name="action_logout">Log out</string>
+
 
 
     <!--RegisterPerson-->

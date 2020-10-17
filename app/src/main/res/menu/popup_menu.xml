@@ -21,6 +21,19 @@
         />
 
     <item
+        android:id="@+id/action_delete_home_location"
+        android:title="@string/action_delete_home_location"
+        android:visible="false"
+        />
+
+    <item
+        android:id="@+id/action_delete_partnerID"
+        android:title="@string/action_delete_partnerID"
+        android:visible="false"
+        />
+
+
+    <item
         android:id="@+id/action_logout"
         android:title="@string/action_logout"
         android:visible="false"

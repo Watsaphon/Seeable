@@ -68,8 +68,8 @@ class GoogleRegisterPerson : AppCompatActivity() {
                 val ID = ref.push().key
                 val test = UserPersonHelperClass(
                     UID,
-                    "-",
-                    "-",
+                    "not found!",
+                    "not found!",
                     inputfullName,
                     inputPhone,
                     "no-pairing")

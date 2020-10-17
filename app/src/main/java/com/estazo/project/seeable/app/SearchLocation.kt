@@ -129,7 +129,6 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
 
                 val ref = FirebaseDatabase.getInstance().reference
 
-
                 val post = UserBlinderHelperClass("$currentID", "$currentUsername", "$currentPassword",
                     "$currentFullName","$currentPhone","$currentNameHelper",
                     "$currentPhoneHelper",lat.toDouble(),long.toDouble(),"$homeLocation")

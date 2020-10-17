@@ -26,6 +26,8 @@
     <string name="action_about">เกี่ยวกับ</string>
     <string name="action_change_language">เปลี่ยนภาษา</string>
     <string name="action_other">อื่นๆ</string>
+    <string name="action_delete_home_location">ลบที่อยู่บ้าน</string>
+    <string name="action_delete_partnerID">ลบ ID คนตาบอดที่จับคู่อยู่</string>
     <string name="action_profile">ดูประวัติส่วนตัว</string>
     <string name="action_logout">ออกจากระบบ</string>
 
