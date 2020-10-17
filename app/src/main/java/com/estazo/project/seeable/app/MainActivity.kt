@@ -561,12 +561,12 @@ class MainActivity : AppCompatActivity() {
 
         val googleUserType = sharedGooglePrefUserType.getString("stringKeyGoogleType","not found!")
 
-        var idText : TextView =  mDialogView.findViewById(R.id.blinderID)
-        var usernameText : TextView =  mDialogView.findViewById(R.id.blinderUsername)
-        var fullNameText : TextView =  mDialogView.findViewById(R.id.blinderFullName)
-        var phoneText : TextView =  mDialogView.findViewById(R.id.blinderPhone)
-        var nameHelperText : TextView =  mDialogView.findViewById(R.id.blinderNameHelper)
-        var phoneHelperText : TextView =  mDialogView.findViewById(R.id.blinderPhoneHelper)
+        val idText : TextView =  mDialogView.findViewById(R.id.blinderID)
+        val usernameText : TextView =  mDialogView.findViewById(R.id.blinderUsername)
+        val fullNameText : TextView =  mDialogView.findViewById(R.id.blinderFullName)
+        val phoneText : TextView =  mDialogView.findViewById(R.id.blinderPhone)
+        val nameHelperText : TextView =  mDialogView.findViewById(R.id.blinderNameHelper)
+        val phoneHelperText : TextView =  mDialogView.findViewById(R.id.blinderPhoneHelper)
 
         val id = sharedPrefID.getString("stringKey2", "not found!")
         val username =  sharedPrefUsername.getString("stringKeyUsername", "not found!")
@@ -577,8 +577,8 @@ class MainActivity : AppCompatActivity() {
 
         if(googleUserType == "blind"){
             idText.text = getString(R.string.main_blind_id)+" $id "
-            phoneText.text = getString(R.string.main_blind_fullName)+"$fullName "
-            fullNameText.text = getString(R.string.main_blind_phone)+"$phone "
+            fullNameText.text = getString(R.string.main_blind_fullName)+"$fullName "
+            phoneText.text = getString(R.string.main_blind_phone)+"$phone "
             nameHelperText.text =getString(R.string.main_blind_name_helper)+ "$nameHelper "
             phoneHelperText.text = getString(R.string.main_blind_phone_helper)+"$phoneHelper "
         }
@@ -586,8 +586,8 @@ class MainActivity : AppCompatActivity() {
             usernameText.visibility = View.VISIBLE
             idText.text = getString(R.string.main_blind_id)+" $id "
             usernameText.text = getString(R.string.main_blind_username)+"$username "
-            phoneText.text = getString(R.string.main_blind_fullName)+"$fullName "
-            fullNameText.text = getString(R.string.main_blind_phone)+"$phone "
+            fullNameText.text = getString(R.string.main_blind_fullName)+"$fullName "
+            phoneText.text = getString(R.string.main_blind_phone)+"$phone "
             nameHelperText.text =getString(R.string.main_blind_name_helper)+ "$nameHelper "
             phoneHelperText.text = getString(R.string.main_blind_phone_helper)+"$phoneHelper "
         }
