@@ -48,6 +48,7 @@ class LoginScreen : AppCompatActivity() {
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var auth: FirebaseAuth
 
+    private lateinit var sharedPrefIntroApp: SharedPreferences
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefFullName: SharedPreferences
     private lateinit var sharedPrefNameHelper: SharedPreferences
@@ -79,6 +80,14 @@ class LoginScreen : AppCompatActivity() {
         register = findViewById(R.id.regis_button)
         fab = findViewById(R.id.floating_action_button)
         auth = FirebaseAuth.getInstance()
+
+        sharedPrefIntroApp = getSharedPreferences("value", 0)
+        val introApp = sharedPrefIntroApp.getString("stringKeyIntro", "No")
+        if(introApp =="No"){
+            val editor = sharedPrefIntroApp.edit()
+            editor.putString("stringKeyIntro","YES")
+            editor.apply()
+        }
 
         sharedPrefLanguage = getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)

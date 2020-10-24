@@ -33,7 +33,6 @@
     <string name="action_logout">Log out</string>
 
 
-
     <!--RegisterPerson-->
     <string name="username_box_person">Please insert person Username.</string>
     <string name="password_box_person">Please insert person Password.</string>
@@ -103,4 +102,20 @@
     <!--SearchLocation-->
     <string name="search_box">Search...</string>
     <string name="search_btn">Confirm Location</string>
+
+    <!--InroduceApp-->
+    <string name="header_intro">What is Seeable ?</string>
+    <string name="language_intro">EN | TH</string>
+    <string name="next_intro_btn">Next ></string>
+    <string name="skip_intro_btn">Skip</string>
+    <string name="subheading_slide_page_1">Seeable is an app that help blinds to warn dangers and obstacles.</string>
+    <string name="content_page_1">this make sightless people more safety.</string>
+    <string name="subheading_slide_page_2">When we see dangers or obstacles. We “alert” by voice to you and tell any necessary things in front of blinds.</string>
+    <string name="content_page_2">Supported language : Thai, English</string>
+    <string name="subheading_slide_page_3">When you have accident and fall down, device will call for help and send notification to caretaker.</string>
+    <string name="content_page_3">All of information, event and critical situation will send to caretaker to deal with.</string>
+    <string name="subheading_slide_page_4">Blinds can use the app to call and navigate to their home.</string>
+    <string name="content_page_4">The app has buttons to let blinds can use for call, navigate or send event to caretaker.</string>
+    <string name="subheading_slide_page_5">Caretakers receive event or status of blind person that in cover</string>
+    <string name="content_page_5">Caretakers can see data and event that sent from blinds and response or help them.</string>
 </resources>

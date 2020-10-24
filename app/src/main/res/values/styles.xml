@@ -39,6 +39,10 @@
         <item name="android:background">@android:color/holo_blue_light</item>
     </style>
 
+    <style name="UnderLine">
+        <item name="android:textColor">#3498db</item>
+        <item name="android:background">@drawable/under_line</item>
+    </style>
 
 
 </resources>

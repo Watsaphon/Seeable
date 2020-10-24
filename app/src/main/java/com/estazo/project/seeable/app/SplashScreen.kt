@@ -35,6 +35,10 @@ class SplashScreen : AppCompatActivity() {
         Log.i("test", "onCreate() call")
 
         /**Shared Preferences เป็นคลาสที่ใช้สำหรับเก็บข้อมูลถาวรที่เป็นค่าของตัวแปรธรรมดาๆ อย่างเช่น Boolean,Int,Float*/
+        val sharedPrefIntroApp = getSharedPreferences("value", 0)
+        val introApp = sharedPrefIntroApp.getString("stringKeyIntro", "No")
+
+
         val sharedPrefLanguage = getSharedPreferences("value", 0)
         val language = sharedPrefLanguage.getString("stringKey", "en")
         val editor = sharedPrefLanguage.edit()
@@ -92,50 +96,57 @@ class SplashScreen : AppCompatActivity() {
         Log.i("CheckUserTypes_plash", "Now User Type is :$userType")
 
         Log.i("checkStatus"," login : $login , userType : $userType , userGoogle : $userGoogle , googleUserType : $googleUserType ")
-        if(login != "not found!" && userType != "not found!" ){
-            if(userType== "person"){
-                Handler().postDelayed({
-                    startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
-                    finishAffinity()
-                }, 1000)
-            }
-            else if (userType== "blind"){
-                Handler().postDelayed({
-                    startActivity(Intent(this@SplashScreen, MainActivity::class.java))
-                    finishAffinity()
-                }, 1000)
-            }
+        Log.i("CheckFirst_splash", "First Login :$introApp")
+        if(introApp == "No"){
+            Handler().postDelayed({
+                startActivity(Intent(this@SplashScreen, IntroduceApp::class.java))
+                finishAffinity()
+            }, 1000)
         }
-        else if(userGoogle != "not found!" && googleUserType != "not found!" ){
-            when (googleUserType) {
-                "person" -> {
+       else{
+            if(login != "not found!" && userType != "not found!" ){
+                if(userType== "person"){
                     Handler().postDelayed({
                         startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
                         finishAffinity()
                     }, 1000)
                 }
-                "blind" -> {
+                else if (userType== "blind"){
                     Handler().postDelayed({
                         startActivity(Intent(this@SplashScreen, MainActivity::class.java))
                         finishAffinity()
                     }, 1000)
                 }
-                "noRegister" -> {
-                    Handler().postDelayed({
-                        startActivity(Intent(this@SplashScreen, SelectRegister::class.java))
-                        finishAffinity()
-                    }, 1000)
+            }
+            else if(userGoogle != "not found!" && googleUserType != "not found!" ){
+                when (googleUserType) {
+                    "person" -> {
+                        Handler().postDelayed({
+                            startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
+                            finishAffinity()
+                        }, 1000)
+                    }
+                    "blind" -> {
+                        Handler().postDelayed({
+                            startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+                            finishAffinity()
+                        }, 1000)
+                    }
+                    "noRegister" -> {
+                        Handler().postDelayed({
+                            startActivity(Intent(this@SplashScreen, SelectRegister::class.java))
+                            finishAffinity()
+                        }, 1000)
+                    }
                 }
             }
+            else{
+                Handler().postDelayed({
+                    startActivity(Intent(this@SplashScreen, LoginScreen::class.java))
+                    finishAffinity()
+                }, 1000)
+            }
         }
-        else{
-            Handler().postDelayed({
-                startActivity(Intent(this@SplashScreen, LoginScreen::class.java))
-                finishAffinity()
-            }, 1000)
-        }
-
-
 
     }
 

@@ -94,8 +94,24 @@
     <string name="main_blind_name_helper">ชื่อผู้ดูแล :</string>
     <string name="main_blind_phone_helper">เบอร์โทรศัพท์ผู้ดูแล :</string>
 
+    <!--SearchLocation-->
     <string name="search_box">ค้นหา...</string>
     <string name="search_btn">ยืนยันที่อยู่</string>
 
 
+    <!--InroduceApp-->
+    <string name="header_intro">Seeable คืออะไร</string>
+    <string name="language_intro">EN | TH</string>
+    <string name="next_intro_btn">ต่อไป ></string>
+    <string name="skip_intro_btn">ข้าม</string>
+    <string name="subheading_slide_page_1">SeeAble เป็นแอพพลิเคชั่นที่ช่วยแจ้งเตือนอันตรายและสิ่งกีดขวางให้กับคนตาบอด</string>
+    <string name="content_page_1">แอพพลิเคชั่นนี้จะช่วยให้คนตาบอดมีความปลอดภัยเพิ่มมากขึ้น</string>
+    <string name="subheading_slide_page_2">เมื่อเราตรวจพบอันตรายหรือสิ่งกีดขวาง เราจะแจ้งเตือนคุณด้วยเสียงและบอกสิ่งที่จำเป็นต่อคนตาบอด</string>
+    <string name="content_page_2">ภาษาที่รองรับ : ไทย,อังกฤษ</string>
+    <string name="subheading_slide_page_3">เมื่อคุณเกิดอุบัติเหตุและล้มลง อุปกรณ์จะโทรออกเพื่อขอความช่วยเหลือและส่งข้อความแจ้งเตือนให้แก่ผู้ดูแล</string>
+    <string name="content_page_3">ข้อมูลทั้งหมดรวมถึงเหตุการณ์ต่างๆและสถานการณ์วิกฤตจะถูกส่งไปยังผู้ดูแลที่คุณผูกไว้</string>
+    <string name="subheading_slide_page_4">คนตาบอดสามารถใช้แอพพลิเคชั่นเพื่อโทรออกและนำทางกลับไปสู่บ้านได้</string>
+    <string name="content_page_4">แอพพลิเคชั่นจะมีปุ่มไว้สำหรับให้คนตาบอดใช้เพื่อโทรออก,นำทางกลับบ้านหรือส่งข้อมูลเหตุการณ์ต่างๆให้กับผู้ดูแลได้</string>
+    <string name="subheading_slide_page_5">ผู้ดูแลจะได้รับข้อมูลเหตุการณ์หรือสถานะของคนตาบอดที่ผูกกันไว้</string>
+    <string name="content_page_5">ผู้ดูแลสามารถดูข้อมูลและข้อมูลเหตุการณ์ที่ส่งมาจากคนตาบอดและตอบกลับหรือช่วยเหลือคนตาบอดได้</string>
 </resources>
