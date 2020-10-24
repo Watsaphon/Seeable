@@ -165,7 +165,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="17dp"
-        android:gravity="top"
+        android:gravity="center"
         android:text="@string/language_intro"
         android:textSize="18dp"
         android:textColor="#FFFFFF"

@@ -5,7 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,6 +18,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -65,6 +70,7 @@ class LoginScreen : AppCompatActivity() {
 
     private lateinit var  mAlertDialog : AlertDialog
     private lateinit var UID : String
+    private lateinit var changeLang : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,9 +84,8 @@ class LoginScreen : AppCompatActivity() {
         passwordBox = findViewById(R.id.password_box)
         finish = findViewById(R.id.login_finish_button)
         register = findViewById(R.id.regis_button)
-        fab = findViewById(R.id.floating_action_button)
         auth = FirebaseAuth.getInstance()
-
+        changeLang = findViewById(R.id.en_th)
         sharedPrefIntroApp = getSharedPreferences("value", 0)
         val introApp = sharedPrefIntroApp.getString("stringKeyIntro", "No")
         if(introApp =="No"){
@@ -88,6 +93,8 @@ class LoginScreen : AppCompatActivity() {
             editor.putString("stringKeyIntro","YES")
             editor.apply()
         }
+
+
 
         sharedPrefLanguage = getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
@@ -102,6 +109,24 @@ class LoginScreen : AppCompatActivity() {
         sharedGooglePrefUserType = getSharedPreferences("value", 0)
         sharedPrefHomeLocation = getSharedPreferences("value", 0)
         sharedPrefPartnerID = getSharedPreferences("value", 0)
+
+
+        val text = "EN|TH"
+        val ssb = SpannableStringBuilder(text)
+        val fcsWhite = ForegroundColorSpan(Color.WHITE)
+        val fcsGreen = ForegroundColorSpan(Color.GREEN)
+
+        val language = sharedPrefLanguage.getString("stringKey", "not found!")
+        if(language == "en"){
+            ssb.setSpan(fcsWhite, 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            ssb.setSpan(fcsGreen, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            changeLang.text = ssb
+        }
+        else if(language =="th"){
+            ssb.setSpan(fcsWhite, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            ssb.setSpan(fcsGreen, 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            changeLang.text = ssb
+        }
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
         val stringValue2 = sharedPrefID.getString("stringKey2", "not found!")
@@ -119,21 +144,7 @@ class LoginScreen : AppCompatActivity() {
         finish.setOnClickListener(View.OnClickListener { login() })
         signInButton.setOnClickListener(View.OnClickListener { signIn() })
         register.setOnClickListener(View.OnClickListener { register() })
-        fab.setOnClickListener {
-            /** PopupMenu dropdown */
-            val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
-            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.action_about -> gotoAbout()
-                    R.id.action_change_language -> changeLanguage()
-                    R.id.action_settings -> gotoSetting()
-                }
-                hideSystemUI()
-                true
-            }
-            popupMenu.show()
-        }
+        changeLang.setOnClickListener(View.OnClickListener { changeLanguage() })
     }
 
     override fun onStart() {

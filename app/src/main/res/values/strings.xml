@@ -54,13 +54,16 @@
     <string name="content_2">Supported language : Thai,English.</string>
 
     <!--LoginScreen-->
-    <string name="Login_heading">Log in</string>
-    <string name="Login_button">Finish</string>
+    <string name="Login_heading">LOGIN</string>
+    <string name="Login_button">Login</string>
     <string name="login_success">Login Success</string>
     <string name="login_empty">Please Enter Username or Password</string>
     <string name="login_incorrect">Username or Password Incorrect</string>
-    <string name="or">OR</string>
-    <string name="register_login_button">REGISTER</string>
+    <string name="or">or</string>
+    <string name="register_login_button">Sign up</string>
+    <string name="forgot_password">Forgot your password ?</string>
+    <string name="register_text">You are the new one ?</string>
+
 
     <!--alertPairing-->
     <string name="pairing_header">Pairing</string>
