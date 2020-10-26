@@ -1,5 +1,6 @@
 package com.estazo.project.seeable.app.Login
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -11,17 +12,12 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
 import com.estazo.project.seeable.app.*
 import com.estazo.project.seeable.app.Register.SelectRegister
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -40,7 +36,7 @@ import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
-class LoginScreen : AppCompatActivity() {
+open class LoginScreen : AppCompatActivity() {
 
     private lateinit var userNameBox: EditText
     private lateinit var passwordBox: EditText
@@ -72,6 +68,7 @@ class LoginScreen : AppCompatActivity() {
     private lateinit var UID : String
     private lateinit var changeLang : TextView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_screen)
@@ -93,7 +90,6 @@ class LoginScreen : AppCompatActivity() {
             editor.putString("stringKeyIntro","YES")
             editor.apply()
         }
-
 
 
         sharedPrefLanguage = getSharedPreferences("value", 0)
@@ -121,11 +117,18 @@ class LoginScreen : AppCompatActivity() {
             ssb.setSpan(fcsWhite, 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             ssb.setSpan(fcsGreen, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             changeLang.text = ssb
+
+            val textView = signInButton.getChildAt(0) as TextView
+            textView.text = "Sign in with Google "
+
         }
         else if(language =="th"){
             ssb.setSpan(fcsWhite, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             ssb.setSpan(fcsGreen, 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             changeLang.text = ssb
+
+            val textView = signInButton.getChildAt(0) as TextView
+            textView.text = " เข้าสู่ระบบด้วย Google "
         }
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")

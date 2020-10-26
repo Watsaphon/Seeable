@@ -6,32 +6,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="@color/colorAccent"
+    android:background="#FFFFFF"
     tools:context=".Register.SelectRegister">
 
 
     <TextView
         android:id="@+id/header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginTop="65dp"
         android:fontFamily="@font/artifika"
+        android:gravity="center"
         android:text="@string/select_register_header"
-        android:textColor="@color/colorWhite"
-        android:textSize="25sp"
+        android:textColor="#3DADFF"
+        android:textSize="36dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sub_header"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginTop="7dp"
+        android:fontFamily="@font/artifika"
+        android:text="@string/select_register_subheader"
+        android:textColor="#404040"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="90dp"
         android:layout_margin="15dp"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="#FFFFFF"
         app:borderWidth="0dp"
         app:elevation="0dp"
         app:layout_constraintBottom_toTopOf="@+id/header"

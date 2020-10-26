@@ -59,7 +59,7 @@
         android:layout_height="45dp"
         android:fontFamily="@font/adamina"
         android:gravity="center|left"
-        android:text="@string/main_blind_name_helper"
+        android:text="@string/main_blind_name_caretaker"
         android:textSize="18dp" />
 
     <TextView
@@ -68,7 +68,7 @@
         android:layout_height="45dp"
         android:fontFamily="@font/adamina"
         android:gravity="center|left"
-        android:text="@string/main_blind_phone_helper"
+        android:text="@string/main_blind_phone_caretaker"
         android:textSize="18dp" />
 
     <Button

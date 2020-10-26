@@ -3,24 +3,28 @@
     <string name="map_key" translatable="false">AIzaSyBsTGyPIQmdXk_SqIa5q-DkBDvakeqv6-E</string>
     <string name="title_register">Register for Blind</string>
     <string name="finish_button">Finish</string>
-    <string name="header_regis_blind">Register for Blind</string>
-    <string name="title_regis_blind">Register for Blind defdlf k k f;dkfk pdfk kspfk spfk kpfs fkspf fk ps fpf ksp</string>
-    <string name="header_regis_person">Register for Person</string>
-    <string name="title_regis_person">Register for Person dg fnsgfhfaswbnm   gd nsdg g n s x g d sz fs  gr sdlge tgjge s j oig iiiiiiiiiij egjbs edijlg djg jods gjosegj jg ohie gjhos ehg sdoihg iusdh giufgh iusd hgdshgi dsuh sduihgiusdghi  gdf   fkgdg  ; a ksfk ;faskf osfs kfpsfakfpskjfps </string>
+    <string name="header_regis_blind">Register\'s Blind</string>
+    <string name="header_regis_person">Register\'s Caretaker</string>
     <string name="txt_username_register">Username</string>
     <string name="txt_password_register">Password</string>
     <string name="txt_fullname_register">Full Name</string>
-    <string name="txt_phone">Phone</string>
-    <string name="txt_name_helper">Name for Helper</string>
-    <string name="txt_phone_helper">Phone for Helper</string>
-    <string name="blinder_button_desc">Blinder</string>
-    <string name="person_button_desc">Person</string>
-    <string name="select_register_header">SELECT YOUR REGISTER</string>
+    <string name="txt_phone">Tel. Number</string>
+    <string name="txt_name_caretaker">Caretaker\'s name</string>
+    <string name="txt_phone_caretaker">Caretaker\'s phone</string>
+    <string name="blinder_button_desc">Blind</string>
+    <string name="person_button_desc">Caretaker</string>
     <string name="button_shared_locatoin">Shared Location</string>
     <string name="button_navigation">Navigation</string>
     <string name="button_emergency_call">Emergency Call</string>
-    <string name="button_helper_call">Helper Call</string>
+    <string name="button_caretaker_call">Caretaker Call</string>
     <string name="loading_spinner">Loading...</string>
+    <string name="required">(Required)</string>
+
+
+
+    <!--SelectRegister-->
+    <string name="select_register_header">Choose Section</string>
+    <string name="select_register_subheader">What’s phone’s owner role ?</string>
 
     <!--Settings-->
     <string name="action_settings">Settings</string>
@@ -45,8 +49,8 @@
     <string name="password_box_blind">Please insert blinder Password.</string>
     <string name="fullname_box_blind">Please insert blinder Full Name.</string>
     <string name="phone_box_blind">Please insert blinder phone.</string>
-    <string name="helper_box_blind">Please insert helper blinder Full Name.</string>
-    <string name="phoneHelper_box_blind">Please insert helper blinder phone.</string>
+    <string name="caretaker_box_blind">Please insert caretaker blinder Full Name.</string>
+    <string name="phoneCaretaker_box_blind">Please insert caretaker blinder phone.</string>
 
     <!--About Page-->
     <string name="heading_about">What is SeeAble</string>
@@ -99,8 +103,8 @@
     <string name="main_blind_username">Username :</string>
     <string name="main_blind_fullName">Full Name :</string>
     <string name="main_blind_phone">Phone :</string>
-    <string name="main_blind_name_helper">Name Helper :</string>
-    <string name="main_blind_phone_helper">Phone Helper :</string>
+    <string name="main_blind_name_caretaker">Caretaker\'s name :</string>
+    <string name="main_blind_phone_caretaker">Caretaker\'s phone:</string>
 
     <!--SearchLocation-->
     <string name="search_box">Search...</string>

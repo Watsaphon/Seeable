@@ -55,8 +55,8 @@ class GoogleRegisterBlind : AppCompatActivity() {
 
         fullName = findViewById(R.id.fullname_box)
         phoneBox = findViewById(R.id.phone_box)
-        helperBox = findViewById(R.id.helper_box)
-        phoneHelperBox = findViewById(R.id.phone_helper_box)
+        helperBox = findViewById(R.id.caretaker_box)
+        phoneHelperBox = findViewById(R.id.phone_caretaker_box)
         finishButton = findViewById(R.id.regis_finish_button)
 
         finishButton.setOnClickListener {
@@ -69,8 +69,8 @@ class GoogleRegisterBlind : AppCompatActivity() {
             if(inputfullName.isEmpty()&&inputPhone.isEmpty()&&inputHelper.isEmpty()&&inputPhoneHelper.isEmpty()){
                 fullName.error = getString(R.string.fullname_box_blind)
                 phoneBox.error = getString(R.string.phone_box_blind)
-                helperBox.error = getString(R.string.helper_box_blind)
-                phoneHelperBox.error = getString(R.string.phoneHelper_box_blind)
+                helperBox.error = getString(R.string.caretaker_box_blind)
+                phoneHelperBox.error = getString(R.string.phoneCaretaker_box_blind)
             }
             else if(inputfullName.isEmpty()){
                 fullName.error = getString(R.string.fullname_box_blind)
@@ -80,11 +80,11 @@ class GoogleRegisterBlind : AppCompatActivity() {
             }
             else if(inputHelper.isEmpty())
             {
-                helperBox.error = getString(R.string.helper_box_blind)
+                helperBox.error = getString(R.string.caretaker_box_blind)
             }
             else if(inputPhoneHelper.isEmpty())
             {
-                phoneHelperBox.error = getString(R.string.phoneHelper_box_blind)
+                phoneHelperBox.error = getString(R.string.phoneCaretaker_box_blind)
             }
             else{
                 val ref = FirebaseDatabase.getInstance().getReference("users_blind")

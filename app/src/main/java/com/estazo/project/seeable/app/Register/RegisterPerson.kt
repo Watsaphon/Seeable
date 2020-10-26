@@ -36,6 +36,8 @@ class RegisterPerson : AppCompatActivity() {
         phoneBox = findViewById(R.id.phone_box)
         finishButton = findViewById(R.id.regis_finish_button)
 
+
+
         finishButton.setOnClickListener {
             val inputUsername: String = userName.text.toString()
             val inputPassword: String = password.text.toString()

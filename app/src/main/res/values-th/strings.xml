@@ -2,24 +2,26 @@
     <string name="app_name">SeeAble</string>
     <string name="title_register">ลงทะเบียนสำหรับคนตาบอด</string>
     <string name="finish_button">เสร็จสิ้น</string>
-    <string name="header_regis_blind">ลงทะเบียนสำหรับคนตาบอด</string>
-    <string name="title_regis_blind">ลงทะเบียนคนตาบอดหเหกาเ่หกสเ่สหกเ</string>
+    <string name="header_regis_blind">ลงทะเบียนคนตาบอด</string>
     <string name="header_regis_person">ลงทะเบียนคนดูแล</string>
-    <string name="title_regis_person">ลงทะเบียนคนดูแลกเสำสพยก</string>
     <string name="txt_username_register">ชื่อผู้ใช้งาน</string>
     <string name="txt_password_register">รหัสผ่าน</string>
     <string name="txt_fullname_register">ชื่อ-นามสกุล</string>
     <string name="txt_phone">เบอร์โทร</string>
-    <string name="txt_name_helper">ชื่อผู้ช่วยเหลือ</string>
-    <string name="txt_phone_helper">เบอร์โทรผู้ช่วยเหลือ</string>
+    <string name="txt_name_caretaker">ชื่อผู้ช่วยเหลือ</string>
+    <string name="txt_phone_caretaker">เบอร์โทรผู้ช่วยเหลือ</string>
     <string name="blinder_button_desc">คนตาบอด</string>
     <string name="person_button_desc">คนดูแล</string>
-    <string name="select_register_header">เลือกผู้ลงทะเบียน</string>
     <string name="button_shared_locatoin">ส่งตำแหน่งที่อยู่ปัจจุบัน</string>
     <string name="button_navigation">การนำทาง</string>
     <string name="button_emergency_call">โทรฉุกเฉิน</string>
-    <string name="button_helper_call">โทรหาผู้ดูแล</string>
+    <string name="button_caretaker_call">โทรหาผู้ดูแล</string>
     <string name="loading_spinner">กำลังโหลด...</string>
+    <string name="required">(จำเป็น)</string>
+
+    <!--SelectRegister-->
+    <string name="select_register_header">เลือกผู้ลงทะเบียน</string>
+    <string name="select_register_subheader">คุณจะเลือกลงทะเบียนแบบใด ?</string>
 
     <!--Settings-->
     <string name="action_settings">การตั้งค่า</string>
@@ -43,8 +45,8 @@
     <string name="password_box_blind">กรุณากรอกชรหัสผ่านองคนตาบอด</string>
     <string name="fullname_box_blind">กรุณากรอกชื่อ-นามสกุลคนตาบอด</string>
     <string name="phone_box_blind">กรุณากรอกเบอร์โทรคนตาบอด</string>
-    <string name="helper_box_blind">กรุณากรอกชื่อผู้ดูแลคนตาบอด</string>
-    <string name="phoneHelper_box_blind">กรุณากรอกเบอร์โทรผู้ดูแลคนตาบอด</string>
+    <string name="caretaker_box_blind">กรุณากรอกชื่อผู้ดูแลคนตาบอด</string>
+    <string name="phoneCaretaker_box_blind">กรุณากรอกเบอร์โทรผู้ดูแลคนตาบอด</string>
 
     <!--About Page-->
     <string name="heading_about">SeeAble คืออะไร </string>
@@ -93,8 +95,8 @@
     <string name="main_blind_username">ผู้ใช้งาน :</string>
     <string name="main_blind_fullName">ชื่อ-นามสกุล :</string>
     <string name="main_blind_phone">เบอร์โทรศัพท์ :</string>
-    <string name="main_blind_name_helper">ชื่อผู้ดูแล :</string>
-    <string name="main_blind_phone_helper">เบอร์โทรศัพท์ผู้ดูแล :</string>
+    <string name="main_blind_name_caretaker">ชื่อผู้ดูแล :</string>
+    <string name="main_blind_phone_caretaker">เบอร์โทรศัพท์ผู้ดูแล :</string>
 
     <!--SearchLocation-->
     <string name="search_box">ค้นหา...</string>

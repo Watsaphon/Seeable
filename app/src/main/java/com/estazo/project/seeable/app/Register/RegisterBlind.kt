@@ -37,8 +37,8 @@ class RegisterBlind : AppCompatActivity() {
         password = findViewById(R.id.password_box)
         fullName = findViewById(R.id.fullname_box)
         phoneBox = findViewById(R.id.phone_box)
-        helperBox = findViewById(R.id.helper_box)
-        phoneHelperBox = findViewById(R.id.phone_helper_box)
+        helperBox = findViewById(R.id.caretaker_box)
+        phoneHelperBox = findViewById(R.id.phone_caretaker_box)
         finishButton = findViewById(R.id.regis_finish_button)
 
 
@@ -57,8 +57,8 @@ class RegisterBlind : AppCompatActivity() {
                 password.error = getString(R.string.password_box_blind)
                 fullName.error = getString(R.string.fullname_box_blind)
                 phoneBox.error = getString(R.string.phone_box_blind)
-                helperBox.error = getString(R.string.helper_box_blind)
-                phoneHelperBox.error = getString(R.string.phoneHelper_box_blind)
+                helperBox.error = getString(R.string.caretaker_box_blind)
+                phoneHelperBox.error = getString(R.string.phoneCaretaker_box_blind)
             }
             else if(inputUsername.isEmpty()){
                 userName.error = getString(R.string.username_box_blind)
@@ -74,11 +74,11 @@ class RegisterBlind : AppCompatActivity() {
             }
             else if(inputHelper.isEmpty())
             {
-                helperBox.error = getString(R.string.helper_box_blind)
+                helperBox.error = getString(R.string.caretaker_box_blind)
             }
             else if(inputPhoneHelper.isEmpty())
             {
-                phoneHelperBox.error = getString(R.string.phoneHelper_box_blind)
+                phoneHelperBox.error = getString(R.string.phoneCaretaker_box_blind)
             }
             else{
                 val ref = FirebaseDatabase.getInstance().getReference("users_blind")

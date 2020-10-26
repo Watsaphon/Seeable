@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
             vibrate()
             textToSpeech!!.speak("Helper Call Activate", TextToSpeech.QUEUE_FLUSH, null)
             helperCall()
-         Toast.makeText(this, getString(R.string.button_helper_call), Toast.LENGTH_SHORT).show()
+         Toast.makeText(this, getString(R.string.button_caretaker_call), Toast.LENGTH_SHORT).show()
 
     }
         fab.setOnClickListener {
@@ -579,8 +579,8 @@ class MainActivity : AppCompatActivity() {
             idText.text = getString(R.string.main_blind_id)+" $id "
             fullNameText.text = getString(R.string.main_blind_fullName)+"$fullName "
             phoneText.text = getString(R.string.main_blind_phone)+"$phone "
-            nameHelperText.text =getString(R.string.main_blind_name_helper)+ "$nameHelper "
-            phoneHelperText.text = getString(R.string.main_blind_phone_helper)+"$phoneHelper "
+            nameHelperText.text =getString(R.string.main_blind_name_caretaker)+ "$nameHelper "
+            phoneHelperText.text = getString(R.string.main_blind_phone_caretaker)+"$phoneHelper "
         }
         else{
             usernameText.visibility = View.VISIBLE
@@ -588,8 +588,8 @@ class MainActivity : AppCompatActivity() {
             usernameText.text = getString(R.string.main_blind_username)+"$username "
             fullNameText.text = getString(R.string.main_blind_fullName)+"$fullName "
             phoneText.text = getString(R.string.main_blind_phone)+"$phone "
-            nameHelperText.text =getString(R.string.main_blind_name_helper)+ "$nameHelper "
-            phoneHelperText.text = getString(R.string.main_blind_phone_helper)+"$phoneHelper "
+            nameHelperText.text =getString(R.string.main_blind_name_caretaker)+ "$nameHelper "
+            phoneHelperText.text = getString(R.string.main_blind_phone_caretaker)+"$phoneHelper "
         }
 
 
