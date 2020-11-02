@@ -332,8 +332,7 @@ open class LoginScreen : AppCompatActivity() {
         //Inflate the dialog with custom view
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
         //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(this)
-            .setView(mDialogView)
+        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
         //show dialog
         mAlertDialog.dismiss()
     }

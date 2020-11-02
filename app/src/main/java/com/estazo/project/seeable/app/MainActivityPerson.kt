@@ -313,11 +313,21 @@ class MainActivityPerson : AppCompatActivity() {
         mAlertDialog.setCancelable(false)
     }
 
+    private fun dismissAlertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        mAlertDialog.dismiss()
+    }
+
     /** Direction in Google Map  */
     private var valueEventListenerDirectMap: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            Toast.makeText(this@MainActivityPerson," Activity walking activate",Toast.LENGTH_SHORT).show()
-            val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
+                Toast.makeText(this@MainActivityPerson," Activity walking activate",Toast.LENGTH_SHORT).show()
+                val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
                 if (dataSnapshot.exists()) {
                         val id = dataSnapshot.child("id").value.toString()
                         val latitude = dataSnapshot.child("latitude").value.toString()
@@ -335,8 +345,11 @@ class MainActivityPerson : AppCompatActivity() {
                             }
                         }
                 }
+            dismissAlertDialogLoading()
         }
-        override fun onCancelled(databaseError: DatabaseError) {}
+        override fun onCancelled(databaseError: DatabaseError) {
+            Toast.makeText(this@MainActivityPerson," Activity walking failed",Toast.LENGTH_SHORT).show()
+            dismissAlertDialogLoading() }
     }
 
     /** check users_blind to pairing */

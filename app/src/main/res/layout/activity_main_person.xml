@@ -18,7 +18,7 @@
 
         <View
             android:id="@+id/vector_3"
-            android:layout_width="match_parent"
+            android:layout_width="360dp"
             android:layout_height="80dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -78,14 +78,15 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="140dp"
-            android:layout_marginEnd="140dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginEnd="137dp"
             android:layout_marginBottom="11dp"
             android:background="@null"
             app:srcCompat="@mipmap/heart_foreground" />
 
+
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/imageView5"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_alignParentStart="true"
@@ -96,21 +97,23 @@
             android:layout_marginEnd="40dp"
             app:srcCompat="@mipmap/bpm_example_foreground" />
 
+
+
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="215dp"
-            android:layout_height="34dp"
+            android:id="@+id/textView4"
+            android:layout_width="242dp"
+            android:layout_height="164dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="97dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="99dp"
+            android:layout_marginStart="85dp"
+            android:layout_marginTop="119dp"
+            android:layout_marginEnd="85dp"
             android:fontFamily="@font/roboto"
             android:gravity="center"
-            android:text="Example BPM"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="Not      Available"
+            android:textSize="35sp" />
+
 
     </RelativeLayout>
 
