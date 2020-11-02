@@ -7,6 +7,6 @@
     android:right="0dp"
     android:top="0dp"
     >
-    <bitmap android:src="@drawable/npl_003" android:gravity="fill"/>
+    <bitmap android:src="@drawable/splashscreen" android:gravity="fill"/>
 </item>
 </layer-list>
