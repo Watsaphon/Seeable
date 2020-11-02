@@ -48,7 +48,7 @@
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".MainActivityPerson"
-            android:configChanges="orientation|screenSize" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Login.LoginScreen"
             android:configChanges="orientation|screenSize" />

@@ -12,10 +12,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.PopupMenu
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
 import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClass
@@ -49,13 +46,18 @@ class MainActivityPerson : AppCompatActivity() {
 
     private lateinit var sharedPrefPartnerID: SharedPreferences
 
-    private lateinit var partnerID : String
     private lateinit var checkPartnerID : String
     private lateinit var  mAlertDialog : AlertDialog
 
     private lateinit var sharedPrefGoogle : SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
     private lateinit var sharedGooglePrefUserType : SharedPreferences
+
+    private lateinit var setting : View
+    private lateinit var notify : View
+    private lateinit var activity_walking : ImageButton
+    private lateinit var health_status : ImageButton
+    private lateinit var heart : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,16 +78,19 @@ class MainActivityPerson : AppCompatActivity() {
         sharedPrefUserType = getSharedPreferences("value", 0)
         sharedGooglePrefUserType = getSharedPreferences("value", 0)
 
+
+
         val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
         Log.d("checkPairing_MainPerson","$partnerID")
         if(partnerID=="no-pairing"){
             alertDialogPairing()
         }
 
-        fab = findViewById(R.id.floating_action_button)
-        fab.setOnClickListener {
+        //Initializing Views
+        setting = findViewById(R.id.setting)
+        setting.setOnClickListener{
             /** PopupMenu dropdown */
-            val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
+            val popupMenu = PopupMenu(this, setting, Gravity.CENTER)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
             popupMenu.menu.findItem(R.id.action_delete_partnerID).isVisible = true
             popupMenu.menu.findItem(R.id.action_logout).isVisible = true
@@ -103,13 +108,29 @@ class MainActivityPerson : AppCompatActivity() {
             popupMenu.show()
         }
 
-        /** Direct Google Map */
-        mapButton = findViewById(R.id.map_btn)
-        mapButton.setOnClickListener{
+        notify = findViewById(R.id.notify)
+        notify.setOnClickListener{
+            Toast.makeText(this," Notification not available",Toast.LENGTH_SHORT).show()
+        }
+
+        heart = findViewById(R.id.heart)
+        heart.setOnClickListener{
+            Toast.makeText(this," This Function not available",Toast.LENGTH_SHORT).show()
+        }
+
+        health_status = findViewById(R.id.health_status)
+        health_status.setOnClickListener{
+            Toast.makeText(this," Healthy Status not available",Toast.LENGTH_SHORT).show()
+        }
+
+        activity_walking = findViewById(R.id.activity_walking)
+        activity_walking.setOnClickListener{
             Log.i("partnerID_main","$partnerID")
             val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$partnerID").orderByChild("id")
             query.addListenerForSingleValueEvent(valueEventListenerDirectMap)
+            alertDialogLoading()
         }
+
     }
 
 
@@ -278,10 +299,24 @@ class MainActivityPerson : AppCompatActivity() {
 
     }
 
+    /** AlertDialog to loading  */
+    private fun alertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        mAlertDialog  = mBuilder.show()
+        mAlertDialog.window!!.setLayout(400,300)
+        mAlertDialog.setCanceledOnTouchOutside(false)
+        mAlertDialog.setCancelable(false)
+    }
 
     /** Direction in Google Map  */
     private var valueEventListenerDirectMap: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
+            Toast.makeText(this@MainActivityPerson," Activity walking activate",Toast.LENGTH_SHORT).show()
             val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
                 if (dataSnapshot.exists()) {
                         val id = dataSnapshot.child("id").value.toString()

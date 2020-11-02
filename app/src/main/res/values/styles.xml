@@ -17,7 +17,7 @@
     <style name="CustomButton1" parent = "@android:style/Widget.Button">
         <item name="android:padding">20dp</item>
         <item name="android:drawable">@drawable/button_custom</item>
-        <item name="android:background">@android:color/holo_green_light</item>
+        <item name="android:background">#6CCC4A</item>
     </style>
 
     <style name="CustomButton2" parent = "@android:style/Widget.Button">
@@ -43,6 +43,7 @@
         <item name="android:textColor">#3498db</item>
         <item name="android:background">@drawable/under_line</item>
     </style>
+
 
 
 </resources>

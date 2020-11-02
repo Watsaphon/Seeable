@@ -105,11 +105,12 @@ class MainActivity : AppCompatActivity() {
        Log.i("CheckUserID_MainBlind", "Current User ID : $currentUser")
        Log.i("SplashScreenMain", "LoginScreen now language : $stringValue")
 
-        sharedLocationBtn = findViewById(R.id.button1)
-        navigationBtn = findViewById(R.id.button2)
-        emergencyCallBtn = findViewById(R.id.button3)
-        helperCallBtn = findViewById(R.id.button4)
+        sharedLocationBtn = findViewById(R.id.button2)
+        navigationBtn = findViewById(R.id.button1)
+        emergencyCallBtn = findViewById(R.id.button4)
+        helperCallBtn = findViewById(R.id.button3)
         fab = findViewById(R.id.floating_action_button)
+//      fab.bringToFront()
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         RequestPermission()
@@ -129,7 +130,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("Debug:","sharedLocationBtn -> CheckPermission : "  + CheckPermission().toString())
             Log.d("Debug:", "sharedLocationBtn -> isLocationEnabled : " +  isLocationEnabled().toString())
 //            RequestPermission()
-            textToSpeech!!.speak("shared Location Activate", TextToSpeech.QUEUE_FLUSH, null)
+            textToSpeech!!.speak("send Location Activate", TextToSpeech.QUEUE_FLUSH, null)
             getLastLocation()
             sendLocation()
 
@@ -142,14 +143,14 @@ class MainActivity : AppCompatActivity() {
         }
        emergencyCallBtn.setOnVeryLongClickListener{
             vibrate()
-           textToSpeech!!.speak("Emergency Call Activate", TextToSpeech.QUEUE_FLUSH, null)
+           textToSpeech!!.speak("Call Emergency Activate", TextToSpeech.QUEUE_FLUSH, null)
             emergencyCall()
             Toast.makeText(this, getString(R.string.button_emergency_call), Toast.LENGTH_SHORT).show()
         }
 
         helperCallBtn.setOnVeryLongClickListener{
             vibrate()
-            textToSpeech!!.speak("Helper Call Activate", TextToSpeech.QUEUE_FLUSH, null)
+            textToSpeech!!.speak("Call Caretaker Activate", TextToSpeech.QUEUE_FLUSH, null)
             helperCall()
          Toast.makeText(this, getString(R.string.button_caretaker_call), Toast.LENGTH_SHORT).show()
 

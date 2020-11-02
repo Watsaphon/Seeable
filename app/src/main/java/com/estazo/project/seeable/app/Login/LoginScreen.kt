@@ -143,7 +143,6 @@ open class LoginScreen : AppCompatActivity() {
             .requestEmail().build()
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
         finish.setOnClickListener(View.OnClickListener { login() })
         signInButton.setOnClickListener(View.OnClickListener { signIn() })
         register.setOnClickListener(View.OnClickListener { register() })
@@ -327,7 +326,6 @@ open class LoginScreen : AppCompatActivity() {
         mAlertDialog.window!!.setLayout(400,300)
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
-
     }
 
     private fun dismissAlertDialogLoading() {
