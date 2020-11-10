@@ -29,10 +29,10 @@ import java.util.*
 
 class SelectRegister : AppCompatActivity() {
 
-    private lateinit var blindButton: Button
-    private lateinit var personButton: Button
-    private lateinit var blindGoogleButton: Button
-    private lateinit var personGoogleButton: Button
+    private lateinit var blindButton: View
+    private lateinit var personButton: View
+    private lateinit var blindGoogleButton: View
+    private lateinit var personGoogleButton: View
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var mGoogleSignInClient: GoogleSignInClient

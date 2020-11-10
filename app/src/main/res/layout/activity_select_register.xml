@@ -66,70 +66,146 @@
         tools:ignore="MissingConstraints" />
 
 
-    <Button
+
+<!--    <Button-->
+<!--        android:id="@+id/blinder_btn"-->
+<!--        android:layout_width="170dp"-->
+<!--        android:layout_height="170dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:background="@drawable/round_blind_button"-->
+<!--        android:drawableTop="@mipmap/blinder_icon_foreground"-->
+<!--        android:text="@string/blinder_button_desc"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/sub_header"-->
+<!--        android:visibility="gone"-->
+<!--        />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/blinderGoogle_btn"-->
+<!--        android:layout_width="170dp"-->
+<!--        android:layout_height="170dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:background="@drawable/round_blind_button"-->
+<!--        android:drawableTop="@mipmap/blinder_icon_foreground"-->
+<!--        android:text="@string/blinder_button_desc"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/sub_header"-->
+<!--        android:visibility="gone"-->
+<!--        />-->
+
+
+<!--    <Button-->
+<!--        android:id="@+id/person_btn"-->
+<!--        android:layout_width="170dp"-->
+<!--        android:layout_height="170dp"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:layout_marginBottom="134dp"-->
+<!--        android:background="@drawable/round_person_button"-->
+<!--        android:drawableTop="@mipmap/person_icon_foreground"-->
+<!--        android:text="@string/person_button_desc"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/blinder_btn"-->
+<!--        android:visibility="gone"-->
+<!--        />-->
+
+
+
+<!--    <Button-->
+<!--        android:id="@+id/personGoogle_btn"-->
+<!--        android:layout_width="170dp"-->
+<!--        android:layout_height="170dp"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:layout_marginBottom="134dp"-->
+<!--        android:background="@drawable/round_person_button"-->
+<!--        android:drawableTop="@mipmap/person_icon_foreground"-->
+<!--        android:text="@string/person_button_desc"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/blinderGoogle_btn"-->
+<!--        android:visibility="gone"-->
+<!--        />-->
+
+    <ImageView
+        android:id="@+id/bg_blind"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sub_header"
+        app:srcCompat="@mipmap/bg_blind_foreground" />
+
+    <ImageView
+        android:id="@+id/bg_care"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bg_blind"
+        app:srcCompat="@mipmap/bg_care_foreground" />
+
+    <View
         android:id="@+id/blinder_btn"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/round_blind_button"
-        android:drawableTop="@mipmap/blinder_icon_foreground"
-        android:text="@string/blinder_button_desc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sub_header"
+        android:background="@mipmap/icon_blind_foreground"
+        app:layout_constraintBottom_toBottomOf="@+id/bg_blind"
+        app:layout_constraintEnd_toEndOf="@+id/bg_blind"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/bg_blind"
+        app:layout_constraintTop_toTopOf="@+id/bg_blind"
+        app:layout_constraintVertical_bias="0.662"
         android:visibility="gone"
         />
 
-    <Button
-        android:id="@+id/blinderGoogle_btn"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/round_blind_button"
-        android:drawableTop="@mipmap/blinder_icon_foreground"
-        android:text="@string/blinder_button_desc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sub_header"
-        android:visibility="gone"
-        />
-
-
-    <Button
+    <View
         android:id="@+id/person_btn"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="134dp"
-        android:background="@drawable/round_person_button"
-        android:drawableTop="@mipmap/person_icon_foreground"
-        android:text="@string/person_button_desc"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/blinder_btn"
+        android:layout_marginBottom="60dp"
+        android:background="@mipmap/select_care_icon_foreground"
+        app:layout_constraintBottom_toBottomOf="@+id/bg_care"
+        app:layout_constraintEnd_toEndOf="@+id/bg_care"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="@+id/bg_care"
         android:visibility="gone"
         />
 
+    <View
+        android:id="@+id/blinderGoogle_btn"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:background="@mipmap/icon_blind_foreground"
+        app:layout_constraintBottom_toBottomOf="@+id/bg_blind"
+        app:layout_constraintEnd_toEndOf="@+id/bg_blind"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="@+id/bg_blind"
+        app:layout_constraintTop_toTopOf="@+id/bg_blind"
+        app:layout_constraintVertical_bias="0.662"
+        android:visibility="gone"
+        />
 
-
-    <Button
+    <View
         android:id="@+id/personGoogle_btn"
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="134dp"
-        android:background="@drawable/round_person_button"
-        android:drawableTop="@mipmap/person_icon_foreground"
-        android:text="@string/person_button_desc"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/blinderGoogle_btn"
+        android:layout_marginBottom="60dp"
+        android:background="@mipmap/select_care_icon_foreground"
+        app:layout_constraintBottom_toBottomOf="@+id/bg_care"
+        app:layout_constraintEnd_toEndOf="@+id/bg_care"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="@+id/bg_care"
         android:visibility="gone"
         />
 
