@@ -70,12 +70,13 @@
 
 
     <!--alertPairing-->
-    <string name="pairing_header">Pairing</string>
-    <string name="pairing_subHeader">You have to pair with your partner before use this application.</string>
+    <string name="pairing_header">No blind pairing!</string>
+    <string name="pairing_subHeader">You have to pairing at least 1 blind to begin using the app.</string>
     <string name="pairing_text_box">Please Enter partner ID to pairing</string>
     <string name="pairing_hint">insert your partner ID here...</string>
     <string name="pairing_summitBtn">Summit</string>
     <string name="pairing_logoutBtn">Log Out</string>
+    <string name="pairing_addnewBtn">Start Pairing</string>
     <string name="pairing_exitBtn">Exit</string>
 
     <!--alertHomeLocation-->

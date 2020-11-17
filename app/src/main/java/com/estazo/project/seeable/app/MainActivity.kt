@@ -529,22 +529,22 @@ class MainActivity : AppCompatActivity() {
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
         //login button click of custom layout
-        mDialogView.dialogSummitBtn.setOnClickListener {
-//            val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
-//            query.addListenerForSingleValueEvent(valueEventListener)
-//            val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
-//            checkPartnerID = partnerIDBox
-            val intent = Intent(this,SearchLocation::class.java)
-            startActivity(intent)
-        }
-        //logout button click of custom layout
-        mDialogView.dialogLogoutBtn.setOnClickListener {
-            gotoLogout()
-        }
-        //exit button click of custom layout
-        mDialogView.dialogExitBtn.setOnClickListener {
-            finishAffinity()
-        }
+//        mDialogView.dialogSummitBtn.setOnClickListener {
+//////            val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
+//////            query.addListenerForSingleValueEvent(valueEventListener)
+//////            val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
+//////            checkPartnerID = partnerIDBox
+////            val intent = Intent(this,SearchLocation::class.java)
+////            startActivity(intent)
+////        }
+////        //logout button click of custom layout
+////        mDialogView.dialogLogoutBtn.setOnClickListener {
+////            gotoLogout()
+////        }
+////        //exit button click of custom layout
+////        mDialogView.dialogExitBtn.setOnClickListener {
+////            finishAffinity()
+////        }
 
     }
 

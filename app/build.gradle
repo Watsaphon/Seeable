@@ -64,4 +64,7 @@ dependencies {
     //Workmanager
     implementation "android.arch.work:work-runtime-ktx:2.0.1"
     androidTestImplementation "android.arch.work:work-testing:2.0.1"
+
+    //CardView
+    implementation "androidx.cardview:cardview:1.0.0"
 }

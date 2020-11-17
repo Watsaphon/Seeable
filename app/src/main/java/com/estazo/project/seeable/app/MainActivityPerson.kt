@@ -2,19 +2,17 @@ package com.estazo.project.seeable.app
 
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
 import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClass
 import com.estazo.project.seeable.app.Login.LoginScreen
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -26,7 +24,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.alert_dialog_home_location.view.*
 import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
+import kotlinx.android.synthetic.main.alert_dialog_pairing.view.dialogLogoutBtn
+import kotlinx.android.synthetic.main.alert_dialog_pairing.view.dialogSummitBtn
 import java.util.*
 
 
@@ -77,7 +78,6 @@ class MainActivityPerson : AppCompatActivity() {
         sharedPrefGoogle  = getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
         sharedGooglePrefUserType = getSharedPreferences("value", 0)
-
 
 
         val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
@@ -272,30 +272,58 @@ class MainActivityPerson : AppCompatActivity() {
 
     /** AlertDialog to pairing user with partner ID  */
     private fun alertDialogPairing() {
-        //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_pairing, null)
-        //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(this)
-            .setView(mDialogView)
-        //show dialog
-        mAlertDialog  = mBuilder.show()
-        mAlertDialog.setCanceledOnTouchOutside(false)
-        mAlertDialog.setCancelable(false)
-        //login button click of custom layout
-        mDialogView.dialogSummitBtn.setOnClickListener {
-            val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
-            query.addListenerForSingleValueEvent(valueEventListener)
-            val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
-            checkPartnerID = partnerIDBox
+//        //Inflate the dialog with custom view
+//        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_pairing, null)
+//        //AlertDialogBuilder
+//        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
+//        //show dialog
+//        mAlertDialog  = mBuilder.show()
+//        mAlertDialog.setCanceledOnTouchOutside(false)
+//        mAlertDialog.setCancelable(false)
+//        mDialogView.dialogSummitBtn.setOnClickListener {
+//            val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
+//            query.addListenerForSingleValueEvent(valueEventListener)
+//            val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
+//            checkPartnerID = partnerIDBox
+//        }
+//        //logout button click of custom layout
+//        mDialogView.dialogLogoutBtn.setOnClickListener {
+//            gotoLogout()
+//        }
+//        //exit button click of custom layout
+//        mDialogView.dialogExitBtn.setOnClickListener {
+//            finishAffinity()
+//        }
+
+        val nag = Dialog(this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)
+        nag.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        nag.setCancelable(false)
+        nag.setContentView(R.layout.alert_dialog_pairing)
+        nag.setCanceledOnTouchOutside(false)
+
+       val btnYES = nag.findViewById(R.id.dialogSummitBtn) as Button
+       val btnLogout = nag.findViewById(R.id.dialogLogoutBtn) as Button
+
+        val header = nag.findViewById(R.id.header) as TextView
+        header.setTextColor(Color.WHITE)
+        val subHeader = nag.findViewById(R.id.subHeader) as TextView
+        subHeader.setTextColor(Color.BLACK)
+
+        btnYES.dialogSummitBtn.setOnClickListener {
+//            val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
+//            query.addListenerForSingleValueEvent(valueEventListener)
+//            val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
+//            checkPartnerID = partnerIDBox
         }
         //logout button click of custom layout
-        mDialogView.dialogLogoutBtn.setOnClickListener {
+        btnLogout.dialogLogoutBtn.setOnClickListener {
             gotoLogout()
         }
-        //exit button click of custom layout
-        mDialogView.dialogExitBtn.setOnClickListener {
-            finishAffinity()
-        }
+//        //exit button click of custom layout
+//        btnExit.dialogExitBtn.setOnClickListener {
+//            finishAffinity()
+//        }
+        nag.show()
 
     }
 
