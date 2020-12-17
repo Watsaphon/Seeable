@@ -36,7 +36,8 @@ import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
-open class LoginScreen : AppCompatActivity() {
+ class LoginScreen : AppCompatActivity() {
+
 
     private lateinit var userNameBox: EditText
     private lateinit var passwordBox: EditText

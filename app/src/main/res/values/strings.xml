@@ -5,7 +5,7 @@
     <string name="finish_button">Finish</string>
     <string name="header_regis_blind">Register\'s Blind</string>
     <string name="header_regis_person">Register\'s Caretaker</string>
-    <string name="txt_username_register">Username</string>
+    <string name="txt_username_register">Tel Number</string>
     <string name="txt_password_register">Password</string>
     <string name="txt_fullname_register">Full Name</string>
     <string name="txt_phone">Tel. Number</string>
@@ -19,7 +19,6 @@
     <string name="button_caretaker_call">Call Caretaker</string>
     <string name="loading_spinner">Loading...</string>
     <string name="required">(Required)</string>
-
 
 
     <!--SelectRegister-->

@@ -31,12 +31,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Register.MainActivity"></activity>
         <activity
             android:name=".IntroduceApp"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SearchLocation"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".Register.GoogleRegisterPerson"
             android:configChanges="orientation|screenSize" />

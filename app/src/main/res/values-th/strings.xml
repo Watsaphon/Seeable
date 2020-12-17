@@ -4,7 +4,7 @@
     <string name="finish_button">เสร็จสิ้น</string>
     <string name="header_regis_blind">ลงทะเบียนคนตาบอด</string>
     <string name="header_regis_person">ลงทะเบียนคนดูแล</string>
-    <string name="txt_username_register">ชื่อผู้ใช้งาน</string>
+    <string name="txt_username_register">เบอร์โทรศัพท์</string>
     <string name="txt_password_register">รหัสผ่าน</string>
     <string name="txt_fullname_register">ชื่อ-นามสกุล</string>
     <string name="txt_phone">เบอร์โทร</string>

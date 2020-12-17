@@ -22,8 +22,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.work.*
 import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
 import com.estazo.project.seeable.app.Login.LoginScreen
+import com.estazo.project.seeable.app.Register.BPMWorker
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -42,8 +44,10 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 import kotlinx.android.synthetic.main.alert_dialog_profile.view.*
 import java.util.*
+import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity: AppCompatActivity() {
 
     private lateinit var sharedLocationBtn: Button
     private lateinit var navigationBtn: Button
@@ -133,14 +137,15 @@ class MainActivity : AppCompatActivity() {
             textToSpeech!!.speak("send Location Activate", TextToSpeech.QUEUE_FLUSH, null)
             getLastLocation()
             sendLocation()
-
         }
+
         navigationBtn.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigation()
             Toast.makeText(this, getString(R.string.button_navigation), Toast.LENGTH_SHORT).show()
         }
+
        emergencyCallBtn.setOnVeryLongClickListener{
             vibrate()
            textToSpeech!!.speak("Call Emergency Activate", TextToSpeech.QUEUE_FLUSH, null)
@@ -177,7 +182,30 @@ class MainActivity : AppCompatActivity() {
             popupMenu.show()
         }
 
+        val bpmValue = workDataOf(
+            "bpm" to "no-value"
+        )
+
+        val constraint = Constraints.Builder().apply {
+            setRequiredNetworkType(NetworkType.CONNECTED)
+        }.build()
+
+        //one time
+        val request = PeriodicWorkRequestBuilder<BPMWorker>(10, TimeUnit.SECONDS).apply {
+            setInputData(bpmValue)
+            setConstraints(constraint)
+        }.build()
+
+        //Period
+//        val request = OneTimeWorkRequestBuilder<BPMWorker>().apply {
+//            setConstraints(constraint)
+//            setInitialDelay(10, TimeUnit.SECONDS)
+//        }.build()
+
+        WorkManager.getInstance().enqueue(request)
+
     }
+
 
 
     @SuppressLint("MissingPermission", "DefaultLocale")
