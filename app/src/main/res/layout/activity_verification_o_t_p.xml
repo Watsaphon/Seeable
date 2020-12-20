@@ -53,7 +53,7 @@ tools:context=".Register.VerificationOTP">
         tools:layout_editor_absoluteY="293dp" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/numberOTP"
+        android:id="@+id/codeOTP"
         android:layout_width="378dp"
         android:layout_height="39dp"
         android:layout_margin="15dp"

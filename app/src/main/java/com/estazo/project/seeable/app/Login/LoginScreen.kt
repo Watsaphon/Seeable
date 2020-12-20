@@ -20,6 +20,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.*
 import com.estazo.project.seeable.app.Register.SelectRegister
+import com.estazo.project.seeable.app.Register.VerificationOTP
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -186,7 +187,8 @@ import java.util.*
     }
 
     private fun register() {
-        val intent = Intent(this, SelectRegister::class.java)
+//        val intent = Intent(this, SelectRegister::class.java)
+        val intent = Intent(this, VerificationOTP::class.java)
         startActivity(intent)
     }
 
