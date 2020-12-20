@@ -25,9 +25,10 @@ tools:context=".Register.VerificationOTP">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/telOTP"
-        android:layout_width="378dp"
+        android:layout_width="300dp"
         android:layout_height="39dp"
         android:layout_margin="15dp"
+        android:layout_gravity="center"
         android:background="@drawable/round_corner_button"
         android:hint="Phone Number"
         android:inputType="numberPassword"
@@ -54,9 +55,10 @@ tools:context=".Register.VerificationOTP">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/codeOTP"
-        android:layout_width="378dp"
+        android:layout_width="300dp"
         android:layout_height="39dp"
         android:layout_margin="15dp"
+        android:layout_gravity="center"
         android:hint="Enter OTP"
         android:inputType="numberPassword"
         android:maxLength="6"

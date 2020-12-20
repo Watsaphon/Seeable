@@ -50,11 +50,17 @@ dependencies {
 
     //Firebase
     implementation 'com.google.firebase:firebase-database-ktx:19.4.0'
+    implementation 'com.google.firebase:firebase-core:11.8.0'
     //signin google
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
     //shared location
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    // Declare the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-auth-ktx'
 
     //Retofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'

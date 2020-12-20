@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.estazo.project.seeable.app.Login.LoginScreen
 import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
 import com.google.firebase.auth.FirebaseAuth
@@ -22,7 +23,7 @@ class SignedIn : AppCompatActivity() {
         setPhoneNumber()
         btnSignOut.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            startActivity(Intent(this@SignedIn, MainActivity::class.java))
+            startActivity(Intent(this@SignedIn, LoginScreen::class.java))
             finish()
         }
     }
