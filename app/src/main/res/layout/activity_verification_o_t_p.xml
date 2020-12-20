@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:gravity="center_horizontal"
+android:background="@color/colorAccent"
+tools:context=".Register.VerificationOTP">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="sans-serif"
+        android:text="OTP Verification"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="40dp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/telOTP"
+        android:layout_width="378dp"
+        android:layout_height="39dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/round_corner_button"
+        android:hint="Phone Number"
+        android:inputType="numberPassword"
+        android:maxLength="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="238dp" />
+
+    <Button
+        android:id="@+id/send_otp_button"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/phone_caretaker_box"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/round_corner_button"
+        android:text="Send OTP"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="293dp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/numberOTP"
+        android:layout_width="378dp"
+        android:layout_height="39dp"
+        android:layout_margin="15dp"
+        android:hint="Enter OTP"
+        android:inputType="numberPassword"
+        android:maxLength="6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="387dp"
+        android:background="@drawable/round_corner_button"
+        />
+
+    <Button
+        android:id="@+id/verify_otp_button"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/phone_caretaker_box"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/round_corner_button"
+        android:text="Verify OTP"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="443dp" />
+
+</LinearLayout>
