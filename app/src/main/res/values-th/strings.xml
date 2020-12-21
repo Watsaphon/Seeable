@@ -19,6 +19,16 @@
     <string name="loading_spinner">กำลังโหลด...</string>
     <string name="required">(จำเป็น)</string>
 
+    <!--SendOTP-->
+    <string name="header_SendOTP">ลงทะเบียน</string>
+    <string name="subheader_SendOTP">กรุณากรอกเบอร์โทรศัพท์เพื่อลงทะเบียน แอพพลิเคชั่นจะส่งรหัสOTPเพื่อยืนยันผู้ใช้งาน</string>
+    <string name="button_SendOTP">ส่ง OTP</string>
+
+    <!--VerifyOTP-->
+    <string name="header_VerifyOTP">ยืนยันรหัส OTP</string>
+    <string name="subheader_VerifyOTP">กรุณาใส่รัหสผ่าน6หลักบนโทรศัพท์เพื่อดำเนินการต่อ</string>
+    <string name="button_VerifyOTP">ยืนยัน</string>
+
     <!--SelectRegister-->
     <string name="select_register_header">เลือกผู้ลงทะเบียน</string>
     <string name="select_register_subheader">คุณจะเลือกลงทะเบียนแบบใด ?</string>

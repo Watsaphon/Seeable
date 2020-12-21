@@ -31,9 +31,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Register.SignedIn"></activity>
-        <activity android:name=".Register.VerificationOTP" />
-        <activity android:name=".Register.MainActivity" />
+        <activity android:name=".Register.SendOTP"></activity>
+        <activity android:name=".Register.SignedIn" />
+        <activity
+            android:name=".Register.VerificationOTP"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".IntroduceApp"
             android:screenOrientation="portrait" />

@@ -20,6 +20,15 @@
     <string name="loading_spinner">Loading...</string>
     <string name="required">(Required)</string>
 
+    <!--SendOTP-->
+    <string name="header_SendOTP">Registration</string>
+    <string name="subheader_SendOTP">Please type your phone number to register. The app will send OTP code to confirm the account</string>
+    <string name="button_SendOTP">Send OTP</string>
+
+    <!--VerifyOTP-->
+    <string name="header_VerifyOTP">OTP Confirmation</string>
+    <string name="subheader_VerifyOTP">Please enter 6 digit OTP in your phone to proceed</string>
+    <string name="button_VerifyOTP">Submit</string>
 
     <!--SelectRegister-->
     <string name="select_register_header">Choose Section</string>
@@ -34,7 +43,6 @@
     <string name="action_delete_partnerID">Delete Partner ID</string>
     <string name="action_profile">View Profile</string>
     <string name="action_logout">Log out</string>
-
 
     <!--RegisterPerson-->
     <string name="username_box_person">Please insert person Username.</string>

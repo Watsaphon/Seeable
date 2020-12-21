@@ -3,13 +3,12 @@ package com.estazo.project.seeable.app.Register
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.R
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -18,21 +17,21 @@ import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
 import java.util.concurrent.TimeUnit
 
-
 class VerificationOTP : AppCompatActivity() {
 
-    private lateinit var etTelOTP : EditText
-    private lateinit var sendButton: Button
-    private lateinit var telOTP  : String
-
-    private lateinit var etcodeOTP : EditText
-    private lateinit var veriftButton: Button
+    private lateinit var backButton: ImageButton
+    private lateinit var verifyButton: Button
+    private lateinit var digit_1: EditText
+    private lateinit var digit_2: EditText
+    private lateinit var digit_3: EditText
+    private lateinit var digit_4: EditText
+    private lateinit var digit_5: EditText
+    private lateinit var digit_6: EditText
+    private lateinit var tel: TextView
     private lateinit var codeOTP : String
 
-//    private lateinit var mCallback: OnVerificationStateChangedCallbacks
-    private var mCallback: OnVerificationStateChangedCallbacks? = null
+
     private lateinit var auth: FirebaseAuth
-//    private lateinit var verificationCode: String
     private var verificationCode: String? = null
 
 
@@ -40,142 +39,57 @@ class VerificationOTP : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verification_o_t_p)
 
-        etTelOTP = findViewById(R.id.telOTP)
-        sendButton = findViewById(R.id.send_otp_button)
-        etcodeOTP = findViewById(R.id.codeOTP)
-        veriftButton = findViewById(R.id.verify_otp_button)
+        tel= findViewById(R.id.phone)
+        backButton = findViewById(R.id.back_button)
+        verifyButton = findViewById(R.id.veify_otp_button)
+        digit_1 = findViewById(R.id.digit_1)
+        digit_2 = findViewById(R.id.digit_2)
+        digit_3 = findViewById(R.id.digit_3)
+        digit_4 = findViewById(R.id.digit_4)
+        digit_5 = findViewById(R.id.digit_5)
+        digit_6 = findViewById(R.id.digit_6)
+
+        val phone = intent.getStringExtra("mobile")
+        verificationCode = intent.getStringExtra("OTP")
+        tel.text = "+66-$phone"
+
         auth = FirebaseAuth.getInstance()
+//        StartFirebaseLogin()
 
-        StartFirebaseLogin()
+        digit_1.addTextChangedListener(digit1TextWatcher)
+        digit_2.addTextChangedListener(digit2TextWatcher)
+        digit_3.addTextChangedListener(digit3TextWatcher)
+        digit_4.addTextChangedListener(digit4TextWatcher)
+        digit_5.addTextChangedListener(digit5TextWatcher)
+        digit_6.addTextChangedListener(digit6TextWatcher)
 
-        sendButton.setOnClickListener {
-            telOTP = "+66"+etTelOTP.text.toString()
-            if(telOTP.isEmpty()) {
-                Toast.makeText(this@VerificationOTP, "Please fill Tel",Toast.LENGTH_SHORT).show()
-            }
-            else{
-                Log.d("test_telOTP ", "telOTP : $telOTP")
-                PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                    telOTP,  // Phone number to verify
-                    60,  // Timeout duration
-                    TimeUnit.SECONDS,  // Unit of timeout
-                    this@VerificationOTP,  // Activity (for callback binding)
-                    mCallback!!
-                ) // OnVerificationStateChangedCallbacks
-            }
-        }
-
-        veriftButton.setOnClickListener{
-                codeOTP = etcodeOTP.text.toString()
+        verifyButton.setOnClickListener{
+            val c1 = digit_1.text.toString()
+            val c2 = digit_2.text.toString()
+            val c3 = digit_3.text.toString()
+            val c4 = digit_4.text.toString()
+            val c5 = digit_5.text.toString()
+            val c6 = digit_6.text.toString()
+                codeOTP = "$c1$c2$c3$c4$c5$c6"
                 val credential = PhoneAuthProvider.getCredential(verificationCode!!, codeOTP)
+            Log.i("eieiei","$codeOTP , $verificationCode")
                 SigninWithPhone(credential)
             }
+
+        backButton.setOnClickListener {
+           finish()
         }
 
-    private fun StartFirebaseLogin() {
-//        auth = FirebaseAuth.getInstance()
-        mCallback = object : OnVerificationStateChangedCallbacks() {
-            override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                Toast.makeText(this@VerificationOTP, "verification completed", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onVerificationFailed(e: FirebaseException) {
-                Toast.makeText(this@VerificationOTP, "verification failed", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onCodeSent(
-                s: String,
-                forceResendingToken: ForceResendingToken
-            ) {
-                super.onCodeSent(s, forceResendingToken)
-                verificationCode = s
-                Toast.makeText(this@VerificationOTP, "Code sent", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
-    private fun SigninWithPhone(credential: PhoneAuthCredential) {
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    startActivity(Intent(this@VerificationOTP, SignedIn::class.java))
-                    finish()
-                } else {
-                    Toast.makeText(this@VerificationOTP, "Incorrect OTP", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-    }
-
-
-}
-
-
-//class VerificationOTP : AppCompatActivity() {
-//    var btnGenerateOTP: Button? = null
-//    var btnSignIn: Button? = null
-//    var etPhoneNumber: EditText? = null
-//    var etOTP: EditText? = null
-//    var phoneNumber: String? = null
-//    var otp: String? = null
-//    var auth: FirebaseAuth? = null
-//    var mCallback: OnVerificationStateChangedCallbacks? = null
-//    private var verificationCode: String? = null
-//
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//        findViews()
-//        StartFirebaseLogin()
-//        btnGenerateOTP!!.setOnClickListener {
-//            phoneNumber = etPhoneNumber!!.text.toString()
-//            PhoneAuthProvider.getInstance().verifyPhoneNumber(
-//                phoneNumber!!,  // Phone number to verify
-//                60,  // Timeout duration
-//                TimeUnit.SECONDS,  // Unit of timeout
-//                this@MainActivity,  // Activity (for callback binding)
-//                mCallback!!
-//            ) // OnVerificationStateChangedCallbacks
-//        }
-//        btnSignIn!!.setOnClickListener {
-//            otp = etOTP!!.text.toString()
-//            val credential =
-//                PhoneAuthProvider.getCredential(verificationCode!!, otp!!)
-//            SigninWithPhone(credential)
-//        }
-//    }
-//
-//    private fun SigninWithPhone(credential: PhoneAuthCredential) {
-//        auth!!.signInWithCredential(credential)
-//            .addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    startActivity(Intent(this@MainActivity, SignedIn::class.java))
-//                    finish()
-//                } else {
-//                    Toast.makeText(this@MainActivity, "Incorrect OTP", Toast.LENGTH_SHORT)
-//                        .show()
-//                }
-//            }
-//    }
-//
-//    private fun findViews() {
-//        btnGenerateOTP = findViewById(R.id.btn_generate_otp)
-//        btnSignIn = findViewById(R.id.btn_sign_in)
-//        etPhoneNumber = findViewById(R.id.et_phone_number)
-//        etOTP = findViewById(R.id.et_otp)
-//    }
-//
 //    private fun StartFirebaseLogin() {
-//        auth = FirebaseAuth.getInstance()
 //        mCallback = object : OnVerificationStateChangedCallbacks() {
 //            override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-//                Toast.makeText(this@MainActivity, "verification completed", Toast.LENGTH_SHORT)
-//                    .show()
+//                Toast.makeText(this@VerificationOTP, "verification completed", Toast.LENGTH_SHORT).show()
 //            }
 //
 //            override fun onVerificationFailed(e: FirebaseException) {
-//                Toast.makeText(this@MainActivity, "verification fialed", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@VerificationOTP, "verification failed", Toast.LENGTH_SHORT).show()
 //            }
 //
 //            override fun onCodeSent(
@@ -184,8 +98,93 @@ class VerificationOTP : AppCompatActivity() {
 //            ) {
 //                super.onCodeSent(s, forceResendingToken)
 //                verificationCode = s
-//                Toast.makeText(this@MainActivity, "Code sent", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@VerificationOTP, "Code sent", Toast.LENGTH_SHORT).show()
 //            }
 //        }
 //    }
-//}
+
+    private fun SigninWithPhone(credential: PhoneAuthCredential) {
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    startActivity(Intent(this@VerificationOTP, SignedIn::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(this@VerificationOTP, "Incorrect OTP", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private val digit1TextWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            if(s.toString().trim().isEmpty()){
+            digit_1.requestFocus()
+            }
+        }
+        override fun afterTextChanged(s: Editable) {}
+    }
+    private val digit2TextWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            if(s.toString().trim().isEmpty()){
+                digit_2.requestFocus()
+            }
+        }
+
+        override fun afterTextChanged(s: Editable) {}
+    }
+    private val digit3TextWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            if(s.toString().trim().isEmpty()){
+                digit_3.requestFocus()
+            }
+        }
+
+        override fun afterTextChanged(s: Editable) {}
+    }
+    private val digit4TextWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            if(s.toString().trim().isEmpty()){
+                digit_4.requestFocus()
+            }
+        }
+
+        override fun afterTextChanged(s: Editable) {}
+    }
+    private val digit5TextWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            if(s.toString().trim().isEmpty()){
+                digit_5.requestFocus()
+            }
+        }
+
+        override fun afterTextChanged(s: Editable) {}
+    }
+    private val digit6TextWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            if(s.toString().trim().isEmpty()){
+                digit_6.requestFocus()
+            }
+        }
+
+        override fun afterTextChanged(s: Editable) {}
+    }
+
+}

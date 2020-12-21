@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Register.SendOTP">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteX="-16dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <!-- Vector 1 -->
+    <View
+        android:id="@+id/vector_1"
+        android:layout_width="match_parent"
+        android:layout_height="128.21dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/vector_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <!-- Ellipse 1 -->
+    <View
+        android:id="@+id/ellipse_1"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginTop="111.5dp"
+        android:background="@drawable/ellipse_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+    <!-- Ellipse 2 -->
+    <View
+        android:id="@+id/ellipse_2"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10.5dp"
+        android:layout_marginTop="120.50dp"
+        android:background="@drawable/ellipse_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+    <!-- Ellipse 3 -->
+    <View
+        android:id="@+id/ellipse_3"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="132dp"
+        android:background="@drawable/ellipse_3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+    <!-- Ellipse 4 -->
+    <View
+        android:id="@+id/ellipse_4"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="121.5dp"
+        android:layout_marginTop="125dp"
+        android:background="@drawable/ellipse_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+    <!-- Ellipse 5 -->
+    <View
+        android:id="@+id/ellipse_5"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="140dp"
+        android:background="@drawable/ellipse_5"
+        app:layout_constraintEnd_toEndOf="@+id/ellipse_7"
+        app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+    <!-- Ellipse 6 -->
+    <View
+        android:id="@+id/ellipse_6"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="27dp"
+        android:background="@drawable/ellipse_6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+    <!-- Ellipse 7 -->
+    <View
+        android:id="@+id/ellipse_7"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="182dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="7dp"
+        android:background="@drawable/ellipse_7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="269dp"
+        android:layout_height="75dp"
+        android:layout_alignBottom="@+id/vector_1"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="71dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/header_SendOTP"
+        android:textColor="#FFFFFF"
+        android:textSize="36dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/sms"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    <com.google.android.material.textfield.TextInputEditText-->
+    <!--        android:id="@+id/codeOTP"-->
+    <!--        android:layout_width="300dp"-->
+    <!--        android:layout_height="39dp"-->
+    <!--        android:layout_margin="15dp"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:hint="Enter OTP"-->
+    <!--        android:inputType="numberPassword"-->
+    <!--        android:maxLength="6"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.444"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        tools:layout_editor_absoluteY="387dp"-->
+    <!--        android:background="@drawable/round_corner_button"-->
+    <!--        />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/verify_otp_button"-->
+    <!--        android:layout_width="120dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_margin="15dp"-->
+    <!--        android:layout_below="@+id/phone_caretaker_box"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:background="@drawable/round_corner_button"-->
+    <!--        android:text="Verify OTP"-->
+    <!--        android:textColor="@color/colorAccent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.539"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        tools:layout_editor_absoluteY="443dp" />-->
+
+
+    <ImageView
+        android:id="@+id/sms"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="130dp"
+        app:layout_constraintBottom_toTopOf="@+id/sub_header"
+        app:srcCompat="@mipmap/sms_foreground"
+        tools:layout_editor_absoluteX="64dp" />
+
+    <TextView
+        android:id="@+id/sub_header"
+        android:layout_width="283dp"
+        android:layout_height="48dp"
+        android:layout_above="@+id/telOTP"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/subheader_SendOTP"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/telOTP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/telOTP"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_above="@+id/send_otp_button"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/fill_tel_box"
+        android:hint="+66"
+        android:inputType="phone"
+        android:padding="10dp"
+        android:maxLength="10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="561dp" />
+
+    <Button
+        android:id="@+id/send_otp_button"
+        android:layout_width="280dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/btn_rectangle_blue"
+        android:text="@string/button_SendOTP"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="639dp" />
+
+    <ImageButton
+        android:id="@+id/clear_button"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/telOTP"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="340dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        android:background="@mipmap/close_button_foreground" />
+
+
+
+</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

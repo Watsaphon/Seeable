@@ -6,82 +6,209 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
-android:gravity="center_horizontal"
-android:background="@color/colorAccent"
 tools:context=".Register.VerificationOTP">
 
-    <TextView
-        android:id="@+id/header"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:fontFamily="sans-serif"
-        android:text="OTP Verification"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="40dp" />
+        tools:layout_editor_absoluteX="-130dp"
+        tools:layout_editor_absoluteY="-44dp">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/telOTP"
-        android:layout_width="300dp"
-        android:layout_height="39dp"
-        android:layout_margin="15dp"
-        android:layout_gravity="center"
-        android:background="@drawable/round_corner_button"
-        android:hint="Phone Number"
-        android:inputType="numberPassword"
-        android:maxLength="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="238dp" />
+        <!-- Rectangle 27 -->
+        <View
+            android:id="@+id/rectangle_2"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/ic_rectangle_27" />
 
-    <Button
-        android:id="@+id/send_otp_button"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_margin="15dp"
-        android:layout_below="@+id/phone_caretaker_box"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/round_corner_button"
-        android:text="Send OTP"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="293dp" />
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="200dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="169dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/header_VerifyOTP"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/codeOTP"
-        android:layout_width="300dp"
-        android:layout_height="39dp"
-        android:layout_margin="15dp"
-        android:layout_gravity="center"
-        android:hint="Enter OTP"
-        android:inputType="numberPassword"
-        android:maxLength="6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="387dp"
-        android:background="@drawable/round_corner_button"
-        />
 
-    <Button
-        android:id="@+id/verify_otp_button"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_margin="15dp"
-        android:layout_below="@+id/phone_caretaker_box"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/round_corner_button"
-        android:text="Verify OTP"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="443dp" />
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:background="@mipmap/back_button_foreground" />
 
+        <TextView
+            android:id="@+id/subheader"
+            android:layout_width="242dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/rectangle_2"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="59dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="59dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/subheader_VerifyOTP"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="242dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/subheader"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="59dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="59dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="+66"
+            android:textColor="#000000"
+            />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:id="@+id/digit_1"
+            android:layout_width="45dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_margin="5dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:background="@drawable/round_corner_button"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/digit_2"
+            android:layout_width="45dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/round_corner_button"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/digit_3"
+            android:layout_width="45dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/round_corner_button"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/digit_4"
+            android:layout_width="45dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/round_corner_button"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/digit_5"
+            android:layout_width="45dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/round_corner_button"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/digit_6"
+            android:layout_width="45dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/round_corner_button"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            tools:ignore="LabelFor" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        >
+
+        <Button
+            android:id="@+id/veify_otp_button"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:background="@drawable/btn_rectangle_blue"
+            android:fontFamily="@font/roboto"
+            android:text="@string/button_VerifyOTP"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.46"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="639dp" />
+    </LinearLayout>
 </LinearLayout>
