@@ -50,6 +50,8 @@ class SendOTP : AppCompatActivity() {
             alertDialogLoading()
             if(etTelOTP.text.toString().trim().isEmpty()) {
                Toast.makeText(this@SendOTP, "Enter Phone",Toast.LENGTH_SHORT).show()
+                dismissAlertDialogLoading()
+
             }
             else{
                 val phone : String = "+66"+etTelOTP.text.toString()
