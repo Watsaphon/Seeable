@@ -1,11 +1,13 @@
 package com.estazo.project.seeable.app.Register
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -28,9 +30,10 @@ class SendOTP : AppCompatActivity() {
     private lateinit var sendButton: Button
     private lateinit var auth: FirebaseAuth
     private lateinit var clearButton: ImageButton
-
     private var mCallback: OnVerificationStateChangedCallbacks? = null
     private var verificationCode: String? = null
+
+    private lateinit var  mAlertDialog : AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,7 @@ class SendOTP : AppCompatActivity() {
         StartFirebaseLogin()
 
         sendButton.setOnClickListener {
+            alertDialogLoading()
             if(etTelOTP.text.toString().trim().isEmpty()) {
                Toast.makeText(this@SendOTP, "Enter Phone",Toast.LENGTH_SHORT).show()
             }
@@ -68,10 +72,12 @@ class SendOTP : AppCompatActivity() {
     private fun StartFirebaseLogin() {
         mCallback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
+                dismissAlertDialogLoading()
                 Toast.makeText(this@SendOTP, "verification completed", Toast.LENGTH_SHORT).show()
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
+                dismissAlertDialogLoading()
                 Toast.makeText(this@SendOTP, "verification failed", Toast.LENGTH_SHORT).show()
             }
 
@@ -81,6 +87,7 @@ class SendOTP : AppCompatActivity() {
                 val intent = Intent(this@SendOTP, VerificationOTP::class.java)
                 intent.putExtra("mobile",etTelOTP.text.toString())
                 intent.putExtra("OTP",verificationCode)
+                dismissAlertDialogLoading()
                 startActivity(intent)
                 Toast.makeText(this@SendOTP, "Code sent", Toast.LENGTH_SHORT).show()
             }
@@ -104,5 +111,26 @@ class SendOTP : AppCompatActivity() {
         override fun afterTextChanged(s: Editable) {}
     }
 
+    /** AlertDialog to loading  */
+    private fun alertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        mAlertDialog  = mBuilder.show()
+        mAlertDialog.window!!.setLayout(400,300)
+        mAlertDialog.setCanceledOnTouchOutside(false)
+        mAlertDialog.setCancelable(false)
+    }
 
+    private fun dismissAlertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
+        //show dialog
+        mAlertDialog.dismiss()
+    }
 }

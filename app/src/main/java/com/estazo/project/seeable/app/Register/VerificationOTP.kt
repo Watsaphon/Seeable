@@ -1,11 +1,13 @@
 package com.estazo.project.seeable.app.Register
 
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.R
@@ -32,10 +34,10 @@ class VerificationOTP : AppCompatActivity() {
     private lateinit var codeOTP : String
     private lateinit var  phoneNext : String
 
-
     private lateinit var auth: FirebaseAuth
     private var verificationCode: String? = null
 
+    private lateinit var  mAlertDialog : AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,10 +90,12 @@ class VerificationOTP : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    alertDialogLoading()
                     val intent = Intent(this@VerificationOTP, LittleMore::class.java)
                     Log.i("mobile2",phoneNext)
                     intent.putExtra("mobile2", phoneNext)
                     startActivity(intent)
+                    dismissAlertDialogLoading()
                     finish()
                 } else {
                     Toast.makeText(this@VerificationOTP, "Incorrect OTP", Toast.LENGTH_SHORT).show()
@@ -169,6 +173,29 @@ class VerificationOTP : AppCompatActivity() {
         }
 
         override fun afterTextChanged(s: Editable) {}
+    }
+
+    /** AlertDialog to loading  */
+    private fun alertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        mAlertDialog  = mBuilder.show()
+        mAlertDialog.window!!.setLayout(400,300)
+        mAlertDialog.setCanceledOnTouchOutside(false)
+        mAlertDialog.setCancelable(false)
+    }
+
+    private fun dismissAlertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
+        //show dialog
+        mAlertDialog.dismiss()
     }
 
 }

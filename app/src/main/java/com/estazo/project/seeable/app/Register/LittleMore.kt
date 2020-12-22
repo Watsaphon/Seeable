@@ -1,11 +1,13 @@
 package com.estazo.project.seeable.app.Register
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +30,8 @@ class LittleMore : AppCompatActivity() {
     private lateinit var registerBtn: Button
     private lateinit var setPassword: EditText
     private lateinit var radioGroup: RadioGroup
+
+    private lateinit var  mAlertDialog : AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +62,7 @@ class LittleMore : AppCompatActivity() {
                 // Get the instance of radio button using id
                 val radio: RadioButton = findViewById(id)
                 if (radio.text == "Blind" && password.isNotEmpty() ) {
+                    alertDialogLoading()
 //                    Toast.makeText(applicationContext, "On button click :" + " ${radio.text}", Toast.LENGTH_SHORT).show()
                     val ref = FirebaseDatabase.getInstance().getReference("users_blind")
                     val ID = ref.push().key
@@ -72,6 +77,7 @@ class LittleMore : AppCompatActivity() {
                     ref.child(phone).setValue(test).addOnCompleteListener { saveRegister() }
                 }
                 else if (radio.text == "Caretaker" && password.isNotEmpty()) {
+                    alertDialogLoading()
 //                    Toast.makeText(applicationContext, "On button click :" + " ${radio.text}", Toast.LENGTH_SHORT).show()
                     val ref = FirebaseDatabase.getInstance().getReference("users_caretaker")
                     val ID = ref.push().key
@@ -83,16 +89,22 @@ class LittleMore : AppCompatActivity() {
                         "-")
                     ref.child(phone).setValue(test).addOnCompleteListener { saveRegister() }
                 }
-            } else {
+                else if (password.isEmpty()) {
+                    Toast.makeText(applicationContext, "Please fill your password", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else {
                 // If no radio button checked in this radio group
-                Toast.makeText(applicationContext, "Please Select mode or fill your password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Please Select mode", Toast.LENGTH_SHORT).show()
             }
         }
 
         setPassword.addTextChangedListener(phoneTextWatcher)
+
     }
 
     private fun saveRegister(){
+        dismissAlertDialogLoading()
         val i = Intent(this, LoginScreen::class.java)
         startActivity(i)
         finish()
@@ -115,5 +127,27 @@ class LittleMore : AppCompatActivity() {
         override fun afterTextChanged(s: Editable) {}
     }
 
+    /** AlertDialog to loading  */
+    private fun alertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        mAlertDialog  = mBuilder.show()
+        mAlertDialog.window!!.setLayout(400,300)
+        mAlertDialog.setCanceledOnTouchOutside(false)
+        mAlertDialog.setCancelable(false)
+    }
+
+    private fun dismissAlertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
+        //show dialog
+        mAlertDialog.dismiss()
+    }
 }
 

@@ -189,7 +189,6 @@ import java.util.*
     }
 
     private fun register() {
-//        val intent = Intent(this, LittleMore::class.java)
         val intent = Intent(this, SendOTP::class.java)
         startActivity(intent)
     }
