@@ -30,6 +30,16 @@
     <string name="subheader_VerifyOTP">Please enter 6 digit OTP in your phone to proceed</string>
     <string name="button_VerifyOTP">Submit</string>
 
+    <!--LittleMore-->
+    <string name="header_LittleMore">Little more...</string>
+    <string name="subheader_LittleMore">Select mode</string>
+    <string name="set_password_LittleMore">Set your password</string>
+    <string name="blind_LittleMore">Blind</string>
+    <string name="care_LittleMore">Caretaker</string>
+    <string name="hint_LittleMore">Password...</string>
+
+    <string name="btn_LittleMore">Register</string>
+
     <!--SelectRegister-->
     <string name="select_register_header">Choose Section</string>
     <string name="select_register_subheader">What’s phone’s owner role ?</string>

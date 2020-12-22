@@ -35,6 +35,25 @@ data class UserBlinderHelperClass(
     }
 }
 
-
-
-
+data class UserBlinderHelperClassNew(
+    val ID: String,
+    val Password: String,
+    val FullName: String,
+    val Sex: String,
+    val NameHelper: String,
+    val PhoneHelper: String,
+    val homeLocation : String
+) {
+    @Exclude
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "id" to ID,
+            "password" to Password,
+            "fullName" to FullName,
+            "sex" to Sex,
+            "nameHelper" to NameHelper,
+            "phoneHelper" to PhoneHelper,
+            "homeLocation" to homeLocation
+        )
+    }
+}

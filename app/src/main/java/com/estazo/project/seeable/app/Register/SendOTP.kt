@@ -88,9 +88,7 @@ class SendOTP : AppCompatActivity() {
     }
 
     private val phoneTextWatcher: TextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-        }
-
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             val phone : String = etTelOTP.text.toString().trim()
             if(phone.isNotEmpty()){
@@ -102,24 +100,9 @@ class SendOTP : AppCompatActivity() {
             else if(phone.isEmpty()){
                 clearButton.visibility = View.GONE
             }
-
-
         }
-
         override fun afterTextChanged(s: Editable) {}
     }
 
-    //    private fun SigninWithPhone(credential: PhoneAuthCredential) {
-//        auth.signInWithCredential(credential)
-//            .addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    startActivity(Intent(this@SendOTP, SignedIn::class.java))
-//                    finish()
-//                } else {
-//                    Toast.makeText(this@SendOTP, "Incorrect OTP", Toast.LENGTH_SHORT)
-//                        .show()
-//                }
-//            }
-//    }
 
 }

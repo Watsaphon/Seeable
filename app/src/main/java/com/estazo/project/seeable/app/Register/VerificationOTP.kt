@@ -15,6 +15,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
+import kotlinx.android.synthetic.main.activity_verification_o_t_p.*
 import java.util.concurrent.TimeUnit
 
 class VerificationOTP : AppCompatActivity() {
@@ -29,6 +30,7 @@ class VerificationOTP : AppCompatActivity() {
     private lateinit var digit_6: EditText
     private lateinit var tel: TextView
     private lateinit var codeOTP : String
+    private lateinit var  phoneNext : String
 
 
     private lateinit var auth: FirebaseAuth
@@ -52,9 +54,9 @@ class VerificationOTP : AppCompatActivity() {
         val phone = intent.getStringExtra("mobile")
         verificationCode = intent.getStringExtra("OTP")
         tel.text = "+66-$phone"
+        phoneNext = phone.toString()
 
         auth = FirebaseAuth.getInstance()
-//        StartFirebaseLogin()
 
         digit_1.addTextChangedListener(digit1TextWatcher)
         digit_2.addTextChangedListener(digit2TextWatcher)
@@ -82,32 +84,14 @@ class VerificationOTP : AppCompatActivity() {
 
     }
 
-//    private fun StartFirebaseLogin() {
-//        mCallback = object : OnVerificationStateChangedCallbacks() {
-//            override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-//                Toast.makeText(this@VerificationOTP, "verification completed", Toast.LENGTH_SHORT).show()
-//            }
-//
-//            override fun onVerificationFailed(e: FirebaseException) {
-//                Toast.makeText(this@VerificationOTP, "verification failed", Toast.LENGTH_SHORT).show()
-//            }
-//
-//            override fun onCodeSent(
-//                s: String,
-//                forceResendingToken: ForceResendingToken
-//            ) {
-//                super.onCodeSent(s, forceResendingToken)
-//                verificationCode = s
-//                Toast.makeText(this@VerificationOTP, "Code sent", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
-
     private fun SigninWithPhone(credential: PhoneAuthCredential) {
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    startActivity(Intent(this@VerificationOTP, SignedIn::class.java))
+                    val intent = Intent(this@VerificationOTP, LittleMore::class.java)
+                    Log.i("mobile2",phoneNext)
+                    intent.putExtra("mobile2", phoneNext)
+                    startActivity(intent)
                     finish()
                 } else {
                     Toast.makeText(this@VerificationOTP, "Incorrect OTP", Toast.LENGTH_SHORT).show()

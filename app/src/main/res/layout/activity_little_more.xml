@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Register.LittleMore">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="28dp">
+
+        <!-- Vector 1 -->
+        <View
+            android:id="@+id/vector_1"
+            android:layout_width="match_parent"
+            android:layout_height="128.21dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="-15dp"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/vector_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <!-- Ellipse 1 -->
+        <View
+            android:id="@+id/ellipse_1"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginTop="111.5dp"
+            android:background="@drawable/ellipse_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+        <!-- Ellipse 2 -->
+        <View
+            android:id="@+id/ellipse_2"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10.5dp"
+            android:layout_marginTop="120.50dp"
+            android:background="@drawable/ellipse_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+        <!-- Ellipse 3 -->
+        <View
+            android:id="@+id/ellipse_3"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="132dp"
+            android:background="@drawable/ellipse_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+        <!-- Ellipse 4 -->
+        <View
+            android:id="@+id/ellipse_4"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="121.5dp"
+            android:layout_marginTop="125dp"
+            android:background="@drawable/ellipse_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+        <!-- Ellipse 5 -->
+        <View
+            android:id="@+id/ellipse_5"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="140dp"
+            android:background="@drawable/ellipse_5"
+            app:layout_constraintEnd_toEndOf="@+id/ellipse_7"
+            app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+        <!-- Ellipse 6 -->
+        <View
+            android:id="@+id/ellipse_6"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="124dp"
+            android:layout_marginEnd="27dp"
+            android:background="@drawable/ellipse_6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+        <!-- Ellipse 7 -->
+        <View
+            android:id="@+id/ellipse_7"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="182dp"
+            android:layout_marginTop="116dp"
+            android:layout_marginEnd="7dp"
+            android:background="@drawable/ellipse_7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/vector_1" />
+
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="269dp"
+            android:layout_height="75dp"
+            android:layout_alignBottom="@+id/vector_1"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="71dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="71dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/header_LittleMore"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="36dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/sms"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/sub_header"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="160dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/subheader_LittleMore"
+            android:textColor="#404040"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/select_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/select_blind"
+                android:layout_width="310dp"
+                android:layout_height="120dp"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="204dp"
+                android:background="@drawable/round_blind_button"
+                android:button="@null"
+                android:fontFamily="@font/roboto"
+                android:padding="20dp"
+                android:text="@string/blind_LittleMore"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:typeface="normal" />
+
+            <RadioButton
+                android:id="@+id/select_care"
+                android:layout_width="310dp"
+                android:layout_height="120dp"
+                android:layout_below="@+id/select_blind"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/round_person_button"
+                android:button="@null"
+                android:fontFamily="@font/roboto"
+                android:padding="20dp"
+                android:text="@string/care_LittleMore"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/set_password_txt"
+            android:layout_width="283dp"
+            android:layout_height="25dp"
+            android:layout_above="@+id/setPassword"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginBottom="11dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/set_password_LittleMore"
+            android:textColor="#404040"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/telOTP"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/setPassword"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_above="@+id/register_button"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/fill_tel_box"
+            android:hint="@string/hint_LittleMore"
+            android:inputType="text"
+            android:maxLength="10"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="561dp" />
+
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="41dp"
+            android:layout_marginEnd="39dp"
+            android:layout_marginBottom="61dp"
+            android:background="@drawable/btn_rectangle_blue"
+            android:text="@string/btn_LittleMore"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.46"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="639dp" />
+
+        <ImageButton
+            android:id="@+id/clear_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignBottom="@+id/setPassword"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="340dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="@mipmap/close_button_foreground"
+            android:visibility="gone" />
+
+
+
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

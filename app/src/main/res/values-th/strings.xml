@@ -29,6 +29,15 @@
     <string name="subheader_VerifyOTP">กรุณาใส่รัหสผ่าน6หลักบนโทรศัพท์เพื่อดำเนินการต่อ</string>
     <string name="button_VerifyOTP">ยืนยัน</string>
 
+    <!--LittleMore-->
+    <string name="header_LittleMore">เพิ่มเติม...</string>
+    <string name="subheader_LittleMore">เลือกโหมดการทำงาน</string>
+    <string name="set_password_LittleMore">ตั้งค่ารหัสผ่าน</string>
+    <string name="blind_LittleMore">คนตาบอด</string>
+    <string name="care_LittleMore">ผู้ดูแล</string>
+    <string name="hint_LittleMore">รหัสผ่าน...</string>
+    <string name="btn_LittleMore">ลงทะเบียน</string>
+
     <!--SelectRegister-->
     <string name="select_register_header">เลือกผู้ลงทะเบียน</string>
     <string name="select_register_subheader">คุณจะเลือกลงทะเบียนแบบใด ?</string>

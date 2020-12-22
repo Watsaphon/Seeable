@@ -24,3 +24,20 @@ data class UserPersonHelperClass(
     }
 }
 
+data class UserPersonHelperClassNew(
+    val ID : String ,
+    val  Password: String,
+    val FullName: String,
+    val Sex: String,
+    val partner_id : String
+){ @Exclude
+fun toMap(): Map<String, Any?> {
+    return mapOf(
+        "id" to ID,
+        "password" to Password,
+        "fullName" to FullName,
+        "sex" to Sex,
+        "partner_id" to partner_id
+    )
+}
+}
