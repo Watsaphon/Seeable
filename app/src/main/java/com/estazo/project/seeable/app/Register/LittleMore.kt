@@ -1,7 +1,6 @@
 package com.estazo.project.seeable.app.Register
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -11,14 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
 import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClassNew
 import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClassNew
 import com.estazo.project.seeable.app.Login.LoginScreen
-import com.estazo.project.seeable.app.MainActivityPerson
 import com.estazo.project.seeable.app.R
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 
 
@@ -68,6 +63,7 @@ class LittleMore : AppCompatActivity() {
                     val ID = ref.push().key
                     val test = UserBlinderHelperClassNew(
                             ID.toString(),
+                            phone,
                             "$password",
                             "-",
                             "-",
@@ -83,6 +79,7 @@ class LittleMore : AppCompatActivity() {
                     val ID = ref.push().key
                     val test = UserPersonHelperClassNew(
                         ID.toString(),
+                        phone,
                         "$password",
                         "-",
                         "-",

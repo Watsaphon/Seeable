@@ -59,7 +59,7 @@ class GoogleRegisterPerson : AppCompatActivity() {
                 phoneBox.error = getString(R.string.phone_box_person)
             }
             else{
-                val ref = FirebaseDatabase.getInstance().getReference("users_person")
+                val ref = FirebaseDatabase.getInstance().getReference("users_caretaker")
                 val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
                 var UID  = ""
                 if (user != null) {

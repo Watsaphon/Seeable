@@ -78,8 +78,8 @@
     <string name="Login_heading">LOGIN</string>
     <string name="Login_button">Login</string>
     <string name="login_success">Login Success</string>
-    <string name="login_empty">Please Enter Username or Password</string>
-    <string name="login_incorrect">Username or Password Incorrect</string>
+    <string name="login_empty">Please Enter Phone or Password</string>
+    <string name="login_incorrect">Phone or Password Incorrect</string>
     <string name="or">or</string>
     <string name="register_login_button">Sign up</string>
     <string name="forgot_password">Forgot your password ?</string>

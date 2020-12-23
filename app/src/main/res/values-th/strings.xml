@@ -76,8 +76,8 @@
     <string name="Login_heading">เข้าสู่ระบบ</string>
     <string name="Login_button">เข้าสู่ระบบ</string>
     <string name="login_success">เข้าสู่ระบบเสร็จสิ้น</string>
-    <string name="login_empty">กรุณากรอกชื่อผู้ใช้งานหรือรหัสผ่าน</string>
-    <string name="login_incorrect">ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง</string>
+    <string name="login_empty">กรุณากรอกเบอร์โทรผู้ใช้งานหรือรหัสผ่าน</string>
+    <string name="login_incorrect">เบอร์โทรผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง</string>
     <string name="or">หรือ</string>
     <string name="register_login_button">ลงทะเบียน</string>
     <string name="forgot_password">ลืมรหัสผ่าน ?</string>

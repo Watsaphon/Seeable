@@ -26,6 +26,7 @@ data class UserPersonHelperClass(
 
 data class UserPersonHelperClassNew(
     val ID : String ,
+    val Phone: String,
     val  Password: String,
     val FullName: String,
     val Sex: String,
@@ -34,6 +35,7 @@ data class UserPersonHelperClassNew(
 fun toMap(): Map<String, Any?> {
     return mapOf(
         "id" to ID,
+        "phone" to Phone,
         "password" to Password,
         "fullName" to FullName,
         "sex" to Sex,

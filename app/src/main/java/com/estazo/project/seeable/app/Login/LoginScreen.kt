@@ -42,7 +42,7 @@ import java.util.*
  class LoginScreen : AppCompatActivity() {
 
 
-    private lateinit var userNameBox: EditText
+    private lateinit var telBox: EditText
     private lateinit var passwordBox: EditText
     private lateinit var finish: Button
     private lateinit var register: Button
@@ -60,7 +60,7 @@ import java.util.*
     private lateinit var sharedPrefPassword: SharedPreferences
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPhoneHelper: SharedPreferences
-    private lateinit var sharedPrefUsername: SharedPreferences
+    private lateinit var sharedPrefSex: SharedPreferences
     private lateinit var sharedPrefHomeLocation: SharedPreferences
     private lateinit var sharedPrefPartnerID: SharedPreferences
 
@@ -81,7 +81,7 @@ import java.util.*
 
         //Initializing Views
         signInButton = findViewById(R.id.sign_in_button)
-        userNameBox = findViewById(R.id.username_box)
+        telBox = findViewById(R.id.tel_box)
         passwordBox = findViewById(R.id.password_box)
         finish = findViewById(R.id.login_finish_button)
         register = findViewById(R.id.regis_button)
@@ -98,7 +98,7 @@ import java.util.*
 
         sharedPrefLanguage = getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
-        sharedPrefUsername= getSharedPreferences("value", 0)
+        sharedPrefSex= getSharedPreferences("value", 0)
         sharedPrefPassword= getSharedPreferences("value", 0)
         sharedPrefFullName= getSharedPreferences("value", 0)
         sharedPrefNameHelper= getSharedPreferences("value", 0)
@@ -196,7 +196,7 @@ import java.util.*
     private fun login() {
         closeKeyboard()
         alertDialogLoading()
-        val query = FirebaseDatabase.getInstance().getReference("users_person").orderByChild("id")
+        val query = FirebaseDatabase.getInstance().getReference("users_caretaker").orderByChild("phone")
         query.addListenerForSingleValueEvent(valueEventListener)
     }
 
@@ -246,7 +246,7 @@ import java.util.*
                         val uid = user.uid
                         Log.i("testFirebaseUser2","$uid")
                         UID = uid
-                        val queryUserPerson = FirebaseDatabase.getInstance().getReference("users_person").orderByChild("id")
+                        val queryUserPerson = FirebaseDatabase.getInstance().getReference("users_caretaker").orderByChild("id")
                         queryUserPerson.addListenerForSingleValueEvent(valueEventListenerCheckGoogleUserPerson)
 
                         editorGoogleUser.putString("stringKeyGoogle","$UID")
@@ -352,45 +352,45 @@ import java.util.*
     /**receive value from realtime database (user_person) and check Login */
     private var valueEventListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val loginName = userNameBox.text.toString()
+            val loginTel = telBox.text.toString()
             val loginPassword = passwordBox.text.toString()
             var count = 0
             Log.i("LoginScreen_count","Before adding listener, count=$count")
             if (dataSnapshot.exists()) {
                 for (snapshot in dataSnapshot.children) {
-                    val fullname = snapshot.child("fullName").value.toString()
                     val id = snapshot.child("id").value.toString()
-                    val password = snapshot.child("password").value.toString()
                     val phone = snapshot.child("phone").value.toString()
-                    val username = snapshot.child("username").value.toString()
+                    val password = snapshot.child("password").value.toString()
+                    val fullname = snapshot.child("fullName").value.toString()
+                    val sex = snapshot.child("sex").value.toString()
                     val partnerIDFirebase = snapshot.child("partner_id").value.toString()
 
                     Log.i("LoginScreen_count","In onDataChange, count=$count")
-                    Log.i("LoginScreen_count", "Username : $loginName , Password : $loginPassword")
-                    Log.i("LoginScreen_count", "Database info :  $id,$password,$username,$fullname,$phone ,$partnerIDFirebase")
+                    Log.i("LoginScreen_count", "Username : $loginTel , Password : $loginPassword")
+                    Log.i("LoginScreen_count", "Database info :  $id,$password,$sex,$fullname,$phone ,$partnerIDFirebase")
 
-                    if (loginName.equals(username) && loginPassword.equals(password)){
+                    if (loginTel.equals(phone) && loginPassword.equals(password)){
                         var editorID = sharedPrefID.edit()
-                        val editorUsername = sharedPrefUsername.edit()
-                        val editorPassword = sharedPrefPassword.edit()
-                        val editorFullName = sharedPrefFullName.edit()
                         val editorPhone = sharedPrefPhone.edit()
+                        val editorPassword = sharedPrefPassword.edit()
+                        val editorSex = sharedPrefSex.edit()
+                        val editorFullName = sharedPrefFullName.edit()
                         var editorUserType = sharedPrefUserType.edit()
                         val editorPartnerID = sharedPrefPartnerID.edit()
 
                         editorID.putString("stringKey2", id)
-                        editorUsername.putString("stringKeyUsername", username)
-                        editorPassword.putString("stringKeyPassword", password)
-                        editorFullName.putString("stringKeyFullName", fullname)
                         editorPhone.putString("stringKeyPhone", phone)
+                        editorPassword.putString("stringKeyPassword", password)
+                        editorSex.putString("stringKeySex", sex)
+                        editorFullName.putString("stringKeyFullName", fullname)
                         editorUserType.putString("stringKeyType", "person")
                         editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
 
                         editorID.apply()
-                        editorUsername.apply()
-                        editorPassword.apply()
-                        editorFullName.apply()
                         editorPhone.apply()
+                        editorPassword.apply()
+                        editorSex.apply()
+                        editorFullName.apply()
                         editorUserType.apply()
                         editorPartnerID.apply()
 
@@ -401,11 +401,11 @@ import java.util.*
                         dismissAlertDialogLoading()
 
 //                        /** Check user pair with blinder */
-//                        val query = FirebaseDatabase.getInstance().getReference("users_person").child("$id").orderByChild("partner_id")
+//                        val query = FirebaseDatabase.getInstance().getReference("users_caretaker").child("$id").orderByChild("partner_id")
 //                        query.addListenerForSingleValueEvent(valueEventListenerCheckUserPairing)
                         break
                     }
-                    else if (loginName.isEmpty()  || loginPassword.isEmpty() ) {
+                    else if (loginTel.isEmpty()  || loginPassword.isEmpty() ) {
                         dismissAlertDialogLoading()
                         Toast.makeText(applicationContext, getString(R.string.login_empty), Toast.LENGTH_SHORT).show()
                         break
@@ -427,53 +427,53 @@ import java.util.*
     /**receive value from realtime database (users_blind) and check Login */
     private var valueEventListener2: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val loginName = userNameBox.text.toString()
+            val loginTel = telBox.text.toString()
             val loginPassword = passwordBox.text.toString()
             var count = 0
             Log.i("LoginScreen_checkLogin","Before adding listener, count=$count")
             if (dataSnapshot.exists()) {
                 for (snapshot in dataSnapshot.children) {
-                    val fullname = snapshot.child("fullName").value.toString()
                     val id = snapshot.child("id").value.toString()
-                    val password = snapshot.child("password").value.toString()
                     val phone = snapshot.child("phone").value.toString()
-                    val username = snapshot.child("username").value.toString()
+                    val password = snapshot.child("password").value.toString()
+                    val fullname = snapshot.child("fullName").value.toString()
+                    val sex = snapshot.child("sex").value.toString()
                     val nameHelper = snapshot.child("nameHelper").value.toString()
                     val phoneHelper = snapshot.child("phoneHelper").value.toString()
                     val homeLocation = snapshot.child("homeLocation").value.toString()
 
                     Log.i("LoginScreen_checkLogin","In onDataChange, count=$count")
-                    Log.i("LoginScreen_checkLogin", "Username : $loginName , Password : $loginPassword")
-                    Log.i("LoginScreen_checkLogin", "Database info :  $id,$password,$username,$fullname,$phone,$nameHelper,$phoneHelper")
+                    Log.i("LoginScreen_checkLogin", "Username : $loginTel , Password : $loginPassword")
+                    Log.i("LoginScreen_checkLogin", "Database info :  $id,$password,$sex,$fullname,$phone,$nameHelper,$phoneHelper")
 
-                    if (loginName.equals(username) && loginPassword.equals(password)){
+                    if (loginTel.equals(phone) && loginPassword.equals(password)){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                         val editorID = sharedPrefID.edit()
-                        val editorUsername = sharedPrefUsername.edit()
+                        val editorPhone = sharedPrefPhone.edit()
                         val editorPassword = sharedPrefPassword.edit()
                         val editorFullName = sharedPrefFullName.edit()
                         val editorNameHelper = sharedPrefNameHelper.edit()
-                        val editorPhone = sharedPrefPhone.edit()
+                        val editorSex = sharedPrefSex.edit()
                         val editorPhoneHelper = sharedPrefPhoneHelper.edit()
                         val editorUserType = sharedPrefUserType.edit()
                         val editorHomeLocation = sharedPrefHomeLocation.edit()
 
                         editorID.putString("stringKey2", id)
-                        editorUsername.putString("stringKeyUsername", username)
+                        editorPhone.putString("stringKeyPhone", phone)
                         editorPassword.putString("stringKeyPassword", password)
+                        editorSex.putString("stringKeySex", sex)
                         editorFullName.putString("stringKeyFullName", fullname)
                         editorNameHelper.putString("stringKeyNameHelper", nameHelper)
-                        editorPhone.putString("stringKeyPhone", phone)
                         editorPhoneHelper.putString("stringKeyPhoneHelper", phoneHelper)
                         editorUserType.putString("stringKeyType", "blind")
                         editorHomeLocation.putString("stringKeyHomeLocation", homeLocation)
 
                         editorID.apply()
-                        editorUsername.apply()
+                        editorPhone.apply()
                         editorPassword.apply()
+                        editorSex.apply()
                         editorFullName.apply()
                         editorNameHelper.apply()
-                        editorPhone.apply()
                         editorPhoneHelper.apply()
                         editorUserType.apply()
                         editorHomeLocation.apply()
@@ -483,7 +483,7 @@ import java.util.*
                         dismissAlertDialogLoading()
                         break
                     }
-                    else if (loginName.isEmpty()  || loginPassword.isEmpty() ) {
+                    else if (loginTel.isEmpty()  || loginPassword.isEmpty() ) {
                         Toast.makeText(applicationContext, getString(R.string.login_empty), Toast.LENGTH_SHORT).show()
                         dismissAlertDialogLoading()
                         break
@@ -499,7 +499,6 @@ import java.util.*
                     dismissAlertDialogLoading()
                 }
             }
-
         }
         override fun onCancelled(databaseError: DatabaseError) {}
     }
@@ -619,7 +618,7 @@ import java.util.*
 
 
     /** Check user pair with blinder */
-//    val query = FirebaseDatabase.getInstance().getReference("users_person").child("$id").orderByChild("partner_id")
+//    val query = FirebaseDatabase.getInstance().getReference("users_caretaker").child("$id").orderByChild("partner_id")
 //    query.addListenerForSingleValueEvent(valueEventListenerCheckUserPairing)
 
     /** Check User pair with blinder ( check at only one user not all ) */

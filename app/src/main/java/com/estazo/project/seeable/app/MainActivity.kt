@@ -62,7 +62,7 @@ class MainActivity: AppCompatActivity() {
     private lateinit var sharedPrefPassword: SharedPreferences
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPhoneHelper: SharedPreferences
-    private lateinit var sharedPrefUsername: SharedPreferences
+    private lateinit var sharedPrefSex: SharedPreferences
     private lateinit var  mAlertDialog : AlertDialog
     private lateinit var sharedPrefGoogle : SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
@@ -85,7 +85,7 @@ class MainActivity: AppCompatActivity() {
         sharedPrefGoogle  = getSharedPreferences("value", 0)
         sharedPrefLanguage = getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
-        sharedPrefUsername= getSharedPreferences("value", 0)
+        sharedPrefSex= getSharedPreferences("value", 0)
         sharedPrefPassword= getSharedPreferences("value", 0)
         sharedPrefFullName= getSharedPreferences("value", 0)
         sharedPrefNameHelper= getSharedPreferences("value", 0)
@@ -222,20 +222,20 @@ class MainActivity: AppCompatActivity() {
                 Log.i("Debug_sendLocation","call else")
                 Log.d("Debug_sendLocation:" ,"$link" )
                 val currentID = sharedPrefID.getString("stringKey2", "not found!")
-                val currentUsername = sharedPrefUsername.getString("stringKeyUsername", "not found!")
+                val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
                 val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
                 val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
                 val currentNameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
                 val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
                 val currentPhoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
                 val currentHomeLocation = sharedPrefHomeLocation.getString("stringKeyHomeLocation", "not found!")
-                Log.d("Debug_sendLocation","$currentID, $currentUsername, $currentPassword , $currentFullName,$currentPhone" +
+                Log.d("Debug_sendLocation","$currentID, $currentSex, $currentPassword , $currentFullName,$currentPhone" +
                         ",$currentNameHelper,$currentPhoneHelper ,$currentHomeLocation")
 
 
                 val ref = FirebaseDatabase.getInstance().reference
 
-                val post = UserBlinderHelperClass("$currentID", "$currentUsername", "$currentPassword",
+                val post = UserBlinderHelperClass("$currentID", "$currentSex", "$currentPassword",
                     "$currentFullName","$currentPhone","$currentNameHelper",
                     "$currentPhoneHelper",location.latitude,location.longitude,"$currentHomeLocation")
                 val postValues = post.toMap()
@@ -420,7 +420,7 @@ class MainActivity: AppCompatActivity() {
 
     private fun gotoChangeHomeLocation(){
         val currentID = sharedPrefID.getString("stringKey2", "not found!")
-        val currentUsername = sharedPrefUsername.getString("stringKeyUsername", "not found!")
+        val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
         val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
         val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
         val currentNameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
@@ -429,7 +429,7 @@ class MainActivity: AppCompatActivity() {
 
         val ref = FirebaseDatabase.getInstance().reference
 
-        val post = UserBlinderHelperClass("$currentID", "$currentUsername", "$currentPassword",
+        val post = UserBlinderHelperClass("$currentID", "$currentSex", "$currentPassword",
             "$currentFullName","$currentPhone","$currentNameHelper",
             "$currentPhoneHelper",13.7267346,100.7751312,"no-home")
         val postValues = post.toMap()
@@ -457,23 +457,23 @@ class MainActivity: AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
 
         val editorID = sharedPrefID.edit()
-        val editorUsername = sharedPrefUsername.edit()
+        val editorPhone = sharedPrefPhone.edit()
         val editorPassword = sharedPrefPassword.edit()
         val editorFullName = sharedPrefFullName.edit()
         val editorNameHelper = sharedPrefNameHelper.edit()
-        val editorPhone = sharedPrefPhone.edit()
         val editorPhoneHelper = sharedPrefPhoneHelper.edit()
         val editorGoogleUser = sharedPrefGoogle.edit()
         val editorUserType = sharedPrefUserType.edit()
         val editorGoogleUserType = sharedGooglePrefUserType.edit()
         val editorHomeLocation = sharedPrefHomeLocation.edit()
+        val editorSex = sharedPrefSex.edit()
 
         editorID.putString("stringKey2", "not found!")
-        editorUsername.putString("stringKeyUsername", "not found!")
+        editorPhone.putString("stringKeyPhone", "not found!")
         editorPassword.putString("stringKeyPassword", "not found!")
+        editorSex.putString("stringKeySex", "not found!")
         editorFullName.putString("stringKeyFullName", "not found!")
         editorNameHelper.putString("stringKeyNameHelper", "not found!")
-        editorPhone.putString("stringKeyPhone", "not found!")
         editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
         editorGoogleUser.putString("stringKeyGoogle", "not found!")
         editorUserType.putString("stringKeyType", "not found!")
@@ -481,16 +481,16 @@ class MainActivity: AppCompatActivity() {
         editorHomeLocation.putString("stringKeyHomeLocation", "no-home")
 
         editorID.apply()
-        editorUsername.apply()
+        editorPhone.apply()
         editorPassword.apply()
         editorFullName.apply()
         editorNameHelper.apply()
-        editorPhone.apply()
         editorPhoneHelper.apply()
         editorGoogleUser.apply()
         editorUserType.apply()
         editorGoogleUserType.apply()
         editorHomeLocation.apply()
+        editorSex.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
@@ -598,7 +598,7 @@ class MainActivity: AppCompatActivity() {
         val phoneHelperText : TextView =  mDialogView.findViewById(R.id.blinderPhoneHelper)
 
         val id = sharedPrefID.getString("stringKey2", "not found!")
-        val username =  sharedPrefUsername.getString("stringKeyUsername", "not found!")
+        val sex =  sharedPrefSex.getString("stringKeySex", "not found!")
         val fullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
         val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
         val nameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
@@ -614,7 +614,7 @@ class MainActivity: AppCompatActivity() {
         else{
             usernameText.visibility = View.VISIBLE
             idText.text = getString(R.string.main_blind_id)+" $id "
-            usernameText.text = getString(R.string.main_blind_username)+"$username "
+            usernameText.text = getString(R.string.main_blind_username)+"$sex "
             fullNameText.text = getString(R.string.main_blind_fullName)+"$fullName "
             phoneText.text = getString(R.string.main_blind_phone)+"$phone "
             nameHelperText.text =getString(R.string.main_blind_name_caretaker)+ "$nameHelper "

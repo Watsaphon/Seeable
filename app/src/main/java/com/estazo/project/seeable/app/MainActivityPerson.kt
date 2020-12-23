@@ -14,6 +14,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClass
+import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClassNew
 import com.estazo.project.seeable.app.Login.LoginScreen
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -43,7 +44,7 @@ class MainActivityPerson : AppCompatActivity() {
     private lateinit var sharedPrefPassword: SharedPreferences
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPhoneHelper: SharedPreferences
-    private lateinit var sharedPrefUsername: SharedPreferences
+    private lateinit var sharedPrefSex: SharedPreferences
 
     private lateinit var sharedPrefPartnerID: SharedPreferences
 
@@ -68,7 +69,7 @@ class MainActivityPerson : AppCompatActivity() {
 
         sharedPrefLanguage = getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
-        sharedPrefUsername= getSharedPreferences("value", 0)
+        sharedPrefSex= getSharedPreferences("value", 0)
         sharedPrefPassword= getSharedPreferences("value", 0)
         sharedPrefFullName= getSharedPreferences("value", 0)
         sharedPrefNameHelper= getSharedPreferences("value", 0)
@@ -176,17 +177,17 @@ class MainActivityPerson : AppCompatActivity() {
     private fun gotoChangePartnerID(){
 
         val currentID = sharedPrefID.getString("stringKey2", "not found!")
-        val currentUsername = sharedPrefUsername.getString("stringKeyUsername", "not found!")
+        val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
         val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
         val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
         val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
 
         val ref = FirebaseDatabase.getInstance().reference
 
-        val post = UserPersonHelperClass("$currentID", "$currentUsername", "$currentPassword",
+        val post = UserPersonHelperClass("$currentID", "$currentSex", "$currentPassword",
             "$currentFullName","$currentPhone","no-pairing")
         val postValues = post.toMap()
-        val childUpdates = hashMapOf<String, Any>("users_person/$currentID" to postValues)
+        val childUpdates = hashMapOf<String, Any>("users_caretaker/$currentID" to postValues)
         ref.updateChildren(childUpdates)
 
         val editorPartnerID = sharedPrefPartnerID.edit()
@@ -208,36 +209,36 @@ class MainActivityPerson : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
 
         val editorID = sharedPrefID.edit()
-        val editorPartnerID = sharedPrefPartnerID.edit()
-        val editorUsername = sharedPrefUsername.edit()
+        val editorPhone = sharedPrefPhone.edit()
         val editorPassword = sharedPrefPassword.edit()
+        val editorPartnerID = sharedPrefPartnerID.edit()
+        val editorSex = sharedPrefSex.edit()
         val editorFullName = sharedPrefFullName.edit()
         val editorNameHelper = sharedPrefNameHelper.edit()
-        val editorPhone = sharedPrefPhone.edit()
         val editorPhoneHelper = sharedPrefPhoneHelper.edit()
         val editorGoogleUser = sharedPrefGoogle.edit()
         val editorUserType = sharedPrefUserType.edit()
         val editorGoogleUserType = sharedGooglePrefUserType.edit()
 
         editorID.putString("stringKey2", "not found!")
-        editorPartnerID.putString("stringKeyPartnerID", "not found!")
-        editorUsername.putString("stringKeyUsername", "not found!")
+        editorPhone.putString("stringKeyPhone", "not found!")
         editorPassword.putString("stringKeyPassword", "not found!")
+        editorPartnerID.putString("stringKeyPartnerID", "not found!")
+        editorSex.putString("stringKeySex", "not found!")
         editorFullName.putString("stringKeyFullName", "not found!")
         editorNameHelper.putString("stringKeyNameHelper", "not found!")
-        editorPhone.putString("stringKeyPhone", "not found!")
         editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
         editorGoogleUser.putString("stringKeyGoogle", "not found!")
         editorUserType.putString("stringKeyType", "not found!")
         editorGoogleUserType.putString("stringKeyGoogleType", "not found!")
 
         editorID.apply()
-        editorPartnerID.apply()
-        editorUsername.apply()
+        editorPhone.apply()
         editorPassword.apply()
+        editorPartnerID.apply()
+        editorSex.apply()
         editorFullName.apply()
         editorNameHelper.apply()
-        editorPhone.apply()
         editorPhoneHelper.apply()
         editorGoogleUser.apply()
         editorUserType.apply()
@@ -394,7 +395,7 @@ class MainActivityPerson : AppCompatActivity() {
                     if (checkPartnerID == id){
                         val currentID = sharedPrefID.getString("stringKey2","not found!")
                         Log.i("test_sharedPrefID ","$currentID")
-                        val query = FirebaseDatabase.getInstance().getReference("users_person").child("$currentID").orderByChild("id")
+                        val query = FirebaseDatabase.getInstance().getReference("users_caretaker").child("$currentID").orderByChild("id")
                         query.addListenerForSingleValueEvent(valueEventListenerInsertPartnerID)
                         break
                     }
@@ -413,21 +414,21 @@ class MainActivityPerson : AppCompatActivity() {
         override fun onCancelled(databaseError: DatabaseError) {}
     }
 
-    /** insert partner id to users_person */
+    /** insert partner id to users_caretaker */
     private var valueEventListenerInsertPartnerID: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
                     val id = dataSnapshot.child("id").value.toString()
-                    val username = dataSnapshot.child("username").value.toString()
+                    val phone = dataSnapshot.child("phone").value.toString()
                     val password = dataSnapshot.child("password").value.toString()
                     val fullname = dataSnapshot.child("fullName").value.toString()
-                    val phone = dataSnapshot.child("phone").value.toString()
+                    val sex = dataSnapshot.child("sex").value.toString()
                     Log.i("MainPerson_count", " ID in checkbox : $id")
-                    Log.i("MainPerson_count", "Database info :  $id ,$username,$password,$fullname,$phone")
+                    Log.i("MainPerson_count", "Database info :  $id ,$password,$fullname,$phone,$sex")
                         val ref = FirebaseDatabase.getInstance().reference
-                        val post = UserPersonHelperClass("$id" ,"$username","$password","$fullname","$phone","$checkPartnerID")
+                        val post = UserPersonHelperClassNew("$id" ,"$phone","$password","$fullname","$sex","$checkPartnerID")
                         val postValues = post.toMap()
-                        val childUpdates = hashMapOf<String, Any>("users_person/$id" to postValues)
+                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$id" to postValues)
                         ref.updateChildren(childUpdates)
                         mAlertDialog.dismiss()
                 Toast.makeText(this@MainActivityPerson, getString(R.string.main_toast_success), Toast.LENGTH_SHORT).show()

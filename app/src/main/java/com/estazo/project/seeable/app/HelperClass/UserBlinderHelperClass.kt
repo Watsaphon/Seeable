@@ -37,17 +37,19 @@ data class UserBlinderHelperClass(
 
 data class UserBlinderHelperClassNew(
     val ID: String,
+    val Phone: String,
     val Password: String,
     val FullName: String,
     val Sex: String,
     val NameHelper: String,
     val PhoneHelper: String,
-    val homeLocation : String
+    val homeLocation: String
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
             "id" to ID,
+            "phone" to Phone,
             "password" to Password,
             "fullName" to FullName,
             "sex" to Sex,

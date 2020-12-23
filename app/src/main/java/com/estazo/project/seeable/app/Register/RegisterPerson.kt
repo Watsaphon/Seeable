@@ -64,7 +64,7 @@ class RegisterPerson : AppCompatActivity() {
                 phoneBox.error = getString(R.string.phone_box_person)
             }
             else{
-                val ref = FirebaseDatabase.getInstance().getReference("users_person")
+                val ref = FirebaseDatabase.getInstance().getReference("users_caretaker")
                 val ID = ref.push().key
                 val test = UserPersonHelperClass(ID.toString(), inputUsername, inputPassword, inputfullName, inputPhone, "no-pairing")
                 ref.child(ID.toString()).setValue(test).addOnCompleteListener {
