@@ -42,23 +42,23 @@
 
 
             <Button
-                android:id="@+id/button1"
-                style="@style/CustomButton3"
+                android:id="@+id/selfNavButton"
+                style="@style/CustomSelfNavButton1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
                 android:fontFamily="@font/roboto"
-                android:text="@string/button_navigation"
+                android:text="@string/button_self_navigation"
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/button2"
-                style="@style/CustomButton2"
+                android:id="@+id/careNavButton"
+                style="@style/CustomCareNavButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
                 android:fontFamily="@font/roboto"
-                android:text="@string/button_shared_locatoin"
+                android:text="@string/button_caretaker_navigation"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -70,23 +70,23 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button3"
-                style="@style/CustomButton1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.0"
-                android:fontFamily="@font/roboto"
-                android:text="@string/button_caretaker_call"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/button4"
-                style="@style/CustomButton4"
+                android:id="@+id/callEmergency"
+                style="@style/CustomCallEmergency"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
                 android:fontFamily="@font/roboto"
                 android:text="@string/button_emergency_call"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/sendLocation"
+                style="@style/CustomSendLocation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:fontFamily="@font/roboto"
+                android:text="@string/button_shared_locatoin"
                 android:textSize="16sp" />
 
         </LinearLayout>

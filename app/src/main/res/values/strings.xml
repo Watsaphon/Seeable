@@ -13,12 +13,17 @@
     <string name="txt_phone_caretaker">Caretaker\'s phone</string>
     <string name="blinder_button_desc">Blind</string>
     <string name="person_button_desc">Caretaker</string>
-    <string name="button_shared_locatoin">Send Location</string>
-    <string name="button_navigation">Navigate</string>
-    <string name="button_emergency_call">Call Emergency</string>
-    <string name="button_caretaker_call">Call Caretaker</string>
     <string name="loading_spinner">Loading...</string>
     <string name="required">(Required)</string>
+
+
+    <!--MainActivity-->
+    <string name="button_self_navigation">Self-Navigate</string>
+    <string name="button_caretaker_navigation">Caretaker-Navigate</string>
+    <string name="button_emergency_call">Call Emergency</string>
+    <string name="button_shared_locatoin">Send Location</string>
+
+
 
     <!--SendOTP-->
     <string name="header_SendOTP">Registration</string>
@@ -114,7 +119,7 @@
     <string name="main_toast_failed">Partner ID incorrect</string>
 
 
-    <!--MainBlinder-->
+    <!--AlertDialogProfile-->
     <string name="main_blindBtn">Close</string>
     <string name="main_blind_header">Profile</string>
     <string name="main_blind_id">ID :</string>

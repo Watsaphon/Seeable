@@ -69,7 +69,9 @@ class LittleMore : AppCompatActivity() {
                             "-",
                             "-",
                             "-",
-                            "-")
+                            0.000000000,
+                        0.00000000,
+                        "-")
                     ref.child(phone).setValue(test).addOnCompleteListener { saveRegister() }
                 }
                 else if (radio.text == "Caretaker" && password.isNotEmpty()) {

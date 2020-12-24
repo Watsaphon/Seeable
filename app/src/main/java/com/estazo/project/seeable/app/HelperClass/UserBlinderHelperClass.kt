@@ -43,6 +43,8 @@ data class UserBlinderHelperClassNew(
     val Sex: String,
     val NameHelper: String,
     val PhoneHelper: String,
+    val latitude: Double,
+    val longitude: Double ,
     val homeLocation: String
 ) {
     @Exclude
@@ -55,6 +57,8 @@ data class UserBlinderHelperClassNew(
             "sex" to Sex,
             "nameHelper" to NameHelper,
             "phoneHelper" to PhoneHelper,
+            "latitude" to latitude,
+            "longitude" to longitude,
             "homeLocation" to homeLocation
         )
     }

@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.work.*
 import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
+import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClassNew
 import com.estazo.project.seeable.app.Login.LoginScreen
 import com.estazo.project.seeable.app.Register.BPMWorker
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -41,6 +42,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_verification_o_t_p.*
 import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 import kotlinx.android.synthetic.main.alert_dialog_profile.view.*
 import java.util.*
@@ -50,9 +52,9 @@ import java.util.concurrent.TimeUnit
 class MainActivity: AppCompatActivity() {
 
     private lateinit var sharedLocationBtn: Button
-    private lateinit var navigationBtn: Button
+    private lateinit var selfNavBtn: Button
     private lateinit var emergencyCallBtn: Button
-    private lateinit var helperCallBtn: Button
+    private lateinit var careNavBtn: Button
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -109,10 +111,10 @@ class MainActivity: AppCompatActivity() {
        Log.i("CheckUserID_MainBlind", "Current User ID : $currentUser")
        Log.i("SplashScreenMain", "LoginScreen now language : $stringValue")
 
-        sharedLocationBtn = findViewById(R.id.button2)
-        navigationBtn = findViewById(R.id.button1)
-        emergencyCallBtn = findViewById(R.id.button4)
-        helperCallBtn = findViewById(R.id.button3)
+        selfNavBtn = findViewById(R.id.selfNavButton)
+        careNavBtn = findViewById(R.id.careNavButton)
+        emergencyCallBtn = findViewById(R.id.callEmergency)
+        sharedLocationBtn = findViewById(R.id.sendLocation)
         fab = findViewById(R.id.floating_action_button)
 //      fab.bringToFront()
 
@@ -127,39 +129,34 @@ class MainActivity: AppCompatActivity() {
         })
         textToSpeech!!.setSpeechRate(0.9f)
 
-        sharedLocationBtn.setOnVeryLongClickListener{
-            vibrate()
-            //create method
- //           Toast.makeText(this,getString(R.string.button_shared_locatoin), Toast.LENGTH_SHORT).show()
-            Log.d("Debug:","sharedLocationBtn -> CheckPermission : "  + CheckPermission().toString())
-            Log.d("Debug:", "sharedLocationBtn -> isLocationEnabled : " +  isLocationEnabled().toString())
-//            RequestPermission()
-            textToSpeech!!.speak("send Location Activate", TextToSpeech.QUEUE_FLUSH, null)
-            getLastLocation()
-            sendLocation()
-        }
 
-        navigationBtn.setOnVeryLongClickListener{
+        selfNavBtn.setOnVeryLongClickListener{
             vibrate()
-            textToSpeech!!.speak("Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
+            textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigation()
-            Toast.makeText(this, getString(R.string.button_navigation), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
         }
-
-       emergencyCallBtn.setOnVeryLongClickListener{
+        careNavBtn.setOnVeryLongClickListener{
+            vibrate()
+            textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
+//            helperCall()
+            Toast.makeText(this, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
+        }
+        emergencyCallBtn.setOnVeryLongClickListener{
             vibrate()
            textToSpeech!!.speak("Call Emergency Activate", TextToSpeech.QUEUE_FLUSH, null)
             emergencyCall()
             Toast.makeText(this, getString(R.string.button_emergency_call), Toast.LENGTH_SHORT).show()
         }
-
-        helperCallBtn.setOnVeryLongClickListener{
+        sharedLocationBtn.setOnVeryLongClickListener{
             vibrate()
-            textToSpeech!!.speak("Call Caretaker Activate", TextToSpeech.QUEUE_FLUSH, null)
-            helperCall()
-         Toast.makeText(this, getString(R.string.button_caretaker_call), Toast.LENGTH_SHORT).show()
+            Log.d("Debug:","sharedLocationBtn -> CheckPermission : "  + CheckPermission().toString())
+            Log.d("Debug:", "sharedLocationBtn -> isLocationEnabled : " +  isLocationEnabled().toString())
+            textToSpeech!!.speak("send Location Activate", TextToSpeech.QUEUE_FLUSH, null)
+            getLastLocation()
+            sendLocation()
+        }
 
-    }
         fab.setOnClickListener {
             /** PopupMenu dropdown */
             val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
@@ -235,11 +232,11 @@ class MainActivity: AppCompatActivity() {
 
                 val ref = FirebaseDatabase.getInstance().reference
 
-                val post = UserBlinderHelperClass("$currentID", "$currentSex", "$currentPassword",
-                    "$currentFullName","$currentPhone","$currentNameHelper",
+                val post = UserBlinderHelperClassNew("$currentID", "$currentPhone", "$currentPassword",
+                    "$currentFullName","$currentSex","$currentNameHelper",
                     "$currentPhoneHelper",location.latitude,location.longitude,"$currentHomeLocation")
                 val postValues = post.toMap()
-                val childUpdates = hashMapOf<String, Any>("users_blind/$currentID" to postValues)
+                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone" to postValues)
                 ref.updateChildren(childUpdates)
 
             }
@@ -377,11 +374,11 @@ class MainActivity: AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun helperCall(){
-        val phoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
-        val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phoneHelper, null))
-        startActivity(intent)
-    }
+//    private fun helperCall(){
+//        val phoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
+//        val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phoneHelper, null))
+//        startActivity(intent)
+//    }
 
 
     /** change Language TH and EN*/

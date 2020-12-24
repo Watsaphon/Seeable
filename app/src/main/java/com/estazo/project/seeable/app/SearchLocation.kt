@@ -130,9 +130,9 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
 
                 val post = UserBlinderHelperClassNew("$currentID", "$currentPhone", "$currentPassword",
                     "$currentFullName","$currentSex","$currentNameHelper",
-                    "$currentPhoneHelper","$homeLocation")
+                    "$currentPhoneHelper",lat.toDouble(),long.toDouble(),"$homeLocation")
                 val postValues = post.toMap()
-                val childUpdates = hashMapOf<String, Any>("users_blind/$currentID" to postValues)
+                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone" to postValues)
                 ref.updateChildren(childUpdates)
 
                 val editorHomeLocation = sharedPrefHomeLocation.edit()

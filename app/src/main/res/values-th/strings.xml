@@ -12,12 +12,16 @@
     <string name="txt_phone_caretaker">เบอร์โทรผู้ช่วยเหลือ</string>
     <string name="blinder_button_desc">คนตาบอด</string>
     <string name="person_button_desc">คนดูแล</string>
-    <string name="button_shared_locatoin">ส่งตำแหน่งที่อยู่ปัจจุบัน</string>
-    <string name="button_navigation">การนำทาง</string>
-    <string name="button_emergency_call">โทรฉุกเฉิน</string>
-    <string name="button_caretaker_call">โทรหาผู้ดูแล</string>
+
     <string name="loading_spinner">กำลังโหลด...</string>
     <string name="required">(จำเป็น)</string>
+
+    <!--MainActivity-->
+    <string name="button_self_navigation">เริ่มการนำทางด้วยตนเอง</string>
+    <string name="button_caretaker_navigation">เริ่มการนำทางผ่านทางผู้ดูแล</string>
+    <string name="button_emergency_call">โทรฉุกเฉิน</string>
+    <string name="button_shared_locatoin">ส่งตำแหน่งที่อยู่ปัจจุบัน</string>
+
 
     <!--SendOTP-->
     <string name="header_SendOTP">ลงทะเบียน</string>
@@ -108,7 +112,7 @@
     <string name="main_toast_success">จับคู่สำเร็จ</string>
     <string name="main_toast_failed">ID ของคนตาบอดไม่ถูกต้อง</string>
 
-    <!--MainBlinder-->
+    <!--AlertDialogProfile-->
     <string name="main_blindBtn">ปิด</string>
     <string name="main_blind_header">ข้อมูลส่วนตัว</string>
     <string name="main_blind_id">ไอดี :</string>
