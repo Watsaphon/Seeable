@@ -48,7 +48,7 @@ import kotlinx.android.synthetic.main.alert_dialog_profile.view.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
+/**test github*/
 class MainActivity: AppCompatActivity() {
 
     private lateinit var sharedLocationBtn: Button
