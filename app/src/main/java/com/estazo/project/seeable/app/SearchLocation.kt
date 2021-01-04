@@ -27,20 +27,15 @@ import java.io.IOException
 
 class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
 
-    private lateinit var sharedPrefID: SharedPreferences
-    private lateinit var sharedPrefFullName: SharedPreferences
-    private lateinit var sharedPrefNameHelper: SharedPreferences
-    private lateinit var sharedPrefPassword: SharedPreferences
     private lateinit var sharedPrefPhone: SharedPreferences
-    private lateinit var sharedPrefPhoneHelper: SharedPreferences
-    private lateinit var sharedPrefSex: SharedPreferences
-    private lateinit var sharedPrefHomeLocation: SharedPreferences
+    private lateinit var sharedPrefPassword: SharedPreferences
+    private lateinit var sharedPrefID: SharedPreferences
+    private lateinit var sharedPrefDisplayName: SharedPreferences
 
     private lateinit var searchView : SearchView
     private lateinit var map : GoogleMap
     private lateinit var confirmBtn : Button
-     var homeLocation : String = ""
-
+     var markLocation : String = ""
     private lateinit var lat : String
     private lateinit var long : String
 
@@ -52,11 +47,7 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPassword= getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
-        sharedPrefFullName= getSharedPreferences("value", 0)
-        sharedPrefSex= getSharedPreferences("value", 0)
-        sharedPrefNameHelper= getSharedPreferences("value", 0)
-        sharedPrefPhoneHelper = getSharedPreferences("value", 0)
-        sharedPrefHomeLocation = getSharedPreferences("value", 0)
+        sharedPrefDisplayName= getSharedPreferences("value", 0)
 
         searchView = findViewById(R.id.sv_location)
         confirmBtn= findViewById(R.id.search_btn)
@@ -98,8 +89,8 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
                             map.addMarker(MarkerOptions().position(latLng).title(location))
                             map.animateCamera(CameraUpdateFactory.newLatLng(latLng))
                             Log.i("checkhome3"," latLng : $latLng")
-                            homeLocation = ("$lat,$long")
-                            Log.i("checkhome4"," homeLocation : $homeLocation")
+                            markLocation = ("$lat,$long")
+                            Log.i("checkhome4"," homeLocation : $markLocation")
                         }
                     }
                     Log.i("checkhome6","$addressList")
@@ -107,51 +98,24 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
                 }
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
-
         })
 
         confirmBtn.setOnClickListener{
-            if(homeLocation  == ""){
+            if(markLocation  == ""){
                 Toast.makeText(this,"Please mark your location before confirm", Toast.LENGTH_SHORT).show()
             }
             else{
+                Toast.makeText(this,"$markLocation", Toast.LENGTH_SHORT).show()
 
-
-
-                Toast.makeText(this,"$homeLocation", Toast.LENGTH_SHORT).show()
-
-//                val currentID = sharedPrefID.getString("stringKey2", "not found!")
-//                val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
-//                val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
-//                val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
-//                val currentNameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
                 val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
-//                val currentPhoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
 
                 val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$currentPhone/Navigation")
                 query.addListenerForSingleValueEvent(valueEventListener)
-
-//                val ref = FirebaseDatabase.getInstance().reference
-//
-//                val post = Navigation("-","$homeLocation","-")
-//                val postValues = post.toMap()
-//                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation" to postValues)
-//                ref.updateChildren(childUpdates)
-//
-//                val editorHomeLocation = sharedPrefHomeLocation.edit()
-//                editorHomeLocation.putString("stringKeyHomeLocation", homeLocation)
-//                editorHomeLocation.apply()
-//
-//                val intent = Intent(this@SearchLocation, MainActivity::class.java)
-//                startActivity(intent)
             }
-
         }
-
     }
 
         override fun onMapReady(googleMap: GoogleMap) {
@@ -178,11 +142,10 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
             googleMap.addMarker(markerOptions)
 
             Log.i("checkhome1"," latLng : $latLng")
-            homeLocation = ("$lat,$long")
-            Log.i("checkhome2"," homeLocation : $homeLocation")
+            markLocation = ("$lat,$long")
+            Log.i("checkhome2"," markLocation : $markLocation")
         }
     }
-
 
     /**receive value from realtime database (users_blind) and check Login */
     private var valueEventListener: ValueEventListener = object : ValueEventListener {
@@ -190,19 +153,15 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
                 val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
-                val care_nav = dataSnapshot.child("Caretaker_Navigate").value.toString()
-                val self_nav_care = dataSnapshot.child("Self_Navigate_careUser").value.toString()
+                val carNav = dataSnapshot.child("Caretaker_Navigate").value.toString()
+                val selfNavCare = dataSnapshot.child("Self_Navigate_careUser").value.toString()
 
                 val ref = FirebaseDatabase.getInstance().reference
 
-                val post = Navigation("$care_nav","$homeLocation","$self_nav_care")
+                val post = Navigation("$carNav","$markLocation","$selfNavCare")
                 val postValues = post.toMap()
                 val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation" to postValues)
                 ref.updateChildren(childUpdates)
-
-                val editorHomeLocation = sharedPrefHomeLocation.edit()
-                editorHomeLocation.putString("stringKeyHomeLocation", homeLocation)
-                editorHomeLocation.apply()
 
                 val intent = Intent(this@SearchLocation, MainActivity::class.java)
                 startActivity(intent)

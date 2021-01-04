@@ -53,26 +53,27 @@ class MainActivity: AppCompatActivity() {
     private lateinit var emergencyCallBtn: Button
     private lateinit var careNavBtn: Button
     private lateinit var fab: FloatingActionButton
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
-    private lateinit var sharedPrefID: SharedPreferences
-    private lateinit var sharedPrefFullName: SharedPreferences
-    private lateinit var sharedPrefNameHelper: SharedPreferences
-    private lateinit var sharedPrefPassword: SharedPreferences
-    private lateinit var sharedPrefPhone: SharedPreferences
-    private lateinit var sharedPrefPhoneHelper: SharedPreferences
-    private lateinit var sharedPrefSex: SharedPreferences
     private lateinit var  mAlertDialog : AlertDialog
-    private lateinit var sharedPrefGoogle : SharedPreferences
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+
+    private lateinit var sharedPrefPhone: SharedPreferences
+    private lateinit var sharedPrefPassword: SharedPreferences
+    private lateinit var sharedPrefID: SharedPreferences
+    private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
-    private lateinit var sharedGooglePrefUserType : SharedPreferences
+
+//    private lateinit var sharedPrefHomeLocation : SharedPreferences
+//    private lateinit var sharedPrefNameHelper: SharedPreferences
+//    private lateinit var sharedPrefGoogle : SharedPreferences
+//    private lateinit var sharedPrefPhoneHelper: SharedPreferences
+//    private lateinit var sharedPrefSex: SharedPreferences
+//    private lateinit var sharedGooglePrefUserType : SharedPreferences
 
     //Declaring the needed Variables
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
-
     var textToSpeech: TextToSpeech? = null
 
-    private lateinit var sharedPrefHomeLocation : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,25 +81,28 @@ class MainActivity: AppCompatActivity() {
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         CheckPermission()
-        sharedPrefGoogle  = getSharedPreferences("value", 0)
+
 
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPassword= getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
-        sharedPrefSex= getSharedPreferences("value", 0)
-        sharedPrefNameHelper= getSharedPreferences("value", 0)
-        sharedPrefFullName= getSharedPreferences("value", 0)
-        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
+        sharedPrefDisplayName = getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
-        sharedGooglePrefUserType = getSharedPreferences("value", 0)
-        sharedPrefHomeLocation = getSharedPreferences("value", 0)
+
+//        sharedPrefGoogle  = getSharedPreferences("value", 0)
+//        sharedPrefSex= getSharedPreferences("value", 0)
+//        sharedPrefNameHelper= getSharedPreferences("value", 0)
+//        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
+
+//        sharedGooglePrefUserType = getSharedPreferences("value", 0)
+//        sharedPrefHomeLocation = getSharedPreferences("value", 0)
 
 
-        val homeLocation = sharedPrefHomeLocation.getString("stringKeyHomeLocation","not found!")
-        Log.d("checkHome_MainActivity","$homeLocation")
-        if(homeLocation=="no-home"){
-            alertDialogHomeLocation()
-        }
+//        val homeLocation = sharedPrefHomeLocation.getString("stringKeyHomeLocation","not found!")
+//        Log.d("checkHome_MainActivity","$homeLocation")
+//        if(homeLocation=="no-home"){
+//            alertDialogHomeLocation()
+//        }
 
 
         selfNavBtn = findViewById(R.id.selfNavButton)
@@ -129,7 +133,6 @@ class MainActivity: AppCompatActivity() {
         careNavBtn.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
-//            helperCall()
             Toast.makeText(this, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
         }
         emergencyCallBtn.setOnVeryLongClickListener{
@@ -207,17 +210,12 @@ class MainActivity: AppCompatActivity() {
                 Log.i("Debug_sendLocation","call else")
                 Log.d("Debug_sendLocation:" ,"link : $link" )
                 Log.d("Debug_sendLocation:" ,"location : $location" )
-                val currentID = sharedPrefID.getString("stringKey2", "not found!")
-                val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
-                val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
-                val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
-                val currentNameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
                 val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
-                val currentPhoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
-                val currentHomeLocation = sharedPrefHomeLocation.getString("stringKeyHomeLocation", "not found!")
-                Log.d("Debug_sendLocation","$currentID, $currentSex, $currentPassword , $currentFullName,$currentPhone" +
-                        ",$currentNameHelper,$currentPhoneHelper ,$currentHomeLocation")
+                val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
+                val currentID = sharedPrefID.getString("stringKey2", "not found!")
+                val currentDisplayName = sharedPrefDisplayName.getString("stringKeyFullName", "not found!")
 
+                Log.d("Debug_sendLocation","$currentPhone, $currentPassword ,$currentID, $currentDisplayName")
 
                 val ref = FirebaseDatabase.getInstance().reference
                 val postLocation =  Locations(location.latitude,location.longitude)
@@ -349,8 +347,8 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun navigation() {
-        val currentUser = sharedPrefID.getString("stringKey2", "not found!")
-        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$currentUser").orderByChild("id")
+        val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
+        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$currentPhone/Navigation")
         query.addListenerForSingleValueEvent(valueEventListenerNavigation)
     }
 
@@ -358,42 +356,6 @@ class MainActivity: AppCompatActivity() {
         val phone = "1112"
         val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phone, null))
         startActivity(intent)
-    }
-
-
-    private fun gotoAbout(){
-        val intent = Intent(this,AboutScreen::class.java)
-        startActivity(intent)
-    }
-
-    private fun gotoSetting(){
-        val intent = Intent(this,SettingScreen::class.java)
-        startActivity(intent)
-    }
-
-    private fun gotoChangeHomeLocation(){
-        val currentID = sharedPrefID.getString("stringKey2", "not found!")
-        val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
-        val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
-        val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
-        val currentNameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
-        val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
-        val currentPhoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
-
-        val ref = FirebaseDatabase.getInstance().reference
-
-        val post = UserBlinderHelperClass("$currentID", "$currentSex", "$currentPassword",
-            "$currentFullName","$currentPhone","$currentNameHelper",
-            "$currentPhoneHelper",13.7267346,100.7751312,"no-home")
-        val postValues = post.toMap()
-        val childUpdates = hashMapOf<String, Any>("users_blind/$currentID" to postValues)
-        ref.updateChildren(childUpdates)
-
-        val editorHomeLocation = sharedPrefHomeLocation.edit()
-        editorHomeLocation.putString("stringKeyHomeLocation", "no-home")
-        editorHomeLocation.apply()
-
-        alertDialogHomeLocation()
     }
 
 
@@ -459,92 +421,36 @@ class MainActivity: AppCompatActivity() {
         mAlertDialog.setCancelable(false)
         //login button click of custom layout
         mDialogView.dialogSummitBtn.setOnClickListener {
-//            val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
-//            query.addListenerForSingleValueEvent(valueEventListener)
-//            val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
-//            checkPartnerID = partnerIDBox
-            val intent = Intent(this,SearchLocation::class.java)
-            startActivity(intent)
         }
         //logout button click of custom layout
         mDialogView.dialogLogoutBtn.setOnClickListener {
-//            gotoLogout()
         }
         //exit button click of custom layout
         mDialogView.dialogExitBtn.setOnClickListener {
-//            finishAffinity()
-        }
-
-    }
-
-
-    /** AlertDialog to view profile users_blind  */
-    private fun alertDialogProfile() {
-        //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_profile, null)
-        //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(this)
-            .setView(mDialogView)
-        //show dialog
-        mAlertDialog  = mBuilder.show()
-        Log.i("test","mAlertDialog.show() call")
-
-        val googleUserType = sharedGooglePrefUserType.getString("stringKeyGoogleType","not found!")
-
-        val idText : TextView =  mDialogView.findViewById(R.id.blinderID)
-        val usernameText : TextView =  mDialogView.findViewById(R.id.blinderUsername)
-        val fullNameText : TextView =  mDialogView.findViewById(R.id.blinderFullName)
-        val phoneText : TextView =  mDialogView.findViewById(R.id.blinderPhone)
-        val nameHelperText : TextView =  mDialogView.findViewById(R.id.blinderNameHelper)
-        val phoneHelperText : TextView =  mDialogView.findViewById(R.id.blinderPhoneHelper)
-
-        val id = sharedPrefID.getString("stringKey2", "not found!")
-        val sex =  sharedPrefSex.getString("stringKeySex", "not found!")
-        val fullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
-        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
-        val nameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
-        val phoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
-
-        if(googleUserType == "blind"){
-            idText.text = getString(R.string.main_blind_id)+" $id "
-            fullNameText.text = getString(R.string.main_blind_fullName)+"$fullName "
-            phoneText.text = getString(R.string.main_blind_phone)+"$phone "
-            nameHelperText.text =getString(R.string.main_blind_name_caretaker)+ "$nameHelper "
-            phoneHelperText.text = getString(R.string.main_blind_phone_caretaker)+"$phoneHelper "
-        }
-        else{
-            usernameText.visibility = View.VISIBLE
-            idText.text = getString(R.string.main_blind_id)+" $id "
-            usernameText.text = getString(R.string.main_blind_username)+"$sex "
-            fullNameText.text = getString(R.string.main_blind_fullName)+"$fullName "
-            phoneText.text = getString(R.string.main_blind_phone)+"$phone "
-            nameHelperText.text =getString(R.string.main_blind_name_caretaker)+ "$nameHelper "
-            phoneHelperText.text = getString(R.string.main_blind_phone_caretaker)+"$phoneHelper "
-        }
-
-
-        //login button click of custom layout
-        mDialogView.dialogCloseBtn.setOnClickListener {
-            mAlertDialog.dismiss()
         }
     }
+
+
+
 
     /** Navigation to home in Google Map  */
     private var valueEventListenerNavigation: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val homeLocation = sharedPrefHomeLocation.getString("stringKeyHomeLocation","not found!")
             if (dataSnapshot.exists()) {
-                val homeLocationFB = dataSnapshot.child("homeLocation").value.toString()
-                Log.d("Direction","homeLocationFB  = $homeLocationFB ")
-                if (homeLocation == homeLocationFB) {
+                val location = dataSnapshot.child("Self_Navigate_bindUser").value.toString()
+//                val latitude = dataSnapshot.child("Latitude").value.toString()
+//                val longitude = dataSnapshot.child("Longitude").value.toString()
+//                val locationNavigate = "$latitude,$longitude"
+                Log.d("test_locationNavigate ","Navigate to location : $location")
+
                     // Navigation : current place direct to gmmIntentUri
-                    val gmmIntentUri = Uri.parse("google.navigation:q=$homeLocation&mode=w&avoid=thf")
+                    val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")
                     mapIntent.resolveActivity(packageManager)?.let {
                         startActivity(mapIntent)
                     }
-                }
+
             }
         }
         override fun onCancelled(databaseError: DatabaseError) {}

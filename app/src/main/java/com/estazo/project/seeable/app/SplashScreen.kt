@@ -105,7 +105,7 @@ class SplashScreen : AppCompatActivity() {
         }
        else{
             if(login != "not found!" && userType != "not found!" ){
-                if(userType== "person"){
+                if(userType== "caretaker"){
                     Handler().postDelayed({
                         startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
                         finishAffinity()
@@ -120,7 +120,7 @@ class SplashScreen : AppCompatActivity() {
             }
             else if(userGoogle != "not found!" && googleUserType != "not found!" ){
                 when (googleUserType) {
-                    "person" -> {
+                    "caretaker" -> {
                         Handler().postDelayed({
                             startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
                             finishAffinity()

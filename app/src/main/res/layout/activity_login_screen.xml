@@ -264,33 +264,33 @@
         android:textColor="#FFFFFF"
         android:textSize="18dp" />
 
-    <TextView
-        android:id="@+id/or"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/login_finish_button"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="143dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="143dp"
-        android:text="@string/or"
-        android:textAlignment="center"
-        android:textColor="#C4C4C4"
-        android:textSize="16dp"
-        android:textStyle="bold" />
+<!--    <TextView-->
+<!--        android:id="@+id/or"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/login_finish_button"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginStart="143dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:layout_marginEnd="143dp"-->
+<!--        android:text="@string/or"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="#C4C4C4"-->
+<!--        android:textSize="16dp"-->
+<!--        android:textStyle="bold" />-->
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="316dp"
-        android:layout_height="39dp"
-        android:layout_below="@+id/or"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="22dp"
-        android:background="@drawable/btn_rectangle_white"/>
+<!--    <com.google.android.gms.common.SignInButton-->
+<!--        android:id="@+id/sign_in_button"-->
+<!--        android:layout_width="316dp"-->
+<!--        android:layout_height="39dp"-->
+<!--        android:layout_below="@+id/or"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginStart="22dp"-->
+<!--        android:layout_marginTop="21dp"-->
+<!--        android:layout_marginEnd="22dp"-->
+<!--        android:background="@drawable/btn_rectangle_white"/>-->
 
 
 
@@ -299,7 +299,7 @@
         android:id="@+id/you_are_the"
         android:layout_width="156dp"
         android:layout_height="22dp"
-        android:layout_below="@+id/sign_in_button"
+        android:layout_below="@+id/login_finish_button"
         android:textColor="#C4C4C4"
         android:textSize="16dp"
         android:layout_alignParentStart="true"
@@ -307,7 +307,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="102dp"
         android:layout_marginLeft="143dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="160dp"
         android:layout_marginEnd="102dp"
         android:gravity="center_horizontal|top"
         android:text="@string/register_text" />

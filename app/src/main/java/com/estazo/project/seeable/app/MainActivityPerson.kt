@@ -34,26 +34,20 @@ import java.util.*
 
 class MainActivityPerson : AppCompatActivity() {
 
-    private lateinit var fab: FloatingActionButton
+
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var mapButton : Button
-    private lateinit var sharedPrefID: SharedPreferences
-    private lateinit var sharedPrefFullName: SharedPreferences
-    private lateinit var sharedPrefNameHelper: SharedPreferences
-    private lateinit var sharedPrefPassword: SharedPreferences
-    private lateinit var sharedPrefPhone: SharedPreferences
-    private lateinit var sharedPrefPhoneHelper: SharedPreferences
-    private lateinit var sharedPrefSex: SharedPreferences
 
-    private lateinit var sharedPrefPartnerID: SharedPreferences
+    private lateinit var sharedPrefPhone: SharedPreferences
+    private lateinit var sharedPrefPassword: SharedPreferences
+    private lateinit var sharedPrefID: SharedPreferences
+    private lateinit var sharedPrefDisplayName: SharedPreferences
+    private lateinit var sharedPrefUserType : SharedPreferences
+
 
     private lateinit var checkPartnerID : String
     private lateinit var  mAlertDialog : AlertDialog
-
-    private lateinit var sharedPrefGoogle : SharedPreferences
-    private lateinit var sharedPrefUserType : SharedPreferences
-    private lateinit var sharedGooglePrefUserType : SharedPreferences
 
     private lateinit var setting : View
     private lateinit var notify : View
@@ -68,24 +62,20 @@ class MainActivityPerson : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         sharedPrefLanguage = getSharedPreferences("value", 0)
-        sharedPrefID = getSharedPreferences("value", 0)
-        sharedPrefSex= getSharedPreferences("value", 0)
-        sharedPrefPassword= getSharedPreferences("value", 0)
-        sharedPrefFullName= getSharedPreferences("value", 0)
-        sharedPrefNameHelper= getSharedPreferences("value", 0)
         sharedPrefPhone= getSharedPreferences("value", 0)
-        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
-        sharedPrefPartnerID = getSharedPreferences("value", 0)
-        sharedPrefGoogle  = getSharedPreferences("value", 0)
+        sharedPrefID = getSharedPreferences("value", 0)
+        sharedPrefPassword= getSharedPreferences("value", 0)
+        sharedPrefDisplayName= getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
-        sharedGooglePrefUserType = getSharedPreferences("value", 0)
+
+//        sharedPrefPartnerID = getSharedPreferences("value", 0)
 
 
-        val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
-        Log.d("checkPairing_MainPerson","$partnerID")
-        if(partnerID=="no-pairing"){
-            alertDialogPairing()
-        }
+//        val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
+//        Log.d("checkPairing_MainPerson","$partnerID")
+//        if(partnerID=="no-pairing"){
+//            alertDialogPairing()
+//        }
 
         //Initializing Views
         setting = findViewById(R.id.setting)
@@ -100,7 +90,7 @@ class MainActivityPerson : AppCompatActivity() {
                     R.id.action_about -> gotoAbout()
                     R.id.action_change_language -> changeLanguage()
                     R.id.action_settings -> gotoSetting()
-                    R.id.action_delete_partnerID -> gotoChangePartnerID()
+//                    R.id.action_delete_partnerID -> gotoChangePartnerID()
                     R.id.action_logout -> gotoLogout()
                 }
                 hideSystemUI()
@@ -126,10 +116,10 @@ class MainActivityPerson : AppCompatActivity() {
 
         activity_walking = findViewById(R.id.activity_walking)
         activity_walking.setOnClickListener{
-            Log.i("partnerID_main","$partnerID")
-            val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$partnerID").orderByChild("id")
-            query.addListenerForSingleValueEvent(valueEventListenerDirectMap)
-            alertDialogLoading()
+//            Log.i("partnerID_main","$partnerID")
+//            val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$partnerID").orderByChild("id")
+//            query.addListenerForSingleValueEvent(valueEventListenerDirectMap)
+//            alertDialogLoading()
         }
 
     }
@@ -174,75 +164,78 @@ class MainActivityPerson : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun gotoChangePartnerID(){
-
-        val currentID = sharedPrefID.getString("stringKey2", "not found!")
-        val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
-        val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
-        val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
-        val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
-
-        val ref = FirebaseDatabase.getInstance().reference
-
-        val post = UserPersonHelperClass("$currentID", "$currentSex", "$currentPassword",
-            "$currentFullName","$currentPhone","no-pairing")
-        val postValues = post.toMap()
-        val childUpdates = hashMapOf<String, Any>("users_caretaker/$currentID" to postValues)
-        ref.updateChildren(childUpdates)
-
-        val editorPartnerID = sharedPrefPartnerID.edit()
-        editorPartnerID.putString("stringKeyPartnerID", "no-pairing")
-        editorPartnerID.apply()
-
-        alertDialogPairing()
-
-    }
+//    private fun gotoChangePartnerID(){
+//
+//        val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
+//        val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
+//        val currentID = sharedPrefID.getString("stringKey2", "not found!")
+//        val currentDisplay = sharedPrefDisplay.getString("stringKeyDisplayName", "not found!")
+////        val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
+//
+//
+//        val ref = FirebaseDatabase.getInstance().reference
+//
+//        val post = UserPersonHelperClassNew("$currentID", "$currentPhone", "$currentPassword",
+//            "$currentDisplay","-","-")
+//        val postValues = post.toMap()
+//        val childUpdates = hashMapOf<String, Any>("users_caretaker/$currentID" to postValues)
+//        ref.updateChildren(childUpdates)
+//
+//        val editorPartnerID = sharedPrefPartnerID.edit()
+//        editorPartnerID.putString("stringKeyPartnerID", "no-pairing")
+//        editorPartnerID.apply()
+//
+//        alertDialogPairing()
+//
+//    }
 
     private fun gotoLogout(){
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-        val acct = GoogleSignIn.getLastSignedInAccount(this)
-        if(acct != null){
-            mGoogleSignInClient.signOut()
-            Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
-        }
-        FirebaseAuth.getInstance().signOut()
+//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+//        val acct = GoogleSignIn.getLastSignedInAccount(this)
+//        if(acct != null){
+//            mGoogleSignInClient.signOut()
+//            Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
+//        }
+//        FirebaseAuth.getInstance().signOut()
 
         val editorID = sharedPrefID.edit()
         val editorPhone = sharedPrefPhone.edit()
         val editorPassword = sharedPrefPassword.edit()
-        val editorPartnerID = sharedPrefPartnerID.edit()
-        val editorSex = sharedPrefSex.edit()
-        val editorFullName = sharedPrefFullName.edit()
-        val editorNameHelper = sharedPrefNameHelper.edit()
-        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
-        val editorGoogleUser = sharedPrefGoogle.edit()
+        val editorDisplayName = sharedPrefDisplayName.edit()
         val editorUserType = sharedPrefUserType.edit()
-        val editorGoogleUserType = sharedGooglePrefUserType.edit()
+//        val editorPartnerID = sharedPrefPartnerID.edit()
+//        val editorSex = sharedPrefSex.edit()
+//        val editorNameHelper = sharedPrefNameHelper.edit()
+//        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
+//        val editorGoogleUser = sharedPrefGoogle.edit()
+//        val editorGoogleUserType = sharedGooglePrefUserType.edit()
 
-        editorID.putString("stringKey2", "not found!")
         editorPhone.putString("stringKeyPhone", "not found!")
         editorPassword.putString("stringKeyPassword", "not found!")
-        editorPartnerID.putString("stringKeyPartnerID", "not found!")
-        editorSex.putString("stringKeySex", "not found!")
-        editorFullName.putString("stringKeyFullName", "not found!")
-        editorNameHelper.putString("stringKeyNameHelper", "not found!")
-        editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
-        editorGoogleUser.putString("stringKeyGoogle", "not found!")
+        editorID.putString("stringKey2", "not found!")
+        editorDisplayName.putString("stringKeyDisplayName","not found!")
         editorUserType.putString("stringKeyType", "not found!")
-        editorGoogleUserType.putString("stringKeyGoogleType", "not found!")
 
-        editorID.apply()
+//        editorPartnerID.putString("stringKeyPartnerID", "not found!")
+//        editorSex.putString("stringKeySex", "not found!")
+//        editorNameHelper.putString("stringKeyNameHelper", "not found!")
+//        editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
+//        editorGoogleUser.putString("stringKeyGoogle", "not found!")
+//        editorGoogleUserType.putString("stringKeyGoogleType", "not found!")
+
         editorPhone.apply()
         editorPassword.apply()
-        editorPartnerID.apply()
-        editorSex.apply()
-        editorFullName.apply()
-        editorNameHelper.apply()
-        editorPhoneHelper.apply()
-        editorGoogleUser.apply()
+        editorID.apply()
         editorUserType.apply()
-        editorGoogleUserType.apply()
+        editorDisplayName.apply()
+
+//        editorPartnerID.apply()
+//        editorSex.apply()
+//        editorNameHelper.apply()
+//        editorPhoneHelper.apply()
+//        editorGoogleUser.apply()
+//        editorGoogleUserType.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
@@ -355,26 +348,26 @@ class MainActivityPerson : AppCompatActivity() {
     /** Direction in Google Map  */
     private var valueEventListenerDirectMap: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-                Toast.makeText(this@MainActivityPerson," Activity walking activate",Toast.LENGTH_SHORT).show()
-                val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
-                if (dataSnapshot.exists()) {
-                        val id = dataSnapshot.child("id").value.toString()
-                        val latitude = dataSnapshot.child("latitude").value.toString()
-                        val longtitude = dataSnapshot.child("longitude").value.toString()
-                        Log.d("Direction","partnerID  = $partnerID , id =$id")
-                        if (partnerID == id) {
-                            Log.i("position_latitude", "$latitude")
-                            Log.i("position_longitude", "$longtitude")
-                            // Navigation : current place direct to gmmIntentUri
-                            val gmmIntentUri = Uri.parse("google.navigation:q=$latitude,$longtitude&mode=w&avoid=thf")
-                            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-                            mapIntent.setPackage("com.google.android.apps.maps")
-                            mapIntent.resolveActivity(packageManager)?.let {
-                                startActivity(mapIntent)
-                            }
-                        }
-                }
-            dismissAlertDialogLoading()
+//                Toast.makeText(this@MainActivityPerson," Activity walking activate",Toast.LENGTH_SHORT).show()
+//                val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
+//                if (dataSnapshot.exists()) {
+//                        val id = dataSnapshot.child("id").value.toString()
+//                        val latitude = dataSnapshot.child("latitude").value.toString()
+//                        val longtitude = dataSnapshot.child("longitude").value.toString()
+//                        Log.d("Direction","partnerID  = $partnerID , id =$id")
+//                        if (partnerID == id) {
+//                            Log.i("position_latitude", "$latitude")
+//                            Log.i("position_longitude", "$longtitude")
+//                            // Navigation : current place direct to gmmIntentUri
+//                            val gmmIntentUri = Uri.parse("google.navigation:q=$latitude,$longtitude&mode=w&avoid=thf")
+//                            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+//                            mapIntent.setPackage("com.google.android.apps.maps")
+//                            mapIntent.resolveActivity(packageManager)?.let {
+//                                startActivity(mapIntent)
+//                            }
+//                        }
+//                }
+//            dismissAlertDialogLoading()
         }
         override fun onCancelled(databaseError: DatabaseError) {
             Toast.makeText(this@MainActivityPerson," Activity walking failed",Toast.LENGTH_SHORT).show()

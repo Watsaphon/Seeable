@@ -33,14 +33,16 @@ class SettingBlind : AppCompatActivity() {
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
-    private lateinit var sharedPrefID: SharedPreferences
-    private lateinit var sharedPrefFullName: SharedPreferences
-    private lateinit var sharedPrefNameHelper: SharedPreferences
-    private lateinit var sharedPrefPassword: SharedPreferences
     private lateinit var sharedPrefPhone: SharedPreferences
-    private lateinit var sharedPrefPhoneHelper: SharedPreferences
-    private lateinit var sharedPrefSex: SharedPreferences
+    private lateinit var sharedPrefPassword: SharedPreferences
+    private lateinit var sharedPrefID: SharedPreferences
+    private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
+
+//    private lateinit var sharedPrefNameHelper: SharedPreferences
+//    private lateinit var sharedPrefPhoneHelper: SharedPreferences
+//    private lateinit var sharedPrefSex: SharedPreferences
+
 
 
 
@@ -61,12 +63,11 @@ class SettingBlind : AppCompatActivity() {
         sharedPrefID = getSharedPreferences("value", 0)
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPassword= getSharedPreferences("value", 0)
-        sharedPrefFullName= getSharedPreferences("value", 0)
-        sharedPrefSex= getSharedPreferences("value", 0)
-        sharedPrefNameHelper= getSharedPreferences("value", 0)
-        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
+        sharedPrefDisplayName= getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
-
+//        sharedPrefSex= getSharedPreferences("value", 0)
+//        sharedPrefNameHelper= getSharedPreferences("value", 0)
+//        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
 
 
         lang.setOnClickListener {
@@ -126,44 +127,43 @@ class SettingBlind : AppCompatActivity() {
     }
 
     private fun gotoLogout(){
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-        val acct = GoogleSignIn.getLastSignedInAccount(this)
-        Log.i("testusergoogle1","$acct")
-        if(acct != null){
-            mGoogleSignInClient.signOut()
-            Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
-            Log.i("testusergoogle2","$acct")
-        }
-
-        FirebaseAuth.getInstance().signOut()
+//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+//        val acct = GoogleSignIn.getLastSignedInAccount(this)
+//        Log.i("testusergoogle1","$acct")
+//        if(acct != null){
+//            mGoogleSignInClient.signOut()
+//            Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
+//            Log.i("testusergoogle2","$acct")
+//        }
+//        FirebaseAuth.getInstance().signOut()
 
         val editorID = sharedPrefID.edit()
         val editorPhone = sharedPrefPhone.edit()
         val editorPassword = sharedPrefPassword.edit()
-        val editorFullName = sharedPrefFullName.edit()
-        val editorNameHelper = sharedPrefNameHelper.edit()
-        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
+        val editorDisplay = sharedPrefDisplayName.edit()
         val editorUserType = sharedPrefUserType.edit()
-        val editorSex = sharedPrefSex.edit()
+//        val editorNameHelper = sharedPrefNameHelper.edit()
+//        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
+//        val editorSex = sharedPrefSex.edit()
 
         editorID.putString("stringKey2", "not found!")
         editorPhone.putString("stringKeyPhone", "not found!")
         editorPassword.putString("stringKeyPassword", "not found!")
-        editorSex.putString("stringKeySex", "not found!")
-        editorFullName.putString("stringKeyFullName", "not found!")
-        editorNameHelper.putString("stringKeyNameHelper", "not found!")
-        editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
+        editorDisplay.putString("stringKeyDisplayName", "not found!")
         editorUserType.putString("stringKeyType", "not found!")
+//        editorSex.putString("stringKeySex", "not found!")
+//        editorNameHelper.putString("stringKeyNameHelper", "not found!")
+//        editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
 
         editorID.apply()
         editorPhone.apply()
         editorPassword.apply()
-        editorFullName.apply()
-        editorNameHelper.apply()
-        editorPhoneHelper.apply()
+        editorDisplay.apply()
         editorUserType.apply()
-        editorSex.apply()
+//        editorNameHelper.apply()
+//        editorPhoneHelper.apply()
+//        editorSex.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
