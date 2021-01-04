@@ -10,8 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClassNew
-import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClassNew
+import com.estazo.project.seeable.app.HelperClass.*
 import com.estazo.project.seeable.app.Login.LoginScreen
 import com.estazo.project.seeable.app.R
 import com.google.firebase.database.FirebaseDatabase
@@ -58,35 +57,56 @@ class LittleMore : AppCompatActivity() {
                 val radio: RadioButton = findViewById(id)
                 if (radio.text == "Blind" && password.isNotEmpty() ) {
                     alertDialogLoading()
-//                    Toast.makeText(applicationContext, "On button click :" + " ${radio.text}", Toast.LENGTH_SHORT).show()
-                    val ref = FirebaseDatabase.getInstance().getReference("users_blind")
-                    val ID = ref.push().key
-                    val test = UserBlinderHelperClassNew(
+                    val rootRef = FirebaseDatabase.getInstance().getReference("users_blind")
+                    val ID = rootRef.push().key
+
+                    val location = Locations(0.00000000, 0.00000000)
+                    val caretaker = Caretaker("0812345678", "-","-", "-")
+                    val device = DeviceBlind("-","-",false,"-", "-")
+                    val navigation = Navigation("-", "-", "-")
+
+                    val valueRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")
+                    val rootData = UserBlinderHelperClassNew(
                             ID.toString(),
                             phone,
                             "$password",
-                            "-",
-                            "-",
-                            "-",
-                            "-",
-                            0.000000000,
-                        0.00000000,
-                        "-")
-                    ref.child(phone).setValue(test).addOnCompleteListener { saveRegister() }
+                            "-")
+                    rootRef.child(phone).setValue(rootData).addOnCompleteListener {
+                        valueRef.child("Location").setValue(location).addOnCompleteListener {
+                            valueRef.child("Caretaker").setValue(caretaker).addOnCompleteListener {
+                                valueRef.child("Device").setValue(device).addOnCompleteListener {
+                                    valueRef.child("Navigation").setValue(navigation).addOnCompleteListener {
+                                        Toast.makeText(this,getString(R.string.success_regis),Toast.LENGTH_SHORT).show()
+                                        saveRegister()
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
                 else if (radio.text == "Caretaker" && password.isNotEmpty()) {
                     alertDialogLoading()
-//                    Toast.makeText(applicationContext, "On button click :" + " ${radio.text}", Toast.LENGTH_SHORT).show()
-                    val ref = FirebaseDatabase.getInstance().getReference("users_caretaker")
-                    val ID = ref.push().key
-                    val test = UserPersonHelperClassNew(
+                    val rootRef = FirebaseDatabase.getInstance().getReference("users_caretaker")
+                    val ID = rootRef.push().key
+                    val blind = Blind("0898765432", "-","-", "-")
+                    val device = DeviceCaretaker("-","-", "-")
+                    val valueRef = FirebaseDatabase.getInstance().getReference("users_caretaker/$phone")
+                    val rootData = UserPersonHelperClassNew(
                         ID.toString(),
                         phone,
                         "$password",
                         "-",
                         "-",
                         "-")
-                    ref.child(phone).setValue(test).addOnCompleteListener { saveRegister() }
+                    rootRef.child(phone).setValue(rootData).addOnCompleteListener {
+                        valueRef.child("Blind").setValue(blind).addOnCompleteListener {
+                            valueRef.child("Device").setValue(device).addOnCompleteListener {
+                                Toast.makeText(this, getString(R.string.success_regis), Toast.LENGTH_SHORT).show()
+                                saveRegister()
+                            }
+                        }
+                    }
                 }
                 else if (password.isEmpty()) {
                     Toast.makeText(applicationContext, "Please fill your password", Toast.LENGTH_SHORT).show()

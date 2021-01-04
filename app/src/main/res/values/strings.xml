@@ -24,6 +24,15 @@
     <string name="button_shared_locatoin">Send Location</string>
 
 
+    <!--SettingBlind-->
+    <string name="header_SettingBlind">Setting</string>
+    <string name="button_change_language">Languages</string>
+    <string name="button_account">Account</string>
+    <string name="button_set_location">Set Location</string>
+    <string name="button_manage_user">Manage Caretaker User</string>
+    <string name="button_delete_account">Delete Account</string>
+    <string name="button_log_out">Log Out</string>
+
 
     <!--SendOTP-->
     <string name="header_SendOTP">Registration</string>

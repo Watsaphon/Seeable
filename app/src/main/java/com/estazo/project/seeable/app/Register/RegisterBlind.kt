@@ -8,7 +8,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
+import com.estazo.project.seeable.app.HelperClass.*
 import com.estazo.project.seeable.app.Login.LoginScreen
 import com.estazo.project.seeable.app.R
 import com.google.android.material.textfield.TextInputEditText
@@ -81,9 +81,20 @@ class RegisterBlind : AppCompatActivity() {
                 phoneHelperBox.error = getString(R.string.phoneCaretaker_box_blind)
             }
             else{
-                val ref = FirebaseDatabase.getInstance().getReference("users_blind")
-                val ID = ref.push().key
-                val test =
+
+
+
+                val rootRef = FirebaseDatabase.getInstance().getReference("users_blind")
+                val ID = rootRef.push().key
+
+                val location = Locations(0.00000000, 0.00000000)
+                val caretaker = Caretaker("0812345678", "-","-", "-")
+                val device = DeviceBlind("-","-",false,"-", "-")
+                val navigation = Navigation("-", "-", "-")
+
+                val valueRef = FirebaseDatabase.getInstance().getReference("users_blind/$ID")
+
+                val rootData =
                     UserBlinderHelperClass(
                         ID.toString(),
                         inputUsername,
@@ -96,9 +107,18 @@ class RegisterBlind : AppCompatActivity() {
                         100.7751312,
                         "no-home"
                     )
-                ref.child(ID.toString()).setValue(test).addOnCompleteListener {
-                    Toast.makeText(this,getString(R.string.success_regis),Toast.LENGTH_SHORT).show()
+                rootRef.child(ID.toString()).setValue(rootData).addOnCompleteListener {
+                    valueRef.child("Location").setValue(location).addOnCompleteListener {
+                        valueRef.child("Caretaker").setValue(caretaker).addOnCompleteListener {
+                            valueRef.child("Device").setValue(device).addOnCompleteListener {
+                                valueRef.child("Navigation").setValue(navigation).addOnCompleteListener {
+                                    Toast.makeText(this,getString(R.string.success_regis),Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
                 }
+
                 saveRegister()
 
             }

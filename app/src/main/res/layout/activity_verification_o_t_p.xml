@@ -10,9 +10,9 @@ tools:context=".Register.VerificationOTP">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="-130dp"
-        tools:layout_editor_absoluteY="-44dp">
+        android:layout_height="80dp"
+        android:background="@color/colorAccent"
+        >
 
         <!-- Rectangle 27 -->
         <View
@@ -31,7 +31,7 @@ tools:context=".Register.VerificationOTP">
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="42dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="169dp"
             android:fontFamily="@font/roboto"
             android:text="@string/header_VerifyOTP"
@@ -47,8 +47,17 @@ tools:context=".Register.VerificationOTP">
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="23dp"
             android:background="@mipmap/back_button_foreground" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/subheader"
@@ -82,7 +91,8 @@ tools:context=".Register.VerificationOTP">
             android:textColor="#000000"
             />
 
-    </RelativeLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -21,7 +21,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        app:srcCompat="@drawable/ic_action_name"
+        android:src="@drawable/ic_action_name"
+        app:backgroundTint="#bdbdbd"
         />
     <!--        app:backgroundTint="@android:color/holo_orange_light"-->
     <!--        app:borderWidth="0dp"-->
