@@ -9,6 +9,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
@@ -17,12 +19,13 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.*
 import android.widget.Button
-import android.widget.PopupMenu
+
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.work.*
+import com.estazo.project.seeable.app.HelperClass.Locations
 import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
 import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClassNew
 import com.estazo.project.seeable.app.Login.LoginScreen
@@ -31,19 +34,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.activity_verification_o_t_p.*
-import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
+import kotlinx.android.synthetic.main.alert_dialog_home_location.view.*
 import kotlinx.android.synthetic.main.alert_dialog_profile.view.*
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -56,7 +53,6 @@ class MainActivity: AppCompatActivity() {
     private lateinit var emergencyCallBtn: Button
     private lateinit var careNavBtn: Button
     private lateinit var fab: FloatingActionButton
-    private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefFullName: SharedPreferences
@@ -85,13 +81,13 @@ class MainActivity: AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         CheckPermission()
         sharedPrefGoogle  = getSharedPreferences("value", 0)
-        sharedPrefLanguage = getSharedPreferences("value", 0)
+
+        sharedPrefPhone= getSharedPreferences("value", 0)
+        sharedPrefPassword= getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
         sharedPrefSex= getSharedPreferences("value", 0)
-        sharedPrefPassword= getSharedPreferences("value", 0)
-        sharedPrefFullName= getSharedPreferences("value", 0)
         sharedPrefNameHelper= getSharedPreferences("value", 0)
-        sharedPrefPhone= getSharedPreferences("value", 0)
+        sharedPrefFullName= getSharedPreferences("value", 0)
         sharedPrefPhoneHelper= getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
         sharedGooglePrefUserType = getSharedPreferences("value", 0)
@@ -105,18 +101,12 @@ class MainActivity: AppCompatActivity() {
         }
 
 
-        val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
-        val currentUser = sharedPrefID.getString("stringKey2", "not found!")
-
-       Log.i("CheckUserID_MainBlind", "Current User ID : $currentUser")
-       Log.i("SplashScreenMain", "LoginScreen now language : $stringValue")
-
         selfNavBtn = findViewById(R.id.selfNavButton)
         careNavBtn = findViewById(R.id.careNavButton)
         emergencyCallBtn = findViewById(R.id.callEmergency)
         sharedLocationBtn = findViewById(R.id.sendLocation)
         fab = findViewById(R.id.floating_action_button)
-//      fab.bringToFront()
+
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         RequestPermission()
@@ -157,36 +147,34 @@ class MainActivity: AppCompatActivity() {
             sendLocation()
         }
 
+
         fab.setOnClickListener {
-            /** PopupMenu dropdown */
-            val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
-            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
-            popupMenu.menu.findItem(R.id.action_profile).isVisible = true
-            popupMenu.menu.findItem(R.id.action_delete_home_location).isVisible = true
-            popupMenu.menu.findItem(R.id.action_logout).isVisible = true
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.action_about -> gotoAbout()
-                    R.id.action_change_language -> changeLanguage()
-                    R.id.action_settings -> gotoSetting()
-                    R.id.action_profile -> alertDialogProfile()
-                    R.id.action_delete_home_location -> gotoChangeHomeLocation()
-                    R.id.action_logout -> gotoLogout()
-                }
-                hideSystemUI()
-                true
-            }
-            popupMenu.show()
+//            /** PopupMenu dropdown */
+//            val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
+//            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+//            popupMenu.menu.findItem(R.id.action_profile).isVisible = true
+//            popupMenu.menu.findItem(R.id.action_delete_home_location).isVisible = true
+//            popupMenu.menu.findItem(R.id.action_logout).isVisible = true
+//            popupMenu.setOnMenuItemClickListener { item ->
+//                when (item.itemId) {
+//                    R.id.action_about -> gotoAbout()
+//                    R.id.action_change_language -> changeLanguage()
+//                    R.id.action_settings -> gotoSetting()
+//                    R.id.action_profile -> alertDialogProfile()
+//                    R.id.action_delete_home_location -> gotoChangeHomeLocation()
+//                    R.id.action_logout -> gotoLogout()
+//                }
+//                hideSystemUI()
+//                true
+//            }
+//            popupMenu.show()
+            val intent = Intent(this,SettingBlind::class.java)
+                startActivity(intent)
         }
 
-        val bpmValue = workDataOf(
-            "bpm" to "no-value"
-        )
 
-        val constraint = Constraints.Builder().apply {
-            setRequiredNetworkType(NetworkType.CONNECTED)
-        }.build()
-
+        val bpmValue = workDataOf("bpm" to "no-value")
+        val constraint = Constraints.Builder().apply { setRequiredNetworkType(NetworkType.CONNECTED) }.build()
         //one time
         val request = PeriodicWorkRequestBuilder<BPMWorker>(10, TimeUnit.SECONDS).apply {
             setInputData(bpmValue)
@@ -217,7 +205,8 @@ class MainActivity: AppCompatActivity() {
             }else{
                 val link = java.lang.String.format("%f,%f", location.latitude,location.longitude)
                 Log.i("Debug_sendLocation","call else")
-                Log.d("Debug_sendLocation:" ,"$link" )
+                Log.d("Debug_sendLocation:" ,"link : $link" )
+                Log.d("Debug_sendLocation:" ,"location : $location" )
                 val currentID = sharedPrefID.getString("stringKey2", "not found!")
                 val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
                 val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
@@ -231,12 +220,9 @@ class MainActivity: AppCompatActivity() {
 
 
                 val ref = FirebaseDatabase.getInstance().reference
-
-                val post = UserBlinderHelperClassNew("$currentID", "$currentPhone", "$currentPassword",
-                    "$currentFullName","$currentSex","$currentNameHelper",
-                    "$currentPhoneHelper",location.latitude,location.longitude,"$currentHomeLocation")
-                val postValues = post.toMap()
-                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone" to postValues)
+                val postLocation =  Locations(location.latitude,location.longitude)
+                val postValues = postLocation.toMap()
+                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Location" to postValues)
                 ref.updateChildren(childUpdates)
 
             }
@@ -286,7 +272,7 @@ class MainActivity: AppCompatActivity() {
     private val locationCallback = object : LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult) {
             var lastLocation: Location = locationResult.lastLocation
-            Log.d("Debug:","onLocationResult -> your last last location: "+ lastLocation.longitude.toString())
+            Log.d("Debug:","onLocationResult -> your last location: latitude = "+ lastLocation.latitude.toString()+", longitude = "+ lastLocation.longitude.toString())
             val text = "You Last Location is : Long: "+ lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n"
 
             Toast.makeText(this@MainActivity,"$text",Toast.LENGTH_SHORT).show()
@@ -374,36 +360,6 @@ class MainActivity: AppCompatActivity() {
         startActivity(intent)
     }
 
-//    private fun helperCall(){
-//        val phoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
-//        val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phoneHelper, null))
-//        startActivity(intent)
-//    }
-
-
-    /** change Language TH and EN*/
-    private fun changeLanguage(){
-        val language = sharedPrefLanguage.getString("stringKey", "not found!")
-        Log.i("SplashScreenMain", "Now Language is :$language ")
-        var locale: Locale? = null
-        var editor = sharedPrefLanguage.edit()
-        if (language=="en") {
-            locale = Locale("th")
-            editor.putString("stringKey", "th")
-            editor.apply()
-        } else if (language =="th") {
-            locale = Locale("en")
-            editor.putString("stringKey", "en")
-            editor.apply()
-        }
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.locale = locale
-        baseContext.resources.updateConfiguration(config, null)
-        val intent = Intent(this,SplashScreen::class.java)
-        startActivity(intent)
-//        recreate()
-    }
 
     private fun gotoAbout(){
         val intent = Intent(this,AboutScreen::class.java)
@@ -440,58 +396,6 @@ class MainActivity: AppCompatActivity() {
         alertDialogHomeLocation()
     }
 
-    private fun gotoLogout(){
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-        val acct = GoogleSignIn.getLastSignedInAccount(this)
-        Log.i("testusergoogle1","$acct")
-        if(acct != null){
-            mGoogleSignInClient.signOut()
-            Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
-            Log.i("testusergoogle2","$acct")
-        }
-
-        FirebaseAuth.getInstance().signOut()
-
-        val editorID = sharedPrefID.edit()
-        val editorPhone = sharedPrefPhone.edit()
-        val editorPassword = sharedPrefPassword.edit()
-        val editorFullName = sharedPrefFullName.edit()
-        val editorNameHelper = sharedPrefNameHelper.edit()
-        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
-        val editorGoogleUser = sharedPrefGoogle.edit()
-        val editorUserType = sharedPrefUserType.edit()
-        val editorGoogleUserType = sharedGooglePrefUserType.edit()
-        val editorHomeLocation = sharedPrefHomeLocation.edit()
-        val editorSex = sharedPrefSex.edit()
-
-        editorID.putString("stringKey2", "not found!")
-        editorPhone.putString("stringKeyPhone", "not found!")
-        editorPassword.putString("stringKeyPassword", "not found!")
-        editorSex.putString("stringKeySex", "not found!")
-        editorFullName.putString("stringKeyFullName", "not found!")
-        editorNameHelper.putString("stringKeyNameHelper", "not found!")
-        editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
-        editorGoogleUser.putString("stringKeyGoogle", "not found!")
-        editorUserType.putString("stringKeyType", "not found!")
-        editorGoogleUserType.putString("stringKeyGoogleType", "not found!")
-        editorHomeLocation.putString("stringKeyHomeLocation", "no-home")
-
-        editorID.apply()
-        editorPhone.apply()
-        editorPassword.apply()
-        editorFullName.apply()
-        editorNameHelper.apply()
-        editorPhoneHelper.apply()
-        editorGoogleUser.apply()
-        editorUserType.apply()
-        editorGoogleUserType.apply()
-        editorHomeLocation.apply()
-        editorSex.apply()
-
-        val intent = Intent(this, LoginScreen::class.java)
-        startActivity(intent)
-     }
 
     /** hide navigation and status bar in each activity */
     private fun hideSystemUI() {
@@ -554,22 +458,22 @@ class MainActivity: AppCompatActivity() {
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
         //login button click of custom layout
-//        mDialogView.dialogSummitBtn.setOnClickListener {
-//////            val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
-//////            query.addListenerForSingleValueEvent(valueEventListener)
-//////            val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
-//////            checkPartnerID = partnerIDBox
-////            val intent = Intent(this,SearchLocation::class.java)
-////            startActivity(intent)
-////        }
-////        //logout button click of custom layout
-////        mDialogView.dialogLogoutBtn.setOnClickListener {
-////            gotoLogout()
-////        }
-////        //exit button click of custom layout
-////        mDialogView.dialogExitBtn.setOnClickListener {
-////            finishAffinity()
-////        }
+        mDialogView.dialogSummitBtn.setOnClickListener {
+//            val query = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
+//            query.addListenerForSingleValueEvent(valueEventListener)
+//            val partnerIDBox = mDialogView.dialogPartnerID.text.toString()
+//            checkPartnerID = partnerIDBox
+            val intent = Intent(this,SearchLocation::class.java)
+            startActivity(intent)
+        }
+        //logout button click of custom layout
+        mDialogView.dialogLogoutBtn.setOnClickListener {
+//            gotoLogout()
+        }
+        //exit button click of custom layout
+        mDialogView.dialogExitBtn.setOnClickListener {
+//            finishAffinity()
+        }
 
     }
 

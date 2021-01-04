@@ -27,19 +27,33 @@ data class UserPersonHelperClass(
 data class UserPersonHelperClassNew(
     val ID : String ,
     val Phone: String,
-    val  Password: String,
-    val FullName: String,
-    val Sex: String,
-    val partner_id : String
+    val Password: String,
+    val DisplayName: String,
+    val CriticalEvent: String,
+    val Notification : String
 ){ @Exclude
 fun toMap(): Map<String, Any?> {
     return mapOf(
         "id" to ID,
         "phone" to Phone,
         "password" to Password,
-        "fullName" to FullName,
-        "sex" to Sex,
-        "partner_id" to partner_id
+        "displayName" to DisplayName,
+        "criticalEvent" to CriticalEvent,
+        "notification" to Notification
     )
 }
 }
+
+@IgnoreExtraProperties
+data class Blind(
+    var user1: String ,
+    var user2: String ,
+    var user3: String ,
+    var user4: String
+)
+@IgnoreExtraProperties
+data class DeviceCaretaker(
+    var Activity: String ,
+    var BPM: String ,
+    var Health_Status: String
+)

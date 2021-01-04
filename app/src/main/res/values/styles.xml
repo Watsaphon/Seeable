@@ -49,6 +49,21 @@
         <item name="android:background">@drawable/under_line_black</item>
     </style>
 
+    <style name="UnderLineSetting">
+        <item name="android:textColor">#3498db</item>
+        <item name="android:background">@drawable/under_line_setting</item>
+    </style>
 
+    <style name="settingBlindButton">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textColor">#404040</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:background">@null</item>
+
+    </style>
 
 </resources>

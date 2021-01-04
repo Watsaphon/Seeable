@@ -9,12 +9,14 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.estazo.project.seeable.app.HelperClass.Locations
 import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
 import com.estazo.project.seeable.app.MainActivity
-import com.estazo.project.seeable.app.*
+import com.estazo.project.seeable.app.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 
@@ -35,6 +37,8 @@ class GoogleRegisterBlind : AppCompatActivity() {
     private lateinit var sharedPrefGoogle : SharedPreferences
     private lateinit var sharedPrefUserType: SharedPreferences
     private lateinit var sharedGooglePrefUserType : SharedPreferences
+
+    private lateinit var postReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,15 +91,23 @@ class GoogleRegisterBlind : AppCompatActivity() {
                 phoneHelperBox.error = getString(R.string.phoneCaretaker_box_blind)
             }
             else{
-                val ref = FirebaseDatabase.getInstance().getReference("users_blind")
+
+
+                val location = Locations(0.00000000, 0.00000000)
+
+
+
+               val rootRef = FirebaseDatabase.getInstance().getReference("users_blind")
+                val locationRef = FirebaseDatabase.getInstance().getReference("users_blind/$inputPhone/Location")
                 val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
                 var UID  = ""
                 if (user != null) {
                      UID = user.uid
                 }
-                val ID = ref.push().key
-            Log.i("comeiei"," ID : $ID , UID : $UID")
-                val test = UserBlinderHelperClass(
+                val ID = rootRef.push().key
+                val ID2 = locationRef.push()
+                Log.i("comeiei"," ID : $ID , UID : $UID")
+                val rootKey = UserBlinderHelperClass(
                         UID,
                         "not found!",
                         "not found!",
@@ -106,10 +118,15 @@ class GoogleRegisterBlind : AppCompatActivity() {
                     13.7267346,
                     100.7751312,
                     "no-home"
-                    )
-                ref.child(UID).setValue(test).addOnCompleteListener {
+                )
+
+                rootRef.child(UID).setValue(rootKey).addOnCompleteListener {
                     Toast.makeText(this,getString(R.string.success_regis), Toast.LENGTH_SHORT).show()
                 }
+                locationRef.child(UID).setValue(location).addOnCompleteListener {
+
+                }
+
 //                val editorID = sharedPrefID.edit()
 //                val editorFullName = sharedPrefFullName.edit()
 //                val editorNameHelper = sharedPrefNameHelper.edit()

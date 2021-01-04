@@ -22,6 +22,14 @@
     <string name="button_emergency_call">โทรฉุกเฉิน</string>
     <string name="button_shared_locatoin">ส่งตำแหน่งที่อยู่ปัจจุบัน</string>
 
+    <!--SettingBlind-->
+    <string name="header_SettingBlind">การตั้งค่า</string>
+    <string name="button_change_language">ภาษา</string>
+    <string name="button_account">บัญชีผู้ใช้งาน</string>
+    <string name="button_set_location">ตั้งค่าที่อยู่</string>
+    <string name="button_manage_user">จัดการบัญชีผู้ดูแล</string>
+    <string name="button_delete_account">ลบบัญชีผู้ใช้งาน</string>
+    <string name="button_log_out">ออกจากระบบ</string>
 
     <!--SendOTP-->
     <string name="header_SendOTP">ลงทะเบียน</string>

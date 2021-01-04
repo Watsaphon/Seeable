@@ -10,6 +10,8 @@ import android.widget.Button
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.estazo.project.seeable.app.HelperClass.Locations
+import com.estazo.project.seeable.app.HelperClass.Navigation
 import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClassNew
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -17,7 +19,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.io.IOException
 
 class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
@@ -44,12 +49,12 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_location)
 
-        sharedPrefID = getSharedPreferences("value", 0)
-        sharedPrefSex= getSharedPreferences("value", 0)
-        sharedPrefPassword= getSharedPreferences("value", 0)
-        sharedPrefFullName= getSharedPreferences("value", 0)
-        sharedPrefNameHelper= getSharedPreferences("value", 0)
         sharedPrefPhone= getSharedPreferences("value", 0)
+        sharedPrefPassword= getSharedPreferences("value", 0)
+        sharedPrefID = getSharedPreferences("value", 0)
+        sharedPrefFullName= getSharedPreferences("value", 0)
+        sharedPrefSex= getSharedPreferences("value", 0)
+        sharedPrefNameHelper= getSharedPreferences("value", 0)
         sharedPrefPhoneHelper = getSharedPreferences("value", 0)
         sharedPrefHomeLocation = getSharedPreferences("value", 0)
 
@@ -114,33 +119,35 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
                 Toast.makeText(this,"Please mark your location before confirm", Toast.LENGTH_SHORT).show()
             }
             else{
+
+
+
                 Toast.makeText(this,"$homeLocation", Toast.LENGTH_SHORT).show()
 
-                val currentID = sharedPrefID.getString("stringKey2", "not found!")
-                val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
-                val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
-                val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
-                val currentNameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
+//                val currentID = sharedPrefID.getString("stringKey2", "not found!")
+//                val currentSex = sharedPrefSex.getString("stringKeySex", "not found!")
+//                val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
+//                val currentFullName = sharedPrefFullName.getString("stringKeyFullName", "not found!")
+//                val currentNameHelper = sharedPrefNameHelper.getString("stringKeyNameHelper", "not found!")
                 val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
-                val currentPhoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
-                Log.d("Debug_sendLocation","$currentID, $currentSex, $currentPassword , $currentFullName,$currentPhone" +
-                        ",$currentNameHelper,$currentPhoneHelper ,$homeLocation")
+//                val currentPhoneHelper = sharedPrefPhoneHelper.getString("stringKeyPhoneHelper", "not found!")
 
-                val ref = FirebaseDatabase.getInstance().reference
+                val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$currentPhone/Navigation")
+                query.addListenerForSingleValueEvent(valueEventListener)
 
-                val post = UserBlinderHelperClassNew("$currentID", "$currentPhone", "$currentPassword",
-                    "$currentFullName","$currentSex","$currentNameHelper",
-                    "$currentPhoneHelper",lat.toDouble(),long.toDouble(),"$homeLocation")
-                val postValues = post.toMap()
-                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone" to postValues)
-                ref.updateChildren(childUpdates)
-
-                val editorHomeLocation = sharedPrefHomeLocation.edit()
-                editorHomeLocation.putString("stringKeyHomeLocation", homeLocation)
-                editorHomeLocation.apply()
-
-                val intent = Intent(this@SearchLocation, MainActivity::class.java)
-                startActivity(intent)
+//                val ref = FirebaseDatabase.getInstance().reference
+//
+//                val post = Navigation("-","$homeLocation","-")
+//                val postValues = post.toMap()
+//                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation" to postValues)
+//                ref.updateChildren(childUpdates)
+//
+//                val editorHomeLocation = sharedPrefHomeLocation.edit()
+//                editorHomeLocation.putString("stringKeyHomeLocation", homeLocation)
+//                editorHomeLocation.apply()
+//
+//                val intent = Intent(this@SearchLocation, MainActivity::class.java)
+//                startActivity(intent)
             }
 
         }
@@ -175,5 +182,35 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
             Log.i("checkhome2"," homeLocation : $homeLocation")
         }
     }
+
+
+    /**receive value from realtime database (users_blind) and check Login */
+    private var valueEventListener: ValueEventListener = object : ValueEventListener {
+
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
+                val care_nav = dataSnapshot.child("Caretaker_Navigate").value.toString()
+                val self_nav_care = dataSnapshot.child("Self_Navigate_careUser").value.toString()
+
+                val ref = FirebaseDatabase.getInstance().reference
+
+                val post = Navigation("$care_nav","$homeLocation","$self_nav_care")
+                val postValues = post.toMap()
+                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation" to postValues)
+                ref.updateChildren(childUpdates)
+
+                val editorHomeLocation = sharedPrefHomeLocation.edit()
+                editorHomeLocation.putString("stringKeyHomeLocation", homeLocation)
+                editorHomeLocation.apply()
+
+                val intent = Intent(this@SearchLocation, MainActivity::class.java)
+                startActivity(intent)
+
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
 
 }

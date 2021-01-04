@@ -31,12 +31,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Register.LittleMore"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Register.SendOTP"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Register.SignedIn"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".SettingBlind"></activity>
+        <activity
+            android:name=".Register.LittleMore"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Register.SendOTP"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Register.SignedIn"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Register.VerificationOTP"
             android:screenOrientation="portrait" />
