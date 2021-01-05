@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app
+package com.estazo.project.seeable.app.Login
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -6,7 +6,6 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
-import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -18,9 +17,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import com.estazo.project.seeable.app.Login.LoginScreen
-import com.estazo.project.seeable.app.Register.SelectRegister
-import kotlinx.android.synthetic.main.activity_google_map_screen.*
+import com.estazo.project.seeable.app.R
+import com.estazo.project.seeable.app.SplashScreen
 import java.util.*
 
 

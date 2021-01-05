@@ -47,7 +47,7 @@ tools:context=".Register.VerificationOTP">
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="25dp"
             android:background="@mipmap/back_button_foreground" />
 
     </RelativeLayout>

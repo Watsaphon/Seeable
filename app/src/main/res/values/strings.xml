@@ -22,6 +22,7 @@
     <string name="button_caretaker_navigation">Caretaker-Navigate</string>
     <string name="button_emergency_call">Call Emergency</string>
     <string name="button_shared_locatoin">Send Location</string>
+    <string name="locatoin_null">Please set your location before use Navigation.</string>
 
 
     <!--SettingBlind-->
@@ -33,6 +34,42 @@
     <string name="button_delete_account">Delete Account</string>
     <string name="button_log_out">Log Out</string>
 
+    <!--AccountBlind-->
+    <string name="header_AccountBlind">Account Setting</string>
+    <string name="name_AccountBlind">Name : </string>
+    <string name="displayName_AccountBlind"> not found! </string>
+    <string name="phone_AccountBlind">Phone : 012XXXXXXX</string>
+    <string name="role_AccountBlind">Role : Blind</string>
+    <string name="btn_edit_AccountBlind">Edit name</string>
+    <string name="btn_pass_AccountBlind">Change password</string>
+    <string name="btn_delete_AccountBlind">Delete user</string>
+
+    <!--EditNameAccountBlind-->
+    <string name="header_editDisplayName">Edit name</string>
+    <string name="hint_editDisplayName"> username</string>
+    <string name="btn_editDisplayName">Save</string>
+    <string name="check_same_editDisplayName">Old name and new name cannot be same</string>
+    <string name="check_null_editDisplayName">Please enter new name</string>
+
+    <!--ChangePasswordAccountBlind-->
+    <string name="header_ChangePassword">Change password</string>
+    <string name="text_currentPassword">Current password</string>
+    <string name="text_newPassword">New password</string>
+    <string name="btn_ChangePassword">Save</string>
+    <string name="checkNull_current_ChangePassword">Please fill your current password.</string>
+    <string name="checkNull_new_ChangePassword">Please fill your new password.</string>
+    <string name="check_current_ChangePassword">Your current password is incorrect.</string>
+    <string name="check_new_ChangePassword">The new password cannot be the same as the old password.</string>
+
+    <!--deleteAccountBlind-->
+    <string name="header_DeleteAccountBlind">Delete account</string>
+    <string name="subheader_DeleteAccountBlind">Caution</string>
+    <string name="warning_DeleteAccountBlind">Are you really sure to delete the account?
+        If you delete account, you will lost all of your progress and data. Type your password and
+        press “Delete account” to confirm</string>
+    <string name="hint_DeleteAccountBlind">Password...</string>
+    <string name="btn_DeleteAccountBlind">Delete account</string>
+    <string name="checkPassword_DeleteAccountBlind">Your password is incorrect.</string>
 
     <!--SendOTP-->
     <string name="header_SendOTP">Registration</string>

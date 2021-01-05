@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app
+package com.estazo.project.seeable.app.Login
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
+import com.estazo.project.seeable.app.R
 
 //import library for PagerAdapter
 class SliderAdapter(var context: Context) : PagerAdapter() {
@@ -15,9 +16,27 @@ class SliderAdapter(var context: Context) : PagerAdapter() {
 
     //Array List
 //    private val header = intArrayOf(R.string.heading_slide, R.string.heading_slide, R.string.heading_slide, R.string.heading_slide)
-    private val subHeader = intArrayOf(R.string.subheading_slide_page_1, R.string.subheading_slide_page_2, R.string.subheading_slide_page_3, R.string.subheading_slide_page_4,R.string.subheading_slide_page_5)
-    private val description = intArrayOf(R.string.content_page_1, R.string.content_page_2, R.string.content_page_3, R.string.content_page_4,R.string.content_page_5)
-    private val imgRes = intArrayOf(R.mipmap.img_intro1_foreground,R.mipmap.img_intro2_foreground,R.mipmap.img_intro3_foreground,R.mipmap.img_intro4_foreground,R.mipmap.img_intro5_foreground)
+    private val subHeader = intArrayOf(
+        R.string.subheading_slide_page_1,
+        R.string.subheading_slide_page_2,
+        R.string.subheading_slide_page_3,
+        R.string.subheading_slide_page_4,
+        R.string.subheading_slide_page_5
+    )
+    private val description = intArrayOf(
+        R.string.content_page_1,
+        R.string.content_page_2,
+        R.string.content_page_3,
+        R.string.content_page_4,
+        R.string.content_page_5
+    )
+    private val imgRes = intArrayOf(
+        R.mipmap.img_intro1_foreground,
+        R.mipmap.img_intro2_foreground,
+        R.mipmap.img_intro3_foreground,
+        R.mipmap.img_intro4_foreground,
+        R.mipmap.img_intro5_foreground
+    )
     private lateinit var tvSubHeader: TextView
     private lateinit var tvDesc: TextView
     private lateinit var img: ImageView

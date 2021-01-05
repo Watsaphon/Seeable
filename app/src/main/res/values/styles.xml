@@ -59,11 +59,42 @@
         <item name="android:textColor">#404040</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:fontFamily">@font/roboto</item>
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAlignment">textStart</item>
         <item name="android:background">@null</item>
+    </style>
 
+    <style name="AccountBlind_Name">
+        <item name="android:textColor">#3DADFF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AccountBlind_Info">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">18dp</item>
+
+    </style>
+
+    <style name="AccountBlind_Button">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ChangePassword_txt">
+        <item name="android:textColor">#404040</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
