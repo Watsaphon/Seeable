@@ -8,9 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.content.res.Configuration
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
@@ -20,28 +17,21 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.work.*
 import com.estazo.project.seeable.app.HelperClass.Locations
-import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClass
-import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClassNew
-import com.estazo.project.seeable.app.Login.LoginScreen
 import com.estazo.project.seeable.app.Register.BPMWorker
-import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.estazo.project.seeable.app.settingBlind.SettingBlind
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.location.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.alert_dialog_home_location.view.*
-import kotlinx.android.synthetic.main.alert_dialog_profile.view.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -171,7 +161,8 @@ class MainActivity: AppCompatActivity() {
 //                true
 //            }
 //            popupMenu.show()
-            val intent = Intent(this,SettingBlind::class.java)
+            val intent = Intent(this,
+                SettingBlind::class.java)
                 startActivity(intent)
         }
 
@@ -213,7 +204,7 @@ class MainActivity: AppCompatActivity() {
                 val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
                 val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
                 val currentID = sharedPrefID.getString("stringKey2", "not found!")
-                val currentDisplayName = sharedPrefDisplayName.getString("stringKeyFullName", "not found!")
+                val currentDisplayName = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!")
 
                 Log.d("Debug_sendLocation","$currentPhone, $currentPassword ,$currentID, $currentDisplayName")
 
@@ -442,7 +433,10 @@ class MainActivity: AppCompatActivity() {
 //                val longitude = dataSnapshot.child("Longitude").value.toString()
 //                val locationNavigate = "$latitude,$longitude"
                 Log.d("test_locationNavigate ","Navigate to location : $location")
-
+                if(location =="null"){
+                    Toast.makeText(this@MainActivity,R.string.locatoin_null ,Toast.LENGTH_SHORT).show()
+                }
+                else{
                     // Navigation : current place direct to gmmIntentUri
                     val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
@@ -450,6 +444,8 @@ class MainActivity: AppCompatActivity() {
                     mapIntent.resolveActivity(packageManager)?.let {
                         startActivity(mapIntent)
                     }
+
+                }
 
             }
         }

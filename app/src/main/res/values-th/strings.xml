@@ -21,6 +21,8 @@
     <string name="button_caretaker_navigation">เริ่มการนำทางผ่านทางผู้ดูแล</string>
     <string name="button_emergency_call">โทรฉุกเฉิน</string>
     <string name="button_shared_locatoin">ส่งตำแหน่งที่อยู่ปัจจุบัน</string>
+    <string name="locatoin_null">กรุณาตั้งค่าที่อยู่ที่จะเดินทางก่อนเริ่มการใช้งานการเดินทาง</string>
+
 
     <!--SettingBlind-->
     <string name="header_SettingBlind">การตั้งค่า</string>
@@ -30,6 +32,42 @@
     <string name="button_manage_user">จัดการบัญชีผู้ดูแล</string>
     <string name="button_delete_account">ลบบัญชีผู้ใช้งาน</string>
     <string name="button_log_out">ออกจากระบบ</string>
+
+    <!--AccountBlind-->
+    <string name="header_AccountBlind">ตั้งค่าบัญชีผู้ใช้งาน</string>
+    <string name="name_AccountBlind">ชื่อผู้ใช้งาน: </string>
+    <string name="displayName_AccountBlind"> ไม่พบ </string>
+    <string name="phone_AccountBlind">เบอร์โทรศัพท์ : 012XXXXXXX</string>
+    <string name="role_AccountBlind">สถานะ : คนตาบอด</string>
+    <string name="btn_edit_AccountBlind">แก้ไขชื่อผู้ใช้งาน</string>
+    <string name="btn_pass_AccountBlind">เปลี่ยนรหัสผ่าน</string>
+    <string name="btn_delete_AccountBlind">ลบบัญชีผู้ใช้งาน</string>
+
+    <!--EditNameAccountBlind-->
+    <string name="header_editDisplayName">แก้ไขชื่อผู้ใช้งาน</string>
+    <string name="hint_editDisplayName">ชื่อผู้ใช้งาน</string>
+    <string name="btn_editDisplayName">บันทึก</string>
+    <string name="check_same_editDisplayName">ชื่อผู้ใช้งานใหม่ห้ามซ้ำกับชื่อผู้ใช้งานเก่า</string>
+    <string name="check_null_editDisplayName">กรุณากรอกชื่อใหม่ของคุณ</string>
+
+    <!--ChangePasswordAccountBlind-->
+    <string name="header_ChangePassword">เปลี่ยนรหัสผ่าน</string>
+    <string name="text_currentPassword">รหัสผ่านปัจจุบัน</string>
+    <string name="text_newPassword">รหัสผ่านใหม่</string>
+    <string name="btn_ChangePassword">บันทึก</string>
+    <string name="checkNull_current_ChangePassword">กรุณากรอกรหัสผ่านปัจจุบันของคุณ</string>
+    <string name="checkNull_new_ChangePassword">กรุณากรอกรหัสผ่านใหม่ของคุณ</string>
+    <string name="check_current_ChangePassword">รหัสผ่านของคุณไม่ถูกต้อง</string>
+    <string name="check_new_ChangePassword">รหัสผ่านใหม่ห้ามซ้ำกับรหัสผ่านปัจจุบัน</string>
+
+    <!--deleteAccountBlind-->
+    <string name="header_DeleteAccountBlind">ลบบัญชีผู้ใช้งาน</string>
+    <string name="subheader_DeleteAccountBlind">คำเตือน</string>
+    <string name="warning_DeleteAccountBlind">คุณต้องการลบบัญชีผู้ใช้งานจริงๆใช่ไหม
+        ถ้าคุณลบบัญชีผู้ใช้งานแล้ว คุณจะสูญเสียข้อมูลและทุกอย่างในแอพพลิเคชั่น กรุณากรอกรหัสผ่านและกดปุ่มลบเพื่อยืนยันการลบบัญชีผู้ใช้งาน</string>
+    <string name="hint_DeleteAccountBlind">รหัสผ่าน...</string>
+    <string name="btn_DeleteAccountBlind">ลบบัญชีผู้ใช้งาน</string>
+    <string name="checkPassword_DeleteAccountBlind">รหัสผ่านของคุณไม่ถูกต้อง</string>
 
     <!--SendOTP-->
     <string name="header_SendOTP">ลงทะเบียน</string>

@@ -16,7 +16,7 @@
         android:layout_height="110dp"
         android:gravity="center"
         android:fontFamily="@font/adamina"
-        android:text="Pairing "
+        android:text="Delete Acccount "
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textSize="40dp" />
@@ -27,7 +27,7 @@
         android:layout_height="144dp"
         android:textSize="18dp"
         android:fontFamily="serif-monospace"
-        android:text="You don't have partner now. Before you can use this application .Please insert your Partner ID."
+        android:text="If you want to delete account .Please confirm your password before delete"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <TextView
@@ -37,7 +37,7 @@
         android:textSize="15dp"
         android:gravity="center"
         android:fontFamily="serif-monospace"
-        android:text="Enter Partner ID to Pairing"
+        android:text="Enter Password to delete account"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <EditText

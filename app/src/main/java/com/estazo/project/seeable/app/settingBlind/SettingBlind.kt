@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app
+package com.estazo.project.seeable.app.settingBlind
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -6,18 +6,20 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import java.util.*
 import android.content.res.Configuration
+import android.view.LayoutInflater
 import com.estazo.project.seeable.app.Login.LoginScreen
-import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.estazo.project.seeable.app.MainActivity
+import com.estazo.project.seeable.app.R
+import com.estazo.project.seeable.app.SplashScreen
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 
 class SettingBlind : AppCompatActivity() {
@@ -27,7 +29,6 @@ class SettingBlind : AppCompatActivity() {
     private lateinit var account: Button
     private lateinit var setLocation: Button
     private lateinit var manageCare: Button
-    private lateinit var deleteAccount: Button
     private lateinit var logout: Button
 
     private lateinit var sharedPrefLanguage: SharedPreferences
@@ -38,12 +39,9 @@ class SettingBlind : AppCompatActivity() {
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
+    private lateinit var sharedPrefCaretakerUser : SharedPreferences
 
-//    private lateinit var sharedPrefNameHelper: SharedPreferences
-//    private lateinit var sharedPrefPhoneHelper: SharedPreferences
-//    private lateinit var sharedPrefSex: SharedPreferences
-
-
+    private lateinit var  mAlertDialog : AlertDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +53,6 @@ class SettingBlind : AppCompatActivity() {
         account = findViewById(R.id.accountBtn)
         setLocation = findViewById(R.id.locationBtn)
         manageCare = findViewById(R.id.manageUserBtn)
-        deleteAccount = findViewById(R.id.deleteBtn)
         logout = findViewById(R.id.logoutBtn)
 
         sharedPrefLanguage = getSharedPreferences("value", 0)
@@ -65,41 +62,29 @@ class SettingBlind : AppCompatActivity() {
         sharedPrefPassword= getSharedPreferences("value", 0)
         sharedPrefDisplayName= getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
-//        sharedPrefSex= getSharedPreferences("value", 0)
-//        sharedPrefNameHelper= getSharedPreferences("value", 0)
-//        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
-
+        sharedPrefCaretakerUser = getSharedPreferences("value", 0)
 
         lang.setOnClickListener {
             changeLanguage()
         }
         account.setOnClickListener {
-            Toast.makeText(this@SettingBlind,"Account",Toast.LENGTH_SHORT).show()
+            account()
         }
         setLocation.setOnClickListener {
             searchLocation()
-            Toast.makeText(this@SettingBlind," set Location",Toast.LENGTH_SHORT).show()
         }
         manageCare.setOnClickListener {
+//            manageCaretaker()
             Toast.makeText(this@SettingBlind," manage Caretaker User",Toast.LENGTH_SHORT).show()
-        }
-        deleteAccount.setOnClickListener {
-            Toast.makeText(this@SettingBlind," delete Account",Toast.LENGTH_SHORT).show()
         }
         logout.setOnClickListener {
             gotoLogout()
         }
         backButton.setOnClickListener {
-            finish()
+            onBackPressed()
         }
 
     }
-
-    private fun searchLocation(){
-        val intent = Intent(this,SearchLocation::class.java)
-        startActivity(intent)
-    }
-
 
 
     /** change Language TH and EN*/
@@ -121,51 +106,118 @@ class SettingBlind : AppCompatActivity() {
         val config = Configuration()
         config.locale = locale
         baseContext.resources.updateConfiguration(config, null)
-        val intent = Intent(this,SplashScreen::class.java)
+        val intent = Intent(this, SplashScreen::class.java)
         startActivity(intent)
-//        recreate()
+    }
+
+    private fun account(){
+        val intent = Intent(this, AccountBlind::class.java)
+        startActivity(intent)
+    }
+
+    private fun searchLocation(){
+        val intent = Intent(this, SearchLocation::class.java)
+        startActivity(intent)
+    }
+
+    private fun manageCaretaker(){
+
     }
 
     private fun gotoLogout(){
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-//        val acct = GoogleSignIn.getLastSignedInAccount(this)
-//        Log.i("testusergoogle1","$acct")
-//        if(acct != null){
-//            mGoogleSignInClient.signOut()
-//            Toast.makeText(this, getString(R.string.action_logout), Toast.LENGTH_SHORT).show()
-//            Log.i("testusergoogle2","$acct")
-//        }
-//        FirebaseAuth.getInstance().signOut()
 
         val editorID = sharedPrefID.edit()
         val editorPhone = sharedPrefPhone.edit()
         val editorPassword = sharedPrefPassword.edit()
         val editorDisplay = sharedPrefDisplayName.edit()
         val editorUserType = sharedPrefUserType.edit()
-//        val editorNameHelper = sharedPrefNameHelper.edit()
-//        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
-//        val editorSex = sharedPrefSex.edit()
+        val editorCaretakerUser = sharedPrefCaretakerUser.edit()
 
         editorID.putString("stringKey2", "not found!")
         editorPhone.putString("stringKeyPhone", "not found!")
         editorPassword.putString("stringKeyPassword", "not found!")
         editorDisplay.putString("stringKeyDisplayName", "not found!")
         editorUserType.putString("stringKeyType", "not found!")
-//        editorSex.putString("stringKeySex", "not found!")
-//        editorNameHelper.putString("stringKeyNameHelper", "not found!")
-//        editorPhoneHelper.putString("stringKeyPhoneHelper", "not found!")
+        editorCaretakerUser.putString("stringKeyCaretakerUser", "not found!")
 
         editorID.apply()
         editorPhone.apply()
         editorPassword.apply()
         editorDisplay.apply()
         editorUserType.apply()
-//        editorNameHelper.apply()
-//        editorPhoneHelper.apply()
-//        editorSex.apply()
+        editorCaretakerUser.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
     }
+
+
+    /**receive value from realtime database (users_blind) and check Login */
+    private var valueEventListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+            dataSnapshot.ref.removeValue()
+
+            val editorID = sharedPrefID.edit()
+            val editorPhone = sharedPrefPhone.edit()
+            val editorPassword = sharedPrefPassword.edit()
+            val editorDisplay = sharedPrefDisplayName.edit()
+            val editorUserType = sharedPrefUserType.edit()
+            val editorCaretakerUser = sharedPrefCaretakerUser.edit()
+
+            editorID.putString("stringKey2", "not found!")
+            editorPhone.putString("stringKeyPhone", "not found!")
+            editorPassword.putString("stringKeyPassword", "not found!")
+            editorDisplay.putString("stringKeyDisplayName", "not found!")
+            editorUserType.putString("stringKeyType", "not found!")
+            editorCaretakerUser.putString("stringKeyCaretakerUser", "not found!")
+
+            editorID.apply()
+            editorPhone.apply()
+            editorPassword.apply()
+            editorDisplay.apply()
+            editorUserType.apply()
+            editorCaretakerUser.apply()
+
+            dismissAlertDialogLoading()
+
+            val intent = Intent(this@SettingBlind, LoginScreen::class.java)
+            startActivity(intent)
+
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
+    /** AlertDialog to loading  */
+    private fun alertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+        //show dialog
+        mAlertDialog  = mBuilder.show()
+        mAlertDialog.window!!.setLayout(400,300)
+        mAlertDialog.setCanceledOnTouchOutside(false)
+        mAlertDialog.setCancelable(false)
+    }
+
+    /** AlertDialog to dismiss loading  */
+    private fun dismissAlertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
+        //show dialog
+        mAlertDialog.dismiss()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
+        Log.i("SettingBlind", "onBackPressed called")
+    }
+
 }

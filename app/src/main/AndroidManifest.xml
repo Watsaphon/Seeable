@@ -31,7 +31,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SettingBlind"></activity>
+        <activity android:name=".settingBlind.DeleteAccountBlind"></activity>
+        <activity android:name=".settingBlind.ChangePasswordAccountBlind" />
+        <activity android:name=".settingBlind.EditNameAccountBlind" />
+        <activity android:name=".settingBlind.AccountBlind" />
+        <activity android:name=".settingBlind.SettingBlind" />
         <activity
             android:name=".Register.LittleMore"
             android:screenOrientation="portrait" />
@@ -45,10 +49,10 @@
             android:name=".Register.VerificationOTP"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".IntroduceApp"
+            android:name=".Login.IntroduceApp"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SearchLocation"
+            android:name=".settingBlind.SearchLocation"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".Register.GoogleRegisterPerson"

@@ -45,10 +45,10 @@ data class UserBlinderHelperClassNew(
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "Id" to ID,
-            "Phone" to Phone,
-            "Password" to Password,
-            "DisplayName" to DisplayName
+            "id" to ID,
+            "phone" to Phone,
+            "password" to Password,
+            "displayName" to DisplayName
         )
     }
 }
@@ -62,19 +62,30 @@ data class Locations(
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "Latitude" to Latitude,
-            "Longitude" to Longitude
+            "latitude" to Latitude,
+            "longitude" to Longitude
         )
     }
 }
 
 @IgnoreExtraProperties
 data class Caretaker(
-    var user1: String = "0812345678",
+    var user1: String = "-",
     var user2: String = "-",
     var user3: String = "-",
     var user4: String = "-"
-)
+) {
+    @Exclude
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "user1" to user1,
+            "user2" to user2,
+            "user3" to user3,
+            "user4" to user4
+        )
+    }
+}
+
 @IgnoreExtraProperties
 data class DeviceBlind(
     var Activity: String = "-",
@@ -83,6 +94,7 @@ data class DeviceBlind(
     var Fall_Detection: String = "-",
     var Health_Status: String = "-"
 )
+
 @IgnoreExtraProperties
 data class Navigation(
     var Caretaker_Navigate: String ,
@@ -92,9 +104,10 @@ data class Navigation(
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "Caretaker_Navigate" to Caretaker_Navigate,
-            "Self_Navigate_bindUser" to Self_Navigate_bindUser,
-            "Self_Navigate_careUser" to Self_Navigate_careUser
+            "caretaker_Navigate" to Caretaker_Navigate,
+            "self_Navigate_bindUser" to Self_Navigate_bindUser,
+            "self_Navigate_careUser" to Self_Navigate_careUser
         )
     }
 }
+

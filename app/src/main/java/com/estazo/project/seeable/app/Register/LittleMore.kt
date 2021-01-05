@@ -66,11 +66,9 @@ class LittleMore : AppCompatActivity() {
                     val navigation = Navigation("-", "-", "-")
 
                     val valueRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")
-                    val rootData = UserBlinderHelperClassNew(
-                            ID.toString(),
-                            phone,
-                            "$password",
-                            "-")
+                    val rootData = UserBlinderHelperClassNew(ID.toString(), phone, "$password", "-")
+
+
                     rootRef.child(phone).setValue(rootData).addOnCompleteListener {
                         valueRef.child("Location").setValue(location).addOnCompleteListener {
                             valueRef.child("Caretaker").setValue(caretaker).addOnCompleteListener {

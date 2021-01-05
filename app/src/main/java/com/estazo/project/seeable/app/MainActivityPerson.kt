@@ -155,13 +155,13 @@ class MainActivityPerson : AppCompatActivity() {
     }
 
     private fun gotoAbout(){
-        val intent = Intent(this,AboutScreen::class.java)
-        startActivity(intent)
+//        val intent = Intent(this,AboutScreen::class.java)
+//        startActivity(intent)
     }
 
     private fun gotoSetting(){
-        val intent = Intent(this,SettingScreen::class.java)
-        startActivity(intent)
+//        val intent = Intent(this,SettingScreen::class.java)
+//        startActivity(intent)
     }
 
 //    private fun gotoChangePartnerID(){

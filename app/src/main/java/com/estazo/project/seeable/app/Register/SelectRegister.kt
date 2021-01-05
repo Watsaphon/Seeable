@@ -9,14 +9,11 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.AboutScreen
 import com.estazo.project.seeable.app.Login.LoginScreen
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.SettingScreen
 import com.estazo.project.seeable.app.SplashScreen
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -107,9 +104,7 @@ class SelectRegister : AppCompatActivity() {
             }
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.action_about ->gotoAbout()
                     R.id.action_change_language -> changeLanguage()
-                    R.id.action_settings -> gotoSetting()
                     R.id.action_logout -> gotoLogout()
                 }
                 hideSystemUI()
@@ -183,15 +178,7 @@ class SelectRegister : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun gotoSetting(){
-        val intent = Intent(this, SettingScreen::class.java)
-        startActivity(intent)
-    }
 
-    private fun gotoAbout(){
-        val intent = Intent(this, AboutScreen::class.java)
-        startActivity(intent)
-    }
 
     private fun gotoLogout(){
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()

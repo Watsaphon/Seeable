@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app
+package com.estazo.project.seeable.app.settingBlind
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,9 +10,9 @@ import android.widget.Button
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.HelperClass.Locations
 import com.estazo.project.seeable.app.HelperClass.Navigation
-import com.estazo.project.seeable.app.HelperClass.UserBlinderHelperClassNew
+import com.estazo.project.seeable.app.MainActivity
+import com.estazo.project.seeable.app.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

@@ -1,6 +1,5 @@
 package com.estazo.project.seeable.app.Login
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -16,22 +15,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.*
-import com.estazo.project.seeable.app.Register.LittleMore
-import com.estazo.project.seeable.app.Register.SelectRegister
+import com.estazo.project.seeable.app.HelperClass.Caretaker
+import com.estazo.project.seeable.app.MainActivity
+import com.estazo.project.seeable.app.MainActivityPerson
+import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.Register.SendOTP
-import com.estazo.project.seeable.app.Register.VerificationOTP
-import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.estazo.project.seeable.app.SplashScreen
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
-import com.google.android.gms.common.api.ApiException
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -39,7 +35,7 @@ import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
- class LoginScreen : AppCompatActivity() {
+class LoginScreen : AppCompatActivity() {
 
 
     private lateinit var telBox: EditText
@@ -52,17 +48,17 @@ import java.util.*
     private lateinit var auth: FirebaseAuth
 
     private lateinit var sharedPrefIntroApp: SharedPreferences
+    private lateinit var sharedPrefPhone: SharedPreferences
+    private lateinit var sharedPrefPassword: SharedPreferences
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefDisplayName: SharedPreferences
+    private lateinit var sharedPrefUserType: SharedPreferences
+    private lateinit var sharedPrefCaretakerUser: SharedPreferences
+
     private lateinit var sharedPrefNameHelper: SharedPreferences
-    private lateinit var sharedPrefPassword: SharedPreferences
-    private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPhoneHelper: SharedPreferences
-    private lateinit var sharedPrefSex: SharedPreferences
     private lateinit var sharedPrefHomeLocation: SharedPreferences
     private lateinit var sharedPrefPartnerID: SharedPreferences
-
-    private lateinit var sharedPrefUserType: SharedPreferences
     private lateinit var sharedPrefGoogle : SharedPreferences
     private lateinit var sharedGooglePrefUserType : SharedPreferences
 
@@ -70,6 +66,8 @@ import java.util.*
     private lateinit var UID : String
     private lateinit var changeLang : TextView
 
+//    private lateinit var caretaker : ArrayList<Caretaker>
+//    private lateinit var userCaretaker : SharedPreferences
 //    private lateinit var signInButton: SignInButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,8 +101,9 @@ import java.util.*
         sharedPrefID = getSharedPreferences("value", 0)
         sharedPrefDisplayName= getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
+        sharedPrefCaretakerUser = getSharedPreferences("value", 0)
 
-//        sharedPrefSex= getSharedPreferences("value", 0)
+//        userCaretaker = getSharedPreferences("value", 0)
 //        sharedPrefNameHelper= getSharedPreferences("value", 0)
 //        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
 //        sharedPrefGoogle  = getSharedPreferences("value", 0)
@@ -123,7 +122,6 @@ import java.util.*
             ssb.setSpan(fcsWhite, 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             ssb.setSpan(fcsGreen, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             changeLang.text = ssb
-
 //            val textView = signInButton.getChildAt(0) as TextView
 //            textView.text = "Sign in with Google "
 
@@ -132,7 +130,6 @@ import java.util.*
             ssb.setSpan(fcsWhite, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             ssb.setSpan(fcsGreen, 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             changeLang.text = ssb
-
 //            val textView = signInButton.getChildAt(0) as TextView
 //            textView.text = " เข้าสู่ระบบด้วย Google "
         }
@@ -291,6 +288,8 @@ import java.util.*
                     val phone = snapshot.child("phone").value.toString()
                     val password = snapshot.child("password").value.toString()
                     val displayName = snapshot.child("displayName").value.toString()
+
+
 //                    val sex = snapshot.child("sex").value.toString()
 //                    val partnerIDFirebase = snapshot.child("partner_id").value.toString()
 
@@ -363,14 +362,15 @@ import java.util.*
                     val phone = snapshot.child("phone").value.toString()
                     val password = snapshot.child("password").value.toString()
                     val displayName = snapshot.child("displayName").value.toString()
-//                    val sex = snapshot.child("sex").value.toString()
-//                    val nameHelper = snapshot.child("nameHelper").value.toString()
-//                    val phoneHelper = snapshot.child("phoneHelper").value.toString()
-//                    val homeLocation = snapshot.child("homeLocation").value.toString()
+                    val user1 = snapshot.child("Caretaker/user1").value.toString()
+                    val user2 = snapshot.child("Caretaker/user2").value.toString()
+                    val user3 = snapshot.child("Caretaker/user3").value.toString()
+                    val user4 = snapshot.child("Caretaker/user4").value.toString()
+
 
                     Log.i("LoginScreen_checkLogin","In onDataChange, count=$count")
                     Log.i("LoginScreen_checkLogin", "Username : $loginTel , Password : $loginPassword")
-                    Log.i("LoginScreen_checkLogin", "Database info :  $id,$password,$displayName,$phone")
+                    Log.i("LoginScreen_checkLogin", "Database info :  $id,$password,$displayName,$phone ,$user1,$user2,$user3,$user4 ")
 
                     if (loginTel.equals(phone) && loginPassword.equals(password)){
                         Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
@@ -379,31 +379,35 @@ import java.util.*
                         val editorPassword = sharedPrefPassword.edit()
                         val editorDisplayName = sharedPrefDisplayName.edit()
                         val editorUserType = sharedPrefUserType.edit()
-//                        val editorNameHelper = sharedPrefNameHelper.edit()
-//                        val editorSex = sharedPrefSex.edit()
-//                        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
-//                        val editorHomeLocation = sharedPrefHomeLocation.edit()
+                        val editorCaretakerUser = sharedPrefCaretakerUser.edit()
 
                         editorID.putString("stringKey2", id)
                         editorPhone.putString("stringKeyPhone", phone)
                         editorPassword.putString("stringKeyPassword", password)
                         editorDisplayName.putString("stringKeyDisplayName", displayName)
                         editorUserType.putString("stringKeyType", "blind")
-
-//                        editorSex.putString("stringKeySex", sex)
-//                        editorHomeLocation.putString("stringKeyHomeLocation", homeLocation)
-//                        editorNameHelper.putString("stringKeyNameHelper", nameHelper)
-//                        editorPhoneHelper.putString("stringKeyPhoneHelper", phoneHelper)
+                        editorCaretakerUser.putString("stringKeyCaretakerUser", "$user1,$user2,$user3,$user4")
 
                         editorPhone.apply()
                         editorPassword.apply()
                         editorID.apply()
                         editorDisplayName.apply()
                         editorUserType.apply()
-//                        editorSex.apply()
-//                        editorNameHelper.apply()
-//                        editorPhoneHelper.apply()
-//                        editorHomeLocation.apply()
+                        editorCaretakerUser.apply()
+
+
+                        val test = sharedPrefCaretakerUser.getString("stringKeyCaretakerUser","not found!")
+                        Log.d("wtfArray","test : $test ")
+                        if(test != null){
+                            val yourArray: List<String> = test.split(",")
+                            Log.d("wtfArray","yourArray : $yourArray ")
+                            val user1 = yourArray[0]
+                            val user2 = yourArray[1]
+                            val user3 = yourArray[2]
+                            val user4 = yourArray[3]
+
+                            Log.d("wtfArray","After split -> user1 : $user1 ,  user2 : $user2 , user3 : $user3 , user4 : $user4")
+                        }
 
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)
