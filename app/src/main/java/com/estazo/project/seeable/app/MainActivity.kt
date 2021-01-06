@@ -8,15 +8,24 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.Color.*
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
 import android.os.*
 import android.speech.tts.TextToSpeech
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.WindowManager
 import android.widget.Button
-
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -31,11 +40,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.alert_dialog_home_location.view.*
+import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-/**test github*/
 class MainActivity: AppCompatActivity() {
 
     private lateinit var sharedLocationBtn: Button
@@ -46,11 +54,14 @@ class MainActivity: AppCompatActivity() {
     private lateinit var  mAlertDialog : AlertDialog
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
+    private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPassword: SharedPreferences
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
+
+
 
 //    private lateinit var sharedPrefHomeLocation : SharedPreferences
 //    private lateinit var sharedPrefNameHelper: SharedPreferences
@@ -72,27 +83,16 @@ class MainActivity: AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         CheckPermission()
 
-
+        sharedPrefLanguage = getSharedPreferences("value", 0)
         sharedPrefPhone= getSharedPreferences("value", 0)
         sharedPrefPassword= getSharedPreferences("value", 0)
         sharedPrefID = getSharedPreferences("value", 0)
         sharedPrefDisplayName = getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
 
-//        sharedPrefGoogle  = getSharedPreferences("value", 0)
-//        sharedPrefSex= getSharedPreferences("value", 0)
-//        sharedPrefNameHelper= getSharedPreferences("value", 0)
-//        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
-
-//        sharedGooglePrefUserType = getSharedPreferences("value", 0)
-//        sharedPrefHomeLocation = getSharedPreferences("value", 0)
 
 
-//        val homeLocation = sharedPrefHomeLocation.getString("stringKeyHomeLocation","not found!")
-//        Log.d("checkHome_MainActivity","$homeLocation")
-//        if(homeLocation=="no-home"){
-//            alertDialogHomeLocation()
-//        }
+
 
 
         selfNavBtn = findViewById(R.id.selfNavButton)
@@ -105,6 +105,10 @@ class MainActivity: AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         RequestPermission()
 
+        val displayName = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!")
+        if(displayName == "-"){
+            alertDialogSetName()
+        }
 
         textToSpeech = TextToSpeech(applicationContext, TextToSpeech.OnInitListener { status ->
             if (status != TextToSpeech.ERROR) {
@@ -142,25 +146,6 @@ class MainActivity: AppCompatActivity() {
 
 
         fab.setOnClickListener {
-//            /** PopupMenu dropdown */
-//            val popupMenu = PopupMenu(this, fab, Gravity.CENTER)
-//            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
-//            popupMenu.menu.findItem(R.id.action_profile).isVisible = true
-//            popupMenu.menu.findItem(R.id.action_delete_home_location).isVisible = true
-//            popupMenu.menu.findItem(R.id.action_logout).isVisible = true
-//            popupMenu.setOnMenuItemClickListener { item ->
-//                when (item.itemId) {
-//                    R.id.action_about -> gotoAbout()
-//                    R.id.action_change_language -> changeLanguage()
-//                    R.id.action_settings -> gotoSetting()
-//                    R.id.action_profile -> alertDialogProfile()
-//                    R.id.action_delete_home_location -> gotoChangeHomeLocation()
-//                    R.id.action_logout -> gotoLogout()
-//                }
-//                hideSystemUI()
-//                true
-//            }
-//            popupMenu.show()
             val intent = Intent(this,
                 SettingBlind::class.java)
                 startActivity(intent)
@@ -369,10 +354,8 @@ class MainActivity: AppCompatActivity() {
     /** function press and hold button for few seconds */
     private fun View.setOnVeryLongClickListener(listener: () -> Unit) {
         setOnTouchListener(object : View.OnTouchListener {
-
             private val longClickDuration = 2000L
             private val handler = Handler()
-
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 if (event?.action == MotionEvent.ACTION_DOWN) {
                     handler.postDelayed({ listener.invoke() }, longClickDuration)
@@ -382,7 +365,6 @@ class MainActivity: AppCompatActivity() {
                 return true
             }
         })
-
     }
 
     /** function vibrations */
@@ -399,25 +381,57 @@ class MainActivity: AppCompatActivity() {
     }
 
 
-    /** AlertDialog to check Home Location in user_bind  */
-    private fun alertDialogHomeLocation() {
+    /** AlertDialog to set DisplayName in user_bind  */
+    private fun alertDialogSetName() {
         //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_home_location, null)
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_set_name ,null)
         //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(this)
-            .setView(mDialogView)
+        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
         //show dialog
         mAlertDialog  = mBuilder.show()
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
-        //login button click of custom layout
-        mDialogView.dialogSummitBtn.setOnClickListener {
+        mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val subHeader : TextView = mDialogView.findViewById(R.id.info1)
+        val txtEN = "Or you can Change it later."
+        val txtTH = "หรือคุณสามารถเปลี่ยนชื่อในภายหลัง"
+        val ssbEN = SpannableStringBuilder(txtEN)
+        val ssbTH = SpannableStringBuilder(txtTH)
+        val fcsSky = ForegroundColorSpan(resources.getColor(R.color.txtDisplay))
+        val fcsGray = ForegroundColorSpan(GRAY)
+        val language = sharedPrefLanguage.getString("stringKey", "not found!")
+        if(language == "en"){
+            ssbEN.setSpan(fcsGray, 0, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            ssbEN.setSpan(fcsSky, 11, 27, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            subHeader.text = ssbEN
         }
-        //logout button click of custom layout
-        mDialogView.dialogLogoutBtn.setOnClickListener {
+        else if(language =="th"){
+            ssbTH.setSpan(fcsGray, 0, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            ssbTH.setSpan(fcsSky, 13, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            subHeader.text = ssbTH
         }
-        //exit button click of custom layout
-        mDialogView.dialogExitBtn.setOnClickListener {
+
+        //confirm button click of custom layout
+        mDialogView.dialogConfirmBtn.setOnClickListener {
+            val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
+            val editName : EditText = mDialogView.findViewById(R.id.addDisplayName)
+            val name = editName.text.toString()
+
+            if(name.isEmpty() || name.isBlank() || name=="-"){
+                Toast.makeText(this,R.string.check_setName,Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val ref = FirebaseDatabase.getInstance().reference
+                ref.child("users_blind/$currentPhone/displayName").setValue(name)
+                val editor = sharedPrefDisplayName.edit()
+                editor.putString("stringKeyDisplayName", name)
+                editor.apply()
+                mAlertDialog.dismiss()
+            }
+        }
+        mDialogView.info1.setOnClickListener {
+            mAlertDialog.dismiss()
         }
     }
 
