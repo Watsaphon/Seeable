@@ -13,9 +13,11 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.*
 import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClass
 import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClassNew
 import com.estazo.project.seeable.app.Login.LoginScreen
+import com.estazo.project.seeable.app.Register.BPMWorker
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -30,7 +32,8 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 import kotlinx.android.synthetic.main.alert_dialog_pairing.view.dialogLogoutBtn
 import kotlinx.android.synthetic.main.alert_dialog_pairing.view.dialogSummitBtn
 import java.util.*
-
+import java.util.concurrent.TimeUnit
+import androidx.lifecycle.Observer
 
 class MainActivityPerson : AppCompatActivity() {
 
@@ -60,6 +63,7 @@ class MainActivityPerson : AppCompatActivity() {
     private lateinit var activity_walking : ImageButton
     private lateinit var health_status : ImageButton
     private lateinit var heart : ImageButton
+    private lateinit var bpm_number : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,9 +87,10 @@ class MainActivityPerson : AppCompatActivity() {
 
         val partnerID = sharedPrefPartnerID.getString("stringKeyPartnerID","not found!")
         Log.d("checkPairing_MainPerson","$partnerID")
-        if(partnerID=="no-pairing"){
-            alertDialogPairing()
-        }
+//        comment for development
+//        if(partnerID=="no-pairing"){
+//            alertDialogPairing()
+//        }
 
         //Initializing Views
         setting = findViewById(R.id.setting)
@@ -109,6 +114,21 @@ class MainActivityPerson : AppCompatActivity() {
             popupMenu.show()
         }
 
+        val bpmValue = workDataOf(
+            "ฺBPM" to "no-value"
+        )
+
+        val constraint = Constraints.Builder().apply {
+            setRequiredNetworkType(NetworkType.CONNECTED)
+        }.build()
+
+        //one time use
+        val request = PeriodicWorkRequestBuilder<BPMWorker>(10, TimeUnit.SECONDS).apply {
+//            setInputData(bpmValue)
+            setConstraints(constraint)
+        }.build()
+
+        WorkManager.getInstance().enqueue(request)
         notify = findViewById(R.id.notify)
         notify.setOnClickListener{
             Toast.makeText(this," Notification not available",Toast.LENGTH_SHORT).show()
@@ -132,6 +152,18 @@ class MainActivityPerson : AppCompatActivity() {
             alertDialogLoading()
         }
 
+        bpm_number = findViewById(R.id.bpm_number)
+        WorkManager.getInstance().getWorkInfoByIdLiveData(request.id)
+            .observe(this, Observer { info: WorkInfo ->
+                Log.d("BPM worker observe", info.state.toString())
+                bpm_number.setText("BPM")
+                if (info.state == WorkInfo.State.SUCCEEDED) {
+                    val bpm = info.outputData.getString("BPM")
+                    Log.d("BPM in activity : ", "$bpm")
+                    bpm_number.setText("BPM")
+                }
+            })
+//        bpm_number.setText("BPM")
     }
 
 
