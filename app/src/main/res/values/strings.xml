@@ -23,7 +23,7 @@
     <string name="button_emergency_call">Call Emergency</string>
     <string name="button_shared_locatoin">Send Location</string>
     <string name="locatoin_null">Please set your location before use Navigation.</string>
-
+    <string name="check_setName">Please fill your name.</string>
 
     <!--SettingBlind-->
     <string name="header_SettingBlind">Setting</string>
@@ -157,6 +157,10 @@
     <string name="homeLocation_logoutBtn">Log Out</string>
     <string name="homeLocation_exitBtn">Exit</string>
 
+    <!--alertSetName-->
+    <string name="header_alertSetName">Add display name</string>
+    <string name="info_alertSetName">Or you can Change it later.</string>
+    <string name="btn_alertSetName">Confirm</string>
 
     <!--MainPerson-->
     <string name="main_person_header">Main Person</string>

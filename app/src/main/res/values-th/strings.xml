@@ -22,7 +22,7 @@
     <string name="button_emergency_call">โทรฉุกเฉิน</string>
     <string name="button_shared_locatoin">ส่งตำแหน่งที่อยู่ปัจจุบัน</string>
     <string name="locatoin_null">กรุณาตั้งค่าที่อยู่ที่จะเดินทางก่อนเริ่มการใช้งานการเดินทาง</string>
-
+    <string name="check_setName">กรุณากรอกชื่อของคุณ</string>
 
     <!--SettingBlind-->
     <string name="header_SettingBlind">การตั้งค่า</string>
@@ -151,6 +151,11 @@
     <string name="homeLocation_logoutBtn">ออกจากระบบ</string>
     <string name="homeLocation_exitBtn">ออก</string>
 
+
+    <!--alertSetName-->
+    <string name="header_alertSetName">เพิ่มชื่อบัญชีผู้ใช้งาน</string>
+    <string name="info_alertSetName">หรือคุณสามารถเปลี่ยนชื่อในภายหลัง</string>
+    <string name="btn_alertSetName">ยืนยัน</string>
 
     <!--MainPerson-->
     <string name="main_person_header">คนดูแล</string>
