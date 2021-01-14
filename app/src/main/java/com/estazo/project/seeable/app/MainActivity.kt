@@ -179,19 +179,19 @@ class MainActivity: AppCompatActivity() {
             popupMenu.show()
         }
 
-        val bpmValue = workDataOf(
-            "bpm" to "no-value"
-        )
-
-        val constraint = Constraints.Builder().apply {
-            setRequiredNetworkType(NetworkType.CONNECTED)
-        }.build()
-
-        //one time
-        val request = PeriodicWorkRequestBuilder<BPMWorker>(10, TimeUnit.SECONDS).apply {
-            setInputData(bpmValue)
-            setConstraints(constraint)
-        }.build()
+//        val bpmValue = workDataOf(
+//            "bpm" to "no-value"
+//        )
+//
+//        val constraint = Constraints.Builder().apply {
+//            setRequiredNetworkType(NetworkType.CONNECTED)
+//        }.build()
+//
+//        //one time
+//        val request = PeriodicWorkRequestBuilder<BPMWorker>(10, TimeUnit.SECONDS).apply {
+//            setInputData(bpmValue)
+//            setConstraints(constraint)
+//        }.build()
 
         //Period
 //        val request = OneTimeWorkRequestBuilder<BPMWorker>().apply {
@@ -199,7 +199,7 @@ class MainActivity: AppCompatActivity() {
 //            setInitialDelay(10, TimeUnit.SECONDS)
 //        }.build()
 
-        WorkManager.getInstance().enqueue(request)
+//        WorkManager.getInstance().enqueue(request)
 
     }
 

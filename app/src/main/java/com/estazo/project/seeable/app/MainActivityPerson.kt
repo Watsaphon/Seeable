@@ -34,8 +34,9 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.dialogSummitBtn
 import java.util.*
 import java.util.concurrent.TimeUnit
 import androidx.lifecycle.Observer
+import com.estazo.project.seeable.app.Register.BpmInterface
 
-class MainActivityPerson : AppCompatActivity() {
+class MainActivityPerson : AppCompatActivity(){
 
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPrefLanguage: SharedPreferences
@@ -124,11 +125,11 @@ class MainActivityPerson : AppCompatActivity() {
 
         //one time use
         val request = PeriodicWorkRequestBuilder<BPMWorker>(10, TimeUnit.SECONDS).apply {
-//            setInputData(bpmValue)
+            setInputData(bpmValue)
             setConstraints(constraint)
         }.build()
-
         WorkManager.getInstance().enqueue(request)
+
         notify = findViewById(R.id.notify)
         notify.setOnClickListener{
             Toast.makeText(this," Notification not available",Toast.LENGTH_SHORT).show()
@@ -155,17 +156,25 @@ class MainActivityPerson : AppCompatActivity() {
         bpm_number = findViewById(R.id.bpm_number)
         WorkManager.getInstance().getWorkInfoByIdLiveData(request.id)
             .observe(this, Observer { info: WorkInfo ->
-                Log.d("BPM worker observe", info.state.toString())
-                bpm_number.setText("BPM")
-                if (info.state == WorkInfo.State.SUCCEEDED) {
+                Log.d("BPM worker observe",info.outputData.toString())
+                if (info.state == WorkInfo.State.ENQUEUED) {
                     val bpm = info.outputData.getString("BPM")
                     Log.d("BPM in activity : ", "$bpm")
-                    bpm_number.setText("BPM")
                 }
             })
-//        bpm_number.setText("BPM")
     }
 
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
