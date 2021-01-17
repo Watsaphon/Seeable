@@ -20,14 +20,14 @@ class BPMWorker (context: Context, workerParams: WorkerParameters) : Worker(cont
     override fun doWork(): Result {
         try {
             var text : String = "Hello"
-//            firebaseRef.addValueEventListener(object : ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    text = snapshot.value.toString()
-//                    Log.d("bpm_worker","$text")
-//                }
-//                override fun onCancelled(databaseError: DatabaseError) {
-//                }
-//            })
+            firebaseRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    text = snapshot.value.toString()
+                    Log.d("bpm_worker","$text")
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                }
+            })
             val data : Data = workDataOf("BPM" to text)
             Log.d("Run this", data.getString("BPM").toString() + " - " + Calendar.getInstance().time.toString())
             return Result.success(data)

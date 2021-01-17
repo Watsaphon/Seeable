@@ -34,9 +34,10 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.dialogSummitBtn
 import java.util.*
 import java.util.concurrent.TimeUnit
 import androidx.lifecycle.Observer
+import com.estazo.project.seeable.app.Register.BPMRunnable
 import com.estazo.project.seeable.app.Register.BpmInterface
 
-class MainActivityPerson : AppCompatActivity(){
+class MainActivityPerson : AppCompatActivity(), BpmInterface{
 
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPrefLanguage: SharedPreferences
@@ -65,6 +66,11 @@ class MainActivityPerson : AppCompatActivity(){
     private lateinit var health_status : ImageButton
     private lateinit var heart : ImageButton
     private lateinit var bpm_number : TextView
+
+    override fun setBpmText(text: String) {
+        bpm_number = findViewById(R.id.bpm_number)
+        bpm_number.setText(text)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -153,7 +159,12 @@ class MainActivityPerson : AppCompatActivity(){
             alertDialogLoading()
         }
 
+
+
         bpm_number = findViewById(R.id.bpm_number)
+        val bpm_thread = Thread(BPMRunnable(bpm_number))
+        bpm_thread.start()
+
         WorkManager.getInstance().getWorkInfoByIdLiveData(request.id)
             .observe(this, Observer { info: WorkInfo ->
                 Log.d("BPM worker observe",info.outputData.toString())
@@ -477,8 +488,6 @@ class MainActivityPerson : AppCompatActivity(){
         }
         override fun onCancelled(databaseError: DatabaseError) {}
     }
-
-
 }
 
 
