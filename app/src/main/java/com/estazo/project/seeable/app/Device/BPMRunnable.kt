@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app.Register
+package com.estazo.project.seeable.app.Device
 
 import android.util.Log
 import android.widget.TextView

@@ -1,6 +1,5 @@
-package com.estazo.project.seeable.app.Register
+package com.estazo.project.seeable.app.Device
 
-import android.content.ComponentCallbacks
 import android.content.Context
 import android.util.Log
 import androidx.work.Data

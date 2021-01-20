@@ -17,7 +17,7 @@ import androidx.work.*
 import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClass
 import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClassNew
 import com.estazo.project.seeable.app.Login.LoginScreen
-import com.estazo.project.seeable.app.Register.BPMWorker
+import com.estazo.project.seeable.app.Device.BPMWorker
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -27,17 +27,16 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.alert_dialog_home_location.view.*
-import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 import kotlinx.android.synthetic.main.alert_dialog_pairing.view.dialogLogoutBtn
 import kotlinx.android.synthetic.main.alert_dialog_pairing.view.dialogSummitBtn
 import java.util.*
 import java.util.concurrent.TimeUnit
 import androidx.lifecycle.Observer
-import com.estazo.project.seeable.app.Register.BPMRunnable
-import com.estazo.project.seeable.app.Register.BpmInterface
+import com.estazo.project.seeable.app.Device.BPMRunnable
+import com.estazo.project.seeable.app.Device.BpmInterface
 
-class MainActivityPerson : AppCompatActivity(), BpmInterface{
+class MainActivityPerson : AppCompatActivity(),
+    BpmInterface {
 
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPrefLanguage: SharedPreferences
@@ -162,7 +161,11 @@ class MainActivityPerson : AppCompatActivity(), BpmInterface{
 
 
         bpm_number = findViewById(R.id.bpm_number)
-        val bpm_thread = Thread(BPMRunnable(bpm_number))
+        val bpm_thread = Thread(
+            BPMRunnable(
+                bpm_number
+            )
+        )
         bpm_thread.start()
 
         WorkManager.getInstance().getWorkInfoByIdLiveData(request.id)
