@@ -198,4 +198,6 @@
     <string name="content_page_4">The app has buttons to let blinds can use for call, navigate or send event to caretaker.</string>
     <string name="subheading_slide_page_5">Caretakers receive event or status of blind person that in cover</string>
     <string name="content_page_5">Caretakers can see data and event that sent from blinds and response or help them.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

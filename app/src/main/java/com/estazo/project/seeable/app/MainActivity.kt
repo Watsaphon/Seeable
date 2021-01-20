@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.graphics.Color.*
 import android.location.Location
 import android.location.LocationManager
@@ -44,6 +43,8 @@ import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+
+/**test github*/
 class MainActivity: AppCompatActivity() {
 
     private lateinit var sharedLocationBtn: Button
@@ -162,11 +163,29 @@ class MainActivity: AppCompatActivity() {
 
         //Period
 //        val request = OneTimeWorkRequestBuilder<BPMWorker>().apply {
-//            setConstraints(constraint)
-//            setInitialDelay(10, TimeUnit.SECONDS)
+//        val bpmValue = workDataOf(
+//            "bpm" to "no-value"
+//        )
+//
+//        val constraint = Constraints.Builder().apply {
+//            setRequiredNetworkType(NetworkType.CONNECTED)
 //        }.build()
+//
+//        //one time
+//        val request = PeriodicWorkRequestBuilder<BPMWorker>(10, TimeUnit.SECONDS).apply {
+//            setInputData(bpmValue)
+//            setConstraints(constraint)
+//        }.build()
+//
+//        //Period
+////        val request = OneTimeWorkRequestBuilder<BPMWorker>().apply {
+////            setConstraints(constraint)
+////            setInitialDelay(10, TimeUnit.SECONDS)
+////        }.build()
+//
+//        WorkManager.getInstance().enqueue(request)
 
-        WorkManager.getInstance().enqueue(request)
+
 
     }
 
