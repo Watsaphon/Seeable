@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
@@ -37,7 +38,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="51dp"
                 android:layout_marginBottom="-5dp"
-                android:background="@mipmap/setting_icon_foreground" />
+                android:background="@drawable/setting_button"
+                />
 
             <View
                 android:id="@+id/notify"
@@ -71,48 +73,70 @@
                 android:layout_marginBottom="179dp"
                 android:background="@mipmap/health_status_foreground" />
 
-            <ImageButton
-                android:id="@+id/heart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="136dp"
-                android:layout_marginEnd="137dp"
-                android:layout_marginBottom="11dp"
-                android:background="@null"
-                app:srcCompat="@mipmap/heart_foreground" />
-
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="500px"
+                android:layout_height="500px"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="59dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginStart="50px"
+                android:layout_marginTop="119dp"
+                android:layout_marginEnd="50px"
                 app:srcCompat="@mipmap/bpm_example_foreground" />
-
-
 
             <TextView
                 android:id="@+id/bpm_number"
-                android:layout_width="242dp"
-                android:layout_height="164dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView5"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="85dp"
-                android:layout_marginTop="119dp"
-                android:layout_marginEnd="85dp"
+                android:layout_marginStart="84dp"
+                android:layout_marginTop="65dp"
+                android:layout_marginEnd="84dp"
                 android:fontFamily="@font/roboto"
                 android:gravity="center"
-                android:text="Not      Available"
-                android:textSize="35sp" />
+                android:text="---"
+                android:textSize="70sp" />
+
+            <TextView
+                android:id="@+id/unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bpm_number"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="86dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="83dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="BPM"
+                android:textColor="#E31B1B"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="108px"
+                android:layout_height="108px"
+                android:layout_above="@+id/vector_3"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="25dp"
+                app:srcCompat="@mipmap/listname_foreground" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="250dp"
+                android:layout_height="108px"
+                android:layout_above="@+id/vector_3"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="25dp"
+                android:layout_toEndOf="@+id/imageView3"
+                style="@style/Listname_blind"
+                />
 
 
         </RelativeLayout>

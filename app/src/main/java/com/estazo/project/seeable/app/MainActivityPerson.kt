@@ -1,59 +1,184 @@
 package com.estazo.project.seeable.app
 
 
-import android.app.AlertDialog
-import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.work.*
-import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClass
-import com.estazo.project.seeable.app.HelperClass.UserPersonHelperClassNew
 import com.estazo.project.seeable.app.Login.LoginScreen
-import com.estazo.project.seeable.app.Register.BPMWorker
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.alert_dialog_home_location.view.*
-import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
-import kotlinx.android.synthetic.main.alert_dialog_pairing.view.dialogLogoutBtn
-import kotlinx.android.synthetic.main.alert_dialog_pairing.view.dialogSummitBtn
 import java.util.*
-import java.util.concurrent.TimeUnit
-import androidx.lifecycle.Observer
 
 class MainActivityPerson : AppCompatActivity() {
+
+    private lateinit var fab: FloatingActionButton
+    private lateinit var sharedPrefLanguage: SharedPreferences
+    private lateinit var sharedPrefPhone: SharedPreferences
+    private lateinit var sharedPrefPassword: SharedPreferences
+    private lateinit var sharedPrefID: SharedPreferences
+    private lateinit var sharedPrefDisplayName: SharedPreferences
+    private lateinit var sharedPrefUserType : SharedPreferences
+
+    private lateinit var language : String
+    private lateinit var phone : String
+    private lateinit var password : String
+    private lateinit var id : String
+    private lateinit var displayName : String
+    private lateinit var userType: String
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_person)
+        Log.i("MainActivityPerson", "onCreate called")
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        hideSystemUI()
 
+        sharedPrefLanguage = getSharedPreferences("value", 0)
+        sharedPrefPhone= getSharedPreferences("value", 0)
+        sharedPrefID = getSharedPreferences("value", 0)
+        sharedPrefPassword= getSharedPreferences("value", 0)
+        sharedPrefDisplayName= getSharedPreferences("value", 0)
+        sharedPrefUserType = getSharedPreferences("value", 0)
 
+        language = sharedPrefLanguage.getString("stringKey", "not found!").toString()
+        phone  = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        password  = sharedPrefPassword.getString("stringKeyPassword", "not found!").toString()
+        id  = sharedPrefID.getString("stringKey2", "not found!").toString()
+        displayName  = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!").toString()
+        userType  = sharedPrefUserType.getString("stringKeyType", "not found!").toString()
 
+        Log.i("MainActivityPerson", "sharedPref -> Language : $language ," +
+                "Phone : $phone , ID : $id, Password : $password," +
+                " DisplayName : $displayName, UserType : $userType ")
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.i("MainActivityPerson", "onStart called")
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.i("MainActivityPerson", "onResume called")
+        updateUI()
+    }
+    override fun onPause() {
+        super.onPause()
+        Log.i("MainActivityPerson", "onPause called")
+    }
+    override fun onStop() {
+        super.onStop()
+        Log.i("MainActivityPerson", "onStop called")
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("MainActivityPerson", "onDestroy called")
+    }
+     private fun hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                // Set the content to appear under the system bars so that the
+                // content doesn't resize when the system bars hide and show.
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                // Hide the nav bar and status bar
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
 
+        override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        hideSystemUI()
+        Log.i("MainActivityPerson", "onWindowFocusChanged called")
+    }
+
+    /** change Language TH and EN*/
+    fun changeLanguage(){
+//        val language = sharedPrefLanguage.getString("stringKey", "not found!")
+        Log.i("CheckLanguage", "Now Language is :$language")
+        var locale: Locale? = null
+        var editor = sharedPrefLanguage.edit()
+        if (language=="en") {
+            locale = Locale("th")
+            editor.putString("stringKey", "th")
+            editor.apply()
+        } else if (language =="th") {
+            locale = Locale("en")
+            editor.putString("stringKey", "en")
+            editor.apply()
+        }
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        baseContext.resources.updateConfiguration(config, null)
+        val intent = Intent(this,SplashScreen::class.java)
+        startActivity(intent)
+    }
+
+    fun gotoLogout(){
+        val editorID = sharedPrefID.edit()
+        val editorPhone = sharedPrefPhone.edit()
+        val editorPassword = sharedPrefPassword.edit()
+        val editorDisplayName = sharedPrefDisplayName.edit()
+        val editorUserType = sharedPrefUserType.edit()
+
+        editorPhone.putString("stringKeyPhone", "not found!")
+        editorPassword.putString("stringKeyPassword", "not found!")
+        editorID.putString("stringKey2", "not found!")
+        editorDisplayName.putString("stringKeyDisplayName","not found!")
+        editorUserType.putString("stringKeyType", "not found!")
+
+        editorPhone.apply()
+        editorPassword.apply()
+        editorID.apply()
+        editorUserType.apply()
+        editorDisplayName.apply()
+
+        val intent = Intent(this, LoginScreen::class.java)
+        startActivity(intent)
+    }
+
+    private fun closeKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    private fun updateUI() {
+        val decorView = window.decorView
+        decorView.setOnSystemUiVisibilityChangeListener { visibility ->
+            if (visibility and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
+                decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+            }
+        }
+    }
 
 }
 
-//    private lateinit var fab: FloatingActionButton
-//    private lateinit var sharedPrefLanguage: SharedPreferences
+
 //    private lateinit var mGoogleSignInClient: GoogleSignInClient
 //    private lateinit var mapButton : Button
-//
+
+//    private lateinit var fab: FloatingActionButton
+//    private lateinit var sharedPrefLanguage: SharedPreferences
 //    private lateinit var sharedPrefPhone: SharedPreferences
 //    private lateinit var sharedPrefPassword: SharedPreferences
 //    private lateinit var sharedPrefID: SharedPreferences

@@ -12,7 +12,6 @@
     <string name="txt_phone_caretaker">เบอร์โทรผู้ช่วยเหลือ</string>
     <string name="blinder_button_desc">คนตาบอด</string>
     <string name="person_button_desc">คนดูแล</string>
-
     <string name="loading_spinner">กำลังโหลด...</string>
     <string name="required">(จำเป็น)</string>
 
@@ -26,12 +25,39 @@
 
     <!--SettingBlind-->
     <string name="header_SettingBlind">การตั้งค่า</string>
-    <string name="button_change_language">ภาษา</string>
+    <string name="button_change_language_blind">ภาษา</string>
     <string name="button_account">บัญชีผู้ใช้งาน</string>
     <string name="button_set_location">ตั้งค่าที่อยู่</string>
     <string name="button_manage_user">จัดการบัญชีผู้ดูแล</string>
     <string name="button_delete_account">ลบบัญชีผู้ใช้งาน</string>
-    <string name="button_log_out">ออกจากระบบ</string>
+    <string name="button_log_out_blind">ออกจากระบบ</string>
+
+    <!--SettingCaretaker-->
+    <string name="header_SettingCaretaker">การตั้งค่า</string>
+    <string name="button_change_language_caretaker">ภาษา</string>
+    <string name="button_blind_list_caretaker">รายชื่อคนตาบอด</string>
+    <string name="button_account_setting">ตั้งค่าบัญชีผู้ใช้งาน</string>
+    <string name="button_about">เกี่ยวกับ</string>
+    <string name="button_log_out_caretaker">ออกจากระบบ</string>
+
+    <!--AccountSettingCaretaker-->
+    <string name="header_AccountSettingCaretaker">ตั้งค่าบัญชีผู้ใช้งาน</string>
+    <string name="button_edit_account_caretaker">แก้ไขบัญชีผู้ใช้งาน</string>
+    <string name="button_delete_account_caretaker">ลบบัญชีผู้ใช้งาน</string>
+
+    <!--AccountSettingEditCaretaker-->
+    <string name="header_AccountSettingEditCaretaker">แก้ไขบัญชีผู้ใช้งาน</string>
+    <string name="edit_displayName_AccountSettingEditCaretaker">ชื่อผู้ใช้งาน</string>
+    <string name="edit_tel_AccountSettingEditCaretaker">เบอร์โทรศัพท์</string>
+    <string name="save_AccountSettingEditCaretaker">บันทึก</string>
+
+    <!--AccountSettingDeleteCaretaker-->
+    <string name="header_AccountSettingDeleteCaretaker">ลบบัญชีผู้ใช้งาน</string>
+    <string name="subheader_AccountSettingEditCaretaker">คำเตือน</string>
+    <string name="info_AccountSettingEditCaretaker">คุณต้องการลบบัญชีผู้ใช้งานจริงๆใช่ไหม
+        ถ้าคุณลบบัญชีผู้ใช้งานแล้ว คุณจะสูญเสียข้อมูลและทุกอย่างในแอพพลิเคชั่น กรุณากรอกรหัสผ่านและกดปุ่มลบเพื่อยืนยันการลบบัญชีผู้ใช้งาน
+    </string>
+    <string name="delete_AccountSettingEditCaretaker">ลบ</string>
 
     <!--AccountBlind-->
     <string name="header_AccountBlind">ตั้งค่าบัญชีผู้ใช้งาน</string>

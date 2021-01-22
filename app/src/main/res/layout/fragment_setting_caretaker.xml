@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Caretaker.SettingCaretakerFragment"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/colorAccent"
+            >
+
+            <!-- Rectangle 27 -->
+            <View
+                android:id="@+id/rectangle_2"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/ic_rectangle_27" />
+
+            <TextView
+                android:id="@+id/header"
+                android:layout_width="200dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="42dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="169dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/header_SettingCaretaker"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="25dp"
+                android:background="@mipmap/back_button_foreground" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:id="@+id/langBtn"
+                android:layout_width="210dp"
+                android:layout_height="50dp"
+                android:drawableLeft="@mipmap/icon_lang_foreground"
+                android:text="@string/button_change_language_caretaker"
+                style="@style/settingBlindButton"
+                />
+            <TextView
+                android:id="@+id/ul1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/UnderLineSetting" />
+
+            <Button
+                android:id="@+id/blindlistBtn"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:drawableLeft="@mipmap/icon_account_foreground"
+                android:text="@string/button_blind_list_caretaker"
+                style="@style/settingBlindButton"
+                />
+            <TextView
+                android:id="@+id/ul2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/UnderLineSetting" />
+
+            <Button
+                android:id="@+id/accountBtn"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                android:drawableStart="@mipmap/icon_managecare_foreground"
+                android:text="@string/button_account_setting"
+                style="@style/settingBlindButton"
+                />
+            <TextView
+                android:id="@+id/ul3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/UnderLineSetting" />
+
+            <Button
+                android:id="@+id/aboutBtn"
+                android:layout_width="190dp"
+                android:layout_height="50dp"
+                android:drawableStart="@mipmap/icon_info_foreground"
+                android:text="@string/button_about"
+                style="@style/settingBlindButton"
+                />
+            <TextView
+                android:id="@+id/ul4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/UnderLineSetting" />
+
+            <Button
+                android:id="@+id/logoutBtn"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:text="@string/button_log_out_caretaker"
+                android:drawableStart="@mipmap/icon_logout_foreground"
+                style="@style/settingBlindButton"
+                />
+            <TextView
+                android:id="@+id/ul6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/UnderLineSetting" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

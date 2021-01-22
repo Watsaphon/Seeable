@@ -29,8 +29,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.work.*
+import com.estazo.project.seeable.app.Device.BPMWorker
 import com.estazo.project.seeable.app.HelperClass.Locations
-import com.estazo.project.seeable.app.Register.BPMWorker
 import com.estazo.project.seeable.app.settingBlind.SettingBlind
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.location.*
@@ -62,8 +62,6 @@ class MainActivity: AppCompatActivity() {
     private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
 
-
-
 //    private lateinit var sharedPrefHomeLocation : SharedPreferences
 //    private lateinit var sharedPrefNameHelper: SharedPreferences
 //    private lateinit var sharedPrefGoogle : SharedPreferences
@@ -90,10 +88,6 @@ class MainActivity: AppCompatActivity() {
         sharedPrefID = getSharedPreferences("value", 0)
         sharedPrefDisplayName = getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
-
-
-
-
 
 
         selfNavBtn = findViewById(R.id.selfNavButton)

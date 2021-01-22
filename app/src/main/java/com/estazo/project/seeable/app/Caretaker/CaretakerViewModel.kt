@@ -1,22 +1,29 @@
 package com.estazo.project.seeable.app.Caretaker
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class CaretakerViewModel : ViewModel() {
 
-    // The current bpm
-    private val _bpm = MutableLiveData<Int>()
 
     val bpm: LiveData<Int>
         get() = _bpm
 
-    init {
-        _bpm.value = 0
-        Log.i("CaretakerViewModel", "CaretakerViewModel created!")
+    // The current bpm
+    private val _bpm = MutableLiveData<Int>()
 
+
+    private  var userList: MutableList<String>
+
+
+    init {
+       _bpm.value = 0
+        userList = mutableListOf("Aum", "Keaw", "Safe", "Cat")
+
+        Log.i("CaretakerViewModel", "CaretakerViewModel created!")
     }
 
     /**
@@ -25,11 +32,6 @@ class CaretakerViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         Log.i("CaretakerViewModel", "CaretakerViewModel destroyed!")
-    }
-
-    fun bpmConnect() {
-        _bpm.value = (_bpm.value)?.plus(1)
-
     }
 
 }
