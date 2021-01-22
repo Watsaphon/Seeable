@@ -26,7 +26,9 @@ class AccountSettingFragment : Fragment() {
         binding.editBtn.setOnClickListener{view : View ->
             view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingEditFragment)
         }
-
+        binding.changePasswordBtn.setOnClickListener{view : View ->
+            view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingChangePasswordFragment)
+        }
         binding.deleteBtn.setOnClickListener{view : View ->
             view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingDeleteFragment)
         }

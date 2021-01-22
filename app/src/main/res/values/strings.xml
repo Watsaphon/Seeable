@@ -44,14 +44,21 @@
 
     <!--AccountSettingCaretaker-->
     <string name="header_AccountSettingCaretaker">Account setting</string>
-    <string name="button_edit_account_caretaker">Edit Account</string>
+    <string name="button_edit_displayName_caretaker">Edit Display name</string>
+    <string name="button_change_password_caretaker">Change password</string>
     <string name="button_delete_account_caretaker">Delete Account</string>
 
     <!--AccountSettingEditCaretaker-->
-    <string name="header_AccountSettingEditCaretaker">Edit Account</string>
+    <string name="header_AccountSettingEditCaretaker">Edit Display name</string>
     <string name="edit_displayName_AccountSettingEditCaretaker">Display Name</string>
-    <string name="edit_tel_AccountSettingEditCaretaker">Tel. Number</string>
     <string name="save_AccountSettingEditCaretaker">Save</string>
+
+    <!--AccountSettingChangePasswordCaretaker-->
+    <string name="header_AccountSettingChangePasswordCaretaker">Change password</string>
+    <string name="edit_oldPassword_AccountSettingChangePasswordCaretaker">Current password</string>
+    <string name="edit_newPassword_AccountSettingChangePasswordCaretaker">New password</string>
+    <string name="edit_confirm_AccountSettingChangePasswordCaretaker">Confirm password</string>
+    <string name="save_AccountSettingChangePasswordCaretaker">Save</string>
 
     <!--AccountSettingDeleteCaretaker-->
     <string name="header_AccountSettingDeleteCaretaker">Delete Account</string>
@@ -225,5 +232,7 @@
     <string name="content_page_4">The app has buttons to let blinds can use for call, navigate or send event to caretaker.</string>
     <string name="subheading_slide_page_5">Caretakers receive event or status of blind person that in cover</string>
     <string name="content_page_5">Caretakers can see data and event that sent from blinds and response or help them.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

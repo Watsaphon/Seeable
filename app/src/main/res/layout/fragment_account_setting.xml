@@ -60,17 +60,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <Button
             android:id="@+id/editBtn"
-            android:layout_width="230dp"
+            android:layout_width="250dp"
             android:layout_height="50dp"
             android:drawableStart="@mipmap/icon_edit_foreground"
-            android:text="@string/button_edit_account_caretaker"
+            android:text="@string/button_edit_displayName_caretaker"
             style="@style/settingBlindButton"
             />
         <TextView
             android:id="@+id/ul1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/UnderLineSetting" />
+        <Button
+            android:id="@+id/changePasswordBtn"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:drawableStart="@mipmap/icon_password_foreground"
+            android:text="@string/button_change_password_caretaker"
+            style="@style/settingBlindButton"
+            />
+        <TextView
+            android:id="@+id/ul2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/UnderLineSetting" />
@@ -84,7 +96,7 @@
             style="@style/deleteAccountButton"
             />
         <TextView
-            android:id="@+id/ul2"
+            android:id="@+id/ul3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/UnderLineSetting" />

@@ -50,6 +50,10 @@
             android:id="@+id/action_accountSettingFragment_to_accountSettingDeleteFragment"
             app:destination="@id/accountSettingDeleteFragment"
             app:popUpTo="@id/accountSettingFragment" />
+        <action
+            android:id="@+id/action_accountSettingFragment_to_accountSettingChangePasswordFragment"
+            app:destination="@id/accountSettingChangePasswordFragment"
+            app:popUpTo="@id/accountSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountSettingEditFragment"
@@ -62,5 +66,11 @@
         android:name="com.estazo.project.seeable.app.Caretaker.Setting.AccountSettingDeleteFragment"
         android:label="AccountSettingDeleteFragment"
         tools:layout="@layout/fragment_account_setting_delete"
+        />
+    <fragment
+        android:id="@+id/accountSettingChangePasswordFragment"
+        android:name="com.estazo.project.seeable.app.Caretaker.Setting.AccountSettingChangePasswordFragment"
+        android:label="AccountSettingChangePasswordFragment"
+        tools:layout="@layout/fragment_account_setting_change_password"
         />
 </navigation>

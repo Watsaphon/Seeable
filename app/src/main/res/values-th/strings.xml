@@ -42,14 +42,21 @@
 
     <!--AccountSettingCaretaker-->
     <string name="header_AccountSettingCaretaker">ตั้งค่าบัญชีผู้ใช้งาน</string>
-    <string name="button_edit_account_caretaker">แก้ไขบัญชีผู้ใช้งาน</string>
+    <string name="button_edit_displayName_caretaker">แก้ไขชื่อบัญชีผู้ใช้งาน</string>
+    <string name="button_change_password_caretaker">เปลี่ยนรหัสผ่าน</string>
     <string name="button_delete_account_caretaker">ลบบัญชีผู้ใช้งาน</string>
 
     <!--AccountSettingEditCaretaker-->
     <string name="header_AccountSettingEditCaretaker">แก้ไขบัญชีผู้ใช้งาน</string>
     <string name="edit_displayName_AccountSettingEditCaretaker">ชื่อผู้ใช้งาน</string>
-    <string name="edit_tel_AccountSettingEditCaretaker">เบอร์โทรศัพท์</string>
     <string name="save_AccountSettingEditCaretaker">บันทึก</string>
+
+    <!--AccountSettingChangePasswordCaretaker-->
+    <string name="header_AccountSettingChangePasswordCaretaker">เปลี่ยนรหัสผ่าน</string>
+    <string name="edit_oldPassword_AccountSettingChangePasswordCaretaker">รหัสผ่านปัจจุบัน</string>
+    <string name="edit_newPassword_AccountSettingChangePasswordCaretaker">รหัสผ่านใหม่</string>
+    <string name="edit_confirm_AccountSettingChangePasswordCaretaker">ยืนยันรหัสผ่าน</string>
+    <string name="save_AccountSettingChangePasswordCaretaker">บันทึก</string>
 
     <!--AccountSettingDeleteCaretaker-->
     <string name="header_AccountSettingDeleteCaretaker">ลบบัญชีผู้ใช้งาน</string>
