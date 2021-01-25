@@ -5,7 +5,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".settingBlind.SettingBlind"
+tools:context=".blind.SettingBlind"
 android:orientation="vertical">
 
 <RelativeLayout
@@ -64,7 +64,7 @@ android:orientation="vertical">
             android:layout_width="210dp"
             android:layout_height="50dp"
             android:drawableLeft="@mipmap/icon_lang_foreground"
-            android:text="@string/button_change_language"
+            android:text="@string/button_change_language_blind"
             style="@style/settingBlindButton"
             />
         <TextView
@@ -119,7 +119,7 @@ android:orientation="vertical">
             android:id="@+id/logoutBtn"
             android:layout_width="220dp"
             android:layout_height="50dp"
-            android:text="@string/button_log_out"
+            android:text="@string/button_log_out_blind"
             android:drawableStart="@mipmap/icon_logout_foreground"
             style="@style/settingBlindButton"
             />
@@ -130,58 +130,5 @@ android:orientation="vertical">
             style="@style/UnderLineSetting" />
 
     </LinearLayout>
-
-
-
-
-    <!--<LinearLayout-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="wrap_content"-->
-    <!--    android:layout_marginLeft="10dp"-->
-    <!--    android:layout_marginTop="10dp"-->
-    <!--    >-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/a"-->
-    <!--        android:layout_width="280dp"-->
-    <!--        android:layout_height="48dp"-->
-    <!--        android:background="@drawable/btn_rectangle_blue"-->
-    <!--        android:fontFamily="@font/roboto"-->
-    <!--        android:text="Language"-->
-    <!--        android:textAllCaps="false"-->
-    <!--        android:textColor="#FFFFFF"-->
-    <!--        android:textSize="18sp"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.46"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        tools:layout_editor_absoluteY="639dp" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginLeft="10dp"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        >-->
-
-    <!--        <Button-->
-    <!--            android:id="@+id/b"-->
-    <!--            android:layout_width="280dp"-->
-    <!--            android:layout_height="48dp"-->
-    <!--            android:background="@drawable/btn_rectangle_blue"-->
-    <!--            android:fontFamily="@font/roboto"-->
-    <!--            android:text="@string/button_VerifyOTP"-->
-    <!--            android:textAllCaps="false"-->
-    <!--            android:textColor="#FFFFFF"-->
-    <!--            android:textSize="18sp"-->
-    <!--            android:textStyle="bold"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintHorizontal_bias="0.46"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            tools:layout_editor_absoluteY="639dp" />-->
-
-    <!--    </LinearLayout>-->
 
 </LinearLayout>

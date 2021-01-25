@@ -14,7 +14,7 @@
     <string name="blinder_button_desc">Blind</string>
     <string name="person_button_desc">Caretaker</string>
     <string name="loading_spinner">Loading...</string>
-    <string name="required">(Required)</string>
+
 
 
     <!--MainActivity-->
@@ -27,12 +27,51 @@
 
     <!--SettingBlind-->
     <string name="header_SettingBlind">Setting</string>
-    <string name="button_change_language">Languages</string>
+    <string name="button_change_language_blind">Languages</string>
     <string name="button_account">Account</string>
     <string name="button_set_location">Set Location</string>
     <string name="button_manage_user">Manage Caretaker User</string>
     <string name="button_delete_account">Delete Account</string>
-    <string name="button_log_out">Log Out</string>
+    <string name="button_log_out_blind">Log out</string>
+
+    <!--SettingCaretaker-->
+    <string name="header_SettingCaretaker">Setting</string>
+    <string name="button_change_language_caretaker">Languages</string>
+    <string name="button_blind_list_caretaker">Blind List</string>
+    <string name="button_account_setting">Account Setting</string>
+    <string name="button_about">About</string>
+    <string name="button_log_out_caretaker">Logout</string>
+
+    <!--AccountSettingCaretaker-->
+    <string name="header_AccountSettingCaretaker">Account setting</string>
+    <string name="button_edit_displayName_caretaker">Edit Display name</string>
+    <string name="button_change_password_caretaker">Change password</string>
+    <string name="button_delete_account_caretaker">Delete Account</string>
+
+    <!--AccountSettingEditCaretaker-->
+    <string name="header_AccountSettingEditCaretaker">Edit Display name</string>
+    <string name="edit_displayName_AccountSettingEditCaretaker">Display Name</string>
+    <string name="empty_displayName_AccountSettingEditCaretaker">Please! enter your display name</string>
+    <string name="successfully_AccountSettingEditCaretaker">Display name changed successfully!</string>
+    <string name="save_AccountSettingEditCaretaker">Save</string>
+
+    <!--AccountSettingChangePasswordCaretaker-->
+    <string name="header_AccountSettingChangePasswordCaretaker">Change password</string>
+    <string name="edit_oldPassword_AccountSettingChangePasswordCaretaker">Old password</string>
+    <string name="edit_newPassword_AccountSettingChangePasswordCaretaker">New password</string>
+    <string name="edit_confirm_AccountSettingChangePasswordCaretaker">Confirm password</string>
+    <string name="save_AccountSettingChangePasswordCaretaker">Save</string>
+
+    <!--AccountSettingDeleteCaretaker-->
+    <string name="header_AccountSettingDeleteCaretaker">Delete Account</string>
+    <string name="subheader_AccountSettingEditCaretaker">Caution</string>
+    <string name="info_AccountSettingEditCaretaker">Are you really sure to delete the account?
+        If you delete account, you will lost all of your progress and data. Type your password and
+        press “Delete account” to confirm</string>
+    <string name="wrong_password_AccountSettingEditCaretaker">Password is incorrect</string>
+    <string name="empty_password_AccountSettingEditCaretaker">Please! enter your password</string>
+    <string name="delete_AccountSettingEditCaretaker">Delete account</string>
+
 
     <!--AccountBlind-->
     <string name="header_AccountBlind">Account Setting</string>
@@ -56,10 +95,19 @@
     <string name="text_currentPassword">Current password</string>
     <string name="text_newPassword">New password</string>
     <string name="btn_ChangePassword">Save</string>
+    <string name="required_ChangePassword">(Required)</string>
     <string name="checkNull_current_ChangePassword">Please fill your current password.</string>
     <string name="checkNull_new_ChangePassword">Please fill your new password.</string>
     <string name="check_current_ChangePassword">Your current password is incorrect.</string>
     <string name="check_new_ChangePassword">The new password cannot be the same as the old password.</string>
+
+    <string name="old_empty_ChangePassword"> Please! fill your old password </string>
+    <string name="new_empty_ChangePassword">Please! fill your new password</string>
+    <string name="confirm_empty_ChangePassword">Please! fill your confirm password</string>
+    <string name="old_incorrect_ChangePassword">your old password is incorrect</string>
+    <string name="newPassword_incorrect_ChangePassword">The new password does not match the confirmation</string>
+    <string name="password_same_ChangePassword">New password must difference from old password</string>
+    <string name="successfully_ChangePassword">Password changed successfully!</string>
 
     <!--deleteAccountBlind-->
     <string name="header_DeleteAccountBlind">Delete account</string>
@@ -198,4 +246,7 @@
     <string name="content_page_4">The app has buttons to let blinds can use for call, navigate or send event to caretaker.</string>
     <string name="subheading_slide_page_5">Caretakers receive event or status of blind person that in cover</string>
     <string name="content_page_5">Caretakers can see data and event that sent from blinds and response or help them.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -31,61 +31,35 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".settingBlind.DeleteAccountBlind"></activity>
-        <activity android:name=".settingBlind.ChangePasswordAccountBlind" />
-        <activity android:name=".settingBlind.EditNameAccountBlind" />
-        <activity android:name=".settingBlind.AccountBlind" />
-        <activity android:name=".settingBlind.SettingBlind" />
+        <activity android:name="com.estazo.project.seeable.app.blind.settingBlind.DeleteAccountBlind"></activity>
+        <activity android:name="com.estazo.project.seeable.app.blind.settingBlind.ChangePasswordAccountBlind" />
+        <activity android:name="com.estazo.project.seeable.app.blind.settingBlind.EditNameAccountBlind" />
+        <activity android:name="com.estazo.project.seeable.app.blind.settingBlind.AccountBlind" />
+        <activity android:name="com.estazo.project.seeable.app.blind.SettingBlind" />
         <activity
-            android:name=".Register.LittleMore"
+            android:name=".register.LittleMore"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Register.SendOTP"
+            android:name=".register.SendOTP"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Register.SignedIn"
+            android:name=".register.VerificationOTP"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Register.VerificationOTP"
+            android:name=".login.IntroduceApp"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Login.IntroduceApp"
+            android:name="com.estazo.project.seeable.app.blind.settingBlind.SearchLocation"
+            android:configChanges="orientation|screenSize" />
+
+        <activity
+            android:name=".caretaker.MainActivityPerson"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".settingBlind.SearchLocation"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Register.GoogleRegisterPerson"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Register.GoogleRegisterBlind"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".GoogleMapScreen"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".MainActivityPerson"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Login.LoginScreen"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Login.SignoutByGmail"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Login.SigninByGmail"
+            android:name=".login.LoginScreen"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".CameraTest"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".AboutScreen"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".SettingScreen"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Register.SelectRegister"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".SplashScreen"
@@ -98,13 +72,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Register.RegisterPerson"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Register.RegisterBlind"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".blind.MainActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme" />
 

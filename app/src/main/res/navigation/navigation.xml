@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/caretakerFragment">
+
+    <fragment
+        android:id="@+id/caretakerFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.CaretakerFragment"
+        android:label="CaretakerFragment"
+        tools:layout="@layout/fragment_caretaker"
+        >
+        <action
+            android:id="@+id/action_caretakerFragment_to_settingCaretakerFragment"
+            app:destination="@id/settingCaretakerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingCaretakerFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.SettingCaretakerFragment"
+        android:label="SettingCaretakerFragment"
+        tools:layout="@layout/fragment_setting_caretaker"
+        >
+        <action
+            android:id="@+id/action_settingCaretakerFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment"
+            app:popUpTo="@id/settingCaretakerFragment" />
+        <action
+            android:id="@+id/action_settingCaretakerFragment_to_accountSettingFragment"
+            app:destination="@id/accountSettingFragment"
+            app:popUpTo="@id/settingCaretakerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/accountSettingFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.AccountSettingFragment"
+        android:label="AccountSettingFragment"
+        tools:layout="@layout/fragment_account_setting"
+        >
+        <action
+            android:id="@+id/action_accountSettingFragment_to_accountSettingEditFragment"
+            app:destination="@id/accountSettingEditFragment"
+            app:popUpTo="@id/accountSettingFragment" />
+        <action
+            android:id="@+id/action_accountSettingFragment_to_accountSettingDeleteFragment"
+            app:destination="@id/accountSettingDeleteFragment"
+            app:popUpTo="@id/accountSettingFragment" />
+        <action
+            android:id="@+id/action_accountSettingFragment_to_accountSettingChangePasswordFragment"
+            app:destination="@id/accountSettingChangePasswordFragment"
+            app:popUpTo="@id/accountSettingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountSettingEditFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.AccountSettingEditFragment"
+        android:label="AccountSettingEditFragment"
+        tools:layout="@layout/fragment_account_setting_edit"
+        />
+    <fragment
+        android:id="@+id/accountSettingDeleteFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.AccountSettingDeleteFragment"
+        android:label="AccountSettingDeleteFragment"
+        tools:layout="@layout/fragment_account_setting_delete"
+        />
+    <fragment
+        android:id="@+id/accountSettingChangePasswordFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.AccountSettingChangePasswordFragment"
+        android:label="AccountSettingChangePasswordFragment"
+        tools:layout="@layout/fragment_account_setting_change_password"
+        />
+</navigation>

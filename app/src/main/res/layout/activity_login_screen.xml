@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/login_page"
     android:orientation="vertical"
-    tools:context=".Login.LoginScreen"
+    tools:context=".login.LoginScreen"
     >
 
     <ScrollView
