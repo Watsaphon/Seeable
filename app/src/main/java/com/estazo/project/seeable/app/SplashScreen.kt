@@ -7,9 +7,10 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.Login.IntroduceApp
-import com.estazo.project.seeable.app.Login.LoginScreen
-import com.estazo.project.seeable.app.Register.SelectRegister
+import com.estazo.project.seeable.app.blind.MainActivity
+import com.estazo.project.seeable.app.caretaker.MainActivityPerson
+import com.estazo.project.seeable.app.login.IntroduceApp
+import com.estazo.project.seeable.app.login.LoginScreen
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -24,12 +25,11 @@ class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hideSystemUI()
-        Log.i("test", "onCreate() call")
+
 
         /**Shared Preferences เป็นคลาสที่ใช้สำหรับเก็บข้อมูลถาวรที่เป็นค่าของตัวแปรธรรมดาๆ อย่างเช่น Boolean,Int,Float*/
         val sharedPrefIntroApp = getSharedPreferences("value", 0)
         val introApp = sharedPrefIntroApp.getString("stringKeyIntro", "No")
-
 
         val sharedPrefLanguage = getSharedPreferences("value", 0)
         val language = sharedPrefLanguage.getString("stringKey", "en")
@@ -124,12 +124,12 @@ class SplashScreen : AppCompatActivity() {
                             finishAffinity()
                         }, 1000)
                     }
-                    "noRegister" -> {
-                        Handler().postDelayed({
-                            startActivity(Intent(this@SplashScreen, SelectRegister::class.java))
-                            finishAffinity()
-                        }, 1000)
-                    }
+//                    "noRegister" -> {
+//                        Handler().postDelayed({
+//                            startActivity(Intent(this@SplashScreen, SelectRegister::class.java))
+//                            finishAffinity()
+//                        }, 1000)
+//                    }
                 }
             }
             else{

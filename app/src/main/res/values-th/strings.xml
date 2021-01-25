@@ -13,7 +13,7 @@
     <string name="blinder_button_desc">คนตาบอด</string>
     <string name="person_button_desc">คนดูแล</string>
     <string name="loading_spinner">กำลังโหลด...</string>
-    <string name="required">(จำเป็น)</string>
+
 
     <!--MainActivity-->
     <string name="button_self_navigation">เริ่มการนำทางด้วยตนเอง</string>
@@ -49,11 +49,13 @@
     <!--AccountSettingEditCaretaker-->
     <string name="header_AccountSettingEditCaretaker">แก้ไขบัญชีผู้ใช้งาน</string>
     <string name="edit_displayName_AccountSettingEditCaretaker">ชื่อผู้ใช้งาน</string>
+    <string name="empty_displayName_AccountSettingEditCaretaker">กรุณากรอกชื่อบัญชีผู้ใช้งานของคุณ</string>
     <string name="save_AccountSettingEditCaretaker">บันทึก</string>
+    <string name="successfully_AccountSettingEditCaretaker">เปลี่ยนชื่อผู้ใช้งานเสร็จสิ้น</string>
 
     <!--AccountSettingChangePasswordCaretaker-->
     <string name="header_AccountSettingChangePasswordCaretaker">เปลี่ยนรหัสผ่าน</string>
-    <string name="edit_oldPassword_AccountSettingChangePasswordCaretaker">รหัสผ่านปัจจุบัน</string>
+    <string name="edit_oldPassword_AccountSettingChangePasswordCaretaker">รหัสผ่านเก่า</string>
     <string name="edit_newPassword_AccountSettingChangePasswordCaretaker">รหัสผ่านใหม่</string>
     <string name="edit_confirm_AccountSettingChangePasswordCaretaker">ยืนยันรหัสผ่าน</string>
     <string name="save_AccountSettingChangePasswordCaretaker">บันทึก</string>
@@ -64,6 +66,8 @@
     <string name="info_AccountSettingEditCaretaker">คุณต้องการลบบัญชีผู้ใช้งานจริงๆใช่ไหม
         ถ้าคุณลบบัญชีผู้ใช้งานแล้ว คุณจะสูญเสียข้อมูลและทุกอย่างในแอพพลิเคชั่น กรุณากรอกรหัสผ่านและกดปุ่มลบเพื่อยืนยันการลบบัญชีผู้ใช้งาน
     </string>
+    <string name="wrong_password_AccountSettingEditCaretaker">รหัสผ่านไม่ถูกต้อง</string>
+    <string name="empty_password_AccountSettingEditCaretaker">กรุณากรอกรหัสผ่านของคุณ</string>
     <string name="delete_AccountSettingEditCaretaker">ลบ</string>
 
     <!--AccountBlind-->
@@ -88,10 +92,18 @@
     <string name="text_currentPassword">รหัสผ่านปัจจุบัน</string>
     <string name="text_newPassword">รหัสผ่านใหม่</string>
     <string name="btn_ChangePassword">บันทึก</string>
+    <string name="required_ChangePassword">(จำเป็น)</string>
     <string name="checkNull_current_ChangePassword">กรุณากรอกรหัสผ่านปัจจุบันของคุณ</string>
     <string name="checkNull_new_ChangePassword">กรุณากรอกรหัสผ่านใหม่ของคุณ</string>
     <string name="check_current_ChangePassword">รหัสผ่านของคุณไม่ถูกต้อง</string>
     <string name="check_new_ChangePassword">รหัสผ่านใหม่ห้ามซ้ำกับรหัสผ่านปัจจุบัน</string>
+    <string name="old_empty_ChangePassword">กรุณากรอกรหัสผ่านเก่าของคุณ</string>
+    <string name="new_empty_ChangePassword">กรุณากรอกรหัสผ่านใหม่ของคุณ</string>
+    <string name="confirm_empty_ChangePassword">กรุณายืนยันรหัสผ่านใหม่ของคุณ</string>
+    <string name="old_incorrect_ChangePassword">รหัสผ่านเก่าของคุณไม่ถูกต้อง</string>
+    <string name="newPassword_incorrect_ChangePassword">รหัสผ่านใหม่ไม่ตรงกับที่ยืนยัน</string>
+    <string name="password_same_ChangePassword">รหัสผ่านใหม่ต้องไม่ซ้ำกับรหัสผ่านเก่า</string>
+    <string name="successfully_ChangePassword">เเปลี่ยนรหัสผ่านเสร็จสิ้น</string>
 
     <!--deleteAccountBlind-->
     <string name="header_DeleteAccountBlind">ลบบัญชีผู้ใช้งาน</string>
@@ -100,6 +112,7 @@
         ถ้าคุณลบบัญชีผู้ใช้งานแล้ว คุณจะสูญเสียข้อมูลและทุกอย่างในแอพพลิเคชั่น กรุณากรอกรหัสผ่านและกดปุ่มลบเพื่อยืนยันการลบบัญชีผู้ใช้งาน</string>
     <string name="hint_DeleteAccountBlind">รหัสผ่าน...</string>
     <string name="btn_DeleteAccountBlind">ลบบัญชีผู้ใช้งาน</string>
+
     <string name="checkPassword_DeleteAccountBlind">รหัสผ่านของคุณไม่ถูกต้อง</string>
 
     <!--SendOTP-->

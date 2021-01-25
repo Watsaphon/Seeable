@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-   >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".Caretaker.Setting.AccountSettingDeleteFragment"
+        tools:context=".caretaker.settingCaretaker.AccountSettingDeleteFragment"
         >
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="@color/colorAccent"
-            >
+            android:background="@color/colorAccent">
 
             <!-- Rectangle 27 -->
             <View
@@ -42,7 +39,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-
             <ImageButton
                 android:id="@+id/back_button"
                 android:layout_width="36dp"
@@ -52,16 +48,13 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="25dp"
                 android:background="@mipmap/back_button_foreground" />
-
-
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
-            >
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/sub_header"
@@ -90,7 +83,7 @@
                 android:text="@string/info_AccountSettingEditCaretaker" />
 
             <EditText
-                android:id="@+id/editPassword"
+                android:id="@+id/confirmPassword"
                 android:layout_width="320dp"
                 android:layout_height="45dp"
                 android:background="@drawable/round_corner_button"
@@ -110,8 +103,6 @@
                 android:text="@string/delete_AccountSettingEditCaretaker" />
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 

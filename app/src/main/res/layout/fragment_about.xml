@@ -8,7 +8,7 @@
         android:id="@+id/about_caretaker_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Caretaker.Setting.AboutFragment">
+        tools:context=".caretaker.settingCaretaker.AboutFragment">
 
         <TextView
             android:id="@+id/textView"
