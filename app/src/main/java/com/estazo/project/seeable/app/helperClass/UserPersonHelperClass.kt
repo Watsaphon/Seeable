@@ -44,6 +44,8 @@ fun toMap(): Map<String, Any?> {
 }
 }
 
+
+
 @IgnoreExtraProperties
 data class Blind(
     var user1: String ,
@@ -57,3 +59,12 @@ data class DeviceCaretaker(
     var BPM: String ,
     var Health_Status: String
 )
+
+data class SavedValue(private var _currentValue: String, var previousValue: String = "") {
+    var currentValue: String
+        get() = _currentValue
+        set(value) {
+            previousValue = _currentValue
+            _currentValue = value
+        }
+}

@@ -118,7 +118,7 @@
                 android:textSize="24sp" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/profileImage"
                 android:layout_width="108px"
                 android:layout_height="108px"
                 android:layout_above="@+id/vector_3"
@@ -134,9 +134,35 @@
                 android:layout_above="@+id/vector_3"
                 android:layout_marginStart="0dp"
                 android:layout_marginBottom="25dp"
-                android:layout_toEndOf="@+id/imageView3"
+                android:layout_toEndOf="@+id/profileImage"
                 style="@style/Listname_blind"
                 />
+
+            <TextView
+                android:id="@+id/user1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                visibility="gone"
+                />
+            <TextView
+                android:id="@+id/user2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                visibility="gone"
+                />
+            <TextView
+                android:id="@+id/user3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                visibility="gone"
+                />
+            <TextView
+                android:id="@+id/user4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                visibility="gone"
+                />
+
 
 
         </RelativeLayout>

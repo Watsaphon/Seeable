@@ -15,6 +15,10 @@
         <action
             android:id="@+id/action_caretakerFragment_to_settingCaretakerFragment"
             app:destination="@id/settingCaretakerFragment" />
+        <argument
+            android:name="user1"
+            android:defaultValue="0830348950"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/settingCaretakerFragment"

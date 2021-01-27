@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app.caretaker
+ package com.estazo.project.seeable.app.caretaker
 
 
 import android.content.Context
@@ -11,22 +11,15 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
-import com.estazo.project.seeable.app.login.LoginScreen
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.SplashScreen
-import com.estazo.project.seeable.app.blind.MainActivity
-import com.estazo.project.seeable.app.helperClass.Navigation
-import com.estazo.project.seeable.app.helperClass.UserBlinderHelperClassNew
+import com.estazo.project.seeable.app.login.LoginScreen
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import java.util.*
 
-class MainActivityPerson : AppCompatActivity() {
+
+
+ class MainActivityPerson : AppCompatActivity() {
 
     private lateinit var fab: FloatingActionButton
     private lateinit var sharedPrefLanguage: SharedPreferences
@@ -42,8 +35,6 @@ class MainActivityPerson : AppCompatActivity() {
     private lateinit var id : String
     private lateinit var displayName : String
     private lateinit var userType: String
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +60,8 @@ class MainActivityPerson : AppCompatActivity() {
         Log.i("MainActivityPerson", "sharedPref -> Language : $language ," +
                 "Phone : $phone , ID : $id, Password : $password," +
                 " DisplayName : $displayName, UserType : $userType ")
+
+
     }
 
     override fun onStart() {
@@ -167,7 +160,7 @@ class MainActivityPerson : AppCompatActivity() {
         }
     }
 
-    private fun updateUI() {
+    fun updateUI() {
         val decorView = window.decorView
         decorView.setOnSystemUiVisibilityChangeListener { visibility ->
             if (visibility and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {
