@@ -32,14 +32,6 @@ class SettingCaretakerFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_caretaker, container, false)
         Log.i("SettingCaretaker", "onCreateView call")
-        val userList : List<String>
-        userList  = ArrayList()
-        userList.add("Hello")
-
-
-        Log.i("dataclass", "userList : $userList")
-
-        binding.textView3.text = userList.toString()
 
         binding.backButton.setOnClickListener{
             requireActivity().onBackPressed()
