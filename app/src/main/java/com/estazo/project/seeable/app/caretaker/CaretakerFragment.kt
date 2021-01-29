@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app.caretaker
+ package com.estazo.project.seeable.app.caretaker
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,12 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentCaretakerBinding
-import com.estazo.project.seeable.app.device.BPMRunnable
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -25,14 +25,13 @@ import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 
-class CaretakerFragment : Fragment() {
+ class CaretakerFragment : Fragment() {
 
     private lateinit var binding : FragmentCaretakerBinding
 
     private lateinit var viewModel: CaretakerViewModel
 
     private lateinit var sharedPrefPhone: SharedPreferences
-
     private lateinit var phone : String
 
     private var displayUser1 : String = "-"
@@ -46,18 +45,20 @@ class CaretakerFragment : Fragment() {
 
     lateinit var userList : List<String>
 
+    private lateinit var currentBlindUser : String
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         userList  = ArrayList()
-        firstTimeQuery()
+        queryBlindUser()
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_caretaker, container, false)
         Log.i("CaretakerFragment", "Called ViewModelProvider.get")
         Log.i("CaretakerFragment", "onCreateView call")
 
-        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
 
         sharedPrefPhone= requireActivity().getSharedPreferences("value", 0)
         phone  = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
@@ -81,27 +82,31 @@ class CaretakerFragment : Fragment() {
             view.findNavController().navigate(R.id.action_caretakerFragment_to_settingCaretakerFragment)
         }
 
-        viewModel.fetchSpinnerItems().observe(viewLifecycleOwner, Observer<List<Any>> { user ->
-            val spinner = binding.spinner
-            val arrayAdapter  = ArrayAdapter(activity?.applicationContext!!, R.layout.list_name_blind, user)
-            spinner.adapter = arrayAdapter
-            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    println("Hello world")
-                }
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    val itemPo = parent?.getItemAtPosition(position).toString()
-                    val itemIdPO = parent?.getItemIdAtPosition(position).toString()
-                    val selectItemPo   = parent?.getSelectedItemPosition().toString()
-                    val selectItemId   = parent?.getSelectedItemId().toString()
-                    val getCount   = parent?.getCount().toString()
-                    Log.i("selectItem","itemPo: $itemPo , itemIdPO: $itemIdPO , selectItemPo: $selectItemPo " +
-                            ",selectItemId :$selectItemId , getCount : $getCount")
-                    Toast.makeText(activity,itemPo, Toast.LENGTH_LONG).show()
-                }
-            }
-//            arrayAdapter.notifyDataSetChanged()
-        })
+//        viewModel.fetchSpinnerItems().observe(viewLifecycleOwner, Observer<List<Any>> { user ->
+//            val spinner = binding.spinner
+//            val arrayAdapter  = ArrayAdapter(activity?.applicationContext!!, R.layout.list_name_blind, user)
+//            spinner.adapter = arrayAdapter
+//            if(viewModel.currentUser.value != -1){
+//                viewModel.currentUser.value?.toInt()?.let { spinner.setSelection(it) }
+//            }
+//            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+//                override fun onNothingSelected(parent: AdapterView<*>?) {
+//                    println("Hello world")
+//                }
+//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                    val itemPo = parent?.getItemAtPosition(position).toString()
+//                    val itemIdPO = parent?.getItemIdAtPosition(position).toString()
+//                    val selectItemPo   = parent?.getSelectedItemPosition().toString()
+//                    val selectItemId   = parent?.getSelectedItemId().toString()
+//                    val getCount   = parent?.getCount().toString()
+//                    viewModel._currentUser.value = selectItemPo.toInt()
+//                    Log.i("selectItem","itemPo: $itemPo , itemIdPO: $itemIdPO , selectItemPo: $selectItemPo " +
+//                            ",selectItemId :$selectItemId , getCount : $getCount")
+//                    Toast.makeText(activity,itemPo, Toast.LENGTH_LONG).show()
+//                }
+//            }
+////            arrayAdapter.notifyDataSetChanged()
+//        })
 
 
         binding.healthStatus.setOnClickListener{
@@ -113,7 +118,7 @@ class CaretakerFragment : Fragment() {
         return binding.root
     }
 
-    private fun firstTimeQuery(){
+    private fun queryBlindUser(){
         sharedPrefPhone= requireActivity().getSharedPreferences("value", 0)
         phone  = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
         var firebaseRef = FirebaseDatabase.getInstance().getReference("users_caretaker/$phone/Blind")
@@ -123,6 +128,7 @@ class CaretakerFragment : Fragment() {
                 displayUser2 = snapshot.child("user2").value.toString()
                 displayUser3 = snapshot.child("user3").value.toString()
                 displayUser4 = snapshot.child("user4").value.toString()
+                var size = viewModel.userTel.value!!.size
                 val splitFBUser1 = displayUser1.split("/".toRegex()).toTypedArray()
                 val phoneFBUser1 = splitFBUser1[0]
                 val nameFBUser1 = splitFBUser1[1]
@@ -135,58 +141,86 @@ class CaretakerFragment : Fragment() {
                 val splitFBUser4 = displayUser4.split("/".toRegex()).toTypedArray()
                 val phoneFBUser4 = splitFBUser4[0]
                 val nameFBUser4 = splitFBUser4[1]
+                /**add user and set view on UI */
                 when{
-                    displayUser4 == "-/-" && displayUser3 == "-/-" && displayUser2 == "-/-" ->{
+                    /** set 1 user */
+                    displayUser4 == "-/-" && displayUser3 == "-/-" && displayUser2 == "-/-" && displayUser1 != "-/-" ->{
+                        size = viewModel.userTel.value!!.size
                         viewModel.userDisplay.value = listOf(nameFBUser1)
                         viewModel.userTel.value = listOf(phoneFBUser1)
                         viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{phone ->
                             phoneUser1 = phone[0].toString()
                         })
+                        Log.i("testListOf()1","size : $size")
                     }
-                    displayUser4 == "-/-" && displayUser3 == "-/-" && displayUser2 != "-/-"->{
-                        viewModel.userDisplay
-                        val a = listOf(nameFBUser1,nameFBUser2)
-                        viewModel.userDisplay.postValue(a)
+                    /** set 2 user */
+                    displayUser4 == "-/-" && displayUser3 == "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-"->{
+                        size = viewModel.userTel.value!!.size
+                        viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2)
                         viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2)
                         viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{phone ->
                             phoneUser1 = phone[0].toString()
-                            phoneUser2 = phone[1].toString()
+                            if( size == 2) {
+                                phoneUser2 = phone[1].toString()
+                            }
                         })
+                        Log.i("testListOf()2","size : $size")
                     }
-                    displayUser4 == "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" ->{
+                    /** set 3 user */
+                    displayUser4 == "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-" ->{
+                        size = viewModel.userTel.value!!.size
                         viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3)
                         viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3)
                         viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{phone ->
                             phoneUser1 = phone[0].toString()
-                            phoneUser2 = phone[1].toString()
-                            phoneUser3 = phone[2].toString()
+                            if( size == 2) {
+                                phoneUser2 = phone[1].toString()
+                            }
+                            if( size == 3){
+                                phoneUser3 = phone[2].toString()
+                            }
                         })
+                        Log.i("testListOf()3","size : $size , currentBlindUser : $currentBlindUser")
                     }
-                   else -> {
-                       viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4)
-                       viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4)
-                       viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{phone ->
-                       phoneUser1 = phone[0].toString()
-                       phoneUser2 = phone[1].toString()
-                       phoneUser3 = phone[2].toString()
-                       phoneUser4 = phone[3].toString()
-                       })
-                   }
+                    /** set 4 user */
+                    displayUser4 != "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-"  ->{
+                        size = viewModel.userTel.value!!.size
+                        viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4)
+                        viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4)
+                        viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
+                            phoneUser1 = phone[0].toString()
+                            if( size == 2) {
+                                phoneUser2 = phone[1].toString()
+                            }
+                            if( size == 3) {
+                                phoneUser3 = phone[2].toString()
+                            }
+                            if( size == 4) {
+                                phoneUser4 = phone[3].toString()
+                            }
+                        })
+                        Log.i("testListOf()4","size : $size")
+                    }
                 }
-                Log.d("firstTimeQuery","displayUser1 : $displayUser1 ,displayUser2 : $displayUser2 , displayUser3 : $displayUser3  , displayUser4 : $displayUser4")
-                Log.d("firstTimeQuery","nameFBUser1 : $nameFBUser1 ,nameFBUser2 : $nameFBUser2" +
+                Log.d("queryBlindUser","displayUser1 : $displayUser1 ,displayUser2 : $displayUser2 , displayUser3 : $displayUser3  , displayUser4 : $displayUser4")
+                Log.d("queryBlindUser","nameFBUser1 : $nameFBUser1 ,nameFBUser2 : $nameFBUser2" +
                         " , nameFBUser3 : $nameFBUser3  , nameFBUser4 : $nameFBUser4")
-                Log.d("firstTimeQuery","phoneFBUser1 : $phoneFBUser1 ,phoneFBUser2 : $phoneFBUser2 ," +
+                Log.d("queryBlindUser","phoneFBUser1 : $phoneFBUser1 ,phoneFBUser2 : $phoneFBUser2 ," +
                         " phoneFBUser3 : $phoneFBUser3  , phoneFBUser4 : $phoneFBUser4")
                 val displayNameThread = Thread(DisplayNameRunnable(phone,phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4
                     ,nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4))
                 displayNameThread.start()
+                val updateListThread = Thread(UpdateListBlindUserRunnable(phone))
+                updateListThread.start()
+                Log.i("testListOf()last","size : $size")
             }
             override fun onCancelled(databaseError: DatabaseError) {
             }
         })
 
     }
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -199,21 +233,46 @@ class CaretakerFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.i("CaretakerFragment", "onActivityCreated call")
+        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
+
+        viewModel.fetchSpinnerItems().observe(viewLifecycleOwner, Observer<List<Any>> { user ->
+            val spinner = binding.spinner
+            val arrayAdapter  = ArrayAdapter(activity?.applicationContext!!, R.layout.list_name_blind, user)
+            spinner.adapter = arrayAdapter
+            if(viewModel.currentUser.value != -1){
+                viewModel.currentUser.value?.toInt()?.let { spinner.setSelection(it) }
+            }
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    println("Hello world")
+                }
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val itemPo = parent?.getItemAtPosition(position).toString()
+                    val itemIdPO = parent?.getItemIdAtPosition(position).toString()
+                    val selectItemPo   = parent?.getSelectedItemPosition().toString()
+                    val selectItemId   = parent?.getSelectedItemId().toString()
+                    val getCount   = parent?.getCount().toString()
+                    viewModel._currentUser.value = selectItemPo.toInt()
+                    Log.i("selectItem","itemPo: $itemPo , itemIdPO: $itemIdPO , selectItemPo: $selectItemPo " +
+                            ",selectItemId :$selectItemId , getCount : $getCount")
+                    Toast.makeText(activity,itemPo, Toast.LENGTH_LONG).show()
+                }
+            }
+//            arrayAdapter.notifyDataSetChanged()
+        })
     }
     override fun onStart() {
         super.onStart()
         Log.i("CaretakerFragment", "onStart call")
-        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
     }
+     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+         super.onViewCreated(view, savedInstanceState)
+         Log.i("CaretakerFragment", "onViewCreated call")
+     }
     override fun onResume() {
         super.onResume()
         Log.i("CaretakerFragment", "onResume call")
-//        if (phoneUser1 != "-" && displayUser1 !="-" ){
-//            Log.i("checkRun", "phoneUser1 : $phoneUser1 , displayUser1 : $displayUser1")
-//            val displayNameThread = Thread(DisplayNameRunnable(phone,phoneUser1,phoneUser2,phoneUser3,phoneUser4
-//                ,displayUser1,displayUser2,displayUser3,displayUser4))
-//            displayNameThread.start()
-//        }
     }
     override fun onPause() {
         super.onPause()
@@ -235,20 +294,7 @@ class CaretakerFragment : Fragment() {
         super.onDetach()
         Log.i("CaretakerFragment", "onDetach call")
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.i("CaretakerFragment", "onViewCreated call")
-//        viewModel = activity?.run { ViewModelProviders.of(this).get(CaretakerViewModel::class.java) }
-//            ?: throw Exception("Invalid Activity")
-    }
-//    private fun clearBackStack() {
-//        val manager: FragmentManager = requireActivity().supportFragmentManager
-//        Log.d("clearBackStack", "manager : " + manager.backStackEntryCount)
-//        if (manager.backStackEntryCount > 0) {
-//            val first = manager.getBackStackEntryAt(0)
-//            manager.popBackStack(first.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-//        }
-//    }
+
 
 }
 

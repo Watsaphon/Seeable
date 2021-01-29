@@ -125,6 +125,7 @@ import java.util.*
         val config = Configuration()
         config.locale = locale
         baseContext.resources.updateConfiguration(config, null)
+//        recreate()
         val intent = Intent(this, SplashScreen::class.java)
         startActivity(intent)
     }

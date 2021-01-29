@@ -7,6 +7,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+/** When Blind User change display name.Runnable will also change blind name in Caretaker section */
+
 class DisplayNameRunnable(val phone : String, val phoneBlindUser1 : String , val phoneBlindUser2 : String , val phoneBlindUser3 : String , val phoneBlindUser4 : String ,
                           val displayBlindUser1 : String, val displayBlindUser2 : String, val displayBlindUser3 : String, val displayBlindUser4 : String ) : Runnable {
 

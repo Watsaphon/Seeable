@@ -87,7 +87,7 @@ class LittleMore : AppCompatActivity() {
                     alertDialogLoading()
                     val rootRef = FirebaseDatabase.getInstance().getReference("users_caretaker")
                     val ID = rootRef.push().key
-                    val blind = Blind("0898765432", "-","-", "-")
+                    val blind = Blind("0876543210", "-/-","-/-", "-/-")
                     val device = DeviceCaretaker("-","-", "-")
                     val valueRef = FirebaseDatabase.getInstance().getReference("users_caretaker/$phone")
                     val rootData = UserPersonHelperClassNew(

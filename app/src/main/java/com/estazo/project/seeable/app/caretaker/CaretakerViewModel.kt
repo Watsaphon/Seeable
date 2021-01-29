@@ -15,6 +15,10 @@ class CaretakerViewModel() : ViewModel() {
     var userTel = MutableLiveData<List<String>>()
     var userDisplay = MutableLiveData<List<String>>()
 
+    // The current user
+     val _currentUser = MutableLiveData<Int>()
+    val currentUser : LiveData<Int>
+        get() = _currentUser
 
     // The current bpm
     private val _bpm = MutableLiveData<Int>()
@@ -23,9 +27,11 @@ class CaretakerViewModel() : ViewModel() {
 
 
     init {
+
        _bpm.value = 0
         userTel.value = listOf()
         userDisplay.value = listOf()
+        _currentUser.value = -1
         Log.i("CaretakerViewModel", "CaretakerViewModel created!")
         Log.i("testPhone", "userTel : $userTel , userDisplay : $userDisplay ")
     }
@@ -44,8 +50,6 @@ class CaretakerViewModel() : ViewModel() {
         super.onCleared()
         Log.i("CaretakerViewModel", "CaretakerViewModel destroyed!")
     }
-
-
 
 }
 
