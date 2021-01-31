@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentCaretakerBinding
@@ -45,17 +46,15 @@ import java.util.*
 
     lateinit var userList : List<String>
 
-    private lateinit var currentBlindUser : String
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         userList  = ArrayList()
-        queryBlindUser()
+//        queryBlindUser()
 
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_caretaker, container, false)
-        Log.i("CaretakerFragment", "Called ViewModelProvider.get")
+
         Log.i("CaretakerFragment", "onCreateView call")
 
 //        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
@@ -107,14 +106,6 @@ import java.util.*
 //            }
 ////            arrayAdapter.notifyDataSetChanged()
 //        })
-
-
-        binding.healthStatus.setOnClickListener{
-            Log.i("user_worker_Thread", "user1 : $displayUser1 , user2 : $displayUser2 " +
-                    ", user3 : $displayUser3 , user4 : $displayUser4 , userList : $userList")
-        }
-
-
         return binding.root
     }
 
@@ -171,42 +162,42 @@ import java.util.*
                         size = viewModel.userTel.value!!.size
                         viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3)
                         viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3)
-                        viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{phone ->
-                            phoneUser1 = phone[0].toString()
-                            if( size == 2) {
-                                phoneUser2 = phone[1].toString()
-                            }
-                            if( size == 3){
-                                phoneUser3 = phone[2].toString()
-                            }
-                        })
-                        Log.i("testListOf()3","size : $size , currentBlindUser : $currentBlindUser")
+                            viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
+                                phoneUser1 = phone[0].toString()
+                                if( size == 2) {
+                                    phoneUser2 = phone[1].toString()
+                                }
+                                if( size == 3){
+                                    phoneUser3 = phone[2].toString()
+                                }
+                            })
+                        Log.i("testListOf()3","size : $size ")
                     }
                     /** set 4 user */
                     displayUser4 != "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-"  ->{
                         size = viewModel.userTel.value!!.size
                         viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4)
                         viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4)
-                        viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
-                            phoneUser1 = phone[0].toString()
-                            if( size == 2) {
-                                phoneUser2 = phone[1].toString()
-                            }
-                            if( size == 3) {
-                                phoneUser3 = phone[2].toString()
-                            }
-                            if( size == 4) {
-                                phoneUser4 = phone[3].toString()
-                            }
-                        })
+                            viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
+                                phoneUser1 = phone[0].toString()
+                                if( size == 2) {
+                                    phoneUser2 = phone[1].toString()
+                                }
+                                if( size == 3) {
+                                    phoneUser3 = phone[2].toString()
+                                }
+                                if( size == 4) {
+                                    phoneUser4 = phone[3].toString()
+                                }
+                            })
                         Log.i("testListOf()4","size : $size")
                     }
                 }
-                Log.d("queryBlindUser","displayUser1 : $displayUser1 ,displayUser2 : $displayUser2 , displayUser3 : $displayUser3  , displayUser4 : $displayUser4")
-                Log.d("queryBlindUser","nameFBUser1 : $nameFBUser1 ,nameFBUser2 : $nameFBUser2" +
-                        " , nameFBUser3 : $nameFBUser3  , nameFBUser4 : $nameFBUser4")
-                Log.d("queryBlindUser","phoneFBUser1 : $phoneFBUser1 ,phoneFBUser2 : $phoneFBUser2 ," +
-                        " phoneFBUser3 : $phoneFBUser3  , phoneFBUser4 : $phoneFBUser4")
+//                Log.d("queryBlindUser","displayUser1 : $displayUser1 ,displayUser2 : $displayUser2 , displayUser3 : $displayUser3  , displayUser4 : $displayUser4")
+//                Log.d("queryBlindUser","nameFBUser1 : $nameFBUser1 ,nameFBUser2 : $nameFBUser2" +
+//                        " , nameFBUser3 : $nameFBUser3  , nameFBUser4 : $nameFBUser4")
+//                Log.d("queryBlindUser","phoneFBUser1 : $phoneFBUser1 ,phoneFBUser2 : $phoneFBUser2 ," +
+//                        " phoneFBUser3 : $phoneFBUser3  , phoneFBUser4 : $phoneFBUser4")
                 val displayNameThread = Thread(DisplayNameRunnable(phone,phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4
                     ,nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4))
                 displayNameThread.start()
@@ -233,7 +224,8 @@ import java.util.*
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.i("CaretakerFragment", "onActivityCreated call")
-        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
+        viewModel  = ViewModelProviders.of(this).get(CaretakerViewModel::class.java)
 
         viewModel.fetchSpinnerItems().observe(viewLifecycleOwner, Observer<List<Any>> { user ->
             val spinner = binding.spinner
@@ -269,6 +261,7 @@ import java.util.*
      override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
          super.onViewCreated(view, savedInstanceState)
          Log.i("CaretakerFragment", "onViewCreated call")
+         queryBlindUser()
      }
     override fun onResume() {
         super.onResume()
@@ -277,18 +270,23 @@ import java.util.*
     override fun onPause() {
         super.onPause()
         Log.i("CaretakerFragment", "onPause call")
+        getViewLifecycleOwnerLiveData()
+//        viewLifecycleOwner
     }
     override fun onStop() {
         super.onStop()
         Log.i("CaretakerFragment", "onStop call")
+//        viewLifecycleOwner
     }
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("CaretakerFragment", "onDestroyView call")
+        viewModel.getPhoneUser().removeObservers(this)
     }
     override fun onDestroy() {
         super.onDestroy()
         Log.i("CaretakerFragment", "onDestroy call")
+//        viewLifecycleOwner
     }
     override fun onDetach() {
         super.onDetach()

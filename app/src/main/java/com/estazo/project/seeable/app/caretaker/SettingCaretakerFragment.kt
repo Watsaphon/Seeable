@@ -1,7 +1,6 @@
 package com.estazo.project.seeable.app.caretaker
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
@@ -9,12 +8,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat.recreate
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.SplashScreen
 import com.estazo.project.seeable.app.databinding.FragmentSettingCaretakerBinding
 import java.util.*
 
@@ -59,8 +57,8 @@ class SettingCaretakerFragment : Fragment() {
         }
 
         binding.langBtn.setOnClickListener{
-        (activity as MainActivityPerson).changeLanguage()
-//            changeLanguage()
+//        (activity as MainActivityPerson).changeLanguage()
+           changeLanguage()
         }
 
         binding.logoutBtn.setOnClickListener{
@@ -90,7 +88,7 @@ class SettingCaretakerFragment : Fragment() {
         config.locale = locale
         requireActivity().baseContext.resources.updateConfiguration(config, null)
         requireActivity().onBackPressed()
-//        recreate()
+//        requireActivity().recreate()
 //        val intent = Intent(this, SplashScreen::class.java)
 //        startActivity(intent)
     }
