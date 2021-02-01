@@ -28,6 +28,7 @@ import java.util.*
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
+     private lateinit var sharedPrefBlindId : SharedPreferences
 
     private lateinit var language : String
     private lateinit var phone : String
@@ -35,6 +36,7 @@ import java.util.*
     private lateinit var id : String
     private lateinit var displayName : String
     private lateinit var userType: String
+     private lateinit var currentBlindId : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +51,7 @@ import java.util.*
         sharedPrefPassword= getSharedPreferences("value", 0)
         sharedPrefDisplayName= getSharedPreferences("value", 0)
         sharedPrefUserType = getSharedPreferences("value", 0)
+        sharedPrefBlindId = getSharedPreferences("value", 0)
 
         language = sharedPrefLanguage.getString("stringKey", "not found!").toString()
         phone  = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
@@ -56,6 +59,7 @@ import java.util.*
         id  = sharedPrefID.getString("stringKey2", "not found!").toString()
         displayName  = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!").toString()
         userType  = sharedPrefUserType.getString("stringKeyType", "not found!").toString()
+        currentBlindId  = sharedPrefUserType.getString("stringKeyBlindId", "not found!").toString()
 
         Log.i("MainActivityPerson", "sharedPref -> Language : $language ," +
                 "Phone : $phone , ID : $id, Password : $password," +
@@ -136,18 +140,21 @@ import java.util.*
         val editorPassword = sharedPrefPassword.edit()
         val editorDisplayName = sharedPrefDisplayName.edit()
         val editorUserType = sharedPrefUserType.edit()
+        val editorBlindId = sharedPrefBlindId.edit()
 
         editorPhone.putString("stringKeyPhone", "not found!")
         editorPassword.putString("stringKeyPassword", "not found!")
         editorID.putString("stringKey2", "not found!")
         editorDisplayName.putString("stringKeyDisplayName","not found!")
         editorUserType.putString("stringKeyType", "not found!")
+        editorBlindId.putString("stringKeyBlindId", "not found!")
 
         editorPhone.apply()
         editorPassword.apply()
         editorID.apply()
         editorUserType.apply()
         editorDisplayName.apply()
+        editorBlindId.apply()
 
         val intent = Intent(this, LoginScreen::class.java)
         startActivity(intent)
