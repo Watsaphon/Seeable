@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="?attr/dropdownListPreferredItemHeight"
@@ -10,4 +11,5 @@
     android:singleLine="true"
     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
     android:textSize="20sp"
+    android:text="Loading..."
     />

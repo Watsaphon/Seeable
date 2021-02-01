@@ -27,7 +27,6 @@ class CaretakerViewModel() : ViewModel() {
 
 
     init {
-
        _bpm.value = 0
         userTel.value = listOf()
         userDisplay.value = listOf()

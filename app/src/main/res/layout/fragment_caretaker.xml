@@ -138,13 +138,21 @@
                 style="@style/Listname_blind"
                 />
 
-<!--            <TextView-->
-<!--                android:id="@+id/user1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                visibility="gone"-->
-<!--                />-->
-<!--            <TextView-->
+            <TextView
+                android:id="@+id/loading"
+                android:layout_width="250dp"
+                android:layout_height="108px"
+                android:layout_above="@+id/vector_3"
+                android:layout_toEndOf="@+id/profileImage"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="25dp"
+                android:text="Loading..."
+                android:fontFamily="serif"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="20sp"
+                />
+            <!--            <TextView-->
 <!--                android:id="@+id/user2"-->
 <!--                android:layout_width="wrap_content"-->
 <!--                android:layout_height="wrap_content"-->
