@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentCaretakerBinding
+import com.estazo.project.seeable.app.device.BPMRunnable
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -43,6 +44,8 @@ import com.google.firebase.database.ValueEventListener
 
      private lateinit var sharedPrefBlindId : SharedPreferences
      private lateinit var currentBlindId : String
+
+//     private var currentBlindPhone : String = "-"
 
      override fun onAttach(context: Context) {
          super.onAttach(context)
@@ -89,6 +92,7 @@ import com.google.firebase.database.ValueEventListener
             val spinner = binding.spinner
             val arrayAdapter  = ArrayAdapter(activity?.applicationContext!!, R.layout.list_name_blind, user)
             spinner.adapter = arrayAdapter
+
             /**for store current Blind Id when view destroyed or close app */
             if(currentBlindId != "not found!"){
                     val itemPosition = currentBlindId.toInt()
@@ -99,9 +103,7 @@ import com.google.firebase.database.ValueEventListener
             if(phoneUser1 != "-"){
                 binding.loading.visibility = View.GONE
             }
-//            if(viewModel.currentUser.value != -1){
-//                viewModel.currentUser.value?.toInt()?.let { spinner.setSelection(it) }
-//            }
+
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     Toast.makeText(activity,"Not Selection", Toast.LENGTH_LONG).show()
@@ -116,10 +118,14 @@ import com.google.firebase.database.ValueEventListener
                     val editorBlindId = sharedPrefBlindId.edit()
                     editorBlindId.putString("stringKeyBlindId", "$itemPosition")
                     editorBlindId.apply()
+                    viewModel._currentBlindPhone.value = viewModel.userTel.value?.get(itemPosition).toString()
+                    val bpmThread = Thread(BPMRunnable(binding.bpmNumber,viewModel._currentBlindPhone.value.toString()))
+                    bpmThread.start()
                     Log.i("selectItem","itemPo: $itemPo , selectItemPo: $selectItemPo , itemPosition : $itemPosition")
                 }
             }
         })
+
     }
      override fun onStart() {
          super.onStart()

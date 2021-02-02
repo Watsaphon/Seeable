@@ -25,12 +25,18 @@ class CaretakerViewModel() : ViewModel() {
     val bpm: LiveData<Int>
         get() = _bpm
 
+    // The current phone of blind user
+    val _currentBlindPhone = MutableLiveData<String>()
+    val currentBlindPhone : LiveData<String>
+        get() = _currentBlindPhone
+
 
     init {
        _bpm.value = 0
         userTel.value = listOf()
         userDisplay.value = listOf()
         _currentUser.value = -1
+        _currentBlindPhone.value = "-"
         Log.i("CaretakerViewModel", "CaretakerViewModel created!")
         Log.i("testPhone", "userTel : $userTel , userDisplay : $userDisplay ")
     }
