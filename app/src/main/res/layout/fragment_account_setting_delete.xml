@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".caretaker.settingCaretaker.AccountSettingDeleteFragment"
+        tools:context=".caretaker.settingCaretaker.accoutSetting.AccountSettingDeleteFragment"
         >
         <RelativeLayout
             android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app.caretaker.settingCaretaker
+package com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

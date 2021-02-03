@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app.caretaker
+package com.estazo.project.seeable.app.caretaker.settingCaretaker
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,9 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
+import com.estazo.project.seeable.app.caretaker.MainActivityPerson
 import com.estazo.project.seeable.app.databinding.FragmentSettingCaretakerBinding
 import java.util.*
 
@@ -48,17 +48,17 @@ class SettingCaretakerFragment : Fragment() {
             requireActivity().onBackPressed()
         }
 
-        binding.aboutBtn.setOnClickListener{view : View  ->
-            view.findNavController().navigate(R.id.action_settingCaretakerFragment_to_aboutFragment)
+        binding.langBtn.setOnClickListener{
+//        (activity as MainActivityPerson).changeLanguage()
+            changeLanguage()
+        }
+
+        binding.blindlistBtn.setOnClickListener{view : View  ->
+            view.findNavController().navigate(R.id.action_settingCaretakerFragment_to_blindListFragment)
         }
 
         binding.accountBtn.setOnClickListener{view : View  ->
             view.findNavController().navigate(R.id.action_settingCaretakerFragment_to_accountSettingFragment)
-        }
-
-        binding.langBtn.setOnClickListener{
-//        (activity as MainActivityPerson).changeLanguage()
-           changeLanguage()
         }
 
         binding.logoutBtn.setOnClickListener{

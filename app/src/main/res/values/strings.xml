@@ -16,7 +16,6 @@
     <string name="loading_spinner">Loading...</string>
 
 
-
     <!--MainActivity-->
     <string name="button_self_navigation">Self-Navigate</string>
     <string name="button_caretaker_navigation">Caretaker-Navigate</string>
@@ -71,6 +70,9 @@
     <string name="wrong_password_AccountSettingEditCaretaker">Password is incorrect</string>
     <string name="empty_password_AccountSettingEditCaretaker">Please! enter your password</string>
     <string name="delete_AccountSettingEditCaretaker">Delete account</string>
+
+    <!--BlindListCaretaker-->
+    <string name="header_BlindListCaretaker">Blind list</string>
 
 
     <!--AccountBlind-->

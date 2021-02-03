@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".caretaker.SettingCaretakerFragment"
+        tools:context=".caretaker.settingCaretaker.SettingCaretakerFragment"
         >
 
         <RelativeLayout
@@ -106,20 +106,6 @@
                 style="@style/UnderLineSetting" />
 
             <Button
-                android:id="@+id/aboutBtn"
-                android:layout_width="190dp"
-                android:layout_height="50dp"
-                android:drawableStart="@mipmap/icon_info_foreground"
-                android:text="@string/button_about"
-                style="@style/settingBlindButton"
-                />
-            <TextView
-                android:id="@+id/ul4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/UnderLineSetting" />
-
-            <Button
                 android:id="@+id/logoutBtn"
                 android:layout_width="220dp"
                 android:layout_height="50dp"
@@ -128,7 +114,7 @@
                 style="@style/settingBlindButton"
                 />
             <TextView
-                android:id="@+id/ul6"
+                android:id="@+id/ul4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/UnderLineSetting" />

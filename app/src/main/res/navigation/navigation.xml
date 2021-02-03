@@ -22,27 +22,21 @@
     </fragment>
     <fragment
         android:id="@+id/settingCaretakerFragment"
-        android:name="com.estazo.project.seeable.app.caretaker.SettingCaretakerFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.SettingCaretakerFragment"
         android:label="SettingCaretakerFragment"
         tools:layout="@layout/fragment_setting_caretaker"
         >
         <action
-            android:id="@+id/action_settingCaretakerFragment_to_aboutFragment"
-            app:destination="@id/aboutFragment"
-            app:popUpTo="@id/settingCaretakerFragment" />
-        <action
             android:id="@+id/action_settingCaretakerFragment_to_accountSettingFragment"
             app:destination="@id/accountSettingFragment"
             app:popUpTo="@id/settingCaretakerFragment" />
+        <action
+            android:id="@+id/action_settingCaretakerFragment_to_blindListFragment"
+            app:destination="@id/blindListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/aboutFragment"
-        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.AboutFragment"
-        android:label="fragment_about"
-        tools:layout="@layout/fragment_about" />
-    <fragment
         android:id="@+id/accountSettingFragment"
-        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.AccountSettingFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingFragment"
         android:label="AccountSettingFragment"
         tools:layout="@layout/fragment_account_setting"
         >
@@ -61,20 +55,26 @@
     </fragment>
     <fragment
         android:id="@+id/accountSettingEditFragment"
-        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.AccountSettingEditFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingEditFragment"
         android:label="AccountSettingEditFragment"
         tools:layout="@layout/fragment_account_setting_edit"
         />
     <fragment
         android:id="@+id/accountSettingDeleteFragment"
-        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.AccountSettingDeleteFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingDeleteFragment"
         android:label="AccountSettingDeleteFragment"
         tools:layout="@layout/fragment_account_setting_delete"
         />
     <fragment
         android:id="@+id/accountSettingChangePasswordFragment"
-        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.AccountSettingChangePasswordFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingChangePasswordFragment"
         android:label="AccountSettingChangePasswordFragment"
         tools:layout="@layout/fragment_account_setting_change_password"
+        />
+    <fragment
+        android:id="@+id/blindListFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListFragment"
+        android:label="BlindListFragment"
+        tools:layout="@layout/fragment_blind_list"
         />
 </navigation>

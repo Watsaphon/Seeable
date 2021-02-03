@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener
 
  class CaretakerFragment : Fragment() {
 
-    private lateinit var binding : FragmentCaretakerBinding
+     private lateinit var binding : FragmentCaretakerBinding
 
     private lateinit var viewModel: CaretakerViewModel
 

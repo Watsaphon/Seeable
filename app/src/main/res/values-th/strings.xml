@@ -70,6 +70,9 @@
     <string name="empty_password_AccountSettingEditCaretaker">กรุณากรอกรหัสผ่านของคุณ</string>
     <string name="delete_AccountSettingEditCaretaker">ลบ</string>
 
+    <!--BlindListCaretaker-->
+    <string name="header_BlindListCaretaker">รายการคนตาบอด</string>
+
     <!--AccountBlind-->
     <string name="header_AccountBlind">ตั้งค่าบัญชีผู้ใช้งาน</string>
     <string name="name_AccountBlind">ชื่อผู้ใช้งาน: </string>

@@ -1,7 +1,6 @@
-package com.estazo.project.seeable.app.caretaker.settingCaretaker
+package com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -11,13 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.blind.MainActivity
-import com.estazo.project.seeable.app.caretaker.CaretakerFragment
-import com.estazo.project.seeable.app.caretaker.MainActivityPerson
 import com.estazo.project.seeable.app.databinding.FragmentAccountSettingEditBinding
-import com.estazo.project.seeable.app.login.LoginScreen
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
