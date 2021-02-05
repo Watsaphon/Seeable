@@ -5,7 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/BlindListFragment_layout"
     >
+    <data>
+        <variable
+            name="viewModel"
+            type="com.estazo.project.seeable.app.caretaker.CaretakerViewModel" />
 
+        <variable
+            name="blindListFragment"
+            type="com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListFragment" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -23,15 +23,15 @@ class AccountSettingFragment : Fragment() {
             requireActivity().onBackPressed()
         }
 
-        binding.editBtn.setOnClickListener{view : View ->
-            view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingEditFragment)
-        }
-        binding.changePasswordBtn.setOnClickListener{view : View ->
-            view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingChangePasswordFragment)
-        }
-        binding.deleteBtn.setOnClickListener{view : View ->
-            view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingDeleteFragment)
-        }
+//        binding.editBtn.setOnClickListener{view : View ->
+//            view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingEditFragment)
+//        }
+//        binding.changePasswordBtn.setOnClickListener{view : View ->
+//            view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingChangePasswordFragment)
+//        }
+//        binding.deleteBtn.setOnClickListener{view : View ->
+//            view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingDeleteFragment)
+//        }
 
         return binding.root
 

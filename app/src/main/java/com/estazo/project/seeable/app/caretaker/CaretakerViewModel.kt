@@ -1,6 +1,7 @@
 package com.estazo.project.seeable.app.caretaker
 
 import android.util.Log
+import android.view.SearchEvent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,11 @@ import com.google.firebase.database.ValueEventListener
 
 
 class CaretakerViewModel() : ViewModel() {
+
+    val message =MutableLiveData<Any>()
+
+    val changeFragmentEvent = SingleLiveEvent<Unit>()
+    val updateUserNameEvent = SingleLiveEvent<String>()
 
     var userTel = MutableLiveData<List<String>>()
     var userDisplay = MutableLiveData<List<String>>()
@@ -31,7 +37,12 @@ class CaretakerViewModel() : ViewModel() {
         get() = _currentBlindPhone
 
 
+    val _test =  MutableLiveData<String>()
+    val test : LiveData<String>
+        get() = _test
+
     init {
+        _test.value = "Test ja"
        _bpm.value = 0
         userTel.value = listOf()
         userDisplay.value = listOf()
@@ -48,6 +59,22 @@ class CaretakerViewModel() : ViewModel() {
 
     fun getPhoneUser() : LiveData<List<String>>{
         return userTel
+    }
+
+    fun getDisplayUser() : LiveData<List<String>>{
+        return userDisplay
+    }
+
+    fun changeFragment() {
+        changeFragmentEvent.call()
+    }
+
+    fun updateUserName(name: String) {
+        updateUserNameEvent.value = name
+    }
+
+    fun setMsgCommunicator(msg:String){
+        message.value = msg
     }
 
     /**Callback called when the ViewModel is destroyed*/

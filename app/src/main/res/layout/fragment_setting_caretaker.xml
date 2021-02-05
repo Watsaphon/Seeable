@@ -5,6 +5,16 @@
     android:id="@+id/settingCaretaker_layout"
     >
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.estazo.project.seeable.app.caretaker.CaretakerViewModel" />
+
+        <variable
+            name="settingCaretakerFragment"
+            type="com.estazo.project.seeable.app.caretaker.settingCaretaker.SettingCaretakerFragment" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -82,6 +92,7 @@
                 android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:drawableLeft="@mipmap/icon_account_foreground"
+                android:onClick="@{() -> settingCaretakerFragment.goToNextScreen()}"
                 android:text="@string/button_blind_list_caretaker"
                 style="@style/settingBlindButton"
                 />

@@ -12,10 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
+import com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListViewModel
 import com.estazo.project.seeable.app.databinding.FragmentCaretakerBinding
 import com.estazo.project.seeable.app.device.BPMRunnable
 import com.google.firebase.database.DataSnapshot
@@ -26,9 +28,19 @@ import com.google.firebase.database.ValueEventListener
 
  class CaretakerFragment : Fragment() {
 
-     private lateinit var binding : FragmentCaretakerBinding
+//     private lateinit var binding : FragmentCaretakerBinding
+//
+//    private lateinit var viewModel: CaretakerViewModel
 
-    private lateinit var viewModel: CaretakerViewModel
+
+     // Binding object instance corresponding to the fragment_start.xml layout
+     // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
+     // when the view hierarchy is attached to the fragment.
+//     private var binding: FragmentCaretakerBinding? = null
+     private lateinit var binding: FragmentCaretakerBinding
+
+     // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
+     private val viewModel : CaretakerViewModel by activityViewModels()
 
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var phone : String
@@ -60,7 +72,12 @@ import com.google.firebase.database.ValueEventListener
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_caretaker, container, false)
+
         Log.i("CaretakerFragment", "onCreateView call")
+
+        val fragmentBinding = FragmentCaretakerBinding.inflate(inflater, container, false)
+        binding = fragmentBinding
+
 
         sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
         phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
@@ -68,17 +85,19 @@ import com.google.firebase.database.ValueEventListener
         sharedPrefBlindId = requireActivity().getSharedPreferences("value", 0)
         currentBlindId = sharedPrefBlindId.getString("stringKeyBlindId", "not found!").toString()
 
-        binding.setting.setOnClickListener{view : View  ->
-            view.findNavController().navigate(R.id.action_caretakerFragment_to_settingCaretakerFragment)
-        }
-
-        return binding.root
+        return fragmentBinding.root
 
     }
 
      override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
          super.onViewCreated(view, savedInstanceState)
          Log.i("CaretakerFragment", "onViewCreated call")
+         binding?.caretakerFragment = this
+
+         binding.setting.setOnClickListener{view : View  ->
+             view.findNavController().navigate(R.id.action_caretakerFragment_to_settingCaretakerFragment)
+         }
+
          queryBlindUser()
      }
 
@@ -86,8 +105,7 @@ import com.google.firebase.database.ValueEventListener
         super.onActivityCreated(savedInstanceState)
         Log.i("CaretakerFragment", "onActivityCreated call")
 
-        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
-
+//        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
         viewModel.fetchSpinnerItems().observe(viewLifecycleOwner, Observer<List<Any>> { user ->
             val spinner = binding.spinner
             val arrayAdapter  = ArrayAdapter(activity?.applicationContext!!, R.layout.list_name_blind, user)
@@ -117,6 +135,7 @@ import com.google.firebase.database.ValueEventListener
                     val itemPosition = selectItemPo.toInt()
                     val editorBlindId = sharedPrefBlindId.edit()
                     editorBlindId.putString("stringKeyBlindId", "$itemPosition")
+//                    editorBlindId.putString("stringKeyBlindId", listOf("A","B").toString())
                     editorBlindId.apply()
                     viewModel._currentBlindPhone.value = viewModel.userTel.value?.get(itemPosition).toString()
                     val bpmThread = Thread(BPMRunnable(binding.bpmNumber,viewModel._currentBlindPhone.value.toString()))
@@ -124,6 +143,10 @@ import com.google.firebase.database.ValueEventListener
                     Log.i("selectItem","itemPo: $itemPo , selectItemPo: $selectItemPo , itemPosition : $itemPosition")
                 }
             }
+
+//            viewModel.updateUserNameEvent.observe(viewLifecycleOwner, Observer{ data ->
+//
+//            })
         })
 
     }
@@ -232,6 +255,7 @@ import com.google.firebase.database.ValueEventListener
                          binding.loading.visibility = View.GONE
                          viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4)
                          viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4)
+//                         blindListViewModel.userDisplay2.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4)
                          size = viewModel.userTel.value!!.size
                          viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
                              if(size == 4 ) {
