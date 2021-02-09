@@ -11,6 +11,7 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -20,6 +21,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.SplashScreen
+import com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListViewModel
 import com.estazo.project.seeable.app.login.LoginScreen
 import java.util.*
 
@@ -42,7 +44,6 @@ import java.util.*
     private lateinit var userType: String
      private lateinit var currentBlindId : String
 
-     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,8 +74,9 @@ import java.util.*
 
         // Retrieve NavController from the NavHostFragment
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//
+
         val navController: NavController = navHostFragment.navController
+
         // Set up the action bar for use with the NavController
 //        setupActionBarWithNavController(navController)
 //        val navController = this.findNavController(R.id.nav_host_fragment)
@@ -84,6 +86,7 @@ import java.util.*
 //        val navController: NavController = Navigation.findNavController(this, R.id.nav_host)
 //        appBarConfiguration = AppBarConfiguration.Builder().build()
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
+
 
     }
 
@@ -202,6 +205,7 @@ import java.util.*
             }
         }
     }
+
 
 
 }

@@ -3,13 +3,25 @@ package com.estazo.project.seeable.app.caretaker.settingCaretaker
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.estazo.project.seeable.app.caretaker.SingleLiveEvent
 
 class BlindListViewModel : ViewModel() {
 
-    var userDisplay2 = MutableLiveData<List<String>>()
+    val updateUserNameEvent = SingleLiveEvent<List<String>>()
+
+    var listUser = MutableLiveData<List<String>>()
+
+
 
     init {
-        userDisplay2.value = listOf("1","2","3","4")
+        listUser.value = listOf()
+        Log.i("BlindListViewModel", "BlindListViewModel created!")
+    }
+
+    fun updateUserName(user : List<String>) {
+//        updateUserNameEvent.value = user
+        listUser.value = user
+        Log.d("updateUserNameEvent","updateUserNameEvent : $updateUserNameEvent , listUser :$listUser")
     }
 
     /**Callback called when the ViewModel is destroyed*/

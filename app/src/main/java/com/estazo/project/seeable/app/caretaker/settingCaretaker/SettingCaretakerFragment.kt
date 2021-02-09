@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
@@ -27,7 +28,7 @@ class SettingCaretakerFragment : Fragment() {
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var language : String
 
-    private val caretakerViewModel: CaretakerViewModel by activityViewModels()
+//    private val caretakerViewModel: CaretakerViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -39,9 +40,9 @@ class SettingCaretakerFragment : Fragment() {
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_caretaker, container, false)
-        val fragmentBinding = FragmentSettingCaretakerBinding.inflate(inflater, container, false)
-        binding = fragmentBinding
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_caretaker, container, false)
+//        val fragmentBinding = FragmentSettingCaretakerBinding.inflate(inflater, container, false)
+//        binding = fragmentBinding
         Log.i("SettingCaretaker", "onCreateView call")
 
         sharedPrefLanguage = requireActivity().getSharedPreferences("value", 0)
@@ -49,17 +50,29 @@ class SettingCaretakerFragment : Fragment() {
 
         Log.i("SettingCaretaker", " language : $language")
 
-        return fragmentBinding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding?.apply {
-            lifecycleOwner = viewLifecycleOwner
-            viewModel = caretakerViewModel
-            settingCaretakerFragment = this@SettingCaretakerFragment
-        }
+//        binding?.apply {
+//            lifecycleOwner = viewLifecycleOwner
+//            viewModel = caretakerViewModel
+//            settingCaretakerFragment = this@SettingCaretakerFragment
+//
+////            viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
+////                if(size == 3 ) {
+////                    phoneUser1 = phone[0].toString()
+////                    phoneUser2 = phone[1].toString()
+////                    phoneUser3 = phone[2].toString()
+////                }
+////            })
+//        }
+//        viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
+//
+//                val phoneUser1 = phone[0].toString()
+//
+//        })
 
         binding.backButton.setOnClickListener{
             requireActivity().onBackPressed()
@@ -70,9 +83,9 @@ class SettingCaretakerFragment : Fragment() {
             changeLanguage()
         }
         
-//        binding.blindlistBtn.setOnClickListener{view : View  ->
-//            view.findNavController().navigate(R.id.action_settingCaretakerFragment_to_blindListFragment)
-//        }
+        binding.blindlistBtn.setOnClickListener{view : View  ->
+            view.findNavController().navigate(R.id.action_settingCaretakerFragment_to_blindListFragment)
+        }
 //
 //        binding.accountBtn.setOnClickListener{view : View  ->
 //            view.findNavController().navigate(R.id.action_settingCaretakerFragment_to_accountSettingFragment)
@@ -84,9 +97,9 @@ class SettingCaretakerFragment : Fragment() {
         }
     }
 
-    fun goToNextScreen() {
-        findNavController().navigate(R.id.action_settingCaretakerFragment_to_blindListFragment)
-    }
+//    fun goToNextScreen() {
+//        findNavController().navigate(R.id.action_settingCaretakerFragment_to_blindListFragment)
+//    }
 
     /** change Language TH and EN*/
     private fun changeLanguage(){
@@ -115,6 +128,10 @@ class SettingCaretakerFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.i("SettingCaretaker", "onActivityCreated call")
+//        caretakerViewModel.getPhoneUser().observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<Any>>{ phone ->
+//         val   phoneUser1 = phone[0].toString()
+//            Log.i("SettingCaretaker", "phoneUser1 : $phoneUser1")
+//        })
     }
     override fun onStart() {
         super.onStart()

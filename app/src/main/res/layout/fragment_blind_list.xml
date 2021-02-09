@@ -5,15 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/BlindListFragment_layout"
     >
-    <data>
-        <variable
-            name="viewModel"
-            type="com.estazo.project.seeable.app.caretaker.CaretakerViewModel" />
 
-        <variable
-            name="blindListFragment"
-            type="com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListFragment" />
-    </data>
+<!--    <data>-->
+<!--        &lt;!&ndash;        <variable&ndash;&gt;-->
+<!--        &lt;!&ndash;            name="blindViewModel"&ndash;&gt;-->
+<!--        &lt;!&ndash;            type="com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListViewModel" />&ndash;&gt;-->
+<!--        <variable-->
+<!--            name="viewModel"-->
+<!--            type="com.estazo.project.seeable.app.caretaker.CaretakerViewModel" />-->
+<!--        <variable-->
+<!--            name="blindListFragment"-->
+<!--            type="com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListFragment" />-->
+<!--    </data>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,177 +65,181 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="320dp"
-            android:layout_height="100dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/border_blindlist_layout"
-            android:id="@+id/user1"
-            >
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@mipmap/img_blindlist_foreground"
-                />
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="match_parent"
-                android:id="@+id/nameUser1"
-                android:text="User 1 "
-                android:padding="10dp"
-                android:textColor="#3DADFF"
-                android:textSize="18dp"
-                android:gravity="left|center"
-                />
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@mipmap/add_blindlist_foreground"
+                android:layout_width="320dp"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/border_blindlist_layout"
+                android:id="@+id/user1"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@mipmap/img_blindlist_foreground"
                     />
-                <ImageButton
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/nameUser1"
+                    android:text="User 1 "
+                    android:padding="10dp"
+                    android:textColor="#3DADFF"
+                    android:textSize="18dp"
+                    android:gravity="left|center"
+                    />
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/delete_blindlist_foreground"
-                    />
+                    android:orientation="vertical">
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@mipmap/add_blindlist_foreground"
+                        />
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/delete_blindlist_foreground"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="320dp"
-            android:layout_height="100dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/border_blindlist_layout"
-            android:id="@+id/user2"
-            >
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@mipmap/img_blindlist_foreground"
-                />
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="match_parent"
-                android:id="@+id/nameUser2"
-                android:text="User 2 "
-                android:padding="10dp"
-                android:textColor="#3DADFF"
-                android:textSize="18dp"
-                android:gravity="left|center"
-                />
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@mipmap/add_blindlist_foreground"
+                android:layout_width="320dp"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/border_blindlist_layout"
+                android:id="@+id/user2"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@mipmap/img_blindlist_foreground"
                     />
-                <ImageButton
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/nameUser2"
+                    android:text="User 2 "
+                    android:padding="10dp"
+                    android:textColor="#3DADFF"
+                    android:textSize="18dp"
+                    android:gravity="left|center"
+                    />
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/delete_blindlist_foreground"
-                    />
+                    android:orientation="vertical">
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@mipmap/add_blindlist_foreground"
+                        />
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/delete_blindlist_foreground"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="320dp"
-            android:layout_height="100dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/border_blindlist_layout"
-            android:id="@+id/user3"
-            >
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@mipmap/img_blindlist_foreground"
-                />
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="match_parent"
-                android:id="@+id/nameUser3"
-                android:text="User 3 "
-                android:padding="10dp"
-                android:textColor="#3DADFF"
-                android:textSize="18dp"
-                android:gravity="left|center"
-                />
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@mipmap/add_blindlist_foreground"
+                android:layout_width="320dp"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/border_blindlist_layout"
+                android:id="@+id/user3"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@mipmap/img_blindlist_foreground"
                     />
-                <ImageButton
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/nameUser3"
+                    android:text="User 3 "
+                    android:padding="10dp"
+                    android:textColor="#3DADFF"
+                    android:textSize="18dp"
+                    android:gravity="left|center"
+                    />
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/delete_blindlist_foreground"
-                    />
+                    android:orientation="vertical">
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@mipmap/add_blindlist_foreground"
+                        />
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/delete_blindlist_foreground"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="320dp"
-            android:layout_height="100dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/border_blindlist_layout"
-            android:id="@+id/user4"
-            >
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@mipmap/img_blindlist_foreground"
-                />
-            <TextView
-                android:layout_width="170dp"
-                android:layout_height="match_parent"
-                android:id="@+id/nameUser4"
-                android:text="User4 "
-                android:padding="10dp"
-                android:textColor="#3DADFF"
-                android:textSize="18dp"
-                android:gravity="left|center"
-                />
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@mipmap/add_blindlist_foreground"
+                android:layout_width="320dp"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/border_blindlist_layout"
+                android:id="@+id/user4"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@mipmap/img_blindlist_foreground"
                     />
-                <ImageButton
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/nameUser4"
+                    android:text="User4 "
+                    android:padding="10dp"
+                    android:textColor="#3DADFF"
+                    android:textSize="18dp"
+                    android:gravity="left|center"
+                    />
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/delete_blindlist_foreground"
-                    />
+                    android:orientation="vertical">
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@mipmap/add_blindlist_foreground"
+                        />
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/delete_blindlist_foreground"
+                        />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+
 
     </LinearLayout>
-
-
-
 
 </layout>
