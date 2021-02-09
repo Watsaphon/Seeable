@@ -34,7 +34,7 @@ import java.util.*
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
-     private lateinit var sharedPrefBlindId : SharedPreferences
+    private lateinit var sharedPrefBlindId : SharedPreferences
 
     private lateinit var language : String
     private lateinit var phone : String

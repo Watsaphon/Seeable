@@ -27,6 +27,7 @@ class AccountSettingDeleteFragment : Fragment() {
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
+    private lateinit var sharedPrefBlindId : SharedPreferences
 
     private lateinit var phone  : String
     private lateinit var password  : String
@@ -44,6 +45,7 @@ class AccountSettingDeleteFragment : Fragment() {
         sharedPrefID = requireActivity().getSharedPreferences("value", 0)
         sharedPrefDisplayName= requireActivity().getSharedPreferences("value", 0)
         sharedPrefUserType = requireActivity().getSharedPreferences("value", 0)
+        sharedPrefBlindId = requireActivity().getSharedPreferences("value", 0)
 
         phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
         password = sharedPrefPhone.getString("stringKeyPassword", "not found!").toString()
@@ -92,18 +94,21 @@ class AccountSettingDeleteFragment : Fragment() {
         val editorPassword = sharedPrefPassword.edit()
         val editorDisplay = sharedPrefDisplayName.edit()
         val editorUserType = sharedPrefUserType.edit()
+        val editorBlindId = sharedPrefBlindId.edit()
 
         editorID.putString("stringKey2", "not found!")
         editorPhone.putString("stringKeyPhone", "not found!")
         editorPassword.putString("stringKeyPassword", "not found!")
         editorDisplay.putString("stringKeyDisplayName", "not found!")
         editorUserType.putString("stringKeyType", "not found!")
+        editorBlindId.putString("stringKeyBlindId", "not found!")
 
         editorID.apply()
         editorPhone.apply()
         editorPassword.apply()
         editorDisplay.apply()
         editorUserType.apply()
+        editorBlindId.apply()
 
         val intent = Intent(activity, LoginScreen::class.java)
         startActivity(intent)

@@ -55,25 +55,6 @@ class SettingCaretakerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding?.apply {
-//            lifecycleOwner = viewLifecycleOwner
-//            viewModel = caretakerViewModel
-//            settingCaretakerFragment = this@SettingCaretakerFragment
-//
-////            viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
-////                if(size == 3 ) {
-////                    phoneUser1 = phone[0].toString()
-////                    phoneUser2 = phone[1].toString()
-////                    phoneUser3 = phone[2].toString()
-////                }
-////            })
-//        }
-//        viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
-//
-//                val phoneUser1 = phone[0].toString()
-//
-//        })
-
         binding.backButton.setOnClickListener{
             requireActivity().onBackPressed()
         }
@@ -86,13 +67,13 @@ class SettingCaretakerFragment : Fragment() {
         binding.blindlistBtn.setOnClickListener{view : View  ->
             view.findNavController().navigate(R.id.action_settingCaretakerFragment_to_blindListFragment)
         }
-//
-//        binding.accountBtn.setOnClickListener{view : View  ->
-//            view.findNavController().navigate(R.id.action_settingCaretakerFragment_to_accountSettingFragment)
-//        }
+
+        binding.accountBtn.setOnClickListener{view : View  ->
+            view.findNavController().navigate(R.id.action_settingCaretakerFragment_to_accountSettingFragment)
+        }
 
         binding.logoutBtn.setOnClickListener{
-//        (activity as MainActivityPerson).gotoLogout()
+        (activity as MainActivityPerson).gotoLogout()
 //      /**or call with this*/   MainActivityPerson().gotoLogout()
         }
     }

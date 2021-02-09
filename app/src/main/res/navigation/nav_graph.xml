@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/caretakerFragment">
-
     <fragment
         android:id="@+id/caretakerFragment"
         android:name="com.estazo.project.seeable.app.caretaker.CaretakerFragment"
@@ -23,11 +22,48 @@
         <action
             android:id="@+id/action_settingCaretakerFragment_to_blindListFragment"
             app:destination="@id/blindListFragment" />
+        <action
+            android:id="@+id/action_settingCaretakerFragment_to_accountSettingFragment"
+            app:destination="@id/accountSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/blindListFragment"
         android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListFragment"
         android:label="BlindListFragment"
         tools:layout="@layout/fragment_blind_list"
+        />
+    <fragment
+        android:id="@+id/accountSettingFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingFragment"
+        android:label="AccountSettingFragment"
+        tools:layout="@layout/fragment_account_setting"
+        >
+        <action
+            android:id="@+id/action_accountSettingFragment_to_accountSettingChangePasswordFragment"
+            app:destination="@id/accountSettingChangePasswordFragment" />
+        <action
+            android:id="@+id/action_accountSettingFragment_to_accountSettingDeleteFragment"
+            app:destination="@id/accountSettingDeleteFragment" />
+        <action
+            android:id="@+id/action_accountSettingFragment_to_accountSettingEditFragment"
+            app:destination="@id/accountSettingEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountSettingChangePasswordFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingChangePasswordFragment"
+        android:label="AccountSettingChangePasswordFragment"
+        tools:layout="@layout/fragment_account_setting_change_password"
+        />
+    <fragment
+        android:id="@+id/accountSettingDeleteFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingDeleteFragment"
+        android:label="AccountSettingDeleteFragment"
+        tools:layout="@layout/fragment_account_setting_delete"
+        />
+    <fragment
+        android:id="@+id/accountSettingEditFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingEditFragment"
+        android:label="AccountSettingEditFragment"
+        tools:layout="@layout/fragment_account_setting_edit"
         />
 </navigation>

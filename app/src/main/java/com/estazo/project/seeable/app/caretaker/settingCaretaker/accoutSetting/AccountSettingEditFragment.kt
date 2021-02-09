@@ -46,7 +46,7 @@ class AccountSettingEditFragment : Fragment() {
             requireActivity().onBackPressed()
       }
 
-      binding.saveButton.setOnClickListener {view : View ->
+      binding.saveButton.setOnClickListener {
           editname =  binding.editDisplayName.text.toString()
           Log.i("test","$editname")
           if(editname.isEmpty()){
@@ -65,6 +65,7 @@ class AccountSettingEditFragment : Fragment() {
       }
 
     return binding.root
+
     }
 
     /**receive value from realtime database (users_blind) and check Login */

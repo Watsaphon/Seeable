@@ -44,8 +44,6 @@ import com.google.firebase.database.ValueEventListener
 //     private val viewModel : CaretakerViewModel by activityViewModels()
 
 
-
-
     private val blindListViewModel : BlindListViewModel  by activityViewModels()
 
         private lateinit var viewModel : CaretakerViewModel
