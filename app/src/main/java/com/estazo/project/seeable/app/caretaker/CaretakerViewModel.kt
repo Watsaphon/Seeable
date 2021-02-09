@@ -20,35 +20,31 @@ class CaretakerViewModel() : ViewModel() {
 
     // The current user
      val _currentUser = MutableLiveData<Int>()
-    val currentUser : LiveData<Int>
-        get() = _currentUser
-
-    // The current bpm
-    private val _bpm = MutableLiveData<Int>()
-    val bpm: LiveData<Int>
-        get() = _bpm
+//    val currentUser : LiveData<Int>
+//        get() = _currentUser
 
     // The current phone of blind user
     val _currentBlindPhone = MutableLiveData<String>()
-    val currentBlindPhone : LiveData<String>
-        get() = _currentBlindPhone
+//    val currentBlindPhone : LiveData<String>
+//        get() = _currentBlindPhone
 
+//    // The current bpm
+//    private val _bpm = MutableLiveData<Int>()
+//    val bpm: LiveData<Int>
+//        get() = _bpm
 
-    val _test =  MutableLiveData<String>()
-    val test : LiveData<String>
-        get() = _test
+    var  userList = MutableLiveData<List<String>>()
+
 
     init {
-        _test.value = "Test ja"
-       _bpm.value = 0
+        userList.value = listOf()
         userTel.value = listOf()
         userDisplay.value = listOf()
         _currentUser.value = -1
         _currentBlindPhone.value = "-"
         Log.i("CaretakerViewModel", "CaretakerViewModel created!")
-        Log.i("testPhone", "userTel : $userTel , userDisplay : $userDisplay ,test : $test ")
+        Log.i("testPhone", "userTel : $userTel , userDisplay : $userDisplay ")
     }
-
 
 
     fun fetchSpinnerItems(): LiveData<List<String>> {
@@ -60,17 +56,17 @@ class CaretakerViewModel() : ViewModel() {
         return userTel
     }
 
-    fun getDisplayUser() : LiveData<List<String>>{
-        return userDisplay
-    }
-
-    fun setMsgCommunicator(msg:String){
-        message.value = msg
-    }
-
-    fun sendMessage(text: String) {
-        message.value = text
-    }
+//    fun getDisplayUser() : LiveData<List<String>>{
+//        return userDisplay
+//    }
+//
+//    fun setMsgCommunicator(msg:String){
+//        message.value = msg
+//    }
+//
+//    fun sendMessage(text: String) {
+//        message.value = text
+//    }
 
     fun queryUser(phone: String) {
         var displayUser1 = "-"
@@ -85,6 +81,7 @@ class CaretakerViewModel() : ViewModel() {
                   displayUser2 = snapshot.child("user2").value.toString()
                   displayUser3 = snapshot.child("user3").value.toString()
                   displayUser4 = snapshot.child("user4").value.toString()
+                 userList.value = listOf(displayUser1,displayUser2,displayUser3,displayUser4)
                  Log.i("testListOf()","size : $ , displayUser1 :$displayUser1 , displayUser :$displayUser2 , displayUser3 :$displayUser3 , displayUser4 :$displayUser4")
                  val splitFBUser1 = displayUser1.split("/".toRegex()).toTypedArray()
                  val phoneFBUser1 = splitFBUser1[0]
@@ -99,7 +96,7 @@ class CaretakerViewModel() : ViewModel() {
                  val phoneFBUser4 = splitFBUser4[0]
                  val nameFBUser4 = splitFBUser4[1]
                  Log.i("testListOf()","size : $ , nameFBUser1 :$nameFBUser1 , nameFBUser2 :$nameFBUser2 , nameFBUser3 :$nameFBUser3 , nameFBUser4 :$nameFBUser4")
-//                 /**add user and set view on UI */
+                 /**add user and set view on UI */
                  when{
                      /** set 1 user */
                      displayUser4 == "-/-" && displayUser3 == "-/-" && displayUser2 == "-/-" && displayUser1 != "-/-" ->{
@@ -126,10 +123,6 @@ class CaretakerViewModel() : ViewModel() {
                          Log.i("testListOf()4","displayUser1 :$displayUser1 , displayUser :$displayUser2 , displayUser3 :$displayUser3 , displayUser4 :$displayUser4")
                      }
                  }
-                 val displayNameThread = Thread(DisplayNameRunnable(phone,phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4,nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4))
-                 displayNameThread.start()
-                 val updateListThread = Thread(UpdateListBlindUserRunnable(phone))
-                 updateListThread.start()
              }
              override fun onCancelled(databaseError: DatabaseError) {
              }

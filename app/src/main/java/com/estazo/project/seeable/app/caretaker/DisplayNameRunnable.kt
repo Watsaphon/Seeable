@@ -9,79 +9,92 @@ import com.google.firebase.database.ValueEventListener
 
 /** When Blind User change display name.Runnable will also change blind name in Caretaker section */
 
-class DisplayNameRunnable(val phone : String, val phoneBlindUser1 : String , val phoneBlindUser2 : String , val phoneBlindUser3 : String , val phoneBlindUser4 : String ,
-                          val displayBlindUser1 : String, val displayBlindUser2 : String, val displayBlindUser3 : String, val displayBlindUser4 : String ) : Runnable {
+//class DisplayNameRunnable(val phone : String, val phoneBlindUser1 : String , val phoneBlindUser2 : String , val phoneBlindUser3 : String , val phoneBlindUser4 : String ,
+//                          val displayBlindUser1 : String, val displayBlindUser2 : String, val displayBlindUser3 : String, val displayBlindUser4 : String ) : Runnable {
+class DisplayNameRunnable(val phone : String, val user : List<String> ) : Runnable {
 
-    private var firebaseBlind1 = FirebaseDatabase.getInstance().getReference("users_blind/$phoneBlindUser1")
-    private var firebaseBlind2 = FirebaseDatabase.getInstance().getReference("users_blind/$phoneBlindUser2")
-    private var firebaseBlind3 = FirebaseDatabase.getInstance().getReference("users_blind/$phoneBlindUser3")
-    private var firebaseBlind4 = FirebaseDatabase.getInstance().getReference("users_blind/$phoneBlindUser4")
+    private val splitFBUser1 = user[0].split("/".toRegex()).toTypedArray()
+    private val phoneFBUser1 = splitFBUser1[0]
+    private val nameFBUser1 = splitFBUser1[1]
+
+    private val splitFBUser2 = user[1].split("/".toRegex()).toTypedArray()
+    private val phoneFBUser2 = splitFBUser2[0]
+    private val nameFBUser2 = splitFBUser2[1]
+
+    private val splitFBUser3 = user[2].split("/".toRegex()).toTypedArray()
+    private val phoneFBUser3 = splitFBUser3[0]
+    private val nameFBUser3 = splitFBUser3[1]
+
+    private val splitFBUser4 = user[3].split("/".toRegex()).toTypedArray()
+    private val phoneFBUser4 = splitFBUser4[0]
+    private val nameFBUser4 = splitFBUser4[1]
+
+    private var firebaseBlind1 = FirebaseDatabase.getInstance().getReference("users_blind/$phoneFBUser1")
+    private var firebaseBlind2 = FirebaseDatabase.getInstance().getReference("users_blind/$phoneFBUser2")
+    private var firebaseBlind3 = FirebaseDatabase.getInstance().getReference("users_blind/$phoneFBUser3")
+    private var firebaseBlind4 = FirebaseDatabase.getInstance().getReference("users_blind/$phoneFBUser4")
 
     override fun run() {
-        Log.i("checkRunAll","run()-> phone , $phone , phoneBlindUser1 : $phoneBlindUser1 ,displayBlindUser1 : $displayBlindUser1 ")
+        Log.i("checkRunAll","run()-> phone , $phone , phoneFBUser1 : $phoneFBUser1 ,nameFBUser1 : $nameFBUser1 ")
         firebaseBlind1.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     var displayName = snapshot.child("displayName").value.toString()
-                    Log.i("checkRun1","snapshot.exists() , displayName : $displayName ,displayBlindUser1 : $displayBlindUser1 ")
-                    if(displayBlindUser1 != displayName){
+                    Log.i("checkRun1","snapshot.exists() , displayName : $displayName ,nameFBUser1 : $nameFBUser1 ")
+                    if(nameFBUser1 != displayName){
                         val ref = FirebaseDatabase.getInstance().reference
-                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/Blind/user1" to "$phoneBlindUser1/$displayName")
+                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/Blind/user1" to "$phoneFBUser1/$displayName")
                         ref.updateChildren(childUpdates)
-                        Log.i("checkRun1","if call , displayName : $displayName ,displayBlindUser1 : $displayBlindUser1 ")
+                        Log.i("checkRun1","if call , displayName : $displayName ,nameFBUser1 : $nameFBUser1 ")
                     }
                 }
             }
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
+            override fun onCancelled(databaseError: DatabaseError) {}
         })
         firebaseBlind2.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     var displayName = snapshot.child("displayName").value.toString()
-                    Log.i("checkRun2","snapshot.exists() , displayName : $displayName ,displayBlindUser2 : $displayBlindUser2 ")
-                    if(displayBlindUser2 != displayName){
+                    Log.i("checkRun2","snapshot.exists() , displayName : $displayName ,nameFBUser2 : $nameFBUser2 ")
+                    if(nameFBUser2 != displayName){
                         val ref = FirebaseDatabase.getInstance().reference
-                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/Blind/user2" to "$phoneBlindUser2/$displayName")
+                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/Blind/user2" to "$phoneFBUser2/$displayName")
                         ref.updateChildren(childUpdates)
-                        Log.i("checkRun2","if call , displayName : $displayName ,displayBlindUser1 : $displayBlindUser2 ")
+                        Log.i("checkRun2","if call , displayName : $displayName ,nameFBUser2 : $nameFBUser2 ")
                     }
                 }
             }
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
+            override fun onCancelled(databaseError: DatabaseError) {}
         })
         firebaseBlind3.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     var displayName = snapshot.child("displayName").value.toString()
-                    Log.i("checkRun3","snapshot.exists() , displayName : $displayName ,displayBlindUser3 : $displayBlindUser3 ")
-                    if(displayBlindUser3 != displayName){
+                    Log.i("checkRun3","snapshot.exists() , displayName : $displayName ,nameFBUser3 : $nameFBUser3 ")
+                    if(nameFBUser3 != displayName){
                         val ref = FirebaseDatabase.getInstance().reference
-                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/Blind/user3" to "$phoneBlindUser3/$displayName")
+                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/Blind/user3" to "$phoneFBUser3/$displayName")
                         ref.updateChildren(childUpdates)
-                        Log.i("checkRun3","if call , displayName : $displayName ,displayBlindUser3 : $displayBlindUser3 ")
+                        Log.i("checkRun3","if call , displayName : $displayName ,nameFBUser3 : $nameFBUser3 ")
                     }
                 }
             }
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
+            override fun onCancelled(databaseError: DatabaseError) {}
         })
         firebaseBlind4.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     var displayName = snapshot.child("displayName").value.toString()
-                    Log.i("checkRun4","snapshot.exists() , displayName : $displayName ,displayBlindUser4 : $displayBlindUser4 ")
-                    if(displayBlindUser4 != displayName){
+                    Log.i("checkRun4","snapshot.exists() , displayName : $displayName ,nameFBUser4 : $nameFBUser4 ")
+                    if(nameFBUser4 != displayName){
                         val ref = FirebaseDatabase.getInstance().reference
-                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/Blind/user4" to "$phoneBlindUser4/$displayName")
+                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/Blind/user4" to "$phoneFBUser4/$displayName")
                         ref.updateChildren(childUpdates)
-                        Log.i("checkRun4","if call , displayName : $displayName ,displayBlindUser4 : $displayBlindUser4 ")
+                        Log.i("checkRun4","if call , displayName : $displayName ,nameFBUser4 : $nameFBUser4 ")
                     }
                 }
             }
-            override fun onCancelled(databaseError: DatabaseError) {
-            }
+            override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 }

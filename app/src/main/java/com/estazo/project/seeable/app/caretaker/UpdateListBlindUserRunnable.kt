@@ -8,7 +8,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 /** When Blind User in Caretaker section deleted  Runnable will sort user1-4 */
-class UpdateListBlindUserRunnable(val phone : String  ) : Runnable {
+class UpdateListBlindUserRunnable(val phone : String ) : Runnable {
 
     var firebaseRef = FirebaseDatabase.getInstance().getReference("users_caretaker/$phone/Blind")
 

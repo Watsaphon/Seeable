@@ -176,9 +176,20 @@ import com.google.firebase.database.ValueEventListener
          viewModel.userDisplay.observe(viewLifecycleOwner, Observer<List<String>>{user ->
              Log.i("resume","user : $user")
              if(user.isNotEmpty()) {
-                 Log.i("ViewModel","onResume not empty ja")
+                 Log.i("ViewModel","userDisplay not empty ja")
                  updateUserNameToBlindList(user)
                  binding.loading.visibility = View.GONE
+             }
+         })
+
+         viewModel.userList.observe(viewLifecycleOwner, Observer<List<String>>{user ->
+             Log.i("resume","user : $user")
+             if(user.isNotEmpty()) {
+                 Log.i("ViewModel","userList not empty ja")
+                 val displayNameThread = Thread(DisplayNameRunnable(phone,user))
+                 displayNameThread.start()
+                 val updateListThread = Thread(UpdateListBlindUserRunnable(phone))
+                 updateListThread.start()
              }
          })
      }
