@@ -184,8 +184,8 @@ import com.google.firebase.database.ValueEventListener
              Log.i("resume","user : $user")
              if(user.isNotEmpty()) {
                  Log.i("ViewModel","userList not empty ja")
-                 val displayNameThread = Thread(DisplayNameRunnable(phone,user))
-                 displayNameThread.start()
+//                 val displayNameThread = Thread(DisplayNameRunnable(phone,user))
+//                 displayNameThread.start()
                  val updateListThread = Thread(UpdateListBlindUserRunnable(phone))
                  updateListThread.start()
              }

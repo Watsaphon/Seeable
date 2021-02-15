@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app.caretaker.settingCaretaker
+    package com.estazo.project.seeable.app.caretaker.settingCaretaker
 
 import android.content.Context
 import android.content.SharedPreferences

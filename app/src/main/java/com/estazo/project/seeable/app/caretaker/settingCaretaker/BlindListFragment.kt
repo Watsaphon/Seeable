@@ -5,8 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
-import androidx.databinding.BindingAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -40,21 +39,12 @@ class BlindListFragment : Fragment() {
 //        val fragmentBinding = FragmentBlindListBinding.inflate(inflater, container, false)
 //        binding = fragmentBinding
         Log.i("BlindListFragment", "onCreateView call")
-//        activity?.let { activity ->
-//            caretakerViewModel = ViewModelProviders.of(activity).get(CaretakerViewModel::class.java)
-//        }
         binding.backButton.setOnClickListener{
             requireActivity().onBackPressed()
         }
-
-//        val model = ViewModelProvider(requireActivity()).get(CaretakerViewModel::class.java)
-//        caretakerViewModel.message.observe(viewLifecycleOwner, Observer {message ->
-//            val text = message.toString()
-//            Log.i("BlindListFragment","text : $text")
-//        })
-
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i("BlindListFragment", "onViewCreated call")
@@ -65,15 +55,6 @@ class BlindListFragment : Fragment() {
 //            viewModel = caretakerViewModel
 //            // Assign the fragment
 //            blindListFragment = this@BlindListFragment
-//
-//           viewModel?.userDisplay?.observe(viewLifecycleOwner, Observer<List<Any>>{user ->
-//                val size = user.size
-//                Log.i("ViewModel","size : $size , user : $user")
-//                if(size >= 1){binding.nameUser1.text = user[0].toString()}
-//                if(size >= 2){binding.nameUser2.text = user[1].toString()}
-//                if(size >= 3){binding.nameUser3.text = user[2].toString()}
-//                if(size == 4){binding.nameUser4.text = user[3].toString()}
-//            })
 //        }
     }
 
@@ -82,20 +63,32 @@ class BlindListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         Log.i("BlindListFragment", "onActivityCreated call")
         blindListViewModel.listUser.observe(viewLifecycleOwner, Observer{user ->
+            var numUser : Int = 0
             val size = user.size
-            Log.i("ViewModel","size : $size , user : $user")
                 if(size >= 1){
                     binding.user1.visibility = View.VISIBLE
-                    binding.nameUser1.text = user[0]}
+                    binding.nameUser1.text = user[0]
+                    ++numUser
+                }
                 if(size >= 2){
                     binding.user2.visibility = View.VISIBLE
-                    binding.nameUser2.text = user[1]}
+                    binding.nameUser2.text = user[1]
+                    ++numUser
+                }
                 if(size >= 3){
                     binding.user3.visibility = View.VISIBLE
-                    binding.nameUser3.text = user[2]}
+                    binding.nameUser3.text = user[2]
+                    ++numUser
+                }
                 if(size == 4){
                     binding.user4.visibility = View.VISIBLE
-                    binding.nameUser4.text = user[3]}
+                    binding.nameUser4.text = user[3]
+                    ++numUser
+                }
+                if(numUser == 4){
+                binding.addButton.visibility = View.GONE
+                }
+            Log.i("ViewModel","size : $size , user : $user , numUser : $numUser")
         })
     }
     override fun onStart() {
@@ -126,6 +119,4 @@ class BlindListFragment : Fragment() {
         super.onDetach()
         Log.i("BlindListFragment", "onDetach call")
     }
-
-
 }
