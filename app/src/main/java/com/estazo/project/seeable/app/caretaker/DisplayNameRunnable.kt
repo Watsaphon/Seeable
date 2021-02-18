@@ -8,9 +8,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 /** When Blind User change display name.Runnable will also change blind name in Caretaker section */
-
-//class DisplayNameRunnable(val phone : String, val phoneBlindUser1 : String , val phoneBlindUser2 : String , val phoneBlindUser3 : String , val phoneBlindUser4 : String ,
-//                          val displayBlindUser1 : String, val displayBlindUser2 : String, val displayBlindUser3 : String, val displayBlindUser4 : String ) : Runnable {
 class DisplayNameRunnable(val phone : String, val user : List<String> ) : Runnable {
 
     private val splitFBUser1 = user[0].split("/".toRegex()).toTypedArray()
