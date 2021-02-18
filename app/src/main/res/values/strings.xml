@@ -15,7 +15,6 @@
     <string name="person_button_desc">Caretaker</string>
     <string name="loading_spinner">Loading...</string>
 
-
     <!--MainActivity-->
     <string name="button_self_navigation">Self-Navigate</string>
     <string name="button_caretaker_navigation">Caretaker-Navigate</string>
@@ -74,6 +73,21 @@
     <!--BlindListCaretaker-->
     <string name="header_BlindListCaretaker">Blind list</string>
     <string name="add_BlindListCaretaker">+ ADD</string>
+
+    <!--AddBlindUser-->
+    <string name="header_AddBlindUser">Add new blind</string>
+    <string name="button_AddBlindUser">Send OTP</string>
+    <string name="empty_AddBlindUser">Please enter phone</string>
+    <string name="txt_AddBlindUser">To add new blind, type blind’s number to receive 6-digit OTP code via SMS.
+        Then enter the OTP code to confirm request.</string>
+
+    <!--VerificationBlindFragment-->
+    <string name="header_VerificationBlindFragment">OTP Confirmation</string>
+    <string name="subHeader_VerificationBlindFragment">Please enter 6 digit OTP from blind’s phone to confirm to add new blind</string>
+    <string name="button_VerificationBlindFragment">Submit</string>
+
+    <!--BlindInformationFragment-->
+    <string name="header_BlindInformationFragment">Blind Information</string>
 
     <!--AccountBlind-->
     <string name="header_AccountBlind">Account Setting</string>
@@ -248,6 +262,8 @@
     <string name="content_page_4">The app has buttons to let blinds can use for call, navigate or send event to caretaker.</string>
     <string name="subheading_slide_page_5">Caretakers receive event or status of blind person that in cover</string>
     <string name="content_page_5">Caretakers can see data and event that sent from blinds and response or help them.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

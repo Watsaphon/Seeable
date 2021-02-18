@@ -26,6 +26,7 @@ class VerificationOTP : AppCompatActivity() {
     private lateinit var digit_5: EditText
     private lateinit var digit_6: EditText
     private lateinit var tel: TextView
+
     private lateinit var codeOTP : String
     private lateinit var  phoneNext : String
 

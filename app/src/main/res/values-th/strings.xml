@@ -74,6 +74,20 @@
     <string name="header_BlindListCaretaker">รายการคนตาบอด</string>
     <string name="add_BlindListCaretaker">+ เพิ่ม</string>
 
+    <!--AddBlindUser-->
+    <string name="header_AddBlindUser">เพิ่มคนตาบอดรายใหม่</string>
+    <string name="button_AddBlindUser">ส่ง OTP</string>
+    <string name="empty_AddBlindUser">กรุณากรอกเเบอร์โทรศัพท์</string>
+    <string name="txt_AddBlindUser">เพื่อเพิ่มคนตาบอดรายใหม่ กรุณรากรอกเบอร์โทรศัพท์ของคนตาบอดเพื่อรับเลขรหัส6หลักผ่านทางข้อความ หลังจากนั้นกรุณากรอกรหัส OTP เพื่อยืนยัน</string>
+
+    <!--VerificationBlindFragment-->
+    <string name="header_VerificationBlindFragment">ยืนยันรหัส OTP</string>
+    <string name="subHeader_VerificationBlindFragment">กรุณาใส่รัหสผ่าน6หลักบนโทรศัพท์เพื่อยืนยันการเพิ่มคนตาบอด</string>
+    <string name="button_VerificationBlindFragment">ยืนยัน</string>
+
+    <!--BlindInformationFragment-->
+    <string name="header_BlindInformationFragment">ข้อมูลคนตาบอด</string>
+
     <!--AccountBlind-->
     <string name="header_AccountBlind">ตั้งค่าบัญชีผู้ใช้งาน</string>
     <string name="name_AccountBlind">ชื่อผู้ใช้งาน: </string>

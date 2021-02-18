@@ -56,18 +56,6 @@ class CaretakerViewModel() : ViewModel() {
         return userTel
     }
 
-//    fun getDisplayUser() : LiveData<List<String>>{
-//        return userDisplay
-//    }
-//
-//    fun setMsgCommunicator(msg:String){
-//        message.value = msg
-//    }
-//
-//    fun sendMessage(text: String) {
-//        message.value = text
-//    }
-
     fun queryUser(phone: String) {
         var displayUser1 = "-"
         var displayUser2 = "-"

@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app.caretaker.settingCaretaker
+package com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

@@ -11,17 +11,10 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.SplashScreen
-import com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListViewModel
 import com.estazo.project.seeable.app.login.LoginScreen
 import java.util.*
 
@@ -182,7 +175,7 @@ import java.util.*
         startActivity(intent)
     }
 
-    private fun closeKeyboard() {
+    fun closeKeyboard() {
         val view = this.currentFocus
         if (view != null) {
             val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

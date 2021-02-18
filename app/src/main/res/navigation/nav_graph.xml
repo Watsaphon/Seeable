@@ -28,10 +28,14 @@
     </fragment>
     <fragment
         android:id="@+id/blindListFragment"
-        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.BlindListFragment"
         android:label="BlindListFragment"
         tools:layout="@layout/fragment_blind_list"
-        />
+        >
+        <action
+            android:id="@+id/action_blindListFragment_to_addBlindUserFragment"
+            app:destination="@id/addBlindUserFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountSettingFragment"
         android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingFragment"
@@ -65,5 +69,31 @@
         android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingEditFragment"
         android:label="AccountSettingEditFragment"
         tools:layout="@layout/fragment_account_setting_edit"
+        />
+    <fragment
+        android:id="@+id/addBlindUserFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.AddBlindUserFragment"
+        android:label="AddBlindUserFragment"
+        tools:layout="@layout/fragment_add_blind_user"
+        >
+        <action
+            android:id="@+id/action_addBlindUserFragment_to_verificationBlindFragment"
+            app:destination="@id/verificationBlindFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationBlindFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.VerificationBlindFragment"
+        android:label="VerificationBlindFragment"
+        tools:layout="@layout/fragment_verification_blind"
+        >
+        <action
+            android:id="@+id/action_verificationBlindFragment_to_caretakerFragment"
+            app:destination="@id/caretakerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/blindInformationFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.BlindInformationFragment"
+        android:label="BlindInformationFragment"
+        tools:layout="@layout/fragment_blind_information"
         />
 </navigation>

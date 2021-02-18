@@ -10,22 +10,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.caretaker.settingCaretaker.BlindListViewModel
+import com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.BlindListViewModel
 import com.estazo.project.seeable.app.databinding.FragmentCaretakerBinding
 import com.estazo.project.seeable.app.device.BPMRunnable
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 
  class CaretakerFragment : Fragment() {
@@ -44,7 +37,7 @@ import com.google.firebase.database.ValueEventListener
 //     private val viewModel : CaretakerViewModel by activityViewModels()
 
 
-    private val blindListViewModel : BlindListViewModel  by activityViewModels()
+    private val blindListViewModel : BlindListViewModel by activityViewModels()
 
         private lateinit var viewModel : CaretakerViewModel
 

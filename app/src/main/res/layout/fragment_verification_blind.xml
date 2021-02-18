@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".register.VerificationOTP">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".caretaker.settingCaretaker.blindList.VerificationBlindFragment">
 
-    <RelativeLayout
+        <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@color/colorAccent"
@@ -34,7 +36,7 @@ tools:context=".register.VerificationOTP">
             android:layout_marginTop="30dp"
             android:layout_marginEnd="169dp"
             android:fontFamily="@font/roboto"
-            android:text="@string/header_VerifyOTP"
+            android:text="@string/header_VerificationBlindFragment"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -71,7 +73,7 @@ tools:context=".register.VerificationOTP">
             android:layout_marginEnd="59dp"
             android:fontFamily="@font/roboto"
             android:gravity="center"
-            android:text="@string/subheader_VerifyOTP"
+            android:text="@string/subHeader_VerificationBlindFragment"
             android:textColor="#000000"
             android:textStyle="bold" />
 
@@ -200,18 +202,18 @@ tools:context=".register.VerificationOTP">
     </LinearLayout>
 
         <Button
-            android:id="@+id/veify_otp_button"
+            android:id="@+id/verify_otp_button"
             android:layout_width="280dp"
             android:layout_height="48dp"
             android:background="@drawable/btn_rectangle_blue"
             android:fontFamily="@font/roboto"
-            android:text="@string/button_VerifyOTP"
+            android:text="@string/button_VerificationBlindFragment"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="40dp"
             android:layout_gravity="center"
-         />
-
-</LinearLayout>
+            />
+    </LinearLayout>
+</layout>

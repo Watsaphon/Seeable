@@ -1,15 +1,15 @@
-package com.estazo.project.seeable.app.caretaker.settingCaretaker
+package com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.caretaker.CaretakerViewModel
 import com.estazo.project.seeable.app.databinding.FragmentBlindListBinding
@@ -18,7 +18,6 @@ import com.estazo.project.seeable.app.databinding.FragmentBlindListBinding
 class BlindListFragment : Fragment() {
 
     private lateinit var binding : FragmentBlindListBinding
-
 
     private val blindListViewModel : BlindListViewModel by activityViewModels()
 
@@ -41,6 +40,9 @@ class BlindListFragment : Fragment() {
         Log.i("BlindListFragment", "onCreateView call")
         binding.backButton.setOnClickListener{
             requireActivity().onBackPressed()
+        }
+        binding.addButton.setOnClickListener{ view ->
+            view.findNavController().navigate(R.id.action_blindListFragment_to_addBlindUserFragment)
         }
         return binding.root
     }
