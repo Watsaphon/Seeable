@@ -21,10 +21,14 @@ class BlindListFragment : Fragment() {
 
     private val blindListViewModel : BlindListViewModel by activityViewModels()
 
-    private val caretakerViewModel: CaretakerViewModel by activityViewModels()
+//    private val caretakerViewModel: CaretakerViewModel by activityViewModels()
+
+    private val blindInfoViewModel : BlindInformationViewModel by activityViewModels()
 
 //    private var caretakerViewModel: CaretakerViewModel
 
+    private lateinit var selectPhone : String
+    private lateinit var selectUser : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +48,7 @@ class BlindListFragment : Fragment() {
         binding.addButton.setOnClickListener{ view ->
             view.findNavController().navigate(R.id.action_blindListFragment_to_addBlindUserFragment)
         }
+
         return binding.root
     }
 
@@ -92,6 +97,39 @@ class BlindListFragment : Fragment() {
                 }
             Log.i("ViewModel","size : $size , user : $user , numUser : $numUser")
         })
+        blindListViewModel.listUserPhone.observe(viewLifecycleOwner, Observer{phone ->
+            selectPhone = phone.toString()
+            Log.i("ViewModelBLF","selectPhone : $selectPhone , phone : $phone")
+        })
+
+        binding.editUser1.setOnClickListener{view ->
+            val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
+            val phone1 = phoneList[0].substring(1)
+            blindInfoViewModel.userNameBlind(binding.nameUser1.text.toString(),phone1)
+            Log.i("ViewModelBLF","phone1 : $phone1")
+            view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
+        }
+        binding.editUser2.setOnClickListener{view ->
+            val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
+            val phone2 = phoneList[1]
+            blindInfoViewModel.userNameBlind(binding.nameUser2.text.toString(),phone2)
+            view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
+            Log.i("ViewModelBLF","phone2 : $phone2")
+        }
+        binding.editUser3.setOnClickListener{view ->
+            val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
+            val phone3 = phoneList[2]
+            blindInfoViewModel.userNameBlind(binding.nameUser3.text.toString(),phone3)
+            view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
+            Log.i("ViewModelBLF","phone3 : $phone3")
+        }
+        binding.editUser4.setOnClickListener{view ->
+            val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
+            val phone4 = phoneList[3].substring(0,11)
+            blindInfoViewModel.userNameBlind(binding.nameUser4.text.toString(),phone4)
+            view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
+            Log.i("ViewModelBLF","phone4 : $phone4")
+        }
     }
     override fun onStart() {
         super.onStart()

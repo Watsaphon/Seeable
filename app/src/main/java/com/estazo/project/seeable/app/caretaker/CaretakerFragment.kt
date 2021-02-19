@@ -57,7 +57,6 @@ import com.estazo.project.seeable.app.device.BPMRunnable
      private lateinit var sharedPrefBlindId : SharedPreferences
      private lateinit var currentBlindId : String
 
-
 //     private var currentBlindPhone : String = "-"
 
      override fun onAttach(context: Context) {
@@ -173,12 +172,13 @@ import com.estazo.project.seeable.app.device.BPMRunnable
              }
          })
 
-         viewModel.userList.observe(viewLifecycleOwner, Observer<List<String>>{user ->
+         viewModel.userTel.observe(viewLifecycleOwner, Observer<List<String>>{user ->
              Log.i("resume","user : $user")
              if(user.isNotEmpty()) {
                  Log.i("ViewModel","userList not empty ja")
 //                 val displayNameThread = Thread(DisplayNameRunnable(phone,user))
 //                 displayNameThread.start()
+                 updateUserPhoneToBlindList(user)
                  val updateListThread = Thread(UpdateListBlindUserRunnable(phone))
                  updateListThread.start()
              }
@@ -211,114 +211,9 @@ import com.estazo.project.seeable.app.device.BPMRunnable
          blindListViewModel.updateUserName(user)
      }
 
+     private fun updateUserPhoneToBlindList(phone : List<String>) {
+         blindListViewModel.updateUserPhone(phone)
+     }
 
-//     private fun queryBlindUser(){
-////         sharedPrefPhone= requireActivity().getSharedPreferences("value", 0)
-////         phone  = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
-////
-////         var firebaseRef = FirebaseDatabase.getInstance().getReference("users_caretaker/$phone/Blind")
-////         firebaseRef.addValueEventListener(object : ValueEventListener {
-////             override fun onDataChange(snapshot: DataSnapshot) {
-////                 displayUser1 = snapshot.child("user1").value.toString()
-////                 displayUser2 = snapshot.child("user2").value.toString()
-////                 displayUser3 = snapshot.child("user3").value.toString()
-////                 displayUser4 = snapshot.child("user4").value.toString()
-////                 var size = viewModel.userTel.value!!.size
-////                 val splitFBUser1 = displayUser1.split("/".toRegex()).toTypedArray()
-////                 val phoneFBUser1 = splitFBUser1[0]
-////                 val nameFBUser1 = splitFBUser1[1]
-////                 val splitFBUser2 = displayUser2.split("/".toRegex()).toTypedArray()
-////                 val phoneFBUser2 = splitFBUser2[0]
-////                 val nameFBUser2 = splitFBUser2[1]
-////                 val splitFBUser3 = displayUser3.split("/".toRegex()).toTypedArray()
-////                 val phoneFBUser3 = splitFBUser3[0]
-////                 val nameFBUser3 = splitFBUser3[1]
-////                 val splitFBUser4 = displayUser4.split("/".toRegex()).toTypedArray()
-////                 val phoneFBUser4 = splitFBUser4[0]
-////                 val nameFBUser4 = splitFBUser4[1]
-////                 /**add user and set view on UI */
-////                 when{
-////                     /** set 1 user */
-////                     displayUser4 == "-/-" && displayUser3 == "-/-" && displayUser2 == "-/-" && displayUser1 != "-/-" ->{
-////                         binding.loading.visibility = View.GONE
-////                         viewModel.userDisplay.value = listOf(nameFBUser1)
-////                         viewModel.userTel.value = listOf(phoneFBUser1)
-////                         size = viewModel.userTel.value!!.size
-////                         viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{phone ->
-////                             if(size == 1){
-////                                 phoneUser1 = phone[0].toString()
-////                             }
-////                         })
-////                         updateUserNameToBlindList(listOf(nameFBUser1))
-////                         viewModel.getPhoneUser().removeObservers(viewLifecycleOwner)
-////                         Log.i("testListOf()1","size : $size  , user1 :$phoneUser1")
-////                     }
-////                     /** set 2 user */
-////                     displayUser4 == "-/-" && displayUser3 == "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-"->{
-////                         binding.loading.visibility = View.GONE
-////                         viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2)
-////                         viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2)
-////                         size = viewModel.userTel.value!!.size
-////                         viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{phone ->
-////                             if(size == 2){
-////                                 phoneUser1 = phone[0].toString()
-////                                 phoneUser2 = phone[1].toString()
-////                             }
-////                         })
-////                         updateUserNameToBlindList(listOf(nameFBUser1,nameFBUser2))
-////                         viewModel.getPhoneUser().removeObservers(viewLifecycleOwner)
-////                         Log.i("testListOf()2","size : $size  , user1 :$phoneUser1 , user2 :$phoneUser2")
-////                     }
-////                     /** set 3 user */
-////                     displayUser4 == "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-" ->{
-////                         binding.loading.visibility = View.GONE
-////                         viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3)
-////                         viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3)
-////                         size = viewModel.userTel.value!!.size
-////                         viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
-////                             if(size == 3 ) {
-////                                 phoneUser1 = phone[0].toString()
-////                                 phoneUser2 = phone[1].toString()
-////                                 phoneUser3 = phone[2].toString()
-////                             }
-////                         })
-////                         updateUserNameToBlindList(listOf(nameFBUser1,nameFBUser2,nameFBUser3))
-////                         viewModel.getPhoneUser().removeObservers(viewLifecycleOwner)
-//////                         viewModel.getPhoneUser().removeObservers(context as AppCompatActivity)
-////                         Log.i("testListOf()3 case3","size : $size , user1 :$phoneUser1 , user2 :$phoneUser2 , user3 :$phoneUser3")
-////                     }
-////                     /** set 4 user */
-////                     displayUser4 != "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-"  ->{
-////                         binding.loading.visibility = View.GONE
-////                         viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4)
-////                         viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4)
-//////                         blindListViewModel.userDisplay2.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4)
-////                         size = viewModel.userTel.value!!.size
-////                         viewModel.getPhoneUser().observe(viewLifecycleOwner, Observer<List<Any>>{ phone ->
-////                             if(size == 4 ) {
-////                                 phoneUser1 = phone[0].toString()
-////                                 phoneUser2 = phone[1].toString()
-////                                 phoneUser3 = phone[2].toString()
-////                                 phoneUser4 = phone[3].toString()
-////                             }
-////                         })
-////                         updateUserNameToBlindList(listOf(nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4))
-////                         viewModel.sendMessage("pass data complete")
-////                         viewModel.getPhoneUser().removeObservers(viewLifecycleOwner)
-//////                         viewModel.getPhoneUser().removeObservers(context as AppCompatActivity)
-////                         Log.i("testListOf()4 case4","size : $size , user1 :$phoneUser1 , user2 :$phoneUser2 , user3 :$phoneUser3 , user4 :$phoneUser4 ")
-////
-////                     }
-////                 }
-////                 val displayNameThread = Thread(DisplayNameRunnable(phone,phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4,nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4))
-////                 displayNameThread.start()
-////                 val updateListThread = Thread(UpdateListBlindUserRunnable(phone))
-////                 updateListThread.start()
-////                 Log.i("testListOf()final","size : $size")
-////             }
-////             override fun onCancelled(databaseError: DatabaseError) {
-////             }
-////         })
-//     }
 
  }

@@ -95,11 +95,13 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
                     <ImageButton
+                        android:id="@+id/editUser1"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@mipmap/add_blindlist_foreground"
                         />
                     <ImageButton
+                        android:id="@+id/deleteUser1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@mipmap/delete_blindlist_foreground"
@@ -138,11 +140,13 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
                     <ImageButton
+                        android:id="@+id/editUser2"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@mipmap/add_blindlist_foreground"
                         />
                     <ImageButton
+                        android:id="@+id/deleteUser2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@mipmap/delete_blindlist_foreground"
@@ -181,11 +185,13 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
                     <ImageButton
+                        android:id="@+id/editUser3"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@mipmap/add_blindlist_foreground"
                         />
                     <ImageButton
+                        android:id="@+id/deleteUser3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@mipmap/delete_blindlist_foreground"
@@ -224,11 +230,13 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
                     <ImageButton
+                        android:id="@+id/editUser4"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@mipmap/add_blindlist_foreground"
                         />
                     <ImageButton
+                        android:id="@+id/deleteUser4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@mipmap/delete_blindlist_foreground"

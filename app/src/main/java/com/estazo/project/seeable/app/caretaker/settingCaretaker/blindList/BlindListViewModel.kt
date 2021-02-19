@@ -10,17 +10,22 @@ class BlindListViewModel : ViewModel() {
     val updateUserNameEvent = SingleLiveEvent<List<String>>()
 
     var listUser = MutableLiveData<List<String>>()
-
+    var listUserPhone = MutableLiveData<List<String>>()
 
 
     init {
         listUser.value = listOf()
+        listUserPhone.value = listOf()
         Log.i("BlindListViewModel", "BlindListViewModel created!")
     }
 
     fun updateUserName(user : List<String>) {
-//        updateUserNameEvent.value = user
         listUser.value = user
+        Log.d("updateUserNameEvent","updateUserNameEvent : $updateUserNameEvent , listUser :$listUser")
+    }
+
+    fun updateUserPhone(userPhone : List<String>) {
+        listUserPhone.value = userPhone
         Log.d("updateUserNameEvent","updateUserNameEvent : $updateUserNameEvent , listUser :$listUser")
     }
 

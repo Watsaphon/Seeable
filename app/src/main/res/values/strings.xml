@@ -88,6 +88,12 @@
 
     <!--BlindInformationFragment-->
     <string name="header_BlindInformationFragment">Blind Information</string>
+    <string name="name_BlindInformationFragment">Name : </string>
+    <string name="displayName_BlindInformationFragment"> not found! </string>
+    <string name="phone_BlindInformationFragment">Phone : 012XXXXXXX</string>
+    <string name="role_BlindInformationFragment">Role : Blind</string>
+    <string name="nav_BlindInformationFragment">Navigation List</string>
+    <string name="add_BlindInformationFragment">ADD +</string>
 
     <!--AccountBlind-->
     <string name="header_AccountBlind">Account Setting</string>

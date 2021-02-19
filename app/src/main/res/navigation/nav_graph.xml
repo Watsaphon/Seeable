@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_blindListFragment_to_addBlindUserFragment"
             app:destination="@id/addBlindUserFragment" />
+        <action
+            android:id="@+id/action_blindListFragment_to_blindInformationFragment"
+            app:destination="@id/blindInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountSettingFragment"

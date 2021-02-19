@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
    >
 
@@ -54,14 +55,102 @@
 
         </RelativeLayout>
 
-        <LinearLayout
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
             >
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="25dp"
+                app:srcCompat="@mipmap/icon_profile_foreground" />
 
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="41dp"
+                android:layout_toEndOf="@+id/profile"
+                android:text="@string/name_BlindInformationFragment"
+                style="@style/AccountBlind_Name"
+                />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/displayName"
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:layout_below="@+id/name"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@+id/profile"
+                android:text="@string/displayName_BlindInformationFragment"
+                style="@style/AccountBlind_Name"
+                />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="33dp"
+                android:text="@string/phone_BlindInformationFragment"
+                style="@style/AccountBlind_Info"
+                />
+
+            <TextView
+                android:id="@+id/role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/phone"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/role_BlindInformationFragment"
+                style="@style/AccountBlind_Info"
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/navList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_BlindInformationFragment"
+            android:textColor="#3DADFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            />
+
+        <Button
+            android:id="@+id/test"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/dot_line_round"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/add_BlindInformationFragment"
+            android:textColor="@drawable/addblind_text_change"
+            android:textSize="18sp" />
+
+<!--        <ImageView-->
+<!--            android:layout_width="380dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:src="@drawable/dot_line_round"-->
+<!--            android:layerType="software" />-->
     </LinearLayout>
 </layout>

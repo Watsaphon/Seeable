@@ -50,6 +50,9 @@ class VerificationBlindFragment : Fragment() {
 
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var phoneCaretaker : String
+    private lateinit var sharedPrefBlindId : SharedPreferences
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i("VerificationBlind", "onCreate call")
@@ -67,6 +70,8 @@ class VerificationBlindFragment : Fragment() {
 
         sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
         phoneCaretaker  = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+
+        sharedPrefBlindId = requireActivity().getSharedPreferences("value", 0)
 
         binding.digit1.addTextChangedListener(digit1TextWatcher)
         binding.digit2.addTextChangedListener(digit2TextWatcher)
@@ -194,7 +199,6 @@ class VerificationBlindFragment : Fragment() {
                 /**add user and set view on UI */
                 when {
                     phoneFBUser1 == phoneBlind ||  phoneFBUser2 == phoneBlind ||  phoneFBUser3 == phoneBlind -> {
-
                         Log.i("12345","user already match.")
                     }
                     displayUser2 == "-/-" -> {
@@ -221,6 +225,7 @@ class VerificationBlindFragment : Fragment() {
             }
         })
     }
+
     private val digit1TextWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
         }
@@ -315,7 +320,6 @@ class VerificationBlindFragment : Fragment() {
         //show dialog
         mAlertDialog.dismiss()
     }
-
 
 
 }

@@ -326,7 +326,7 @@ class LoginScreen : AppCompatActivity() {
                         val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
                         startActivity(intent)
                         dismissAlertDialogLoading()
-
+                        finishAffinity()
                         break
                     }
                     else if (loginTel.isEmpty()  || loginPassword.isEmpty() ) {
@@ -366,7 +366,6 @@ class LoginScreen : AppCompatActivity() {
                     val user3 = snapshot.child("Caretaker/user3").value.toString()
                     val user4 = snapshot.child("Caretaker/user4").value.toString()
 
-
                     Log.i("LoginScreen_checkLogin","In onDataChange, count=$count")
                     Log.i("LoginScreen_checkLogin", "Username : $loginTel , Password : $loginPassword")
                     Log.i("LoginScreen_checkLogin", "Database info :  $id,$password,$displayName,$phone ,$user1,$user2,$user3,$user4 ")
@@ -394,7 +393,6 @@ class LoginScreen : AppCompatActivity() {
                         editorUserType.apply()
                         editorCaretakerUser.apply()
 
-
                         val test = sharedPrefCaretakerUser.getString("stringKeyCaretakerUser","not found!")
                         Log.d("wtfArray","test : $test ")
                         if(test != null){
@@ -411,6 +409,7 @@ class LoginScreen : AppCompatActivity() {
                         val intent = Intent(this@LoginScreen, MainActivity::class.java)
                         startActivity(intent)
                         dismissAlertDialogLoading()
+                        finishAffinity()
                         break
                     }
                     else if (loginTel.isEmpty()  || loginPassword.isEmpty() ) {

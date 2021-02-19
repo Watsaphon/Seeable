@@ -87,10 +87,17 @@
 
     <!--BlindInformationFragment-->
     <string name="header_BlindInformationFragment">ข้อมูลคนตาบอด</string>
+    <string name="name_BlindInformationFragment">ชื่อผู้ใช้งาน : </string>
+    <string name="displayName_BlindInformationFragment"> ไม่พบ! </string>
+    <string name="phone_BlindInformationFragment">เบอร์โทรศัพท์ : 012XXXXXXX</string>
+    <string name="role_BlindInformationFragment">สถานะ : คนตาบอด</string>
+    <string name="nav_BlindInformationFragment">รายการการนำทาง</string>
+    <string name="add_BlindInformationFragment">เพิ่ม +</string>
+
 
     <!--AccountBlind-->
     <string name="header_AccountBlind">ตั้งค่าบัญชีผู้ใช้งาน</string>
-    <string name="name_AccountBlind">ชื่อผู้ใช้งาน: </string>
+    <string name="name_AccountBlind">ชื่อผู้ใช้งาน : </string>
     <string name="displayName_AccountBlind"> ไม่พบ </string>
     <string name="phone_AccountBlind">เบอร์โทรศัพท์ : 012XXXXXXX</string>
     <string name="role_AccountBlind">สถานะ : คนตาบอด</string>
