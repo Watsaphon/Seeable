@@ -217,6 +217,16 @@
     <string name="pairing_addnewBtn">Start Pairing</string>
     <string name="pairing_exitBtn">Exit</string>
 
+    <!--alertDeleteBlindUser-->
+    <string name="deleteBlind_header">Delete</string>
+    <string name="deleteBlind_subHeader">Do you want to remove this user from the blind list?</string>
+    <string name="deleteBlind_confirm">Confirm</string>
+    <string name="deleteBlind_cancel">Cancel</string>
+
+    <!--alertLastUser-->
+    <string name="alertLastUser_info">You need at least 1 blind to use caretaker mode.</string>
+
+
     <!--alertHomeLocation-->
     <string name="homeLocation_header">Home Location</string>
     <string name="homeLocation_subHeader">So that you can use this application most effectively.

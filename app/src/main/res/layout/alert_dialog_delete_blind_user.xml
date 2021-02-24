@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="20dp"
+        >
+<!--        -->
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/round_alert_dialog"
+                android:topLeftRadius="200dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="@string/deleteBlind_header"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/sub_header"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="center|left"
+                android:padding="10dp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/deleteBlind_subHeader"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:weightSum="2.0"
+                >
+                <Button
+                    android:id="@+id/dialogDeleteBtn"
+                    android:background="@drawable/cancel_alert_delete_blind_user"
+                    android:text="@string/deleteBlind_cancel"
+                    style="@style/alertDialogDelete"
+                    />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"/>
+                <Button
+                    android:id="@+id/dialogConfirmBtn"
+                    android:background="@drawable/confirm_alert_delete_blind_user"
+                    android:text="@string/deleteBlind_confirm"
+                    style="@style/alertDialogDelete"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
