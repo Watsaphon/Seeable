@@ -126,48 +126,45 @@ class BlindListFragment : Fragment() {
 
         binding.editUser1.setOnClickListener{view ->
             val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
-            val phone1 = phoneList[0].substring(1)
-            blindInfoViewModel.userNameBlind(binding.nameUser1.text.toString(),phone1)
+            val phone1 = phoneList[0]
+                .substring(1,11)
+            blindInfoViewModel.userNameBlind(binding.nameUser1.text.toString(),phone1,1)
             Log.i("ViewModelBLF","phone1 : $phone1")
             view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
         }
         binding.editUser2.setOnClickListener{view ->
             val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
-            val phone2 = phoneList[1]
-            blindInfoViewModel.userNameBlind(binding.nameUser2.text.toString(),phone2)
+            val phone2 = phoneList[1].substring(0,11)
+            blindInfoViewModel.userNameBlind(binding.nameUser2.text.toString(),phone2,2)
             view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
             Log.i("ViewModelBLF","phone2 : $phone2")
         }
         binding.editUser3.setOnClickListener{view ->
             val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
-            val phone3 = phoneList[2]
-            blindInfoViewModel.userNameBlind(binding.nameUser3.text.toString(),phone3)
+            val phone3 = phoneList[2].substring(0,11)
+            blindInfoViewModel.userNameBlind(binding.nameUser3.text.toString(),phone3,3)
             view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
             Log.i("ViewModelBLF","phone3 : $phone3")
         }
         binding.editUser4.setOnClickListener{view ->
             val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
             val phone4 = phoneList[3].substring(0,11)
-            blindInfoViewModel.userNameBlind(binding.nameUser4.text.toString(),phone4)
+            blindInfoViewModel.userNameBlind(binding.nameUser4.text.toString(),phone4,4)
             view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
             Log.i("ViewModelBLF","phone4 : $phone4")
         }
 
         binding.deleteUser1.setOnClickListener{
             alertDialogDelete(1)
-
         }
         binding.deleteUser2.setOnClickListener{
             alertDialogDelete(2)
-
         }
         binding.deleteUser3.setOnClickListener{
             alertDialogDelete(3)
-
         }
         binding.deleteUser4.setOnClickListener{
             alertDialogDelete(4)
-
         }
 
     }

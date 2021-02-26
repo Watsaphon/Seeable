@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 card_view:srcCompat="@mipmap/icon_cant_delete_foreground" />
 
             <TextView
