@@ -31,11 +31,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.estazo.project.seeable.app.blind.settingBlind.DeleteAccountBlind"></activity>
-        <activity android:name="com.estazo.project.seeable.app.blind.settingBlind.ChangePasswordAccountBlind" />
-        <activity android:name="com.estazo.project.seeable.app.blind.settingBlind.EditNameAccountBlind" />
-        <activity android:name="com.estazo.project.seeable.app.blind.settingBlind.AccountBlind" />
-        <activity android:name="com.estazo.project.seeable.app.blind.SettingBlind" />
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".blind.settingBlind.DeleteAccountBlind" />
+        <activity android:name=".blind.settingBlind.ChangePasswordAccountBlind" />
+        <activity android:name=".blind.settingBlind.EditNameAccountBlind" />
+        <activity android:name=".blind.settingBlind.AccountBlind" />
+        <activity android:name=".blind.SettingBlind" />
         <activity
             android:name=".register.LittleMore"
             android:screenOrientation="portrait" />
@@ -49,11 +50,10 @@
             android:name=".login.IntroduceApp"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.estazo.project.seeable.app.blind.settingBlind.SearchLocation"
+            android:name=".blind.settingBlind.SearchLocation"
             android:configChanges="orientation|screenSize" />
-
         <activity
-            android:name=".caretaker.MainActivityPerson"
+            android:name=".caretaker.MainCaretaker"
             android:screenOrientation="portrait" />
         <activity
             android:name=".login.LoginScreen"
@@ -72,7 +72,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".blind.MainActivity"
+            android:name=".blind.MainBlind"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme" />
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".blind.MainBlind">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_blind_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_graph"
+        />
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/floating_action_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="90dp"-->
+<!--        android:layout_gravity="top|right"-->
+<!--        android:layout_margin="15dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/linearLayout"-->
+<!--        android:src="@drawable/ic_action_name"-->
+<!--        app:backgroundTint="#bdbdbd"-->
+<!--        />-->
+<!--    &lt;!&ndash;        app:backgroundTint="@android:color/holo_orange_light"&ndash;&gt;-->
+<!--    &lt;!&ndash;        app:borderWidth="0dp"&ndash;&gt;-->
+<!--    &lt;!&ndash;        app:elevation="0dp"&ndash;&gt;-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical">-->
+
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1.0"-->
+<!--            android:orientation="horizontal">-->
+
+
+<!--            <Button-->
+<!--                android:id="@+id/selfNavButton"-->
+<!--                style="@style/CustomSelfNavButton1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1.0"-->
+<!--                android:fontFamily="@font/roboto"-->
+<!--                android:text="@string/button_self_navigation"-->
+<!--                android:textSize="16sp" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/careNavButton"-->
+<!--                style="@style/CustomCareNavButton"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1.0"-->
+<!--                android:fontFamily="@font/roboto"-->
+<!--                android:text="@string/button_caretaker_navigation"-->
+<!--                android:textSize="16sp" />-->
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1.0"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/callEmergency"-->
+<!--                style="@style/CustomCallEmergency"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1.0"-->
+<!--                android:fontFamily="@font/roboto"-->
+<!--                android:text="@string/button_emergency_call"-->
+<!--                android:textSize="16sp" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/sendLocation"-->
+<!--                style="@style/CustomSendLocation"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1.0"-->
+<!--                android:fontFamily="@font/roboto"-->
+<!--                android:text="@string/button_shared_locatoin"-->
+<!--                android:textSize="16sp" />-->
+
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

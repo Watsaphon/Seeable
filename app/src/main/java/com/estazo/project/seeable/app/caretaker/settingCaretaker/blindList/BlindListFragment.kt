@@ -274,6 +274,11 @@ class BlindListFragment : Fragment() {
                 val nameFBUser4 = splitFBUser4[1]
                 /**add user and set view on UI */
                 when{
+                    /** 4 user */
+                    displayUser4 != "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-" ->{
+                        blindListViewModel.updateUserName(listOf(nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4))
+                        blindListViewModel.updateUserPhone(listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4))
+                    }
                     /** delete user from 4 user */
                     displayUser4 == "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-" ->{
                         blindListViewModel.updateUserName(listOf(nameFBUser1,nameFBUser2,nameFBUser3))

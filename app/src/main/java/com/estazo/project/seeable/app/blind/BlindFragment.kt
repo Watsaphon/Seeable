@@ -1,6 +1,5 @@
 package com.estazo.project.seeable.app.blind
 
-
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -8,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Color.*
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
@@ -18,19 +17,21 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import android.widget.*
 import androidx.core.app.ActivityCompat
-import androidx.work.*
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.device.BPMWorker
+import com.estazo.project.seeable.app.caretaker.CaretakerViewModel
+import com.estazo.project.seeable.app.databinding.FragmentBlindBinding
+import com.estazo.project.seeable.app.databinding.FragmentCaretakerBinding
+import com.estazo.project.seeable.app.device.BPMRunnable
 import com.estazo.project.seeable.app.helperClass.Locations
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.location.*
@@ -41,17 +42,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
-/**test github*/
-class MainActivity: AppCompatActivity() {
+class BlindFragment : Fragment() {
 
-    private lateinit var sharedLocationBtn: Button
-    private lateinit var selfNavBtn: Button
-    private lateinit var emergencyCallBtn: Button
-    private lateinit var careNavBtn: Button
-    private lateinit var fab: FloatingActionButton
+
     private lateinit var  mAlertDialog : AlertDialog
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
@@ -60,77 +55,70 @@ class MainActivity: AppCompatActivity() {
     private lateinit var sharedPrefPassword: SharedPreferences
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefDisplayName: SharedPreferences
-    private lateinit var sharedPrefUserType : SharedPreferences
 
-//    private lateinit var sharedPrefHomeLocation : SharedPreferences
-//    private lateinit var sharedPrefNameHelper: SharedPreferences
-//    private lateinit var sharedPrefGoogle : SharedPreferences
-//    private lateinit var sharedPrefPhoneHelper: SharedPreferences
-//    private lateinit var sharedPrefSex: SharedPreferences
-//    private lateinit var sharedGooglePrefUserType : SharedPreferences
 
     //Declaring the needed Variables
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
     var textToSpeech: TextToSpeech? = null
 
+    private lateinit var binding: FragmentBlindBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        hideSystemUI()
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_blind, container, false)
+
+        Log.i("BlindFragment", "onCreateView call")
         CheckPermission()
 
-        sharedPrefLanguage = getSharedPreferences("value", 0)
-        sharedPrefPhone= getSharedPreferences("value", 0)
-        sharedPrefPassword= getSharedPreferences("value", 0)
-        sharedPrefID = getSharedPreferences("value", 0)
-        sharedPrefDisplayName = getSharedPreferences("value", 0)
-        sharedPrefUserType = getSharedPreferences("value", 0)
+        sharedPrefLanguage = requireActivity().getSharedPreferences("value", 0)
+        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+        sharedPrefPassword = requireActivity().getSharedPreferences("value", 0)
+        sharedPrefID = requireActivity().getSharedPreferences("value", 0)
+        sharedPrefDisplayName = requireActivity().getSharedPreferences("value", 0)
 
-
-        selfNavBtn = findViewById(R.id.selfNavButton)
-        careNavBtn = findViewById(R.id.careNavButton)
-        emergencyCallBtn = findViewById(R.id.callEmergency)
-        sharedLocationBtn = findViewById(R.id.sendLocation)
-        fab = findViewById(R.id.floating_action_button)
-
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         RequestPermission()
 
-        val displayName = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!")
-        if(displayName == "-"){
-            alertDialogSetName()
-        }
-
-        textToSpeech = TextToSpeech(applicationContext, TextToSpeech.OnInitListener { status ->
+        textToSpeech = TextToSpeech(activity?.applicationContext, TextToSpeech.OnInitListener { status ->
             if (status != TextToSpeech.ERROR) {
                 textToSpeech!!.language = Locale.US
             }
         })
         textToSpeech!!.setSpeechRate(0.9f)
 
+        val displayName = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!")
+        if(displayName == "-"){
+            alertDialogSetName()
+        }
 
-        selfNavBtn.setOnVeryLongClickListener{
+        return binding.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.i("BlindFragment", "onViewCreated call")
+
+        binding.selfNavButton.setOnClickListener{view : View  ->
             vibrate()
             textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigation()
-            Toast.makeText(this, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
         }
-        careNavBtn.setOnVeryLongClickListener{
+        binding.careNavButton.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
-            Toast.makeText(this, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
         }
-        emergencyCallBtn.setOnVeryLongClickListener{
+        binding.callEmergency.setOnVeryLongClickListener{
             vibrate()
-           textToSpeech!!.speak("Call Emergency Activate", TextToSpeech.QUEUE_FLUSH, null)
+            textToSpeech!!.speak("Call Emergency Activate", TextToSpeech.QUEUE_FLUSH, null)
             emergencyCall()
-            Toast.makeText(this, getString(R.string.button_emergency_call), Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, getString(R.string.button_emergency_call), Toast.LENGTH_SHORT).show()
         }
-        sharedLocationBtn.setOnVeryLongClickListener{
+        binding.sendLocation.setOnVeryLongClickListener{
             vibrate()
             Log.d("Debug:","sharedLocationBtn -> CheckPermission : "  + CheckPermission().toString())
             Log.d("Debug:", "sharedLocationBtn -> isLocationEnabled : " +  isLocationEnabled().toString())
@@ -139,57 +127,31 @@ class MainActivity: AppCompatActivity() {
             sendLocation()
         }
 
-
-        fab.setOnClickListener {
-            val intent = Intent(this,
-                SettingBlind::class.java)
-                startActivity(intent)
+        binding.floatingActionButton.setOnClickListener {
+//            val intent = Intent(this, SettingBlind::class.java)
+//            startActivity(intent)
         }
-
-
-        val bpmValue = workDataOf("bpm" to "no-value")
-        val constraint = Constraints.Builder().apply { setRequiredNetworkType(NetworkType.CONNECTED) }.build()
-        //one time
-        val request = PeriodicWorkRequestBuilder<BPMWorker>(10, TimeUnit.SECONDS).apply {
-            setInputData(bpmValue)
-            setConstraints(constraint)
-        }.build()
-
-        //Period
-//        val request = OneTimeWorkRequestBuilder<BPMWorker>().apply {
-//        val bpmValue = workDataOf(
-//            "bpm" to "no-value"
-//        )
-//
-//        val constraint = Constraints.Builder().apply {
-//            setRequiredNetworkType(NetworkType.CONNECTED)
-//        }.build()
-//
-//        //one time
-//        val request = PeriodicWorkRequestBuilder<BPMWorker>(10, TimeUnit.SECONDS).apply {
-//            setInputData(bpmValue)
-//            setConstraints(constraint)
-//        }.build()
-//
-//        //Period
-////        val request = OneTimeWorkRequestBuilder<BPMWorker>().apply {
-////            setConstraints(constraint)
-////            setInitialDelay(10, TimeUnit.SECONDS)
-////        }.build()
-//
-//        WorkManager.getInstance().enqueue(request)
-
-
 
     }
 
 
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.i("BlindFragment", "onActivityCreated call")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.i("BlindFragment", "onDestroyView call")
+
+    }
+
     @SuppressLint("MissingPermission", "DefaultLocale")
     private fun sendLocation(){
         Log.d("Debug_sendLocation:" ,"sendLocation call" )
         fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
-            var location:Location? = task.result
+            var location: Location? = task.result
             NewLocationData()
             if(location == null){
                 Log.i("Debug_sendLocation","call if")
@@ -199,6 +161,7 @@ class MainActivity: AppCompatActivity() {
                 Log.i("Debug_sendLocation","call else")
                 Log.d("Debug_sendLocation:" ,"link : $link" )
                 Log.d("Debug_sendLocation:" ,"location : $location" )
+
                 val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
                 val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
                 val currentID = sharedPrefID.getString("stringKey2", "not found!")
@@ -224,17 +187,17 @@ class MainActivity: AppCompatActivity() {
         if(CheckPermission()){
             if(isLocationEnabled()){
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
-                    var location:Location? = task.result
+                    var location: Location? = task.result
                     if(location == null){
                         NewLocationData()
                     }else{
                         Log.d("Debug:" ,"getLastLocation() -> Your Location : Long: "+ location.longitude + " , Lat: " + location.latitude )
                         val text = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n"
-                        Toast.makeText(this,"$text",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity,"$text",Toast.LENGTH_SHORT).show()
                     }
                 }
             }else{
-                Toast.makeText(this,"Please Turn on Your device Location",Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,"Please Turn on Your device Location",Toast.LENGTH_SHORT).show()
             }
         }else{
             RequestPermission()
@@ -246,9 +209,9 @@ class MainActivity: AppCompatActivity() {
         locationRequest.interval = 0
         locationRequest.fastestInterval = 0
         locationRequest.numUpdates = 1
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
         ) {
             return
         }
@@ -262,17 +225,21 @@ class MainActivity: AppCompatActivity() {
             Log.d("Debug:","onLocationResult -> your last location: latitude = "+ lastLocation.latitude.toString()+", longitude = "+ lastLocation.longitude.toString())
             val text = "You Last Location is : Long: "+ lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n"
 
-            Toast.makeText(this@MainActivity,"$text",Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity,"$text",Toast.LENGTH_SHORT).show()
         }
     }
-    private fun CheckPermission():Boolean{
+    private fun CheckPermission():Boolean
+    {
         //this function will return a boolean
         //true: if we have permission
         //false if not
         if(
-            ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-            ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED||
-            ActivityCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED
+            ActivityCompat.checkSelfPermission(requireActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ActivityCompat.checkSelfPermission(requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED||
+            ActivityCompat.checkSelfPermission(requireActivity(),
+                Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED
         ){
             return true
         }
@@ -280,14 +247,17 @@ class MainActivity: AppCompatActivity() {
     }
     private fun RequestPermission(){
         //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE), PERMISSION_ID)
-
+        ActivityCompat.requestPermissions(requireActivity(), arrayOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CALL_PHONE), PERMISSION_ID)
     }
     private fun isLocationEnabled():Boolean{
         //this function will return to us the state of the location service
         //if the gps or the network provider is enabled then it will return true otherwise it will return false
-        var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        var locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -298,71 +268,6 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.i("MainActivity", "onStart called")
-    }
-
-    override fun onResume(){
-        super.onResume()
-        Log.i("MainActivity", "onResume called")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.i("MainActivity", "onPause called")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i("MainActivity", "onStop called")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i("MainActivity", "onDestroy called")
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finishAffinity()
-        Log.i("MainActivity", "onBackPressed called")
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        hideSystemUI()
-        Log.i("MainActivity", "onWindowFocusChanged called")
-    }
-
-    private fun navigation() {
-        val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
-        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$currentPhone/Navigation")
-        query.addListenerForSingleValueEvent(valueEventListenerNavigation)
-    }
-
-    private fun emergencyCall(){
-        val phone = "1112"
-        val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phone, null))
-        startActivity(intent)
-    }
-
-
-    /** hide navigation and status bar in each activity */
-    private fun hideSystemUI() {
-        // Enables regular immersive mode.
-        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                // Set the content to appear under the system bars so that the
-                // content doesn't resize when the system bars hide and show.
-                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                // Hide the nav bar and status bar
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN)
-    }
 
     /** function press and hold button for few seconds */
     private fun View.setOnVeryLongClickListener(listener: () -> Unit) {
@@ -383,7 +288,7 @@ class MainActivity: AppCompatActivity() {
     /** function vibrations */
     private fun vibrate(){
         // Vibrate for 300 milliseconds
-        val v = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        val v = requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             v.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE))
         }
@@ -394,12 +299,51 @@ class MainActivity: AppCompatActivity() {
     }
 
 
+    private fun emergencyCall(){
+        val emergency = "1112"
+        val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", emergency, null))
+        startActivity(intent)
+    }
+
+    private fun navigation() {
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phone/Navigation")
+        query.addListenerForSingleValueEvent(valueEventListenerNavigation)
+    }
+    /** Navigation to home in Google Map  */
+    private var valueEventListenerNavigation: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val location = dataSnapshot.child("Self_Navigate_bindUser").value.toString()
+//                val latitude = dataSnapshot.child("Latitude").value.toString()
+//                val longitude = dataSnapshot.child("Longitude").value.toString()
+//                val locationNavigate = "$latitude,$longitude"
+                Log.d("test_locationNavigate ","Navigate to location : $location")
+                if(location =="null"){
+                    Toast.makeText(activity, R.string.locatoin_null,Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    // Navigation : current place direct to gmmIntentUri
+                    val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                    mapIntent.setPackage("com.google.android.apps.maps")
+                    mapIntent.resolveActivity(activity!!.packageManager)?.let {
+                        startActivity(mapIntent)
+                    }
+
+                }
+
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
     /** AlertDialog to set DisplayName in user_bind  */
     private fun alertDialogSetName() {
         //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_set_name,null)
+        val mDialogView = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_set_name,null)
         //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
+        val mBuilder = AlertDialog.Builder(activity).setView(mDialogView)
         //show dialog
         mAlertDialog  = mBuilder.show()
         mAlertDialog.setCanceledOnTouchOutside(false)
@@ -412,7 +356,7 @@ class MainActivity: AppCompatActivity() {
         val ssbEN = SpannableStringBuilder(txtEN)
         val ssbTH = SpannableStringBuilder(txtTH)
         val fcsSky = ForegroundColorSpan(resources.getColor(R.color.txtDisplay))
-        val fcsGray = ForegroundColorSpan(GRAY)
+        val fcsGray = ForegroundColorSpan(Color.GRAY)
         val language = sharedPrefLanguage.getString("stringKey", "not found!")
         if(language == "en"){
             ssbEN.setSpan(fcsGray, 0, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -432,8 +376,7 @@ class MainActivity: AppCompatActivity() {
             val name = editName.text.toString()
 
             if(name.isEmpty() || name.isBlank() || name=="-"){
-                Toast.makeText(this,
-                    R.string.check_setName,Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, R.string.check_setName,Toast.LENGTH_SHORT).show()
             }
             else{
                 val ref = FirebaseDatabase.getInstance().reference
@@ -450,37 +393,4 @@ class MainActivity: AppCompatActivity() {
     }
 
 
-
-
-    /** Navigation to home in Google Map  */
-    private var valueEventListenerNavigation: ValueEventListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            if (dataSnapshot.exists()) {
-                val location = dataSnapshot.child("Self_Navigate_bindUser").value.toString()
-//                val latitude = dataSnapshot.child("Latitude").value.toString()
-//                val longitude = dataSnapshot.child("Longitude").value.toString()
-//                val locationNavigate = "$latitude,$longitude"
-                Log.d("test_locationNavigate ","Navigate to location : $location")
-                if(location =="null"){
-                    Toast.makeText(this@MainActivity,
-                        R.string.locatoin_null,Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    // Navigation : current place direct to gmmIntentUri
-                    val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
-                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-                    mapIntent.setPackage("com.google.android.apps.maps")
-                    mapIntent.resolveActivity(packageManager)?.let {
-                        startActivity(mapIntent)
-                    }
-
-                }
-
-            }
-        }
-        override fun onCancelled(databaseError: DatabaseError) {}
-    }
-
 }
-
-

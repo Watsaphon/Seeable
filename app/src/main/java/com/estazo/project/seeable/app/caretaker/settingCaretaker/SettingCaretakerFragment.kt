@@ -10,13 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.caretaker.CaretakerViewModel
-import com.estazo.project.seeable.app.caretaker.MainActivityPerson
+import com.estazo.project.seeable.app.caretaker.MainCaretaker
 import com.estazo.project.seeable.app.databinding.FragmentSettingCaretakerBinding
 import java.util.*
 
@@ -73,7 +69,7 @@ class SettingCaretakerFragment : Fragment() {
         }
 
         binding.logoutBtn.setOnClickListener{
-        (activity as MainActivityPerson).gotoLogout()
+        (activity as MainCaretaker).gotoLogout()
 //      /**or call with this*/   MainActivityPerson().gotoLogout()
         }
     }

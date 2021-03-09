@@ -20,8 +20,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.blind.MainActivity
-import com.estazo.project.seeable.app.caretaker.MainActivityPerson
+import com.estazo.project.seeable.app.blind.MainBlind
+import com.estazo.project.seeable.app.caretaker.MainCaretaker
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.register.SendOTP
 import com.estazo.project.seeable.app.SplashScreen
@@ -54,29 +54,17 @@ class LoginScreen : AppCompatActivity() {
     private lateinit var sharedPrefUserType: SharedPreferences
     private lateinit var sharedPrefCaretakerUser: SharedPreferences
 
-    private lateinit var sharedPrefNameHelper: SharedPreferences
-    private lateinit var sharedPrefPhoneHelper: SharedPreferences
-    private lateinit var sharedPrefHomeLocation: SharedPreferences
-    private lateinit var sharedPrefPartnerID: SharedPreferences
-    private lateinit var sharedPrefGoogle : SharedPreferences
-    private lateinit var sharedGooglePrefUserType : SharedPreferences
 
     private lateinit var  mAlertDialog : AlertDialog
-    private lateinit var UID : String
     private lateinit var changeLang : TextView
-
-//    private lateinit var caretaker : ArrayList<Caretaker>
-//    private lateinit var userCaretaker : SharedPreferences
-//    private lateinit var signInButton: SignInButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_screen)
+        setContentView(R.layout.fragment_login_screen)
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         //Initializing Views
-//        signInButton = findViewById(R.id.sign_in_button)
         telBox = findViewById(R.id.tel_box)
         passwordBox = findViewById(R.id.password_box)
         finish = findViewById(R.id.login_finish_button)
@@ -102,14 +90,6 @@ class LoginScreen : AppCompatActivity() {
         sharedPrefUserType = getSharedPreferences("value", 0)
         sharedPrefCaretakerUser = getSharedPreferences("value", 0)
 
-//        userCaretaker = getSharedPreferences("value", 0)
-//        sharedPrefNameHelper= getSharedPreferences("value", 0)
-//        sharedPrefPhoneHelper= getSharedPreferences("value", 0)
-//        sharedPrefGoogle  = getSharedPreferences("value", 0)
-//        sharedGooglePrefUserType = getSharedPreferences("value", 0)
-//        sharedPrefHomeLocation = getSharedPreferences("value", 0)
-//        sharedPrefPartnerID = getSharedPreferences("value", 0)
-
 
         val text = "EN|TH"
         val ssb = SpannableStringBuilder(text)
@@ -121,16 +101,12 @@ class LoginScreen : AppCompatActivity() {
             ssb.setSpan(fcsWhite, 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             ssb.setSpan(fcsGreen, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             changeLang.text = ssb
-//            val textView = signInButton.getChildAt(0) as TextView
-//            textView.text = "Sign in with Google "
 
         }
         else if(language =="th"){
             ssb.setSpan(fcsWhite, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             ssb.setSpan(fcsGreen, 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             changeLang.text = ssb
-//            val textView = signInButton.getChildAt(0) as TextView
-//            textView.text = " เข้าสู่ระบบด้วย Google "
         }
 
         val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
@@ -139,17 +115,10 @@ class LoginScreen : AppCompatActivity() {
         Log.i("CheckUserID_login", "Current User ID  : $stringValue2")
         Log.i("CheckLanguage_splash", "LoginScreen now language : $stringValue")
 
-        // Configure Google Sign In
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(getString(R.string.default_web_client_id))
-//            .requestEmail().build()
-//        // Build a GoogleSignInClient with the options specified by gso.
-//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
         finish.setOnClickListener(View.OnClickListener { login() })
         register.setOnClickListener(View.OnClickListener { register() })
         changeLang.setOnClickListener(View.OnClickListener { changeLanguage() })
-//      signInButton.setOnClickListener(View.OnClickListener { signIn() })
+
     }
 
     override fun onStart() {
@@ -323,7 +292,7 @@ class LoginScreen : AppCompatActivity() {
 
                         dismissAlertDialogLoading()
 
-                        val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
+                        val intent = Intent(this@LoginScreen, MainCaretaker::class.java)
                         startActivity(intent)
                         dismissAlertDialogLoading()
                         finishAffinity()
@@ -406,7 +375,7 @@ class LoginScreen : AppCompatActivity() {
                             Log.d("wtfArray","After split -> user1 : $user1 ,  user2 : $user2 , user3 : $user3 , user4 : $user4")
                         }
 
-                        val intent = Intent(this@LoginScreen, MainActivity::class.java)
+                        val intent = Intent(this@LoginScreen, MainBlind::class.java)
                         startActivity(intent)
                         dismissAlertDialogLoading()
                         finishAffinity()
@@ -431,182 +400,6 @@ class LoginScreen : AppCompatActivity() {
         }
         override fun onCancelled(databaseError: DatabaseError) {}
     }
-
-
-
-//    private fun signIn() {
-//        val signInIntent = mGoogleSignInClient.signInIntent
-//        startActivityForResult(signInIntent, RC_SIGN_IN)
-//    }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-//        if (requestCode == RC_SIGN_IN) {
-//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-//            try {
-//                // Google Sign In was successful, authenticate with Firebase
-//                val account = task.getResult(ApiException::class.java)!!
-//                Log.i("LoginScreen_onActResult", "firebaseAuthWithGoogle:" + account.id)
-//                firebaseAuthWithGoogle(account.idToken!!)
-//            } catch (e: ApiException) {
-//                // Google Sign In failed, update UI appropriately
-//                Log.w("LoginScreen_onActResult", "Google sign in failed", e)
-//            }
-//        }
-//    }
-
-//    private fun firebaseAuthWithGoogle(idToken: String) {
-//        val credential = GoogleAuthProvider.getCredential(idToken, null)
-//        alertDialogLoading()
-//        auth.signInWithCredential(credential)
-//            .addOnCompleteListener(this) { task ->
-//                if (task.isSuccessful) {
-//                    // Sign in success, update UI with the signed-in user's information
-//                    Log.i("LoginScreen_fbAuth", "signInWithCredential:success")
-//                    val user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-//                    Log.i("testFirebaseUser1","$user")
-//                    val userGoogle = sharedPrefGoogle.getString("stringKeyGoogle","not found!")
-//                    val userType = sharedPrefUserType.getString("stringKeyType","not found!")
-//
-//                    val googleUserType = sharedGooglePrefUserType.getString("stringKeyGoogleType","not found!")
-//                    val editorGoogleUser  = sharedPrefGoogle.edit()
-//                    val editorGoogleUserType  = sharedGooglePrefUserType.edit()
-//
-//                    Log.i("checkloginlast","user : $user , userGoogle : $userGoogle , userType : $userType")
-//
-//                    if (user != null && userGoogle == "not found!" && googleUserType == "not found!") {
-//                        val uid = user.uid
-//                        Log.i("testFirebaseUser2","$uid")
-//                        UID = uid
-//                        val queryUserPerson = FirebaseDatabase.getInstance().getReference("users_caretaker").orderByChild("id")
-//                        queryUserPerson.addListenerForSingleValueEvent(valueEventListenerCheckGoogleUserPerson)
-//
-//                        editorGoogleUser.putString("stringKeyGoogle","$UID")
-//                        editorGoogleUserType.putString("stringKeyGoogleType","noRegister")
-//                        editorGoogleUser.apply()
-//                        editorGoogleUserType.apply()
-//                    }
-//
-//                } else {
-//                    // If sign in fails, display a message to the user.
-//                    Log.w("LoginScreen_fbAuth", "signInWithCredential:failure", task.exception)
-//                    Toast.makeText(applicationContext, "Authentication Failed.", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//    }
-
-//    /**receive value from realtime database (user_person) and check Login Google User*/
-//    private var valueEventListenerCheckGoogleUserPerson : ValueEventListener = object : ValueEventListener {
-//        override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                var count = 0
-//            Log.i("LoginScreen_countG","Before adding listener, count=$count")
-//            if (dataSnapshot.exists()) {
-//                for (snapshot in dataSnapshot.children) {
-//                    val id = snapshot.child("id").value.toString()
-//                    val partnerIDFirebase = snapshot.child("partner_id").value.toString()
-//                    Log.i("LoginScreen_countG","In onDataChange, count=$count")
-//                    if (UID == id){
-//                        Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-//
-//                        val editorGoogleUser = sharedPrefGoogle.edit()
-//                        val editorGoogleUserType = sharedGooglePrefUserType.edit()
-//                        val editorPartnerID = sharedPrefPartnerID.edit()
-//
-//                        editorGoogleUser.putString("stringKeyGoogle","$UID")
-//                        editorGoogleUserType.putString("stringKeyGoogleType", "person")
-//                        editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
-//
-//                        editorGoogleUser.apply()
-//                        editorGoogleUserType.apply()
-//                        editorPartnerID.apply()
-//
-//                    val intent = Intent(this@LoginScreen, MainActivityPerson::class.java)
-//                    startActivity(intent)
-//                    dismissAlertDialogLoading()
-//
-//                    break
-//                    }
-//                    ++count
-//                }
-//                Log.i("login_page_count","After adding listener, count=$count")
-//                val countDatabase = dataSnapshot.childrenCount.toInt()
-//                if(count==countDatabase){
-//                    /**if not found user in user_person -> find in users_blind */
-//                    val queryUserBlinder = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
-//                    queryUserBlinder.addListenerForSingleValueEvent(valueEventListenerCheckGoogleUserBlinder)
-//                }
-//            }
-//        }
-//        override fun onCancelled(databaseError: DatabaseError) {}
-//    }
-
-//    /**receive value from realtime database (user_blind) and check Login Google User*/
-//    private var valueEventListenerCheckGoogleUserBlinder : ValueEventListener = object : ValueEventListener {
-//        override fun onDataChange(dataSnapshot: DataSnapshot) {
-//            var count = 0
-//            Log.i("LoginScreen_checkLogin","Before adding listener, count=$count")
-//            if (dataSnapshot.exists()) {
-//                for (snapshot in dataSnapshot.children) {
-//                    val id = snapshot.child("id").value.toString()
-//                    val displayName = snapshot.child("displayName").value.toString()
-//                    val phone = snapshot.child("phone").value.toString()
-//                    val username = snapshot.child("username").value.toString()
-//                    val nameHelper = snapshot.child("nameHelper").value.toString()
-//                    val phoneHelper = snapshot.child("phoneHelper").value.toString()
-//                    val homeLocation = snapshot.child("homeLocation").value.toString()
-//
-//                    Log.i("LoginScreen_checkLogin","In onDataChange, count=$count")
-//                    if (UID == id){
-//                        Toast.makeText(applicationContext, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-//                        val editorID = sharedPrefID.edit()
-//                        val editorDisplayName = sharedPrefDisplayName.edit()
-//                        val editorNameHelper = sharedPrefNameHelper.edit()
-//                        val editorPhone = sharedPrefPhone.edit()
-//                        val editorPhoneHelper = sharedPrefPhoneHelper.edit()
-//                        val editorGoogleUser = sharedPrefGoogle.edit()
-//                        val editorGoogleUserType = sharedGooglePrefUserType.edit()
-//                        val editorHomeLocation = sharedPrefHomeLocation.edit()
-//
-//                        editorID.putString("stringKey2", id)
-//                        editorDisplayName.putString("stringKeyFullName", displayName)
-//                        editorNameHelper.putString("stringKeyNameHelper", nameHelper)
-//                        editorPhone.putString("stringKeyPhone", phone)
-//                        editorPhoneHelper.putString("stringKeyPhoneHelper", phoneHelper)
-//                        editorGoogleUser.putString("stringKeyGoogle","$UID")
-//                        editorGoogleUserType.putString("stringKeyGoogleType", "blind")
-//                        editorHomeLocation.putString("stringKeyHomeLocation", homeLocation)
-//
-//                        editorID.apply()
-//                        editorDisplayName.apply()
-//                        editorNameHelper.apply()
-//                        editorPhone.apply()
-//                        editorPhoneHelper.apply()
-//                        editorGoogleUser.apply()
-//                        editorGoogleUserType.apply()
-//                        editorHomeLocation.apply()
-//
-//                        val intent = Intent(this@LoginScreen, MainActivity::class.java)
-//                        startActivity(intent)
-//                        dismissAlertDialogLoading()
-//                        break
-//                    }
-//                    ++count
-//                }
-//                Log.i("LoginScreen_checkLogin","After adding listener, count=$count")
-//                val countDatabase = dataSnapshot.childrenCount.toInt()
-//                if(count==countDatabase){
-//                    Log.i("LoginScreen_checkLogin","check count database, count=$countDatabase")
-//                    Log.i("LoginScreen_checkLogin","check count for loop, count=$count")
-//                    val intent = Intent(this@LoginScreen, SelectRegister::class.java)
-//                    startActivity(intent)
-//                    dismissAlertDialogLoading()
-//                }
-//            }
-//
-//        }
-//        override fun onCancelled(databaseError: DatabaseError) {}
-//    }
 
 }
 

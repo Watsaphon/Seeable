@@ -94,6 +94,13 @@
     <string name="role_BlindInformationFragment">Role : Blind</string>
     <string name="nav_BlindInformationFragment">Navigation List</string>
     <string name="add_BlindInformationFragment">ADD +</string>
+    <string name="update_empty_BlindInformationFragment">Please fill your new name.</string>
+    <string name="update_same_BlindInformationFragment">The new name can\'t be the same as your old name.</string>
+    <string name="update_success_BlindInformationFragment">Update name successfully.</string>
+
+    <!--NavigationEditFragment-->
+    <string name="header_NavigationEditFragment">Navigation Edit</string>
+
 
     <!--AccountBlind-->
     <string name="header_AccountBlind">Account Setting</string>

@@ -19,7 +19,7 @@ import com.estazo.project.seeable.app.login.LoginScreen
 import java.util.*
 
 
- class MainActivityPerson : AppCompatActivity() {
+ class MainCaretaker : AppCompatActivity() {
 
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var sharedPrefPhone: SharedPreferences
@@ -40,7 +40,7 @@ import java.util.*
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_person)
+        setContentView(R.layout.activity_caretaker)
         Log.i("MainActivityPerson", "onCreate called")
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         hideSystemUI()
@@ -66,7 +66,7 @@ import java.util.*
                 " DisplayName : $displayName, UserType : $userType ")
 
         // Retrieve NavController from the NavHostFragment
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_caretaker_fragment) as NavHostFragment
 
         val navController: NavController = navHostFragment.navController
 
@@ -126,7 +126,7 @@ import java.util.*
     }
 
     /** change Language TH and EN*/
-    fun changeLanguage(){
+    private fun changeLanguage(){
 //        val language = sharedPrefLanguage.getString("stringKey", "not found!")
         Log.i("CheckLanguage", "Now Language is :$language")
         var locale: Locale? = null
@@ -185,7 +185,7 @@ import java.util.*
 
 
 
-    fun updateUI() {
+    private fun updateUI() {
         val decorView = window.decorView
         decorView.setOnSystemUiVisibilityChangeListener { visibility ->
             if (visibility and View.SYSTEM_UI_FLAG_FULLSCREEN == 0) {

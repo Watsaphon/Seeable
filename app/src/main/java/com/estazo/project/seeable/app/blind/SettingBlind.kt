@@ -215,7 +215,7 @@ class SettingBlind : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainBlind::class.java)
         startActivity(intent)
         finishAffinity()
         Log.i("SettingBlind", "onBackPressed called")

@@ -11,7 +11,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.estazo.project.seeable.app.helperClass.Navigation
-import com.estazo.project.seeable.app.blind.MainActivity
+import com.estazo.project.seeable.app.blind.MainBlind
 import com.estazo.project.seeable.app.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -163,7 +163,7 @@ class SearchLocation : AppCompatActivity() , OnMapReadyCallback {
                 val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation" to postValues)
                 ref.updateChildren(childUpdates)
 
-                val intent = Intent(this@SearchLocation, MainActivity::class.java)
+                val intent = Intent(this@SearchLocation, MainBlind::class.java)
                 startActivity(intent)
 
             }

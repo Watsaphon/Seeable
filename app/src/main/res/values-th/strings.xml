@@ -93,6 +93,12 @@
     <string name="role_BlindInformationFragment">สถานะ : คนตาบอด</string>
     <string name="nav_BlindInformationFragment">รายการการนำทาง</string>
     <string name="add_BlindInformationFragment">เพิ่ม +</string>
+    <string name="update_empty_BlindInformationFragment">กรุณากรอกชื่อใหม่ของคุณ</string>
+    <string name="update_same_BlindInformationFragment">ชื่อใหม่จะต้องไม่ซ้ำเก่าชื่อเก่าของคุณ</string>
+    <string name="update_success_BlindInformationFragment">อัพเดทชื่อเสร็จสิ้น</string>
+
+    <!--NavigationEditFragment-->
+    <string name="header_NavigationEditFragment">แก้ไขการนำทาง</string>
 
 
     <!--AccountBlind-->

@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav_graph_caretaker"
     app:startDestination="@id/caretakerFragment">
     <fragment
         android:id="@+id/caretakerFragment"
@@ -11,7 +11,8 @@
         tools:layout="@layout/fragment_caretaker" >
         <action
             android:id="@+id/action_caretakerFragment_to_settingCaretakerFragment"
-            app:destination="@id/settingCaretakerFragment" />
+            app:destination="@id/settingCaretakerFragment"
+            app:popUpTo="@id/caretakerFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingCaretakerFragment"
@@ -100,4 +101,14 @@
         android:label="BlindInformationFragment"
         tools:layout="@layout/fragment_blind_information"
         />
+    <activity
+        android:id="@+id/loginScreen"
+        android:name="com.estazo.project.seeable.app.login.LoginScreen"
+        android:label="activity_login_screen"
+        tools:layout="@layout/fragment_login_screen" />
+    <fragment
+        android:id="@+id/blindFragment"
+        android:name="com.estazo.project.seeable.app.blind.BlindFragment"
+        android:label="fragment_blind"
+        tools:layout="@layout/fragment_blind" />
 </navigation>

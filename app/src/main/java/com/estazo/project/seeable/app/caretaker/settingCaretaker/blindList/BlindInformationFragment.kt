@@ -12,9 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.caretaker.MainActivityPerson
+import com.estazo.project.seeable.app.caretaker.MainCaretaker
 import com.estazo.project.seeable.app.databinding.FragmentBlindInformationBinding
-import com.estazo.project.seeable.app.helperClass.Locations
 import com.google.firebase.database.FirebaseDatabase
 
 
@@ -62,7 +61,9 @@ class BlindInformationFragment : Fragment() {
         binding.editNameButton.setOnClickListener {
             updateDisplayName()
         }
+
         binding.saveBtn.setOnClickListener {
+            (activity as MainCaretaker).closeKeyboard()
             addDisplayName()
         }
 
@@ -110,12 +111,13 @@ class BlindInformationFragment : Fragment() {
 
         when {
             updateName.isEmpty() -> {
-                Toast.makeText(activity,"Please fill your new name", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity,R.string.update_empty_BlindInformationFragment, Toast.LENGTH_LONG).show()
             }
             updateName == selectUsernameBlind -> {
-                Toast.makeText(activity,"The new name can't be the same as the old name.", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity,R.string.update_same_BlindInformationFragment, Toast.LENGTH_LONG).show()
             }
             else -> {
+                selectUsernameBlind = updateName
                 binding.displayName.text = updateName
 
                 val ref = FirebaseDatabase.getInstance().reference
@@ -124,15 +126,15 @@ class BlindInformationFragment : Fragment() {
                 val childUpdates2 = hashMapOf<String, Any>("users_caretaker/$phoneCaretaker/Blind/user$positionBlindUser" to "$selectPhoneBlind/$updateName")
                 ref.updateChildren(childUpdates2)
 
-
                 binding.editName.visibility = View.GONE
                 binding.saveBtn.visibility = View.GONE
 
                 binding.displayName.visibility = View.VISIBLE
                 binding.editNameButton.visibility = View.VISIBLE
 
-                (activity as MainActivityPerson).closeKeyboard()
-                Toast.makeText(activity,"Update name successfully.", Toast.LENGTH_LONG).show()
+                binding.editName.text.clear()
+
+                Toast.makeText(activity,R.string.update_success_BlindInformationFragment, Toast.LENGTH_LONG).show()
 
             }
         }

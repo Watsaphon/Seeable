@@ -7,8 +7,8 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.blind.MainActivity
-import com.estazo.project.seeable.app.caretaker.MainActivityPerson
+import com.estazo.project.seeable.app.blind.MainBlind
+import com.estazo.project.seeable.app.caretaker.MainCaretaker
 import com.estazo.project.seeable.app.login.IntroduceApp
 import com.estazo.project.seeable.app.login.LoginScreen
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -99,13 +99,13 @@ class SplashScreen : AppCompatActivity() {
             if(login != "not found!" && userType != "not found!" ){
                 if(userType== "caretaker"){
                     Handler().postDelayed({
-                        startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
+                        startActivity(Intent(this@SplashScreen, MainCaretaker::class.java))
                         finishAffinity()
                     }, 1000)
                 }
                 else if (userType== "blind"){
                     Handler().postDelayed({
-                        startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+                        startActivity(Intent(this@SplashScreen, MainBlind::class.java))
                         finishAffinity()
                     }, 1000)
                 }
@@ -114,13 +114,13 @@ class SplashScreen : AppCompatActivity() {
                 when (googleUserType) {
                     "caretaker" -> {
                         Handler().postDelayed({
-                            startActivity(Intent(this@SplashScreen, MainActivityPerson::class.java))
+                            startActivity(Intent(this@SplashScreen, MainCaretaker::class.java))
                             finishAffinity()
                         }, 1000)
                     }
                     "blind" -> {
                         Handler().postDelayed({
-                            startActivity(Intent(this@SplashScreen, MainActivity::class.java))
+                            startActivity(Intent(this@SplashScreen, MainBlind::class.java))
                             finishAffinity()
                         }, 1000)
                     }

@@ -1,7 +1,6 @@
 package com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
@@ -11,20 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.caretaker.CaretakerViewModel
-import com.estazo.project.seeable.app.caretaker.MainActivityPerson
-import com.estazo.project.seeable.app.caretaker.UpdateListBlindUserRunnable
+import com.estazo.project.seeable.app.caretaker.MainCaretaker
 import com.estazo.project.seeable.app.databinding.FragmentVerificationBlindBinding
-import com.estazo.project.seeable.app.register.LittleMore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
@@ -160,7 +153,7 @@ class VerificationBlindFragment : Fragment() {
                     queryBlind(phoneCaretaker,phoneBlind)
                     dismissAlertDialogLoading()
                     findNavController().navigate(R.id.action_verificationBlindFragment_to_caretakerFragment)
-                    (activity as MainActivityPerson).closeKeyboard()
+                    (activity as MainCaretaker).closeKeyboard()
                     Toast.makeText(activity, "Correct OTP", Toast.LENGTH_SHORT).show()
                 }
                 else {
