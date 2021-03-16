@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/BlindFragment"
-tools:context=".blind.BlindFragment">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+   >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/BlindFragment"
+        tools:context=".blind.BlindFragment"
         >
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_button"
+            android:id="@+id/FAB"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
             android:layout_gravity="top|right"
@@ -89,16 +91,16 @@ tools:context=".blind.BlindFragment">
 
             </LinearLayout>
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
-<!--        android:background="@color/colorPrimaryDark"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        >-->
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+    <!--        android:background="@color/colorPrimaryDark"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        >-->
 
 
-<!--        -->
-<!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+    <!--        -->
+    <!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
 
 

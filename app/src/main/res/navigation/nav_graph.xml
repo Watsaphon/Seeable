@@ -3,17 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_caretaker"
-    app:startDestination="@id/caretakerFragment">
-    <fragment
-        android:id="@+id/caretakerFragment"
-        android:name="com.estazo.project.seeable.app.caretaker.CaretakerFragment"
-        android:label="fragment_caretaker"
-        tools:layout="@layout/fragment_caretaker" >
-        <action
-            android:id="@+id/action_caretakerFragment_to_settingCaretakerFragment"
-            app:destination="@id/settingCaretakerFragment"
-            app:popUpTo="@id/caretakerFragment" />
-    </fragment>
+    app:startDestination="@id/splashScreen"
+    >
+<!--    app:startDestination="@id/splashScreen"-->
     <fragment
         android:id="@+id/settingCaretakerFragment"
         android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.SettingCaretakerFragment"
@@ -26,6 +18,11 @@
         <action
             android:id="@+id/action_settingCaretakerFragment_to_accountSettingFragment"
             app:destination="@id/accountSettingFragment" />
+        <action
+            android:id="@+id/action_settingCaretakerFragment_to_loginScreen"
+            app:destination="@id/loginScreen"
+            app:popUpTo="@id/loginScreen"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/blindListFragment"
@@ -101,14 +98,86 @@
         android:label="BlindInformationFragment"
         tools:layout="@layout/fragment_blind_information"
         />
-    <activity
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.estazo.project.seeable.app.SplashScreen"
+        android:label="activity_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreen_to_caretakerFragment"
+            app:destination="@id/caretakerFragment"
+            app:popUpTo="@id/splashScreen" />
+        <action
+            android:id="@+id/action_splashScreen_to_loginScreen"
+            app:destination="@id/loginScreen"
+            app:popUpTo="@id/splashScreen" />
+        <action
+            android:id="@+id/action_splashScreen_to_blindFragment"
+            app:destination="@id/blindFragment"
+            app:popUpTo="@id/splashScreen" />
+        <action
+            android:id="@+id/action_splashScreen_to_introduceAppFragment"
+            app:destination="@id/introduceAppFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/loginScreen"
         android:name="com.estazo.project.seeable.app.login.LoginScreen"
-        android:label="activity_login_screen"
-        tools:layout="@layout/fragment_login_screen" />
+        android:label="fragment_login_screen"
+        tools:layout="@layout/fragment_login_screen" >
+        <action
+            android:id="@+id/action_loginScreen_to_caretakerFragment"
+            app:destination="@id/caretakerFragment"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginScreen_to_blindFragment"
+            app:destination="@id/blindFragment"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/blindFragment"
         android:name="com.estazo.project.seeable.app.blind.BlindFragment"
         android:label="fragment_blind"
-        tools:layout="@layout/fragment_blind" />
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_blind" >
+        <action
+            android:id="@+id/action_blindFragment_to_settingBlindFragment2"
+            app:destination="@id/settingBlindFragment2"
+            app:popUpTo="@id/blindFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/caretakerFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.CaretakerFragment"
+        android:label="fragment_caretaker"
+        tools:layout="@layout/fragment_caretaker" >
+        <action
+            android:id="@+id/action_caretakerFragment_to_settingCaretakerFragment"
+            app:destination="@id/settingCaretakerFragment"
+            app:popUpTo="@id/caretakerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingBlindFragment2"
+        android:name="com.estazo.project.seeable.app.blind.SettingBlindFragment"
+        android:label="SettingBlindFragment"
+        tools:layout="@layout/fragment_setting_blind"
+        >
+        <action
+            android:id="@+id/action_settingBlindFragment2_to_splashScreen"
+            app:destination="@id/splashScreen"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/loginScreen"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/introduceAppFragment"
+        android:name="com.estazo.project.seeable.app.login.IntroduceAppFragment"
+        android:label="fragment_introduce_app"
+        tools:layout="@layout/fragment_introduce_app" >
+        <action
+            android:id="@+id/action_introduceAppFragment_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
+
 </navigation>

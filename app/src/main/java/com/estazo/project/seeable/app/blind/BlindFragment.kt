@@ -26,7 +26,9 @@ import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.caretaker.CaretakerViewModel
 import com.estazo.project.seeable.app.databinding.FragmentBlindBinding
@@ -56,7 +58,6 @@ class BlindFragment : Fragment() {
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefDisplayName: SharedPreferences
 
-
     //Declaring the needed Variables
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
@@ -71,6 +72,7 @@ class BlindFragment : Fragment() {
 
         Log.i("BlindFragment", "onCreateView call")
         CheckPermission()
+
 
         sharedPrefLanguage = requireActivity().getSharedPreferences("value", 0)
         sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
@@ -101,7 +103,16 @@ class BlindFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i("BlindFragment", "onViewCreated call")
 
-        binding.selfNavButton.setOnClickListener{view : View  ->
+
+
+        binding.FAB.setOnClickListener {
+//            findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2, null,
+//                NavOptions.Builder().setPopUpTo(R.id.blindFragment, true).build())
+            view.findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2)
+
+        }
+
+        binding.selfNavButton.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigation()
@@ -127,10 +138,6 @@ class BlindFragment : Fragment() {
             sendLocation()
         }
 
-        binding.floatingActionButton.setOnClickListener {
-//            val intent = Intent(this, SettingBlind::class.java)
-//            startActivity(intent)
-        }
 
     }
 

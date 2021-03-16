@@ -1,64 +1,55 @@
 package com.estazo.project.seeable.app
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import com.estazo.project.seeable.app.blind.MainBlind
-import com.estazo.project.seeable.app.caretaker.MainCaretaker
-import com.estazo.project.seeable.app.login.IntroduceApp
-import com.estazo.project.seeable.app.login.LoginScreen
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import com.estazo.project.seeable.app.databinding.FragmentSplashScreenBinding
 import java.util.*
 
 
 var checkSuccess : Boolean = false
 
-class SplashScreen : AppCompatActivity() {
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
+class SplashScreen : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        hideSystemUI()
+//    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
+    private lateinit var binding : FragmentSplashScreenBinding
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash_screen, container, false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         /**Shared Preferences เป็นคลาสที่ใช้สำหรับเก็บข้อมูลถาวรที่เป็นค่าของตัวแปรธรรมดาๆ อย่างเช่น Boolean,Int,Float*/
-        val sharedPrefIntroApp = getSharedPreferences("value", 0)
+        val sharedPrefIntroApp = requireActivity().getSharedPreferences("value", 0)
         val introApp = sharedPrefIntroApp.getString("stringKeyIntro", "No")
 
-        val sharedPrefLanguage = getSharedPreferences("value", 0)
+        val sharedPrefLanguage = requireActivity().getSharedPreferences("value", 0)
         val language = sharedPrefLanguage.getString("stringKey", "en")
         val editor = sharedPrefLanguage.edit()
 
-        val sharedPrefID = getSharedPreferences("value", 0)
-        val login = sharedPrefID.getString("stringKey2","not found!")
-        val editor2 = sharedPrefID.edit()
+        val sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+        val login = sharedPrefPhone.getString("stringKeyPhone","not found!")
+        val editor2 = sharedPrefPhone.edit()
 
-        val sharedPrefUserType = getSharedPreferences("value", 0)
+        val sharedPrefUserType = requireActivity().getSharedPreferences("value", 0)
         val userType = sharedPrefUserType.getString("stringKeyType","not found!")
         val editor3 = sharedPrefUserType.edit()
 
-        val sharedPrefGoogle = getSharedPreferences("value", 0)
-        val userGoogle = sharedPrefGoogle.getString("stringKeyGoogle","not found!")
-        var editorGoogleUser = sharedPrefGoogle.edit()
-
-        val sharedGooglePrefUserType = getSharedPreferences("value", 0)
-        val googleUserType = sharedGooglePrefUserType.getString("stringKeyGoogleType","not found!")
-        var editorGoogleUserType = sharedPrefGoogle.edit()
-
         var locale: Locale? = null
-
-        // Configure Google Sign In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail().build()
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         Log.i("CheckUserID_splash", "First User ID  : $login")
         Log.i("CheckLanguage_splash", "First Language is :$language")
@@ -82,81 +73,45 @@ class SplashScreen : AppCompatActivity() {
 
         val config = Configuration()
         config.locale = locale
-        baseContext.resources.updateConfiguration(config, null)
-        Log.i("CheckUserID_splash", "  Second User  : $login")
+        requireActivity().baseContext.resources.updateConfiguration(config, null)
+
         Log.i("CheckLanguage_splash", "Now Language is :$language")
         Log.i("CheckUserTypes_plash", "Now User Type is :$userType")
 
-        Log.i("checkStatus"," login : $login , userType : $userType , userGoogle : $userGoogle , googleUserType : $googleUserType ")
-        Log.i("CheckFirst_splash", "First Login :$introApp")
+        Log.i("checkStatus"," login : $login , userType : $userType")
+        Log.i("checkStatus", "First Login :$introApp")
+
+        /** Check user status in app*/
         if(introApp == "No"){
-            Handler().postDelayed({
-                startActivity(Intent(this@SplashScreen, IntroduceApp::class.java))
-                finishAffinity()
-            }, 1000)
+//            Handler().postDelayed({
+////                view.findNavController().navigate(R.id.action_splashScreen_to_loginScreen)
+//            }, 1000)
+            findNavController().navigate(R.id.action_splashScreen_to_introduceAppFragment, null,
+                NavOptions.Builder().setPopUpTo(R.id.splashScreen, true).build())
+            Log.i("testss","intro app ja")
         }
-       else{
+        else{
             if(login != "not found!" && userType != "not found!" ){
-                if(userType== "caretaker"){
-                    Handler().postDelayed({
-                        startActivity(Intent(this@SplashScreen, MainCaretaker::class.java))
-                        finishAffinity()
-                    }, 1000)
-                }
-                else if (userType== "blind"){
-                    Handler().postDelayed({
-                        startActivity(Intent(this@SplashScreen, MainBlind::class.java))
-                        finishAffinity()
-                    }, 1000)
-                }
-            }
-            else if(userGoogle != "not found!" && googleUserType != "not found!" ){
-                when (googleUserType) {
+                when (userType) {
                     "caretaker" -> {
-                        Handler().postDelayed({
-                            startActivity(Intent(this@SplashScreen, MainCaretaker::class.java))
-                            finishAffinity()
-                        }, 1000)
+                        findNavController().navigate(R.id.action_splashScreen_to_caretakerFragment, null,
+                            NavOptions.Builder().setPopUpTo(R.id.splashScreen, true).build())
+                        Log.i("testss","caretker ja")
                     }
                     "blind" -> {
-                        Handler().postDelayed({
-                            startActivity(Intent(this@SplashScreen, MainBlind::class.java))
-                            finishAffinity()
-                        }, 1000)
+                        findNavController().navigate(R.id.action_splashScreen_to_blindFragment, null,
+                            NavOptions.Builder().setPopUpTo(R.id.splashScreen, true).build())
+                        Log.i("testss","blind ja")
                     }
-//                    "noRegister" -> {
-//                        Handler().postDelayed({
-//                            startActivity(Intent(this@SplashScreen, SelectRegister::class.java))
-//                            finishAffinity()
-//                        }, 1000)
-//                    }
                 }
             }
             else{
-                Handler().postDelayed({
-                    startActivity(Intent(this@SplashScreen, LoginScreen::class.java))
-                    finishAffinity()
-                }, 1000)
+                Log.i("testss","no user ja")
+                findNavController().navigate(R.id.action_splashScreen_to_loginScreen, null,
+                    NavOptions.Builder().setPopUpTo(R.id.splashScreen, true).build())
             }
         }
-
     }
 
-    private fun hideSystemUI() {
-        /**
-        // Enables regular immersive mode.
-        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
-        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-         */
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                // Set the content to appear under the system bars so that the
-                // content doesn't resize when the system bars hide and show.
-                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                // Hide the nav bar and status bar
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN)
-    }
 
 }

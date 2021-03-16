@@ -65,10 +65,10 @@ import java.util.*
                 "Phone : $phone , ID : $id, Password : $password," +
                 " DisplayName : $displayName, UserType : $userType ")
 
-        // Retrieve NavController from the NavHostFragment
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_caretaker_fragment) as NavHostFragment
-
-        val navController: NavController = navHostFragment.navController
+//        // Retrieve NavController from the NavHostFragment
+//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_caretaker_fragment) as NavHostFragment
+//
+//        val navController: NavController = navHostFragment.navController
 
         // Set up the action bar for use with the NavController
 //        setupActionBarWithNavController(navController)
@@ -149,31 +149,31 @@ import java.util.*
         startActivity(intent)
     }
 
-    fun gotoLogout(){
-        val editorID = sharedPrefID.edit()
-        val editorPhone = sharedPrefPhone.edit()
-        val editorPassword = sharedPrefPassword.edit()
-        val editorDisplayName = sharedPrefDisplayName.edit()
-        val editorUserType = sharedPrefUserType.edit()
-        val editorBlindId = sharedPrefBlindId.edit()
-
-        editorPhone.putString("stringKeyPhone", "not found!")
-        editorPassword.putString("stringKeyPassword", "not found!")
-        editorID.putString("stringKey2", "not found!")
-        editorDisplayName.putString("stringKeyDisplayName","not found!")
-        editorUserType.putString("stringKeyType", "not found!")
-        editorBlindId.putString("stringKeyBlindId", "not found!")
-
-        editorPhone.apply()
-        editorPassword.apply()
-        editorID.apply()
-        editorUserType.apply()
-        editorDisplayName.apply()
-        editorBlindId.apply()
-
-        val intent = Intent(this, LoginScreen::class.java)
-        startActivity(intent)
-    }
+//    fun gotoLogout(){
+//        val editorID = sharedPrefID.edit()
+//        val editorPhone = sharedPrefPhone.edit()
+//        val editorPassword = sharedPrefPassword.edit()
+//        val editorDisplayName = sharedPrefDisplayName.edit()
+//        val editorUserType = sharedPrefUserType.edit()
+//        val editorBlindId = sharedPrefBlindId.edit()
+//
+//        editorPhone.putString("stringKeyPhone", "not found!")
+//        editorPassword.putString("stringKeyPassword", "not found!")
+//        editorID.putString("stringKey2", "not found!")
+//        editorDisplayName.putString("stringKeyDisplayName","not found!")
+//        editorUserType.putString("stringKeyType", "not found!")
+//        editorBlindId.putString("stringKeyBlindId", "not found!")
+//
+//        editorPhone.apply()
+//        editorPassword.apply()
+//        editorID.apply()
+//        editorUserType.apply()
+//        editorDisplayName.apply()
+//        editorBlindId.apply()
+//
+//        val intent = Intent(this, LoginScreen::class.java)
+//        startActivity(intent)
+//    }
 
     fun closeKeyboard() {
         val view = this.currentFocus

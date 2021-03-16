@@ -69,9 +69,9 @@ class MainBlind: AppCompatActivity() {
 
 
         // Retrieve NavController from the NavHostFragment
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_blind_fragment) as NavHostFragment
-
-        val navController: NavController = navHostFragment.navController
+//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_blind_fragment) as NavHostFragment
+//
+//        val navController: NavController = navHostFragment.navController
 
 //        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 //        RequestPermission()

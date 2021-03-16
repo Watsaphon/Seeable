@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_page"
     android:orientation="vertical"
-    tools:context=".login.LoginScreen"
-    >
+    tools:context=".login.LoginScreen">
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"

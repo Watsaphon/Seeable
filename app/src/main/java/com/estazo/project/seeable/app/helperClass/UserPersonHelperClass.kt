@@ -45,7 +45,6 @@ fun toMap(): Map<String, Any?> {
 }
 
 
-
 @IgnoreExtraProperties
 data class Blind(
     var user1: String ,

@@ -1,6 +1,7 @@
     package com.estazo.project.seeable.app.caretaker.settingCaretaker
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
@@ -10,10 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.caretaker.MainCaretaker
 import com.estazo.project.seeable.app.databinding.FragmentSettingCaretakerBinding
+import com.estazo.project.seeable.app.login.LoginScreen
 import java.util.*
 
 
@@ -23,6 +28,13 @@ class SettingCaretakerFragment : Fragment() {
 
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var language : String
+
+    private lateinit var sharedPrefPhone: SharedPreferences
+    private lateinit var sharedPrefPassword: SharedPreferences
+    private lateinit var sharedPrefID: SharedPreferences
+    private lateinit var sharedPrefDisplayName: SharedPreferences
+    private lateinit var sharedPrefUserType : SharedPreferences
+    private lateinit var sharedPrefBlindId : SharedPreferences
 
 //    private val caretakerViewModel: CaretakerViewModel by activityViewModels()
 
@@ -43,6 +55,13 @@ class SettingCaretakerFragment : Fragment() {
 
         sharedPrefLanguage = requireActivity().getSharedPreferences("value", 0)
         language = sharedPrefLanguage.getString("stringKey", "not found!").toString()
+
+        sharedPrefPhone= requireActivity().getSharedPreferences("value", 0)
+        sharedPrefID = requireActivity().getSharedPreferences("value", 0)
+        sharedPrefPassword= requireActivity().getSharedPreferences("value", 0)
+        sharedPrefDisplayName= requireActivity().getSharedPreferences("value", 0)
+        sharedPrefUserType = requireActivity().getSharedPreferences("value", 0)
+        sharedPrefBlindId = requireActivity().getSharedPreferences("value", 0)
 
         Log.i("SettingCaretaker", " language : $language")
 
@@ -69,14 +88,10 @@ class SettingCaretakerFragment : Fragment() {
         }
 
         binding.logoutBtn.setOnClickListener{
-        (activity as MainCaretaker).gotoLogout()
-//      /**or call with this*/   MainActivityPerson().gotoLogout()
+        logout()
         }
     }
 
-//    fun goToNextScreen() {
-//        findNavController().navigate(R.id.action_settingCaretakerFragment_to_blindListFragment)
-//    }
 
     /** change Language TH and EN*/
     private fun changeLanguage(){
@@ -105,11 +120,36 @@ class SettingCaretakerFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.i("SettingCaretaker", "onActivityCreated call")
-//        caretakerViewModel.getPhoneUser().observe(viewLifecycleOwner, androidx.lifecycle.Observer<List<Any>>{ phone ->
-//         val   phoneUser1 = phone[0].toString()
-//            Log.i("SettingCaretaker", "phoneUser1 : $phoneUser1")
-//        })
     }
+
+    private fun logout(){
+        val editorID = sharedPrefID.edit()
+        val editorPhone = sharedPrefPhone.edit()
+        val editorPassword = sharedPrefPassword.edit()
+        val editorDisplayName = sharedPrefDisplayName.edit()
+        val editorUserType = sharedPrefUserType.edit()
+        val editorBlindId = sharedPrefBlindId.edit()
+
+        editorPhone.putString("stringKeyPhone", "not found!")
+        editorPassword.putString("stringKeyPassword", "not found!")
+        editorID.putString("stringKey2", "not found!")
+        editorDisplayName.putString("stringKeyDisplayName","not found!")
+        editorUserType.putString("stringKeyType", "not found!")
+        editorBlindId.putString("stringKeyBlindId", "not found!")
+
+        editorPhone.apply()
+        editorPassword.apply()
+        editorID.apply()
+        editorUserType.apply()
+        editorDisplayName.apply()
+        editorBlindId.apply()
+                findNavController().navigate(R.id.action_settingCaretakerFragment_to_loginScreen,
+                null,
+                NavOptions.Builder().setPopUpTo(R.id.loginScreen, true).build()
+            )
+
+    }
+
     override fun onStart() {
         super.onStart()
         Log.i("SettingCaretaker", "onStart call")
@@ -139,27 +179,5 @@ class SettingCaretakerFragment : Fragment() {
         Log.i("SettingCaretaker", "onDetach call")
     }
 
-//    /** change Language TH and EN*/
-//    private fun changeLanguage(){
-//        val language = sharedPrefLanguage.getString("stringKey", "not found!")
-//        Log.i("CheckLanguage", "Now Language is :$language ")
-//        var locale: Locale? = null
-//        var editor = sharedPrefLanguage.edit()
-//        if (language=="en") {
-//            locale = Locale("th")
-//            editor.putString("stringKey", "th")
-//            editor.apply()
-//        } else if (language =="th") {
-//            locale = Locale("en")
-//            editor.putString("stringKey", "en")
-//            editor.apply()
-//        }
-//        Locale.setDefault(locale)
-//        val config = Configuration()
-//        config.locale = locale
-//        baseContext.resources.updateConfiguration(config, null)
-//        val intent = Intent(this, SplashScreen::class.java)
-//        startActivity(intent)
-//    }
 
 }

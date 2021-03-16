@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.blind.SettingBlind
+import com.estazo.project.seeable.app.blind.SettingBlindFragment
 
 class AccountBlind : AppCompatActivity() {
 
@@ -73,7 +73,7 @@ class AccountBlind : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(this, SettingBlind::class.java)
+        val intent = Intent(this, SettingBlindFragment::class.java)
         startActivity(intent)
         finishAffinity()
         Log.i("AccountBlind", "onBackPressed called")

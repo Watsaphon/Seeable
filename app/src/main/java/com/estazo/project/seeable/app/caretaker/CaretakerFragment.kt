@@ -26,11 +26,10 @@ import com.estazo.project.seeable.app.device.BPMRunnable
 //
 //    private lateinit var viewModel: CaretakerViewModel
 
-
      // Binding object instance corresponding to the fragment_start.xml layout
      // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
      // when the view hierarchy is attached to the fragment.
-//     private var binding: FragmentCaretakerBinding? = null
+    // private var binding: FragmentCaretakerBinding? = null
      private lateinit var binding: FragmentCaretakerBinding
 
      // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
@@ -189,6 +188,8 @@ import com.estazo.project.seeable.app.device.BPMRunnable
         super.onPause()
         Log.i("CaretakerFragment", "onPause call")
     }
+
+
     override fun onStop() {
         super.onStop()
         Log.i("CaretakerFragment", "onStop call")

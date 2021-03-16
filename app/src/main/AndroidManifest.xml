@@ -31,12 +31,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity"></activity>
+<!--        <activity android:name=".MainActivity"></activity>-->
         <activity android:name=".blind.settingBlind.DeleteAccountBlind" />
         <activity android:name=".blind.settingBlind.ChangePasswordAccountBlind" />
         <activity android:name=".blind.settingBlind.EditNameAccountBlind" />
         <activity android:name=".blind.settingBlind.AccountBlind" />
-        <activity android:name=".blind.SettingBlind" />
+        <activity android:name=".blind.SettingBlindFragment" />
         <activity
             android:name=".register.LittleMore"
             android:screenOrientation="portrait" />
@@ -47,7 +47,7 @@
             android:name=".register.VerificationOTP"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".login.IntroduceApp"
+            android:name=".login.IntroduceAppFragment"
             android:screenOrientation="portrait" />
         <activity
             android:name=".blind.settingBlind.SearchLocation"
@@ -55,15 +55,15 @@
         <activity
             android:name=".caretaker.MainCaretaker"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".login.LoginScreen"
-            android:configChanges="orientation|screenSize" />
+<!--        <activity-->
+<!--            android:name=".login.LoginScreen"-->
+<!--            android:screenOrientation="portrait" />-->
         <activity
             android:name=".CameraTest"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".SplashScreen"
-            android:configChanges="orientation|screenSize"
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
