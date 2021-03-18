@@ -15,8 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.caretaker.MainCaretaker
 import com.estazo.project.seeable.app.databinding.FragmentVerificationBlindBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -153,7 +153,7 @@ class VerificationBlindFragment : Fragment() {
                     queryBlind(phoneCaretaker,phoneBlind)
                     dismissAlertDialogLoading()
                     findNavController().navigate(R.id.action_verificationBlindFragment_to_caretakerFragment)
-                    (activity as MainCaretaker).closeKeyboard()
+                    (activity as MainActivity).closeKeyboard()
                     Toast.makeText(activity, "Correct OTP", Toast.LENGTH_SHORT).show()
                 }
                 else {

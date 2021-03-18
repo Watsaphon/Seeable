@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".register.LittleMore">
+    tools:context=".register.LittleMoreFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -180,7 +181,8 @@
                 android:text="@string/blind_LittleMore"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
-                android:typeface="normal" />
+                android:typeface="normal"
+                />
 
             <RadioButton
                 android:id="@+id/select_care"
@@ -196,7 +198,8 @@
                 android:padding="20dp"
                 android:text="@string/care_LittleMore"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                />
         </RadioGroup>
 
         <TextView
@@ -273,9 +276,6 @@
             android:background="@mipmap/close_button_foreground"
             android:visibility="gone" />
 
-
-
-
-
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -41,24 +41,12 @@ class MainActivity : AppCompatActivity() {
         Log.i("fff","userType : $userType")
         when (userType){
             "not found!" -> {
-                // Retrieve NavController from the NavHostFragment
-//                val navHostFragment = supportFragmentManager.findFragmentById(R.id.loginScreen) as NavHostFragment
-////                view.findNavController().navigate(R.id.action_loginScreen_to_caretakerFragment)
-//                val navController: NavController = navHostFragment.navController
                 Toast.makeText(this, "null", Toast.LENGTH_LONG).show()
             }
             "blind" -> {
-                // Retrieve NavController from the NavHostFragment
-//                val navHostFragment = supportFragmentManager.findFragmentById(R.id.action_loginScreen_to_blindFragment) as NavHostFragment
-////                view.findNavController().navigate(R.id.action_loginScreen_to_caretakerFragment)
-//                val navController: NavController = navHostFragment.navController
                 Toast.makeText(this, "blind", Toast.LENGTH_LONG).show()
             }
             "caretaker" -> {
-                // Retrieve NavController from the NavHostFragment
-//                val navHostFragment = supportFragmentManager.findFragmentById(R.id.caretakerFragment) as NavHostFragment
-////                view.findNavController().navigate(R.id.action_loginScreen_to_caretakerFragment)
-//                val navController: NavController = navHostFragment.navController
                 Toast.makeText(this, "caretaker", Toast.LENGTH_LONG).show()
                  }
         }
@@ -66,8 +54,6 @@ class MainActivity : AppCompatActivity() {
 //        // Retrieve NavController from the NavHostFragment
 //        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
 //        val navController: NavController = navHostFragment.navController
-
-
 
     }
 

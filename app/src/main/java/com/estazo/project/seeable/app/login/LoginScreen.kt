@@ -43,6 +43,7 @@ class LoginScreen : Fragment() {
 //    private lateinit var finish: Button
 //    private lateinit var register: Button
 //    private var RC_SIGN_IN = 0
+
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var auth: FirebaseAuth
@@ -68,64 +69,6 @@ class LoginScreen : Fragment() {
                 requireActivity().finishAffinity()
             }
         })
-
-//        setContentView(R.layout.fragment_login_screen)
-//        hideSystemUI()
-//        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
-        //Initializing Views
-//        telBox = findViewById(R.id.tel_box)
-//        passwordBox = findViewById(R.id.password_box)
-//        finish = findViewById(R.id.login_finish_button)
-//        register = findViewById(R.id.regis_button)
-//        auth = FirebaseAuth.getInstance()
-//        changeLang = findViewById(R.id.en_th)
-
-//        sharedPrefIntroApp = getSharedPreferences("value", 0)
-//        val introApp = sharedPrefIntroApp.getString("stringKeyIntro", "No")
-//        if(introApp =="No"){
-//            val editor = sharedPrefIntroApp.edit()
-//            editor.putString("stringKeyIntro","YES")
-//            editor.apply()
-//        }
-//
-//
-//        sharedPrefLanguage = getSharedPreferences("value", 0)
-//        sharedPrefPhone= getSharedPreferences("value", 0)
-//        sharedPrefPassword= getSharedPreferences("value", 0)
-//        sharedPrefID = getSharedPreferences("value", 0)
-//        sharedPrefDisplayName= getSharedPreferences("value", 0)
-//        sharedPrefUserType = getSharedPreferences("value", 0)
-//        sharedPrefCaretakerUser = getSharedPreferences("value", 0)
-
-
-//        val text = "EN|TH"
-//        val ssb = SpannableStringBuilder(text)
-//        val fcsWhite = ForegroundColorSpan(Color.WHITE)
-//        val fcsGreen = ForegroundColorSpan(Color.GREEN)
-//
-//        val language = sharedPrefLanguage.getString("stringKey", "not found!")
-//        if(language == "en"){
-//            ssb.setSpan(fcsWhite, 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//            ssb.setSpan(fcsGreen, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//            changeLang.text = ssb
-//
-//        }
-//        else if(language =="th"){
-//            ssb.setSpan(fcsWhite, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//            ssb.setSpan(fcsGreen, 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//            changeLang.text = ssb
-//        }
-//
-//        val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
-//        val stringValue2 = sharedPrefID.getString("stringKey2", "not found!")
-//
-//        Log.i("CheckUserID_login", "Current User ID  : $stringValue2")
-//        Log.i("CheckLanguage_splash", "LoginScreen now language : $stringValue")
-
-//        finish.setOnClickListener(View.OnClickListener { login() })
-//        register.setOnClickListener(View.OnClickListener { register() })
-//        changeLang.setOnClickListener(View.OnClickListener { changeLanguage() })
 
     }
 
@@ -185,26 +128,6 @@ class LoginScreen : Fragment() {
         
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-//                // in here you can do logic when backPress is clicked
-//            }
-//        })
-//
-//        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-//                if(shouldInterceptBackPress()){
-//                    // in here you can do logic when backPress is clicked
-//                }else{
-//                    isEnabled = false
-//                    activity?.onBackPressed()
-//                }
-//            }
-//        })
-//
-//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -226,6 +149,7 @@ class LoginScreen : Fragment() {
 
 
     private fun register() {
+        findNavController().navigate(R.id.action_loginScreen_to_sendOTP)
 //       val intent = Intent(this, SendOTP::class.java)
 //        startActivity(intent)
     }
@@ -257,7 +181,6 @@ class LoginScreen : Fragment() {
         val config = Configuration()
         config.locale = locale
         requireActivity().baseContext.resources.updateConfiguration(config, null)
-//        requireActivity().recreate()
         findNavController().navigate(R.id.loginScreen)
     }
 
@@ -275,14 +198,6 @@ class LoginScreen : Fragment() {
         mAlertDialog.setCancelable(false)
     }
 
-//    private fun dismissAlertDialogLoading() {
-//        //Inflate the dialog with custom view
-//        val mDialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
-//        //AlertDialogBuilder
-//        val mBuilder = AlertDialog.Builder(activity).setView(mDialogView)
-//        //show dialog
-//        mAlertDialog.dismiss()
-//    }
 
 
 

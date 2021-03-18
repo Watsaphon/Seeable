@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.caretaker.MainCaretaker
 import com.estazo.project.seeable.app.databinding.FragmentBlindInformationBinding
 import com.google.firebase.database.FirebaseDatabase
 
@@ -63,7 +63,7 @@ class BlindInformationFragment : Fragment() {
         }
 
         binding.saveBtn.setOnClickListener {
-            (activity as MainCaretaker).closeKeyboard()
+            (activity as MainActivity).closeKeyboard()
             addDisplayName()
         }
 

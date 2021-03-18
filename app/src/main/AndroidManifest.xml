@@ -38,13 +38,13 @@
         <activity android:name=".blind.settingBlind.AccountBlind" />
         <activity android:name=".blind.SettingBlindFragment" />
         <activity
-            android:name=".register.LittleMore"
+            android:name=".register.LittleMoreFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".register.SendOTP"
+            android:name=".register.SendOTPFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".register.VerificationOTP"
+            android:name=".register.VerificationOTPFragment"
             android:screenOrientation="portrait" />
         <activity
             android:name=".login.IntroduceAppFragment"

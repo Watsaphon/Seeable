@@ -1,7 +1,6 @@
 package com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,14 +9,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentAddBlindUserBinding
-import com.estazo.project.seeable.app.register.VerificationOTP
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential

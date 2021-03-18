@@ -134,6 +134,10 @@
             app:destination="@id/blindFragment"
             app:popUpTo="@id/splashScreen"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginScreen_to_sendOTP"
+            app:destination="@id/sendOTP"
+            app:popUpTo="@id/loginScreen" />
     </fragment>
     <fragment
         android:id="@+id/blindFragment"
@@ -177,6 +181,45 @@
         tools:layout="@layout/fragment_introduce_app" >
         <action
             android:id="@+id/action_introduceAppFragment_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/sendOTP"
+        android:name="com.estazo.project.seeable.app.register.SendOTPFragment"
+        android:label="SendOTP"
+        tools:layout="@layout/fragment_send_o_t_p"
+        >
+        <action
+            android:id="@+id/action_sendOTP_to_verificationOTP"
+            app:destination="@id/verificationOTP" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationOTP"
+        android:name="com.estazo.project.seeable.app.register.VerificationOTPFragment"
+        android:label="VerificationOTP"
+        tools:layout="@layout/fragment_verification_o_t_p"
+        >
+        <action
+            android:id="@+id/action_verificationOTP_to_littleMore"
+            app:destination="@id/littleMore" />
+        <argument
+            android:name="mobile"
+            app:argType="string" />
+        <argument
+            android:name="OTP"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/littleMore"
+        android:name="com.estazo.project.seeable.app.register.LittleMoreFragment"
+        android:label="LittleMore"
+        tools:layout="@layout/fragment_little_more"
+        >
+        <argument
+            android:name="mobile"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_littleMore_to_loginScreen"
             app:destination="@id/loginScreen" />
     </fragment>
 
