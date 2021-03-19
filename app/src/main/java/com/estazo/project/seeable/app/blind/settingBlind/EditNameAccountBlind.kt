@@ -71,7 +71,7 @@ class EditNameAccountBlind : AppCompatActivity() {
                 editor.putString("stringKeyDisplayName","$newName")
                 editor.apply()
 
-                val intent = Intent(this, AccountBlind::class.java)
+                val intent = Intent(this, AccountBlindFragment::class.java)
                 startActivity(intent)
             }
 
@@ -81,7 +81,7 @@ class EditNameAccountBlind : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(this, AccountBlind::class.java)
+        val intent = Intent(this, AccountBlindFragment::class.java)
         startActivity(intent)
         finishAffinity()
         Log.i("EditNameAccountBlind", "onBackPressed called")

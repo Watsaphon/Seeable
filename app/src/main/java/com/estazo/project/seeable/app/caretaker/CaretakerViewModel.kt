@@ -100,8 +100,8 @@ class CaretakerViewModel() : ViewModel() {
                      }
                      /** set 3 user */
                      displayUser4 == "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-" ->{
-                         userDisplay.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3)
-                         userTel.value = listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3)
+                         userDisplay.value = listOf(nameFBUser1 , nameFBUser2 , nameFBUser3)
+                         userTel.value = listOf(phoneFBUser1 , phoneFBUser2 , phoneFBUser3)
                          Log.i("testListOf()3","displayUser1 :$displayUser1 , displayUser :$displayUser2 , displayUser3 :$displayUser3")
                      }
                      /** set 4 user */

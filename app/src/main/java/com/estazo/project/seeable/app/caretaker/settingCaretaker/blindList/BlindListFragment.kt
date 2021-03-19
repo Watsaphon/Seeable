@@ -2,32 +2,23 @@ package com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList
 
 import android.app.AlertDialog
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.caretaker.CaretakerViewModel
 import com.estazo.project.seeable.app.databinding.FragmentBlindListBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.alert_dialog_delete_blind_user.view.*
-import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 import kotlinx.android.synthetic.main.alert_dialog_set_name.view.dialogConfirmBtn
 
 
@@ -120,38 +111,40 @@ class BlindListFragment : Fragment() {
             Log.i("ViewModel","size : $size , user : $user , numUser : $numUser")
         })
         blindListViewModel.listUserPhone.observe(viewLifecycleOwner, Observer{phone ->
-            selectPhone = phone.toString()
+//            val list : String = phone.toString()
+//            list.replace("\\s+","")
+            selectPhone = phone.toString().replace(", ",",")
+//            selectPhone.replace("0","11")
             Log.i("ViewModelBLF","selectPhone : $selectPhone , phone : $phone")
         })
 
         binding.editUser1.setOnClickListener{view ->
             val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
-            val phone1 = phoneList[0]
-                .substring(1,11)
+            val phone1 = phoneList[0].substring(1,11)
             blindInfoViewModel.userNameBlind(binding.nameUser1.text.toString(),phone1,1)
-            Log.i("ViewModelBLF","phone1 : $phone1")
+            Log.i("ViewModelBLF","phone1 :$phone1")
             view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
         }
         binding.editUser2.setOnClickListener{view ->
             val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
-            val phone2 = phoneList[1].substring(0,11)
+            val phone2 = phoneList[1].substring(0)
             blindInfoViewModel.userNameBlind(binding.nameUser2.text.toString(),phone2,2)
             view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
-            Log.i("ViewModelBLF","phone2 : $phone2")
+            Log.i("ViewModelBLF","phone2 :$phone2")
         }
         binding.editUser3.setOnClickListener{view ->
             val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
-            val phone3 = phoneList[2].substring(0,11)
+            val phone3 = phoneList[2].substring(0,10)
             blindInfoViewModel.userNameBlind(binding.nameUser3.text.toString(),phone3,3)
             view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
-            Log.i("ViewModelBLF","phone3 : $phone3")
+            Log.i("ViewModelBLF","phone3 :$phone3")
         }
         binding.editUser4.setOnClickListener{view ->
             val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
-            val phone4 = phoneList[3].substring(0,11)
+            val phone4 = phoneList[3].substring(0,10)
             blindInfoViewModel.userNameBlind(binding.nameUser4.text.toString(),phone4,4)
             view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
-            Log.i("ViewModelBLF","phone4 : $phone4")
+            Log.i("ViewModelBLF","phone4 :$phone4")
         }
 
         binding.deleteUser1.setOnClickListener{

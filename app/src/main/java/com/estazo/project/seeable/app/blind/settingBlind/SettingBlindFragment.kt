@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app.blind
+package com.estazo.project.seeable.app.blind.settingBlind
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -153,8 +153,7 @@ class SettingBlindFragment : Fragment() {
     }
 
     private fun account(){
-//        val intent = Intent(this, AccountBlind::class.java)
-//        startActivity(intent)
+        findNavController().navigate(R.id.action_settingBlindFragment2_to_accountBlindFragment)
     }
 
     private fun searchLocation(){

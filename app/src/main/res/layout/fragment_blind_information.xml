@@ -72,24 +72,25 @@
 
             <TextView
                 android:id="@+id/name"
-                style="@style/AccountBlind_Name"
                 android:layout_width="wrap_content"
                 android:layout_height="33dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="25dp"
                 android:layout_toEndOf="@+id/profile"
-                android:text="@string/name_BlindInformationFragment" />
+                android:text="@string/name_BlindInformationFragment"
+                style="@style/AccountBlind_Name"
+                />
 
             <TextView
                 android:id="@+id/displayName"
-                style="@style/AccountBlind_Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/name"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/profile"
                 android:text="@string/displayName_BlindInformationFragment"
+                style="@style/AccountBlind_Name"
                 />
 
 

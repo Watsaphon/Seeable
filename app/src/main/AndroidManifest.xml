@@ -32,11 +32,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 <!--        <activity android:name=".MainActivity"></activity>-->
-        <activity android:name=".blind.settingBlind.DeleteAccountBlind" />
-        <activity android:name=".blind.settingBlind.ChangePasswordAccountBlind" />
+        <activity android:name=".blind.settingBlind.DeleteAccountBlindFragment" />
+        <activity android:name=".blind.settingBlind.ChangePasswordAccountBlindFragment" />
         <activity android:name=".blind.settingBlind.EditNameAccountBlind" />
-        <activity android:name=".blind.settingBlind.AccountBlind" />
-        <activity android:name=".blind.SettingBlindFragment" />
+        <activity android:name=".blind.settingBlind.AccountBlindFragment" />
+        <activity android:name=".blind.settingBlind.SettingBlindFragment" />
         <activity
             android:name=".register.LittleMoreFragment"
             android:screenOrientation="portrait" />

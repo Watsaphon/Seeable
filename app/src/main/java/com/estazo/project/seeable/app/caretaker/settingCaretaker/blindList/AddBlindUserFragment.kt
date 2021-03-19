@@ -136,7 +136,8 @@ class AddBlindUserFragment : Fragment() {
             .setView(mDialogView)
         //show dialog
         mAlertDialog  = mBuilder.show()
-        mAlertDialog.window!!.setLayout(400,300)
+//        mAlertDialog.window!!.setLayout(400,300)
+        mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
     }

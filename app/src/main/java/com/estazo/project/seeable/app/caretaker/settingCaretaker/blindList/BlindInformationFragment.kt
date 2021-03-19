@@ -121,9 +121,9 @@ class BlindInformationFragment : Fragment() {
                 binding.displayName.text = updateName
 
                 val ref = FirebaseDatabase.getInstance().reference
-                val childUpdates = hashMapOf<String, Any>("users_blind/$selectPhoneBlind/displayName" to updateName)
+                val childUpdates = hashMapOf<String,Any>("users_blind/$selectPhoneBlind/displayName" to updateName)
                 ref.updateChildren(childUpdates)
-                val childUpdates2 = hashMapOf<String, Any>("users_caretaker/$phoneCaretaker/Blind/user$positionBlindUser" to "$selectPhoneBlind/$updateName")
+                val childUpdates2 = hashMapOf<String,Any>("users_caretaker/$phoneCaretaker/Blind/user$positionBlindUser" to "$selectPhoneBlind/$updateName")
                 ref.updateChildren(childUpdates2)
 
                 binding.editName.visibility = View.GONE

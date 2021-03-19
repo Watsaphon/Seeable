@@ -10,7 +10,6 @@ class BlindInformationViewModel : ViewModel() {
     var phone = MutableLiveData<String>()
     var position = MutableLiveData<Int>()
 
-
     init {
         user.value = "-"
         phone.value = "-"

@@ -163,7 +163,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingBlindFragment2"
-        android:name="com.estazo.project.seeable.app.blind.SettingBlindFragment"
+        android:name="com.estazo.project.seeable.app.blind.settingBlind.SettingBlindFragment"
         android:label="SettingBlindFragment"
         tools:layout="@layout/fragment_setting_blind"
         >
@@ -173,6 +173,9 @@
             app:launchSingleTop="false"
             app:popUpTo="@id/loginScreen"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_settingBlindFragment2_to_accountBlindFragment"
+            app:destination="@id/accountBlindFragment" />
     </fragment>
     <fragment
         android:id="@+id/introduceAppFragment"
@@ -220,6 +223,39 @@
             app:argType="string" />
         <action
             android:id="@+id/action_littleMore_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountBlindFragment"
+        android:name="com.estazo.project.seeable.app.blind.settingBlind.AccountBlindFragment"
+        android:label="AccountBlindFragment"
+        tools:layout="@layout/fragment_account_blind"
+        >
+        <action
+            android:id="@+id/action_accountBlindFragment_to_changePasswordAccountBlindFragment"
+            app:destination="@id/changePasswordAccountBlindFragment" />
+        <action
+            android:id="@+id/action_accountBlindFragment_to_deleteAccountBlindFragment"
+            app:destination="@id/deleteAccountBlindFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordAccountBlindFragment"
+        android:name="com.estazo.project.seeable.app.blind.settingBlind.ChangePasswordAccountBlindFragment"
+        android:label="ChangePasswordAccountBlindFragment"
+        tools:layout="@layout/fragment_change_password_account_blind"
+        >
+        <action
+            android:id="@+id/action_changePasswordAccountBlindFragment_to_blindFragment"
+            app:destination="@id/blindFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deleteAccountBlindFragment"
+        android:name="com.estazo.project.seeable.app.blind.settingBlind.DeleteAccountBlindFragment"
+        android:label="DeleteAccountBlindFragment"
+        tools:layout="@layout/fragment_delete_account_blind"
+        >
+        <action
+            android:id="@+id/action_deleteAccountBlindFragment_to_loginScreen"
             app:destination="@id/loginScreen" />
     </fragment>
 
