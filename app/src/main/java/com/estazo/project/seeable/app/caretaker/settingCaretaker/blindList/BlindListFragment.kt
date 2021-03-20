@@ -127,7 +127,7 @@ class BlindListFragment : Fragment() {
         }
         binding.editUser2.setOnClickListener{view ->
             val phoneList = selectPhone.split(",".toRegex()).toTypedArray()
-            val phone2 = phoneList[1].substring(0)
+            val phone2 = phoneList[1].substring(0,10)
             blindInfoViewModel.userNameBlind(binding.nameUser2.text.toString(),phone2,2)
             view.findNavController().navigate(R.id.action_blindListFragment_to_blindInformationFragment)
             Log.i("ViewModelBLF","phone2 :$phone2")

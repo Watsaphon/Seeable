@@ -91,6 +91,7 @@ class BlindFragment : Fragment() {
         textToSpeech!!.setSpeechRate(0.9f)
 
         val displayName = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!")
+
         if(displayName == "-"){
             alertDialogSetName()
         }
@@ -389,7 +390,8 @@ class BlindFragment : Fragment() {
                 val ref = FirebaseDatabase.getInstance().reference
                 ref.child("users_blind/$currentPhone/displayName").setValue(name)
                 val editor = sharedPrefDisplayName.edit()
-                editor.putString("stringKeyDisplayName", name)
+//                editor.putString("stringKeyDisplayName", name)
+                editor.putString("stringKeyDisplayName", "not found!")
                 editor.apply()
                 mAlertDialog.dismiss()
             }

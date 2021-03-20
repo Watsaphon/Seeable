@@ -91,7 +91,7 @@ class LittleMoreFragment : Fragment() {
                     val ID = rootRef.push().key
 
                     val location = Locations(0.00000000, 0.00000000)
-                    val caretaker = Caretaker("0812345678", "-","-", "-")
+                    val caretaker = Caretaker("-", "-","-", "-")
                     val device = DeviceBlind("-","-",false,"-", "-")
                     val navigation = Navigation("-", "-", "-")
 
@@ -117,7 +117,7 @@ class LittleMoreFragment : Fragment() {
                     alertDialogLoading()
                     val rootRef = FirebaseDatabase.getInstance().getReference("users_caretaker")
                     val ID = rootRef.push().key
-                    val blind = Blind("0876543210", "-/-","-/-", "-/-")
+                    val blind = Blind("-/-" , "-/-","-/-", "-/-")
                     val device = DeviceCaretaker("-","-", "-")
                     val valueRef = FirebaseDatabase.getInstance().getReference("users_caretaker/$phone")
                     val rootData = UserPersonHelperClassNew(

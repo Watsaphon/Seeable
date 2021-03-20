@@ -163,25 +163,33 @@ import com.estazo.project.seeable.app.device.BPMRunnable
          viewModel.queryUser("$phone")
 
          viewModel.userDisplay.observe(viewLifecycleOwner, Observer<List<String>>{user ->
-             Log.i("resume","user : $user")
+             Log.i("resume"," userDisplay -> user : $user")
              if(user.isNotEmpty()) {
-                 Log.i("ViewModel","userDisplay not empty ja")
+                 Log.i("resume","userDisplay not empty ja")
                  updateUserNameToBlindList(user)
                  binding.loading.visibility = View.GONE
              }
          })
 
          viewModel.userTel.observe(viewLifecycleOwner, Observer<List<String>>{user ->
-             Log.i("resume","user : $user")
+             Log.i("resume","userTel -> user : $user")
              if(user.isNotEmpty()) {
-                 Log.i("ViewModel","userList not empty ja")
-//                 val displayNameThread = Thread(DisplayNameRunnable(phone,user))
-//                 displayNameThread.start()
+                 Log.i("resume","userList not empty ja")
                  updateUserPhoneToBlindList(user)
                  val updateListThread = Thread(UpdateListBlindUserRunnable(phone))
                  updateListThread.start()
              }
          })
+
+         viewModel.userList.observe(viewLifecycleOwner, Observer<List<String>>{list ->
+             Log.i("resume","userList -> list : $list")
+             if(list.isNotEmpty()) {
+                 Log.i("resume","userList not empty ja")
+                 val displayNameThread = Thread(DisplayNameRunnable(phone,list))
+                 displayNameThread.start()
+             }
+         })
+
      }
 
     override fun onPause() {
