@@ -131,10 +131,22 @@ class VerificationOTPFragment : Fragment() {
             val c4 = binding.digit4.text.toString()
             val c5 = binding.digit5.text.toString()
             val c6 = binding.digit6.text.toString()
-            codeOTP = "$c1$c2$c3$c4$c5$c6"
-            val credential = PhoneAuthProvider.getCredential(verificationCode!!, codeOTP)
-            Log.i("eieiei","$codeOTP , $verificationCode")
-            signInWithPhone(credential)
+
+//            codeOTP = "$c1$c2$c3$c4$c5$c6"
+//            val credential = PhoneAuthProvider.getCredential(verificationCode!!, codeOTP)
+//            Log.i("eieiei","$codeOTP , $verificationCode")
+//            signInWithPhone(credential)
+
+            if (c1.isNotEmpty() && c2.isNotEmpty() && c3.isNotEmpty() && c4.isNotEmpty() && c5.isNotEmpty() &&c6.isNotEmpty()){
+                codeOTP = "$c1$c2$c3$c4$c5$c6"
+                val credential = PhoneAuthProvider.getCredential(verificationCode!!, codeOTP)
+                Log.i("eieiei","$codeOTP , $verificationCode")
+                signInWithPhone(credential)
+            }
+            else{
+                Toast.makeText(activity, R.string.empty_VerifyOTP,Toast.LENGTH_SHORT).show()
+            }
+
             (activity as MainActivity).closeKeyboard()
         }
 

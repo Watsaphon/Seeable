@@ -203,6 +203,11 @@ class VerificationBlindFragment : Fragment() {
                     phoneFBUser1 == phoneBlind ||  phoneFBUser2 == phoneBlind ||  phoneFBUser3 == phoneBlind -> {
                         Log.i("12345","user already match.")
                     }
+                    displayUser1 == "-/-" -> {
+                        val ref = FirebaseDatabase.getInstance().reference
+                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phoneCaretaker/Blind/user1" to "$phoneBlind/$name")
+                        ref.updateChildren(childUpdates)
+                    }
                     displayUser2 == "-/-" -> {
                         val ref = FirebaseDatabase.getInstance().reference
                         val childUpdates = hashMapOf<String, Any>("users_caretaker/$phoneCaretaker/Blind/user2" to "$phoneBlind/$name")
