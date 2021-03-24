@@ -179,6 +179,9 @@
         <action
             android:id="@+id/action_settingBlindFragment2_to_accountBlindFragment"
             app:destination="@id/accountBlindFragment" />
+        <action
+            android:id="@+id/action_settingBlindFragment2_to_searchLocationFragment"
+            app:destination="@id/searchLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/introduceAppFragment"
@@ -260,6 +263,16 @@
         <action
             android:id="@+id/action_deleteAccountBlindFragment_to_loginScreen"
             app:destination="@id/loginScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchLocationFragment"
+        android:name="com.estazo.project.seeable.app.blind.settingBlind.SearchLocationFragment"
+        android:label="SearchLocationFragment"
+        tools:layout="@layout/fragment_search_location"
+        >
+        <action
+            android:id="@+id/action_searchLocationFragment_to_blindFragment"
+            app:destination="@id/blindFragment" />
     </fragment>
 
 </navigation>

@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -60,6 +61,14 @@ import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
          sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
          phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
          queryUser("$phone")
+
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+                 override fun handleOnBackPressed() {
+                     // in here you can do logic when backPress is clicked
+                     requireActivity().finishAffinity()
+                 }
+        })
+
      }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

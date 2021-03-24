@@ -50,7 +50,7 @@
             android:name=".login.IntroduceAppFragment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".blind.settingBlind.SearchLocation"
+            android:name=".blind.settingBlind.SearchLocationFragment"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".caretaker.MainCaretaker"

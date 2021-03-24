@@ -157,8 +157,7 @@ class SettingBlindFragment : Fragment() {
     }
 
     private fun searchLocation(){
-//        val intent = Intent(this, SearchLocation::class.java)
-//        startActivity(intent)
+        findNavController().navigate(R.id.action_settingBlindFragment2_to_searchLocationFragment)
     }
 
     private fun manageCaretaker(){
