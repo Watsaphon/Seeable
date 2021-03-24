@@ -142,9 +142,11 @@ class VerificationOTPFragment : Fragment() {
                 val credential = PhoneAuthProvider.getCredential(verificationCode!!, codeOTP)
                 Log.i("eieiei","$codeOTP , $verificationCode")
                 signInWithPhone(credential)
+                mAlertDialog.dismiss()
             }
             else{
                 Toast.makeText(activity, R.string.empty_VerifyOTP,Toast.LENGTH_SHORT).show()
+                mAlertDialog.dismiss()
             }
 
             (activity as MainActivity).closeKeyboard()

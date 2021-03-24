@@ -172,9 +172,12 @@ import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
                  Log.i("resume33","userList not empty ja" +
                          " , checkList : $checkList , user1 : $user1")
                  binding.setting.isEnabled = true
-                 if (mAlertDialog.isShowing){
-                     Log.i("pppp","alert is showing in if")
-                     mAlertDialog.dismiss()
+
+                 if (this::mAlertDialog.isInitialized){
+                     if (mAlertDialog.isShowing){
+                         Log.i("pppp","alert is showing in if")
+                         mAlertDialog.dismiss()
+                     }
                  }
                  val displayNameThread = Thread(DisplayNameRunnable(phone,list))
                  displayNameThread.start()
