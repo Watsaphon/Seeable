@@ -104,7 +104,7 @@
     <!--AccountBlind-->
     <string name="header_AccountBlind">ตั้งค่าบัญชีผู้ใช้งาน</string>
     <string name="name_AccountBlind">ชื่อผู้ใช้งาน : </string>
-    <string name="displayName_AccountBlind"> ไม่พบ </string>
+    <string name="displayName_AccountBlind"> ไม่พบชิ่อผู้ใช้งาน ! </string>
     <string name="phone_AccountBlind">เบอร์โทรศัพท์ : 012XXXXXXX</string>
     <string name="role_AccountBlind">สถานะ : คนตาบอด</string>
     <string name="btn_edit_AccountBlind">แก้ไขชื่อผู้ใช้งาน</string>
@@ -154,6 +154,7 @@
     <!--VerifyOTP-->
     <string name="header_VerifyOTP">ยืนยันรหัส OTP</string>
     <string name="subheader_VerifyOTP">กรุณาใส่รัหสผ่าน6หลักบนโทรศัพท์เพื่อดำเนินการต่อ</string>
+    <string name="empty_VerifyOTP">กรุณากรอกรหัสยืนยัน</string>
     <string name="button_VerifyOTP">ยืนยัน</string>
 
     <!--LittleMore-->

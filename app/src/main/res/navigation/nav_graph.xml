@@ -160,6 +160,9 @@
             android:id="@+id/action_caretakerFragment_to_settingCaretakerFragment"
             app:destination="@id/settingCaretakerFragment"
             app:popUpTo="@id/caretakerFragment" />
+        <action
+            android:id="@+id/action_caretakerFragment_to_addBlindUserFragment"
+            app:destination="@id/addBlindUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingBlindFragment2"

@@ -55,7 +55,7 @@ class LoginScreen : Fragment() {
     private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefUserType: SharedPreferences
     private lateinit var sharedPrefCaretakerUser: SharedPreferences
-
+    private lateinit var sharedPrefEmptyList: SharedPreferences
 
     private lateinit var  mAlertDialog : AlertDialog
 //    private lateinit var changeLang : TextView
@@ -94,6 +94,7 @@ class LoginScreen : Fragment() {
         sharedPrefDisplayName= requireActivity().getSharedPreferences("value", 0)
         sharedPrefUserType = requireActivity().getSharedPreferences("value", 0)
         sharedPrefCaretakerUser = requireActivity().getSharedPreferences("value", 0)
+        sharedPrefEmptyList = requireActivity().getSharedPreferences("value", 0)
 
         val text = "EN|TH"
         val ssb = SpannableStringBuilder(text)
@@ -228,6 +229,7 @@ class LoginScreen : Fragment() {
                         val editorPassword = sharedPrefPassword.edit()
 //                        val editorDisplayName = sharedPrefDisplayName.edit()
                         val editorUserType = sharedPrefUserType.edit()
+                        val editorEmptyList = sharedPrefEmptyList.edit()
 //                        val editorSex = sharedPrefSex.edit()
 //                        val editorPartnerID = sharedPrefPartnerID.edit()
 
@@ -236,6 +238,7 @@ class LoginScreen : Fragment() {
                         editorPassword.putString("stringKeyPassword", password)
 //                        editorDisplayName.putString("stringKeyDisplayName", displayName)
                         editorUserType.putString("stringKeyType", "caretaker")
+//                        editorEmptyList.putString("","")
 //                        editorSex.putString("stringKeySex", sex)
 //                        editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
 

@@ -143,7 +143,6 @@ class SettingCaretakerFragment : Fragment() {
                 null,
                 NavOptions.Builder().setPopUpTo(R.id.loginScreen, true).build()
             )
-
     }
 
     override fun onStart() {

@@ -105,7 +105,7 @@
     <!--AccountBlind-->
     <string name="header_AccountBlind">Account Setting</string>
     <string name="name_AccountBlind">Name : </string>
-    <string name="displayName_AccountBlind"> not found! </string>
+    <string name="displayName_AccountBlind">not found ! </string>
     <string name="phone_AccountBlind">Phone : 012XXXXXXX</string>
     <string name="role_AccountBlind">Role : Blind</string>
     <string name="btn_edit_AccountBlind">Edit name</string>
@@ -156,6 +156,7 @@
     <!--VerifyOTP-->
     <string name="header_VerifyOTP">OTP Confirmation</string>
     <string name="subheader_VerifyOTP">Please enter 6 digit OTP in your phone to proceed</string>
+    <string name="empty_VerifyOTP">Please Enter verification code</string>
     <string name="button_VerifyOTP">Submit</string>
 
     <!--LittleMore-->

@@ -18,6 +18,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+
             >
 
             <TextView
@@ -25,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/round_alert_dialog"
-                android:topLeftRadius="200dp"
                 android:fontFamily="@font/roboto"
                 android:gravity="center"
                 android:text="@string/deleteBlind_header"
@@ -33,6 +33,7 @@
                 android:textSize="18dp"
                 android:textStyle="bold"
                 />
+<!--            android:topLeftRadius="200dp"-->
 
             <TextView
                 android:id="@+id/sub_header"
@@ -55,7 +56,7 @@
                 >
                 <Button
                     android:id="@+id/dialogDeleteBtn"
-                    android:background="@drawable/cancel_alert_delete_blind_user"
+                    android:background="@drawable/no_button_click"
                     android:text="@string/deleteBlind_cancel"
                     style="@style/alertDialogDelete"
                     />
@@ -65,7 +66,7 @@
                     android:background="@android:color/white"/>
                 <Button
                     android:id="@+id/dialogConfirmBtn"
-                    android:background="@drawable/confirm_alert_delete_blind_user"
+                    android:background="@drawable/yes_button_click"
                     android:text="@string/deleteBlind_confirm"
                     style="@style/alertDialogDelete"
                     />

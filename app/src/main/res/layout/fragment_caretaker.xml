@@ -118,7 +118,7 @@
                 android:layout_marginStart="140dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="140dp"
-                android:layout_marginBottom="39dp"
+                android:layout_marginBottom="30dp"
                 android:fontFamily="@font/roboto"
                 android:gravity="center"
                 android:text="BPM"

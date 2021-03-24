@@ -1,5 +1,6 @@
  package com.estazo.project.seeable.app.caretaker
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -9,54 +10,44 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.BlindListViewModel
 import com.estazo.project.seeable.app.databinding.FragmentCaretakerBinding
 import com.estazo.project.seeable.app.device.BPMRunnable
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
+import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 
 
  class CaretakerFragment : Fragment() {
-//     private lateinit var binding : FragmentCaretakerBinding
-//
-//    private lateinit var viewModel: CaretakerViewModel
 
-     // Binding object instance corresponding to the fragment_start.xml layout
-     // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
-     // when the view hierarchy is attached to the fragment.
-    // private var binding: FragmentCaretakerBinding? = null
-     private lateinit var binding: FragmentCaretakerBinding
+    private lateinit var binding: FragmentCaretakerBinding
 
-     // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
-//     private val viewModel : CaretakerViewModel by activityViewModels()
+     private lateinit var viewModel : CaretakerViewModel
+     private val blindListViewModel : BlindListViewModel by activityViewModels()
 
-
-    private val blindListViewModel : BlindListViewModel by activityViewModels()
-
-        private lateinit var viewModel : CaretakerViewModel
-
-
-    private lateinit var sharedPrefPhone: SharedPreferences
-    private lateinit var phone : String
-
-    private var displayUser1 : String = "-"
-    private var displayUser2 : String = "-"
-    private var displayUser3 : String = "-"
-    private var displayUser4 : String = "-"
-    private var phoneUser1 : String = "-"
-    private var phoneUser2 : String = "-"
-    private var phoneUser3 : String = "-"
-    private var phoneUser4 : String = "-"
-
+     private lateinit var sharedPrefPhone: SharedPreferences
+     private lateinit var phone : String
      private lateinit var sharedPrefBlindId : SharedPreferences
      private lateinit var currentBlindId : String
 
-//     private var currentBlindPhone : String = "-"
+     private var phoneUser1 : String = "-"
+
+     private lateinit var  mAlertDialog : AlertDialog
+
 
      override fun onAttach(context: Context) {
          super.onAttach(context)
@@ -66,6 +57,9 @@ import com.estazo.project.seeable.app.device.BPMRunnable
      override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
          Log.i("CaretakerFragment", "onCreate call")
+         sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+         phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+         queryUser("$phone")
      }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -75,12 +69,13 @@ import com.estazo.project.seeable.app.device.BPMRunnable
 
         val fragmentBinding = FragmentCaretakerBinding.inflate(inflater, container, false)
         binding = fragmentBinding
+        binding.setting.isEnabled = false
 
-        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
-        phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
-
+//        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+//        phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
         sharedPrefBlindId = requireActivity().getSharedPreferences("value", 0)
         currentBlindId = sharedPrefBlindId.getString("stringKeyBlindId", "not found!").toString()
+
 
         return fragmentBinding.root
 
@@ -95,7 +90,6 @@ import com.estazo.project.seeable.app.device.BPMRunnable
              view.findNavController().navigate(R.id.action_caretakerFragment_to_settingCaretakerFragment)
          }
 
-//         queryBlindUser()
      }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -107,7 +101,7 @@ import com.estazo.project.seeable.app.device.BPMRunnable
 //        blindListViewModel = ViewModelProvider(this).get(BlindListViewModel::class.java)
 //        }
 
-        viewModel = ViewModelProvider(this).get(CaretakerViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(CaretakerViewModel::class.java)
 
         viewModel.fetchSpinnerItems().observe(viewLifecycleOwner, Observer<List<Any>> { user ->
             val spinner = binding.spinner
@@ -148,6 +142,46 @@ import com.estazo.project.seeable.app.device.BPMRunnable
 
         })
 
+//        viewModel.queryUser("$phone")
+
+        viewModel.userDisplay.observe(viewLifecycleOwner, Observer<List<String>>{user ->
+            Log.i("resume1"," userDisplay -> user : $user")
+            if(user.isNotEmpty()) {
+                Log.i("resume1","userDisplay not empty ja")
+                updateUserNameToBlindList(user)
+                binding.loading.visibility = View.GONE
+            }
+        })
+
+        viewModel.userTel.observe(viewLifecycleOwner, Observer<List<String>>{user ->
+            Log.i("resume2","userTel -> user : $user")
+            if(user.isNotEmpty()) {
+                Log.i("resume2","userList not empty ja")
+                updateUserPhoneToBlindList(user)
+                val updateListThread = Thread(UpdateListBlindUserRunnable(phone))
+                updateListThread.start()
+            }
+        })
+
+        viewModel.userList.observe(viewLifecycleOwner, Observer<List<String>>{list ->
+            Log.i("resume33","userList -> list : $list")
+            val checkList = list.toString().split(",".toRegex()).toTypedArray()
+
+            val user1 = checkList[0].substring(1)
+             if(list.isNotEmpty() && user1 != "-/-" ) {
+                 Log.i("resume33","userList not empty ja" +
+                         " , checkList : $checkList , user1 : $user1")
+                 binding.setting.isEnabled = true
+                 val displayNameThread = Thread(DisplayNameRunnable(phone,list))
+                 displayNameThread.start()
+             }
+             else if (list.isNotEmpty() && user1 == "-/-"  ){
+                 Log.i("resume33","resume empty")
+                 alertDialogPairing()
+//                 binding.setting.isEnabled = true
+             }
+        })
+
     }
 
      override fun onStart() {
@@ -158,45 +192,97 @@ import com.estazo.project.seeable.app.device.BPMRunnable
      override fun onResume() {
          super.onResume()
          Log.i("CaretakerFragment", "onResume call")
-         sharedPrefPhone= requireActivity().getSharedPreferences("value", 0)
-         phone  = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
-         viewModel.queryUser("$phone")
 
-         viewModel.userDisplay.observe(viewLifecycleOwner, Observer<List<String>>{user ->
-             Log.i("resume"," userDisplay -> user : $user")
-             if(user.isNotEmpty()) {
-                 Log.i("resume","userDisplay not empty ja")
-                 updateUserNameToBlindList(user)
-                 binding.loading.visibility = View.GONE
+     }
+
+     /** AlertDialog to loading  */
+     private fun alertDialogPairing() {
+         //Inflate the dialog with custom view
+         val mDialogView = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_pairing, null)
+         //AlertDialogBuilder
+         val mBuilder = AlertDialog.Builder(activity).setView(mDialogView)
+         //show dialog
+         mAlertDialog  = mBuilder.show()
+         mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+         mAlertDialog.setCanceledOnTouchOutside(false)
+         mAlertDialog.setCancelable(false)
+
+         mDialogView.startPair.setOnClickListener {
+             findNavController().navigate(R.id.action_caretakerFragment_to_addBlindUserFragment)
+             mAlertDialog.dismiss()
              }
-         })
 
-         viewModel.userTel.observe(viewLifecycleOwner, Observer<List<String>>{user ->
-             Log.i("resume","userTel -> user : $user")
-             if(user.isNotEmpty()) {
-                 Log.i("resume","userList not empty ja")
-                 updateUserPhoneToBlindList(user)
-                 val updateListThread = Thread(UpdateListBlindUserRunnable(phone))
-                 updateListThread.start()
+     }
+
+     private fun queryUser(phone: String) {
+         var displayUser1 = "-"
+         var displayUser2 = "-"
+         var displayUser3 = "-"
+         var displayUser4 = "-"
+         Log.i("test","phone : $phone")
+         val firebaseRef = FirebaseDatabase.getInstance().getReference("users_caretaker/$phone/Blind")
+         firebaseRef.addValueEventListener(object : ValueEventListener {
+             override fun onDataChange(snapshot: DataSnapshot) {
+                 displayUser1 = snapshot.child("user1").value.toString()
+                 displayUser2 = snapshot.child("user2").value.toString()
+                 displayUser3 = snapshot.child("user3").value.toString()
+                 displayUser4 = snapshot.child("user4").value.toString()
+                 viewModel.userList.value = listOf(displayUser1,displayUser2,displayUser3,displayUser4)
+
+                 Log.i("testListOf()","size : $ , displayUser1 :$displayUser1 , displayUser :$displayUser2 , displayUser3 :$displayUser3 , displayUser4 :$displayUser4")
+                 val splitFBUser1 = displayUser1.split("/".toRegex()).toTypedArray()
+                 val phoneFBUser1 = splitFBUser1[0]
+                 val nameFBUser1 = splitFBUser1[1]
+                 val splitFBUser2 = displayUser2.split("/".toRegex()).toTypedArray()
+                 val phoneFBUser2 = splitFBUser2[0]
+                 val nameFBUser2 = splitFBUser2[1]
+                 val splitFBUser3 = displayUser3.split("/".toRegex()).toTypedArray()
+                 val phoneFBUser3 = splitFBUser3[0]
+                 val nameFBUser3 = splitFBUser3[1]
+                 val splitFBUser4 = displayUser4.split("/".toRegex()).toTypedArray()
+                 val phoneFBUser4 = splitFBUser4[0]
+                 val nameFBUser4 = splitFBUser4[1]
+                 Log.i("testListOf()","size : $ , nameFBUser1 :$nameFBUser1 , nameFBUser2 :$nameFBUser2 , nameFBUser3 :$nameFBUser3 , nameFBUser4 :$nameFBUser4")
+                 /**add user and set view on UI */
+                 when{
+                     /** set 1 user */
+                     displayUser4 == "-/-" && displayUser3 == "-/-" && displayUser2 == "-/-" && displayUser1 != "-/-" ->{
+                         viewModel.userDisplay.value = listOf(nameFBUser1)
+                         viewModel.userTel.value = listOf(phoneFBUser1)
+                         Log.i("testListOf()1","displayUser1 :$displayUser1")
+                     }
+                     /** set 2 user */
+                     displayUser4 == "-/-" && displayUser3 == "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-"->{
+                         viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2)
+                         viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2)
+                         Log.i("testListOf()2","displayUser1 :$displayUser1 , displayUser2 :$displayUser2")
+                     }
+                     /** set 3 user */
+                     displayUser4 == "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-" ->{
+                         viewModel.userDisplay.value = listOf(nameFBUser1 , nameFBUser2 , nameFBUser3)
+                         viewModel.userTel.value = listOf(phoneFBUser1 , phoneFBUser2 , phoneFBUser3)
+                         Log.i("testListOf()3","displayUser1 :$displayUser1 , displayUser :$displayUser2 , displayUser3 :$displayUser3")
+                     }
+                     /** set 4 user */
+                     displayUser4 != "-/-" && displayUser3 != "-/-" && displayUser2 != "-/-" && displayUser1 != "-/-"  ->{
+                         viewModel.userDisplay.value = listOf(nameFBUser1,nameFBUser2,nameFBUser3,nameFBUser4)
+                         viewModel.userTel.value = listOf(phoneFBUser1,phoneFBUser2,phoneFBUser3,phoneFBUser4)
+                         Log.i("testListOf()4","displayUser1 :$displayUser1 , displayUser :$displayUser2 , displayUser3 :$displayUser3 , displayUser4 :$displayUser4")
+                     }
+                 }
+
              }
-         })
-
-         viewModel.userList.observe(viewLifecycleOwner, Observer<List<String>>{list ->
-             Log.i("resume","userList -> list : $list")
-             if(list.isNotEmpty()) {
-                 Log.i("resume","userList not empty ja")
-                 val displayNameThread = Thread(DisplayNameRunnable(phone,list))
-                 displayNameThread.start()
+             override fun onCancelled(databaseError: DatabaseError) {
              }
          })
 
      }
 
+
     override fun onPause() {
         super.onPause()
         Log.i("CaretakerFragment", "onPause call")
     }
-
 
     override fun onStop() {
         super.onStop()
@@ -205,7 +291,8 @@ import com.estazo.project.seeable.app.device.BPMRunnable
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("CaretakerFragment", "onDestroyView call")
-        viewModel.getPhoneUser().removeObservers(this)
+//        viewModel.userList.removeObservers(viewLifecycleOwner)
+
     }
     override fun onDestroy() {
         super.onDestroy()

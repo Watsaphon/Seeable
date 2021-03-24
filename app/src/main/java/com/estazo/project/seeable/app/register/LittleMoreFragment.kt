@@ -96,7 +96,7 @@ class LittleMoreFragment : Fragment() {
                     val navigation = Navigation("-", "-", "-")
 
                     val valueRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")
-                    val rootData = UserBlinderHelperClassNew(ID.toString(), phone, "$password", "-")
+                    val rootData = UserBlinderHelperClassNew(ID.toString(), phone, "$password", "not found !")
 
 
                     rootRef.child(phone).setValue(rootData).addOnCompleteListener {
@@ -124,7 +124,7 @@ class LittleMoreFragment : Fragment() {
                         ID.toString(),
                         phone,
                         "$password",
-                        "-",
+                        "not found !",
                         "-",
                         "-")
                     rootRef.child(phone).setValue(rootData).addOnCompleteListener {
