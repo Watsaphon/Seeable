@@ -262,6 +262,9 @@
 
     <!--SearchLocation-->
     <string name="search_box">ค้นหา...</string>
+    <string name="title_box">ตั้งชื่อตำแหน่งของคุณ (จำเป็น)</string>
+    <string name="empty_mark">กรุณาปักหมุดตำแหน่งก่อนกดยืนยัน</string>
+    <string name="empty_title">กรุณาตั้งชื่อตำแหน่งก่อนที่กดยืนยัน</string>
     <string name="search_btn">ยืนยันที่อยู่</string>
 
 

@@ -97,16 +97,18 @@ data class DeviceBlind(
 
 @IgnoreExtraProperties
 data class Navigation(
-    var Caretaker_Navigate: String ,
-    var Self_Navigate_bindUser: String,
-    var Self_Navigate_careUser: String
+    var Title_Navigate_bindUser: String,
+    var Navigate_bindUser: String,
+    var Title_Navigate_careUser: String,
+    var Navigate_careUser: String
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "caretaker_Navigate" to Caretaker_Navigate,
-            "self_Navigate_bindUser" to Self_Navigate_bindUser,
-            "self_Navigate_careUser" to Self_Navigate_careUser
+            "navigate_bindUser" to Navigate_bindUser,
+            "navigate_careUser" to Navigate_careUser,
+            "title_Navigate_bindUser" to Title_Navigate_bindUser,
+            "title_Navigate_careUser" to Title_Navigate_careUser
         )
     }
 }

@@ -148,8 +148,7 @@ class SettingBlindFragment : Fragment() {
         config.locale = locale
         requireActivity().baseContext.resources.updateConfiguration(config, null)
         requireActivity().onBackPressed()
-//        val intent = Intent(this, SplashScreen::class.java)
-//        startActivity(intent)
+
     }
 
     private fun account(){
@@ -157,6 +156,7 @@ class SettingBlindFragment : Fragment() {
     }
 
     private fun searchLocation(){
+        alertDialogLoading()
         findNavController().navigate(R.id.action_settingBlindFragment2_to_searchLocationFragment)
     }
 
@@ -189,77 +189,47 @@ class SettingBlindFragment : Fragment() {
 
         findNavController().navigate(R.id.action_settingBlindFragment2_to_splashScreen, null,
             NavOptions.Builder().setPopUpTo(R.id.loginScreen, false).build())
-//        findNavController().navigate(R.id.action_settingBlindFragment2_to_splashScreen)
 
     }
 
 
-    /**receive value from realtime database (users_blind) and check Login */
-//    private var valueEventListener: ValueEventListener = object : ValueEventListener {
-//        override fun onDataChange(dataSnapshot: DataSnapshot) {
-//
-//            dataSnapshot.ref.removeValue()
-//
-//            val editorID = sharedPrefID.edit()
-//            val editorPhone = sharedPrefPhone.edit()
-//            val editorPassword = sharedPrefPassword.edit()
-//            val editorDisplay = sharedPrefDisplayName.edit()
-//            val editorUserType = sharedPrefUserType.edit()
-//            val editorCaretakerUser = sharedPrefCaretakerUser.edit()
-//
-//            editorID.putString("stringKey2", "not found!")
-//            editorPhone.putString("stringKeyPhone", "not found!")
-//            editorPassword.putString("stringKeyPassword", "not found!")
-//            editorDisplay.putString("stringKeyDisplayName", "not found!")
-//            editorUserType.putString("stringKeyType", "not found!")
-//            editorCaretakerUser.putString("stringKeyCaretakerUser", "not found!")
-//
-//            editorID.apply()
-//            editorPhone.apply()
-//            editorPassword.apply()
-//            editorDisplay.apply()
-//            editorUserType.apply()
-//            editorCaretakerUser.apply()
-//
-//            dismissAlertDialogLoading()
-//
-//            val intent = Intent(this@SettingBlindFragment, LoginScreen::class.java)
-//            startActivity(intent)
-//
-//        }
-//        override fun onCancelled(databaseError: DatabaseError) {}
-//    }
 
     /** AlertDialog to loading  */
-//    private fun alertDialogLoading() {
-//        //Inflate the dialog with custom view
-//        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
-//        //AlertDialogBuilder
-//        val mBuilder = AlertDialog.Builder(this)
-//            .setView(mDialogView)
-//        //show dialog
-//        mAlertDialog  = mBuilder.show()
-//        mAlertDialog.window!!.setLayout(400,300)
-//        mAlertDialog.setCanceledOnTouchOutside(false)
-//        mAlertDialog.setCancelable(false)
-//    }
+    private fun alertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(activity).setView(mDialogView)
+        //show dialog
+        mAlertDialog  = mBuilder.show()
+        mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        mAlertDialog.setCanceledOnTouchOutside(false)
+        mAlertDialog.setCancelable(false)
+    }
 
-//    /** AlertDialog to dismiss loading  */
-//    private fun dismissAlertDialogLoading() {
-//        //Inflate the dialog with custom view
-//        val mDialogView = LayoutInflater.from(this).inflate(R.layout.loading_dialog, null)
-//        //AlertDialogBuilder
-//        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
-//        //show dialog
-//        mAlertDialog.dismiss()
-//    }
 
-//    override fun onBackPressed() {
-//        super.onBackPressed()
-//        val intent = Intent(this, MainBlind::class.java)
-//        startActivity(intent)
-//        finishAffinity()
-//        Log.i("SettingBlind", "onBackPressed called")
-//    }
+    override fun onPause() {
+        super.onPause()
+        Log.i("SettingBlindFragment", "onPause call")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("SettingBlindFragment", "onStop call")
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.i("SettingBlindFragment", "onDestroyView call")
+        mAlertDialog.dismiss()
+
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("SettingBlindFragment", "onDestroy call")
+    }
+    override fun onDetach() {
+        super.onDetach()
+        Log.i("SettingBlindFragment", "onDetach call")
+    }
 
 }

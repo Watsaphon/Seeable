@@ -93,7 +93,7 @@ class LittleMoreFragment : Fragment() {
                     val location = Locations(0.00000000, 0.00000000)
                     val caretaker = Caretaker("-", "-","-", "-")
                     val device = DeviceBlind("-","-",false,"-", "-")
-                    val navigation = Navigation("-", "-", "-")
+                    val navigation = Navigation("-", "-", "-","-")
 
                     val valueRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")
                     val rootData = UserBlinderHelperClassNew(ID.toString(), phone, "$password", "not found !")
@@ -148,23 +148,6 @@ class LittleMoreFragment : Fragment() {
 
         binding.setPassword.addTextChangedListener(phoneTextWatcher)
 
-        fun onRadioButtonClicked(view: View) {
-            if (view is RadioButton) {
-                // Is the button now checked?
-                val checked = view.isChecked
-                // Check which radio button was clicked
-                when (view.getId()) {
-                    R.id.select_blind ->
-                        if (checked) {
-                            // Pirates are the best
-                        }
-                    R.id.select_care ->
-                        if (checked) {
-                            // Ninjas rule
-                        }
-                }
-            }
-        }
 
         return binding.root
     }
@@ -172,9 +155,6 @@ class LittleMoreFragment : Fragment() {
     private fun saveRegister(){
         mAlertDialog.dismiss()
         findNavController().navigate(R.id.action_littleMore_to_loginScreen)
-//        val i = Intent(this, LoginScreen::class.java)
-//        startActivity(i)
-//        finish()
     }
 
     private val phoneTextWatcher: TextWatcher = object : TextWatcher {
@@ -204,19 +184,11 @@ class LittleMoreFragment : Fragment() {
         //show dialog
         mAlertDialog  = mBuilder.show()
         mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-//        mAlertDialog.window!!.setLayout(400,300)
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
     }
 
-//    private fun dismissAlertDialogLoading() {
-//        //Inflate the dialog with custom view
-//        val mDialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
-//        //AlertDialogBuilder
-//        val mBuilder = AlertDialog.Builder(activity).setView(mDialogView)
-//        //show dialog
-//        mAlertDialog.dismiss()
-//    }
+
 
 }
 

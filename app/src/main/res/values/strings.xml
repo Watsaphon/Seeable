@@ -269,6 +269,9 @@
 
     <!--SearchLocation-->
     <string name="search_box">Search...</string>
+    <string name="title_box">set title of location (Required)</string>
+    <string name="empty_mark">Please mark your location before click confirm</string>
+    <string name="empty_title">"Please set title of your location before click confirm</string>
     <string name="search_btn">Confirm Location</string>
 
     <!--InroduceApp-->
