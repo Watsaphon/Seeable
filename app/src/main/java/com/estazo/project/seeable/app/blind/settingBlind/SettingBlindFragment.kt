@@ -220,8 +220,13 @@ class SettingBlindFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("SettingBlindFragment", "onDestroyView call")
-        mAlertDialog.dismiss()
-
+//        mAlertDialog.dismiss()
+        if (this::mAlertDialog.isInitialized) {
+            if (mAlertDialog.isShowing) {
+                Log.i("pppp", "alert is showing in if")
+                mAlertDialog.dismiss()
+            }
+        }
     }
     override fun onDestroy() {
         super.onDestroy()

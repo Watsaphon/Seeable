@@ -97,7 +97,11 @@
         android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.BlindInformationFragment"
         android:label="BlindInformationFragment"
         tools:layout="@layout/fragment_blind_information"
-        />
+        >
+        <argument
+            android:name="phoneBlind"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/splashScreen"
         android:name="com.estazo.project.seeable.app.SplashScreen"

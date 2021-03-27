@@ -39,7 +39,7 @@ class SearchLocationFragment : Fragment() , OnMapReadyCallback {
 
     private lateinit var sharedPrefPhone: SharedPreferences
 //    private lateinit var sharedPrefPassword: SharedPreferences
-//    private lateinit var sharedPrefID: SharedPreferences
+//    private lateinit var s haredPrefID: SharedPreferences
 //    private lateinit var sharedPrefDisplayName: SharedPreferences
 
 //    private lateinit var searchView : SearchView

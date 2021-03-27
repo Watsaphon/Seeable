@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
-                android:weightSum="2.0"
+                android:weightSum="3.0"
                 >
                 <Button
                     android:id="@+id/dialogDeleteBtn"
@@ -70,7 +70,16 @@
                     android:text="@string/deleteBlind_confirm"
                     style="@style/alertDialogDelete"
                     />
-
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"/>
+                <Button
+                    android:id="@+id/dfdfd"
+                    android:background="@drawable/yes_button_click"
+                    android:text="@string/deleteBlind_confirm"
+                    style="@style/alertDialogDelete"
+                    />
             </LinearLayout>
 
         </LinearLayout>

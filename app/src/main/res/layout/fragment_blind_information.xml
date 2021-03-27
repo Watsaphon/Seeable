@@ -93,8 +93,6 @@
                 style="@style/AccountBlind_Name"
                 />
 
-
-
             <ImageButton
                 android:id="@+id/editNameButton"
                 android:layout_width="30dp"
@@ -168,26 +166,103 @@
             android:layout_marginLeft="20dp"
             />
 
-        <Button
-            android:id="@+id/test"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/dot_line_round"
-            android:fontFamily="@font/roboto"
-            android:gravity="center"
-            android:text="@string/add_BlindInformationFragment"
-            android:textColor="@drawable/addblind_text_change"
-            android:textSize="18sp" />
+    <LinearLayout
+        android:id="@+id/blindNavigate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal"
+        android:weightSum="3.0"
+        android:background="@drawable/bg_round_navigate"
+        >
 
-<!--        <ImageView-->
-<!--            android:layout_width="380dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:src="@drawable/dot_line_round"-->
-<!--            android:layerType="software" />-->
+        <TextView
+            android:id="@+id/titleLocationBlind"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Loading..."
+            android:textColor="#3DADFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="2.5"
+
+            />
+        <Button
+            android:id="@+id/editBlind"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:background="@mipmap/icon_add_navigate_foreground"
+            />
+        <Button
+            android:id="@+id/deleteBlind"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:background="@mipmap/icon_delete_navigate_foreground"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/careNavigate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_round_navigate"
+        android:weightSum="3.0"
+        >
+
+        <TextView
+            android:id="@+id/titleLocationCare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Loading..."
+            android:textColor="#3DADFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_weight="2.5"
+            />
+        <Button
+            android:id="@+id/editCare"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:background="@mipmap/icon_add_navigate_foreground"
+            />
+        <Button
+            android:id="@+id/deleteCare"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"
+            android:background="@mipmap/icon_delete_navigate_foreground"
+            />
+
+    </LinearLayout>
+
+            <Button
+                android:id="@+id/addNavigate"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginEnd="22dp"
+                android:background="@drawable/dot_line_round"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="@string/add_BlindInformationFragment"
+                android:textColor="@drawable/addblind_text_change"
+                android:textSize="18sp" />
+
+
     </LinearLayout>
 </layout>

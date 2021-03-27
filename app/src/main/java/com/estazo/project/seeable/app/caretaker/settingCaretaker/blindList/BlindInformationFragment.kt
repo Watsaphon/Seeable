@@ -14,7 +14,11 @@ import androidx.lifecycle.Observer
 import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentBlindInformationBinding
+import com.estazo.project.seeable.app.register.LittleMoreFragmentArgs
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class BlindInformationFragment : Fragment() {
@@ -32,6 +36,8 @@ class BlindInformationFragment : Fragment() {
     private lateinit var selectUsernameBlind: String
     private lateinit var  positionBlindUser : String
 
+    private lateinit var phoneBlind : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i("BlindInformation", "onCreate call")
@@ -40,6 +46,15 @@ class BlindInformationFragment : Fragment() {
 
         language = sharedPrefLanguage.getString("stringKey", "not found!").toString()
         phoneCaretaker  = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+
+        arguments?.let {
+            val mobile = BlindInformationFragmentArgs.fromBundle(it).phoneBlind
+            phoneBlind = mobile
+        }
+        Log.i("BlindInformation", "phoneBlind : $phoneBlind")
+        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phoneBlind")
+        query.addListenerForSingleValueEvent(valueEventListener)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -138,6 +153,26 @@ class BlindInformationFragment : Fragment() {
 
             }
         }
+    }
+
+    /**remove user from realtime database (users_caretaker) */
+    private var valueEventListener: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val titleBlind =
+                    dataSnapshot.child("Navigation/title_Navigate_bindUser").value.toString()
+                val locationBlind =
+                    dataSnapshot.child("Navigation/navigate_bindUser").value.toString()
+                val titleCaretaker =
+                    dataSnapshot.child("Navigation/title_Navigate_careUser").value.toString()
+                val locationCaretaker =
+                    dataSnapshot.child("Navigation/navigate_careUser").value.toString()
+                Log.i("BlindInformation", "titleBlind : $titleBlind , locationBlind : $locationBlind ," +
+                        " titleCaretaker : $titleCaretaker , locationCaretaker : $locationCaretaker ")
+            }
+
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
     }
 
 }
