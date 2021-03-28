@@ -101,6 +101,9 @@
         <argument
             android:name="phoneBlind"
             app:argType="string" />
+        <action
+            android:id="@+id/action_blindInformationFragment_to_searchLocationCaretakerFragment"
+            app:destination="@id/searchLocationCaretakerFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashScreen"
@@ -277,6 +280,16 @@
         <action
             android:id="@+id/action_searchLocationFragment_to_blindFragment"
             app:destination="@id/blindFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchLocationCaretakerFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.SearchLocationCaretakerFragment"
+        android:label="SearchLocationCaretakerFragment"
+        tools:layout="@layout/fragment_search_location_caretaker"
+        >
+        <argument
+            android:name="phoneBlind"
+            app:argType="string" />
     </fragment>
 
 </navigation>

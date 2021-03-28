@@ -1,26 +1,22 @@
-package com.estazo.project.seeable.app.blind.settingBlind
+package com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList
 
 import android.app.AlertDialog
-import android.content.SharedPreferences
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.estazo.project.seeable.app.helperClass.Navigation
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.databinding.FragmentAccountBlindBinding
-import com.estazo.project.seeable.app.databinding.FragmentSearchLocationBinding
+import com.estazo.project.seeable.app.databinding.FragmentSearchLocationCaretakerBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -33,41 +29,35 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.io.IOException
 
-class SearchLocationFragment : Fragment() , OnMapReadyCallback {
+class SearchLocationCaretakerFragment : Fragment() , OnMapReadyCallback {
 
-    private lateinit var binding : FragmentSearchLocationBinding
+    private lateinit var binding : FragmentSearchLocationCaretakerBinding
 
-    private lateinit var sharedPrefPhone: SharedPreferences
-//    private lateinit var sharedPrefPassword: SharedPreferences
-//    private lateinit var s haredPrefID: SharedPreferences
-//    private lateinit var sharedPrefDisplayName: SharedPreferences
-
-//    private lateinit var searchView : SearchView
     private lateinit var map : GoogleMap
-//    private lateinit var confirmBtn : Button
-     var markLocation : String = ""
+    var markLocation : String = ""
     private lateinit var lat : String
     private lateinit var long : String
 
     private lateinit var  mAlertDialog : AlertDialog
+    private lateinit var phoneBlind : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            val mobile = SearchLocationCaretakerFragmentArgs.fromBundle(it).phoneBlind
+            phoneBlind = mobile
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_location, container, false)
-
-        sharedPrefPhone= requireActivity().getSharedPreferences("value", 0)
-
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_location_caretaker, container,false)
 
         if (getString(R.string.map_key).isEmpty()) {
             Toast.makeText(activity, "Add your own API key in MapWithMarker/app/secure.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show()
         }
 
-        // Get the SupportMapFragment and request notification when the map is ready to be used.
-//        val mapFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
         mapFragment.getMapAsync(this)
@@ -125,18 +115,15 @@ class SearchLocationFragment : Fragment() , OnMapReadyCallback {
             }
             else{
                 Toast.makeText(activity,"Update location to : $markLocation", Toast.LENGTH_SHORT).show()
-                val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
 
-                val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$currentPhone/Navigation")
+                val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phoneBlind/Navigation")
                 query.addListenerForSingleValueEvent(valueEventListener)
             }
         }
 
         binding.titleBox.addTextChangedListener(phoneTextWatcher)
 
-
-
-    return binding.root
+        return binding.root
     }
 
     private val phoneTextWatcher: TextWatcher = object : TextWatcher {
@@ -157,7 +144,7 @@ class SearchLocationFragment : Fragment() , OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-            map = googleMap
+        map = googleMap
         // Setting a click event handler for the map
         googleMap.setOnMapClickListener { latLng -> // Creating a marker
             val markerOptions = MarkerOptions()
@@ -190,19 +177,16 @@ class SearchLocationFragment : Fragment() , OnMapReadyCallback {
 
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
-                val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
 
                 val ref = FirebaseDatabase.getInstance().reference
-                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation/navigate_bindUser" to "$markLocation")
+                val childUpdates = hashMapOf<String, Any>("users_blind/$phoneBlind/Navigation/navigate_careUser" to "$markLocation")
                 ref.updateChildren(childUpdates)
 
                 val title = binding.titleBox.text.toString()
-                val childUpdates2 = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation/title_Navigate_bindUser" to "$title")
+                val childUpdates2 = hashMapOf<String, Any>("users_blind/$phoneBlind/Navigation/title_Navigate_careUser" to "$title")
                 ref.updateChildren(childUpdates2)
 
-                findNavController().navigate(R.id.action_searchLocationFragment_to_blindFragment)
-
-
+                requireActivity().onBackPressed()
             }
         }
         override fun onCancelled(databaseError: DatabaseError) {}
@@ -223,16 +207,16 @@ class SearchLocationFragment : Fragment() , OnMapReadyCallback {
 
     override fun onPause() {
         super.onPause()
-        Log.i("SearchLocation", "onPause call")
+        Log.i("SearchLocationCaretaker", "onPause call")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.i("SearchLocation", "onStop call")
+        Log.i("SearchLocationCaretaker", "onStop call")
     }
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.i("SearchLocation", "onDestroyView call")
+        Log.i("SearchLocationCaretaker", "onDestroyView call")
         if (this::mAlertDialog.isInitialized) {
             if (mAlertDialog.isShowing) {
                 Log.i("pppp", "alert is showing in if")
@@ -243,11 +227,11 @@ class SearchLocationFragment : Fragment() , OnMapReadyCallback {
     }
     override fun onDestroy() {
         super.onDestroy()
-        Log.i("SearchLocation", "onDestroy call")
+        Log.i("SearchLocationCaretaker", "onDestroy call")
     }
     override fun onDetach() {
         super.onDetach()
-        Log.i("SearchLocation", "onDetach call")
+        Log.i("SearchLocationCaretaker", "onDetach call")
     }
 
 }

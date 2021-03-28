@@ -177,6 +177,7 @@
         android:orientation="horizontal"
         android:weightSum="3.0"
         android:background="@drawable/bg_round_navigate"
+        android:visibility="gone"
         >
 
         <TextView
@@ -218,6 +219,7 @@
         android:orientation="horizontal"
         android:background="@drawable/bg_round_navigate"
         android:weightSum="3.0"
+        android:visibility="gone"
         >
 
         <TextView
@@ -261,7 +263,9 @@
                 android:gravity="center"
                 android:text="@string/add_BlindInformationFragment"
                 android:textColor="@drawable/addblind_text_change"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone"
+                />
 
 
     </LinearLayout>

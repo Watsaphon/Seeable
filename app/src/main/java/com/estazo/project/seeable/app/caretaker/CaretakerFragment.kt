@@ -35,7 +35,7 @@ import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 
  class CaretakerFragment : Fragment() {
 
-    private lateinit var binding: FragmentCaretakerBinding
+     private lateinit var binding: FragmentCaretakerBinding
 
      private lateinit var viewModel : CaretakerViewModel
      private val blindListViewModel : BlindListViewModel by activityViewModels()

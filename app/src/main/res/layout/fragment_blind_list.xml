@@ -208,7 +208,7 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/border_blindlist_layout"
                 android:id="@+id/user4"
-
+                android:visibility="gone"
                 >
                 <ImageView
                     android:layout_width="100dp"

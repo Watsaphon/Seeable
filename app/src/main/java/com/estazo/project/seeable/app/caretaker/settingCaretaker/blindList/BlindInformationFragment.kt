@@ -1,5 +1,6 @@
 package com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList
 
+import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +12,11 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentBlindInformationBinding
+import com.estazo.project.seeable.app.helperClass.Blind
 import com.estazo.project.seeable.app.register.LittleMoreFragmentArgs
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -38,6 +41,8 @@ class BlindInformationFragment : Fragment() {
 
     private lateinit var phoneBlind : String
 
+    private lateinit var  mAlertDialog : AlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i("BlindInformation", "onCreate call")
@@ -52,8 +57,8 @@ class BlindInformationFragment : Fragment() {
             phoneBlind = mobile
         }
         Log.i("BlindInformation", "phoneBlind : $phoneBlind")
-        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phoneBlind")
-        query.addListenerForSingleValueEvent(valueEventListener)
+//        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phoneBlind")
+//        query.addListenerForSingleValueEvent(valueEventListener)
 
     }
 
@@ -61,6 +66,9 @@ class BlindInformationFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_blind_information, container, false)
         Log.i("BlindInformation", "onCreateView call")
+
+        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phoneBlind")
+        query.addListenerForSingleValueEvent(valueEventListener)
 
         binding.backButton.setOnClickListener {
             requireActivity().onBackPressed()
@@ -105,6 +113,33 @@ class BlindInformationFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.i("BlindInformation", "onActivityCreated call")
+        val ref = FirebaseDatabase.getInstance().reference
+
+        binding.editBlind.setOnClickListener{
+            Toast.makeText(activity,"you can't edit this blind destination ",Toast.LENGTH_SHORT).show()
+        }
+        binding.deleteBlind.setOnClickListener{
+            Toast.makeText(activity,"you can't delete this blind destination ",Toast.LENGTH_SHORT).show()
+        }
+        binding.editCare.setOnClickListener{
+            alertDialogLoading()
+            val action = BlindInformationFragmentDirections.actionBlindInformationFragmentToSearchLocationCaretakerFragment(selectPhoneBlind)
+            findNavController().navigate(action)
+        }
+        binding.deleteCare.setOnClickListener{
+            val childUpdates = hashMapOf<String, Any>("users_blind/$selectPhoneBlind/Navigation/navigate_careUser" to "-")
+            ref.updateChildren(childUpdates)
+            val childUpdates2 = hashMapOf<String, Any>("users_blind/$selectPhoneBlind/Navigation/title_Navigate_careUser" to "-")
+            ref.updateChildren(childUpdates2)
+            binding.careNavigate.visibility = View.GONE
+            binding.addNavigate.visibility = View.VISIBLE
+
+        }
+        binding.addNavigate.setOnClickListener{
+            alertDialogLoading()
+            val action = BlindInformationFragmentDirections.actionBlindInformationFragmentToSearchLocationCaretakerFragment(selectPhoneBlind)
+            findNavController().navigate(action)
+        }
     }
 
     private fun updateDisplayName() {
@@ -159,6 +194,7 @@ class BlindInformationFragment : Fragment() {
     private var valueEventListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
+
                 val titleBlind =
                     dataSnapshot.child("Navigation/title_Navigate_bindUser").value.toString()
                 val locationBlind =
@@ -169,10 +205,63 @@ class BlindInformationFragment : Fragment() {
                     dataSnapshot.child("Navigation/navigate_careUser").value.toString()
                 Log.i("BlindInformation", "titleBlind : $titleBlind , locationBlind : $locationBlind ," +
                         " titleCaretaker : $titleCaretaker , locationCaretaker : $locationCaretaker ")
+                var numUser : Int = 0
+                if(titleBlind != "-" && locationBlind != "-" ){
+                    binding.blindNavigate.visibility = View.VISIBLE
+                    binding.titleLocationBlind.text = "$titleBlind (only Blind)"
+//                    ++numUser
+                }
+                if(titleCaretaker != "-" && locationCaretaker != "-" ){
+                    binding.careNavigate.visibility = View.VISIBLE
+                    binding.titleLocationCare.text = "$titleCaretaker"
+                    ++numUser
+                }
+                if(numUser < 1){
+                    binding.addNavigate.visibility = View.VISIBLE
+                }
             }
 
         }
         override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
+    /** AlertDialog to loading  */
+    private fun alertDialogLoading() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(activity).inflate(R.layout.loading_dialog, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(activity).setView(mDialogView)
+        //show dialog
+        mAlertDialog  = mBuilder.show()
+        mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        mAlertDialog.setCanceledOnTouchOutside(false)
+        mAlertDialog.setCancelable(false)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("BlindInformation", "onPause call")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("BlindInformation", "onStop call")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.i("BlindInformation", "onDestroyView call")
+        if (this::mAlertDialog.isInitialized) {
+            if (mAlertDialog.isShowing) {
+                Log.i("pppp", "alert is showing in if")
+                mAlertDialog.dismiss()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("BlindInformation", "onDestroy call")
     }
 
 }
