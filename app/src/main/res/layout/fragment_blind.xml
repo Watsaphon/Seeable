@@ -40,7 +40,6 @@
                 android:layout_weight="1.0"
                 android:orientation="horizontal">
 
-
                 <Button
                     android:id="@+id/selfNavButton"
                     style="@style/CustomSelfNavButton1"

@@ -74,6 +74,11 @@ class BlindFragment : Fragment() {
                 requireActivity().finishAffinity()
             }
         })
+//        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+//        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+//        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phone/Navigation")
+//        query.addListenerForSingleValueEvent(valueEventListenerGetTitle)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -89,6 +94,8 @@ class BlindFragment : Fragment() {
         sharedPrefPassword = requireActivity().getSharedPreferences("value", 0)
         sharedPrefID = requireActivity().getSharedPreferences("value", 0)
         sharedPrefDisplayName = requireActivity().getSharedPreferences("value", 0)
+
+
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         RequestPermission()
@@ -106,6 +113,10 @@ class BlindFragment : Fragment() {
             alertDialogSetName()
         }
 
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phone/Navigation")
+        query.addListenerForSingleValueEvent(valueEventListenerGetTitle)
+
         return binding.root
 
     }
@@ -113,8 +124,6 @@ class BlindFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i("BlindFragment", "onViewCreated call")
-
-
 
         binding.FAB.setOnClickListener {
 //            findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2, null,
@@ -151,8 +160,6 @@ class BlindFragment : Fragment() {
 
 
     }
-
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -246,8 +253,7 @@ class BlindFragment : Fragment() {
             Toast.makeText(activity,"$text",Toast.LENGTH_SHORT).show()
         }
     }
-    private fun CheckPermission():Boolean
-    {
+    private fun CheckPermission():Boolean {
         //this function will return a boolean
         //true: if we have permission
         //false if not
@@ -355,6 +361,30 @@ class BlindFragment : Fragment() {
         }
         override fun onCancelled(databaseError: DatabaseError) {}
     }
+
+    private var valueEventListenerGetTitle: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val titleBlind = dataSnapshot.child("title_Navigate_bindUser").value.toString()
+                val locationBlind = dataSnapshot.child("navigate_bindUser").value.toString()
+                val titleCaretaker = dataSnapshot.child("title_Navigate_careUser").value.toString()
+                val locationCaretaker = dataSnapshot.child("navigate_careUser").value.toString()
+//                val latitude = dataSnapshot.child("Latitude").value.toString()
+//                val longitude = dataSnapshot.child("Longitude").value.toString()
+//                val locationNavigate = "$latitude,$longitude"
+//                Log.d("test_locationNavigate ","Navigate to location : $location")
+                if(titleBlind != "-" && locationBlind != "-" ){
+                    binding.selfNavButton.text = getString(R.string.button_self_navigation) + " to  $titleBlind"
+                }
+                if(titleCaretaker != "-" && locationCaretaker != "-" ){
+                    binding.careNavButton.text = getString(R.string.button_caretaker_navigation) + " to  $titleCaretaker"
+                }
+            }
+
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
 
     /** AlertDialog to set DisplayName in user_bind  */
     private fun alertDialogSetName() {

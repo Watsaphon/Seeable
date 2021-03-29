@@ -85,7 +85,6 @@ import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
         sharedPrefBlindId = requireActivity().getSharedPreferences("value", 0)
         currentBlindId = sharedPrefBlindId.getString("stringKeyBlindId", "not found!").toString()
 
-
         return fragmentBinding.root
 
     }
