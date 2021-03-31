@@ -25,20 +25,17 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.caretaker.CaretakerViewModel
 import com.estazo.project.seeable.app.databinding.FragmentBlindBinding
-import com.estazo.project.seeable.app.databinding.FragmentCaretakerBinding
-import com.estazo.project.seeable.app.device.BPMRunnable
 import com.estazo.project.seeable.app.helperClass.Locations
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.location.*
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -66,6 +63,8 @@ class BlindFragment : Fragment() {
 
     private lateinit var binding: FragmentBlindBinding
 
+    private lateinit var viewModel : BlindViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
@@ -74,20 +73,19 @@ class BlindFragment : Fragment() {
                 requireActivity().finishAffinity()
             }
         })
-//        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
-//        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
-//        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phone/Navigation")
-//        query.addListenerForSingleValueEvent(valueEventListenerGetTitle)
-
+        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        getTitleLocation(phone)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_blind, container, false)
+        val fragmentBinding = FragmentBlindBinding.inflate(inflater, container, false)
+        binding = fragmentBinding
+//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_blind, container, false)
 
         Log.i("BlindFragment", "onCreateView call")
-        CheckPermission()
-
+        checkPermission()
 
         sharedPrefLanguage = requireActivity().getSharedPreferences("value", 0)
         sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
@@ -95,10 +93,8 @@ class BlindFragment : Fragment() {
         sharedPrefID = requireActivity().getSharedPreferences("value", 0)
         sharedPrefDisplayName = requireActivity().getSharedPreferences("value", 0)
 
-
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        RequestPermission()
+        requestPermission()
 
         textToSpeech = TextToSpeech(activity?.applicationContext, TextToSpeech.OnInitListener { status ->
             if (status != TextToSpeech.ERROR) {
@@ -108,16 +104,14 @@ class BlindFragment : Fragment() {
         textToSpeech!!.setSpeechRate(0.9f)
 
         val displayName = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!")
-
         if(displayName == "-"){
             alertDialogSetName()
         }
 
-        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
-        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phone/Navigation")
-        query.addListenerForSingleValueEvent(valueEventListenerGetTitle)
+//        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+//        getTitleLocation(phone)
 
-        return binding.root
+        return fragmentBinding.root
 
     }
 
@@ -125,22 +119,22 @@ class BlindFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i("BlindFragment", "onViewCreated call")
 
-        binding.FAB.setOnClickListener {
-//            findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2, null,
-//                NavOptions.Builder().setPopUpTo(R.id.blindFragment, true).build())
-            view.findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2)
+        binding.blindFragment = this@BlindFragment
 
+        binding.FAB.setOnClickListener {
+            view.findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2)
         }
 
         binding.selfNavButton.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
-            navigation()
+            navigationBlind()
             Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
         }
         binding.careNavButton.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
+            navigationCaretaker()
             Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
         }
         binding.callEmergency.setOnVeryLongClickListener{
@@ -151,36 +145,46 @@ class BlindFragment : Fragment() {
         }
         binding.sendLocation.setOnVeryLongClickListener{
             vibrate()
-            Log.d("Debug:","sharedLocationBtn -> CheckPermission : "  + CheckPermission().toString())
+            Log.d("Debug:","sharedLocationBtn -> CheckPermission : "  + checkPermission().toString())
             Log.d("Debug:", "sharedLocationBtn -> isLocationEnabled : " +  isLocationEnabled().toString())
             textToSpeech!!.speak("send Location Activate", TextToSpeech.QUEUE_FLUSH, null)
             getLastLocation()
             sendLocation()
         }
-
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.i("BlindFragment", "onActivityCreated call")
+        viewModel = ViewModelProviders.of(this).get(BlindViewModel::class.java)
+
+        viewModel.titleBlind.observe(viewLifecycleOwner,Observer<String> { blind ->
+            if(blind != "-"){
+                binding.selfNavButton.text = getString(R.string.button_self_navigation) + " to  $blind"
+            }
+        })
+        viewModel.titleCaretaker.observe(viewLifecycleOwner,Observer<String> { caretaker ->
+            if (caretaker != "-"){
+                binding.careNavButton.text = getString(R.string.button_caretaker_navigation) + " to  $caretaker"
+            }
+        })
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("BlindFragment", "onDestroyView call")
-
     }
 
     @SuppressLint("MissingPermission", "DefaultLocale")
     private fun sendLocation(){
         Log.d("Debug_sendLocation:" ,"sendLocation call" )
         fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
-            var location: Location? = task.result
-            NewLocationData()
+            val location: Location? = task.result
+            newLocationData()
             if(location == null){
                 Log.i("Debug_sendLocation","call if")
-                NewLocationData()
+                newLocationData()
             }else{
                 val link = java.lang.String.format("%f,%f", location.latitude,location.longitude)
                 Log.i("Debug_sendLocation","call else")
@@ -199,22 +203,20 @@ class BlindFragment : Fragment() {
                 val postValues = postLocation.toMap()
                 val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Location" to postValues)
                 ref.updateChildren(childUpdates)
-
             }
         }
-
     }
 
     /** Config location */
     @SuppressLint("MissingPermission")
     private fun getLastLocation(){
         Log.d("Debug:" ,"getLastLocation call" )
-        if(CheckPermission()){
+        if(checkPermission()){
             if(isLocationEnabled()){
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
-                    var location: Location? = task.result
+                    val location: Location? = task.result
                     if(location == null){
-                        NewLocationData()
+                        newLocationData()
                     }else{
                         Log.d("Debug:" ,"getLastLocation() -> Your Location : Long: "+ location.longitude + " , Lat: " + location.latitude )
                         val text = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n"
@@ -225,10 +227,10 @@ class BlindFragment : Fragment() {
                 Toast.makeText(activity,"Please Turn on Your device Location",Toast.LENGTH_SHORT).show()
             }
         }else{
-            RequestPermission()
+            requestPermission()
         }
     }
-    private fun NewLocationData(){
+    private fun newLocationData(){
         var locationRequest =  LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 0
@@ -253,7 +255,7 @@ class BlindFragment : Fragment() {
             Toast.makeText(activity,"$text",Toast.LENGTH_SHORT).show()
         }
     }
-    private fun CheckPermission():Boolean {
+    private fun checkPermission():Boolean {
         //this function will return a boolean
         //true: if we have permission
         //false if not
@@ -269,7 +271,7 @@ class BlindFragment : Fragment() {
         }
         return false
     }
-    private fun RequestPermission(){
+    private fun requestPermission(){
         //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
         ActivityCompat.requestPermissions(requireActivity(), arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -283,7 +285,6 @@ class BlindFragment : Fragment() {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER)
     }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if(requestCode == PERMISSION_ID){
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
@@ -322,28 +323,58 @@ class BlindFragment : Fragment() {
         }
     }
 
-
     private fun emergencyCall(){
         val emergency = "1112"
         val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", emergency, null))
         startActivity(intent)
     }
 
-    private fun navigation() {
+    private fun navigationBlind() {
         val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
         val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phone/Navigation")
-        query.addListenerForSingleValueEvent(valueEventListenerNavigation)
+        query.addListenerForSingleValueEvent(valueEventListenerBlindNav)
     }
-    /** Navigation to home in Google Map  */
-    private var valueEventListenerNavigation: ValueEventListener = object : ValueEventListener {
+    /** Navigation with blind-nav in Google Map  */
+    private var valueEventListenerBlindNav: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
-                val location = dataSnapshot.child("Self_Navigate_bindUser").value.toString()
-//                val latitude = dataSnapshot.child("Latitude").value.toString()
-//                val longitude = dataSnapshot.child("Longitude").value.toString()
-//                val locationNavigate = "$latitude,$longitude"
-                Log.d("test_locationNavigate ","Navigate to location : $location")
-                if(location =="null"){
+                val location = dataSnapshot.child("navigate_blindUser").value.toString()
+                Log.d("test_locationNavigate B","Navigate to location : $location")
+                if(location =="-"){
+                    val tts = getString(R.string.locatoin_null)
+                    textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
+                    Toast.makeText(activity, R.string.locatoin_null,Toast.LENGTH_SHORT).show()
+
+                }
+                else{
+                    // Navigation : current place direct to gmmIntentUri
+                    val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
+                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                    mapIntent.setPackage("com.google.android.apps.maps")
+                    mapIntent.resolveActivity(activity!!.packageManager)?.let {
+                        startActivity(mapIntent)
+                    }
+                }
+
+            }
+        }
+        override fun onCancelled(databaseError: DatabaseError) {}
+    }
+
+    private fun navigationCaretaker() {
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phone/Navigation")
+        query.addListenerForSingleValueEvent(valueEventListenerCaretakerNav)
+    }
+    /** Navigation with caretaker-nav in Google Map  */
+    private var valueEventListenerCaretakerNav: ValueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val location = dataSnapshot.child("navigate_careUser").value.toString()
+                Log.d("test_locationNavigate C","Navigate to location : $location")
+                if(location =="-"){
+                    val tts = getString(R.string.locatoin_null)
+                    textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
                     Toast.makeText(activity, R.string.locatoin_null,Toast.LENGTH_SHORT).show()
                 }
                 else{
@@ -354,7 +385,6 @@ class BlindFragment : Fragment() {
                     mapIntent.resolveActivity(activity!!.packageManager)?.let {
                         startActivity(mapIntent)
                     }
-
                 }
 
             }
@@ -362,27 +392,37 @@ class BlindFragment : Fragment() {
         override fun onCancelled(databaseError: DatabaseError) {}
     }
 
-    private var valueEventListenerGetTitle: ValueEventListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            if (dataSnapshot.exists()) {
-                val titleBlind = dataSnapshot.child("title_Navigate_bindUser").value.toString()
-                val locationBlind = dataSnapshot.child("navigate_bindUser").value.toString()
-                val titleCaretaker = dataSnapshot.child("title_Navigate_careUser").value.toString()
-                val locationCaretaker = dataSnapshot.child("navigate_careUser").value.toString()
-//                val latitude = dataSnapshot.child("Latitude").value.toString()
-//                val longitude = dataSnapshot.child("Longitude").value.toString()
-//                val locationNavigate = "$latitude,$longitude"
-//                Log.d("test_locationNavigate ","Navigate to location : $location")
+    private fun getTitleLocation(phone:String){
+        Log.d("testName","phone : $phone")
+        val firebaseRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone/Navigation")
+        firebaseRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val titleBlind = snapshot.child("title_Navigate_blindUser").value.toString()
+                val locationBlind = snapshot.child("navigate_blindUser").value.toString()
+                val titleCaretaker = snapshot.child("title_Navigate_careUser").value.toString()
+                val locationCaretaker = snapshot.child("navigate_careUser").value.toString()
+                Log.d("testName ","titleBlind : $titleBlind , titleCaretaker : $titleCaretaker")
                 if(titleBlind != "-" && locationBlind != "-" ){
+                    viewModel.titleBlind.value = titleBlind
                     binding.selfNavButton.text = getString(R.string.button_self_navigation) + " to  $titleBlind"
                 }
+                else{
+                    viewModel.titleBlind.value = "-"
+                    binding.selfNavButton.text = getString(R.string.button_self_navigation)
+
+                }
                 if(titleCaretaker != "-" && locationCaretaker != "-" ){
+                    viewModel.titleCaretaker.value = titleCaretaker
                     binding.careNavButton.text = getString(R.string.button_caretaker_navigation) + " to  $titleCaretaker"
                 }
+                else{
+                    viewModel.titleCaretaker.value = "-"
+                    binding.careNavButton.text = getString(R.string.button_caretaker_navigation)
+                }
             }
-
-        }
-        override fun onCancelled(databaseError: DatabaseError) {}
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        })
     }
 
 

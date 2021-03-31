@@ -11,7 +11,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
-class CaretakerViewModel() : ViewModel() {
+class CaretakerViewModel : ViewModel() {
 
     var  userList = MutableLiveData<List<String>>()
     var userTel = MutableLiveData<List<String>>()

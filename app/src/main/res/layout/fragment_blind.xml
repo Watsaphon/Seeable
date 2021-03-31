@@ -5,6 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
    >
 
+    <data>
+        <variable
+            name="blindFragment"
+            type="com.estazo.project.seeable.app.blind.BlindFragment" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"

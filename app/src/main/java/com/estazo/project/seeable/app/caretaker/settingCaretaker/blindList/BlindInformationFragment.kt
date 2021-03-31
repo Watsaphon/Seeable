@@ -196,9 +196,9 @@ class BlindInformationFragment : Fragment() {
             if (dataSnapshot.exists()) {
 
                 val titleBlind =
-                    dataSnapshot.child("Navigation/title_Navigate_bindUser").value.toString()
+                    dataSnapshot.child("Navigation/title_Navigate_blindUser").value.toString()
                 val locationBlind =
-                    dataSnapshot.child("Navigation/navigate_bindUser").value.toString()
+                    dataSnapshot.child("Navigation/navigate_blindUser").value.toString()
                 val titleCaretaker =
                     dataSnapshot.child("Navigation/title_Navigate_careUser").value.toString()
                 val locationCaretaker =

@@ -193,11 +193,11 @@ class SearchLocationFragment : Fragment() , OnMapReadyCallback {
                 val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
 
                 val ref = FirebaseDatabase.getInstance().reference
-                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation/navigate_bindUser" to "$markLocation")
+                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation/navigate_blindUser" to "$markLocation")
                 ref.updateChildren(childUpdates)
 
                 val title = binding.titleBox.text.toString()
-                val childUpdates2 = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation/title_Navigate_bindUser" to "$title")
+                val childUpdates2 = hashMapOf<String, Any>("users_blind/$currentPhone/Navigation/title_Navigate_blindUser" to "$title")
                 ref.updateChildren(childUpdates2)
 
                 findNavController().navigate(R.id.action_searchLocationFragment_to_blindFragment)
