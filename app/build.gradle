@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
     def lifecycle_version = "2.2.0"
     def nav_version = "2.3.3"
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -109,5 +110,19 @@ dependencies {
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
+    /** Notification */
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:26.8.0')
+
+    // Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging-directboot:20.2.0'
+
+//    // Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
+//    // When NOT using the BoM, you must specify versions in Firebase library dependencies
+//    implementation 'com.google.firebase:firebase-messaging-ktx:21.0.1'
+//    implementation 'com.google.firebase:firebase-analytics-ktx:18.0.2'
 
 }

@@ -1,30 +1,26 @@
 package com.estazo.project.seeable.app
 
 import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import com.estazo.project.seeable.app.login.LoginScreen
-import com.google.android.gms.auth.api.signin.GoogleSignIn
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.ktx.messaging
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
+    private var title = ""
+    private var message = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -51,11 +47,59 @@ class MainActivity : AppCompatActivity() {
                  }
         }
 
-//        // Retrieve NavController from the NavHostFragment
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-//        val navController: NavController = navHostFragment.navController
+//        if(intent.extras != null){
+//            for(key in intent.extras!!.keySet()){
+//                if(key=="title"){
+//                    title = intent.extras!!.getString("title","")
+//                }
+//                if(key=="message"){
+//                    message = intent.extras!!.getString("message","")
+//                }
+//            }
+//            Log.d("testNotification","tite : $title , message : $message")
+//        }
+//        Log.d("testNotification","tite : $title , message : $message")
 
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.w("testNotification", "Fetching FCM registration token failed", task.exception)
+//                return@OnCompleteListener
+//            }
+//
+//            // Get new FCM registration token
+//            val token = task.result
+//
+//            // Log and toast
+//            val msg = getString(R.string.msg_token_fmt, token)
+//            Log.d("testNotification", msg)
+//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//        })
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.d("testNotification", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d("testNotification", msg)
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
+
+        Firebase.messaging.subscribeToTopic("shared_location").addOnCompleteListener { task ->
+                var msg = getString(R.string.msg_subscribed)
+                if (!task.isSuccessful) {
+                    msg = getString(R.string.msg_subscribe_failed)
+                }
+                Log.d("testNotification", msg)
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            }
     }
+
 
     override fun onStart() {
         super.onStart()

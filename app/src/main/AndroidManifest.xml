@@ -31,36 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-<!--        <activity android:name=".MainActivity"></activity>-->
-        <activity android:name=".blind.settingBlind.DeleteAccountBlindFragment" />
-        <activity android:name=".blind.settingBlind.ChangePasswordAccountBlindFragment" />
-        <activity android:name=".blind.settingBlind.EditNameAccountBlind" />
-        <activity android:name=".blind.settingBlind.AccountBlindFragment" />
-        <activity android:name=".blind.settingBlind.SettingBlindFragment" />
-        <activity
-            android:name=".register.LittleMoreFragment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".register.SendOTPFragment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".register.VerificationOTPFragment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".login.IntroduceAppFragment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".blind.settingBlind.SearchLocationFragment"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".caretaker.MainCaretaker"
-            android:screenOrientation="portrait" />
-<!--        <activity-->
-<!--            android:name=".login.LoginScreen"-->
-<!--            android:screenOrientation="portrait" />-->
-        <activity
-            android:name=".CameraTest"
-            android:configChanges="orientation|screenSize" />
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
@@ -71,11 +42,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".blind.MainBlind"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -85,6 +51,18 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
+
+
+        <!-- [START firebase_service] -->
+        <service android:name=".MyFirebaseMessagingService"
+            android:exported="false"
+            >
+<!--            android:stopWithTask="false"-->
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- [END firebase_service] -->
     </application>
 
 </manifest>
