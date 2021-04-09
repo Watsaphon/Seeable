@@ -76,6 +76,7 @@ class BlindFragment : Fragment() {
         sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
         val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
         getTitleLocation(phone)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

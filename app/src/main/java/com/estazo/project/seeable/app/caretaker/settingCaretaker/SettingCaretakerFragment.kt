@@ -1,4 +1,4 @@
-    package com.estazo.project.seeable.app.caretaker.settingCaretaker
+package com.estazo.project.seeable.app.caretaker.settingCaretaker
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,12 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
+import com.estazo.project.seeable.app.UserTypeViewModel
 import com.estazo.project.seeable.app.databinding.FragmentSettingCaretakerBinding
 import java.util.*
+import androidx.lifecycle.Observer
 
 
 class SettingCaretakerFragment : Fragment() {
@@ -32,6 +35,7 @@ class SettingCaretakerFragment : Fragment() {
     private lateinit var sharedPrefUserType : SharedPreferences
     private lateinit var sharedPrefBlindId : SharedPreferences
 
+    private val viewModel : UserTypeViewModel by activityViewModels()
 //    private val caretakerViewModel: CaretakerViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
@@ -60,6 +64,10 @@ class SettingCaretakerFragment : Fragment() {
         sharedPrefBlindId = requireActivity().getSharedPreferences("value", 0)
 
         Log.i("SettingCaretaker", " language : $language")
+
+        viewModel.userType.observe(viewLifecycleOwner, Observer { typeView ->
+            Log.d("eieiei_care","type : $typeView")
+        })
 
         return binding.root
     }
@@ -93,7 +101,7 @@ class SettingCaretakerFragment : Fragment() {
     private fun changeLanguage(){
         Log.i("CheckLanguageSetting", "Now Language is :$language")
         var locale: Locale? = null
-        var editor = sharedPrefLanguage.edit()
+        val editor = sharedPrefLanguage.edit()
         if (language=="en") {
             locale = Locale("th")
             editor.putString("stringKey", "th")
@@ -108,9 +116,6 @@ class SettingCaretakerFragment : Fragment() {
         config.locale = locale
         requireActivity().baseContext.resources.updateConfiguration(config, null)
         requireActivity().onBackPressed()
-//        requireActivity().recreate()
-//        val intent = Intent(this, SplashScreen::class.java)
-//        startActivity(intent)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -119,6 +124,8 @@ class SettingCaretakerFragment : Fragment() {
     }
 
     private fun logout(){
+        viewModel.userType.value = "not found!"
+
         val editorID = sharedPrefID.edit()
         val editorPhone = sharedPrefPhone.edit()
         val editorPassword = sharedPrefPassword.edit()
@@ -139,10 +146,8 @@ class SettingCaretakerFragment : Fragment() {
         editorUserType.apply()
         editorDisplayName.apply()
         editorBlindId.apply()
-                findNavController().navigate(R.id.action_settingCaretakerFragment_to_loginScreen,
-                null,
-                NavOptions.Builder().setPopUpTo(R.id.loginScreen, true).build()
-            )
+                findNavController().navigate(R.id.action_settingCaretakerFragment_to_loginScreen, null,
+                NavOptions.Builder().setPopUpTo(R.id.loginScreen, true).build())
     }
 
     override fun onStart() {

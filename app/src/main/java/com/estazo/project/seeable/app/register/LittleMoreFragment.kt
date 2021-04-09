@@ -92,7 +92,7 @@ class LittleMoreFragment : Fragment() {
 
                     val location = Locations(0.00000000, 0.00000000)
                     val caretaker = Caretaker("-", "-","-", "-")
-                    val device = DeviceBlind("-","-",false,"-", "-")
+                    val device = DeviceBlind("-","-",false,"no", "-")
                     val navigation = Navigation("-", "-", "-","-")
 
                     val valueRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")

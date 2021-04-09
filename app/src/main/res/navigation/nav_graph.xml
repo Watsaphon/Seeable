@@ -178,17 +178,14 @@
         tools:layout="@layout/fragment_setting_blind"
         >
         <action
-            android:id="@+id/action_settingBlindFragment2_to_splashScreen"
-            app:destination="@id/splashScreen"
-            app:launchSingleTop="false"
-            app:popUpTo="@id/loginScreen"
-            app:popUpToInclusive="false" />
-        <action
             android:id="@+id/action_settingBlindFragment2_to_accountBlindFragment"
             app:destination="@id/accountBlindFragment" />
         <action
             android:id="@+id/action_settingBlindFragment2_to_searchLocationFragment"
             app:destination="@id/searchLocationFragment" />
+        <action
+            android:id="@+id/action_settingBlindFragment2_to_loginScreen"
+            app:destination="@id/loginScreen" />
     </fragment>
     <fragment
         android:id="@+id/introduceAppFragment"

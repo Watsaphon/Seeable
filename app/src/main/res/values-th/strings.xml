@@ -244,6 +244,13 @@
     <string name="info_alertSetName">หรือคุณสามารถเปลี่ยนชื่อในภายหลัง</string>
     <string name="btn_alertSetName">ยืนยัน</string>
 
+    <!--alertFallDetection-->
+    <string name="fallDetection_header">ตรวจพบการล้ม!</string>
+    <string name="fallDetection_info1">ระบบจะแจ้งเตือนไปสู่ผู้ดูแล.</string>
+    <string name="fallDetection_info2">กรุณาแตะที่หน้าจอค้างไว้เพื่อยกเลิกการแจ้งเตือนอุบัติเหตุแก่ผู้ดูแลภายใน1นาที หากภายใน1นาทีไม่พบการยกเลิกระบบจะแจ้งเตือนอุบัติเหตุแก่ผู้ดูแลของท่านเพื่อทำการช่วยเหลือ
+    </string>
+    <string name="fallDetection_fine">ระบบยกเลิกการแจ้งเตือนแก่ผู้ดูแล อย่าโง่ล้มอีกละ ไอ้ควาย</string>
+
     <!--MainPerson-->
     <string name="main_person_header">คนดูแล</string>
     <string name="main_mapBtn">เปิดดูแผนที่</string>

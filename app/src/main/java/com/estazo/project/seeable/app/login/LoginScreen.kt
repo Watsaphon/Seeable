@@ -16,12 +16,15 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.SplashScreen
+import com.estazo.project.seeable.app.UserTypeViewModel
 import com.estazo.project.seeable.app.databinding.FragmentBlindBinding
 import com.estazo.project.seeable.app.databinding.FragmentLoginScreenBinding
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -37,14 +40,6 @@ class LoginScreen : Fragment() {
 
     private lateinit var binding: FragmentLoginScreenBinding
 
-
-//    private lateinit var telBox: EditText
-//    private lateinit var passwordBox: EditText
-//    private lateinit var finish: Button
-//    private lateinit var register: Button
-//    private var RC_SIGN_IN = 0
-
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var auth: FirebaseAuth
 
@@ -58,7 +53,7 @@ class LoginScreen : Fragment() {
     private lateinit var sharedPrefEmptyList: SharedPreferences
 
     private lateinit var  mAlertDialog : AlertDialog
-//    private lateinit var changeLang : TextView
+    private val viewModel : UserTypeViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -129,12 +124,10 @@ class LoginScreen : Fragment() {
         
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -148,18 +141,15 @@ class LoginScreen : Fragment() {
 
     }
 
-
     private fun register() {
         findNavController().navigate(R.id.action_loginScreen_to_sendOTP)
-//       val intent = Intent(this, SendOTP::class.java)
-//        startActivity(intent)
     }
 
     private fun login() {
         (activity as MainActivity).closeKeyboard()
         alertDialogLoading()
         val query = FirebaseDatabase.getInstance().getReference("users_caretaker").orderByChild("phone")
-        query.addListenerForSingleValueEvent(valueEventListener)
+        query.addListenerForSingleValueEvent(valueEventListenerCaretaker)
     }
 
 
@@ -200,10 +190,8 @@ class LoginScreen : Fragment() {
     }
 
 
-
-
-    /**receive value from realtime database (user_person) and check Login */
-    private var valueEventListener: ValueEventListener = object : ValueEventListener {
+    /**receive value from realtime database (users_caretaker) and check Login */
+    private var valueEventListenerCaretaker: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val loginTel = binding.telBox.text.toString()
             val loginPassword = binding.passwordBox.text.toString()
@@ -211,52 +199,31 @@ class LoginScreen : Fragment() {
             Log.i("LoginScreen_count","Before adding listener, count=$count")
             if (dataSnapshot.exists()) {
                 for (snapshot in dataSnapshot.children) {
-//                    val id = snapshot.child("id").value.toString()
                     val phone = snapshot.child("phone").value.toString()
                     val password = snapshot.child("password").value.toString()
-//                    val displayName = snapshot.child("displayName").value.toString()
-
-//                    val sex = snapshot.child("sex").value.toString()
-//                    val partnerIDFirebase = snapshot.child("partner_id").value.toString()
 
                     Log.i("LoginScreen_count","In onDataChange, count=$count")
                     Log.i("LoginScreen_count", "Username : $loginTel , Password : $loginPassword")
                     Log.i("LoginScreen_count", "Database info :$phone,$password ")
 
                     if (loginTel == phone && loginPassword == password){
-//                        val editorID = sharedPrefID.edit()
                         val editorPhone = sharedPrefPhone.edit()
                         val editorPassword = sharedPrefPassword.edit()
-//                        val editorDisplayName = sharedPrefDisplayName.edit()
                         val editorUserType = sharedPrefUserType.edit()
-                        val editorEmptyList = sharedPrefEmptyList.edit()
-//                        val editorSex = sharedPrefSex.edit()
-//                        val editorPartnerID = sharedPrefPartnerID.edit()
 
-//                        editorID.putString("stringKey2", id)
                         editorPhone.putString("stringKeyPhone", phone)
                         editorPassword.putString("stringKeyPassword", password)
-//                        editorDisplayName.putString("stringKeyDisplayName", displayName)
                         editorUserType.putString("stringKeyType", "caretaker")
-//                        editorEmptyList.putString("","")
-//                        editorSex.putString("stringKeySex", sex)
-//                        editorPartnerID.putString("stringKeyPartnerID", "$partnerIDFirebase")
 
-//                        editorID.apply()
                         editorPhone.apply()
                         editorPassword.apply()
-//                        editorDisplayName.apply()
                         editorUserType.apply()
-//                        editorSex.apply()
-//                        editorPartnerID.apply()
 
-                        mAlertDialog.dismiss()
+                        viewModel.userType.value = "caretaker"
 
-//                        val intent = Intent(this@LoginScreen, MainCaretaker::class.java)
-//                        startActivity(intent)
-//                        view?.findNavController()?.navigate(R.id.action_loginScreen_to_caretakerFragment)
                         findNavController().navigate(R.id.action_loginScreen_to_caretakerFragment, null,
                             NavOptions.Builder().setPopUpTo(R.id.loginScreen, true).build())
+
                         mAlertDialog.dismiss()
                         break
                     }
@@ -271,8 +238,8 @@ class LoginScreen : Fragment() {
                 val countDatabase = dataSnapshot.childrenCount.toInt()
                 if(count==countDatabase){
                     /**if not found user in user_person -> find in users_blind */
-                    val query2 = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("id")
-                    query2.addListenerForSingleValueEvent(valueEventListener2)
+                    val query2 = FirebaseDatabase.getInstance().getReference("users_blind").orderByChild("phone")
+                    query2.addListenerForSingleValueEvent(valueEventListenerBlind)
                 }
             }
         }
@@ -280,7 +247,7 @@ class LoginScreen : Fragment() {
     }
 
     /**receive value from realtime database (users_blind) and check Login */
-    private var valueEventListener2: ValueEventListener = object : ValueEventListener {
+    private var valueEventListenerBlind: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val loginTel = binding.telBox.text.toString()
             val loginPassword = binding.passwordBox.text.toString()
@@ -292,10 +259,6 @@ class LoginScreen : Fragment() {
                     val phone = snapshot.child("phone").value.toString()
                     val password = snapshot.child("password").value.toString()
                     val displayName = snapshot.child("displayName").value.toString()
-//                    val user1 = snapshot.child("Caretaker/user1").value.toString()
-//                    val user2 = snapshot.child("Caretaker/user2").value.toString()
-//                    val user3 = snapshot.child("Caretaker/user3").value.toString()
-//                    val user4 = snapshot.child("Caretaker/user4").value.toString()
 
                     Log.i("LoginScreen_checkLogin","In onDataChange, count=$count")
                     Log.i("LoginScreen_checkLogin", "Username : $loginTel , Password : $loginPassword")
@@ -303,45 +266,25 @@ class LoginScreen : Fragment() {
 
                     if (loginTel == phone && loginPassword == password){
                         Toast.makeText(activity, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
-//                        val editorID = sharedPrefID.edit()
                         val editorPhone = sharedPrefPhone.edit()
                         val editorPassword = sharedPrefPassword.edit()
                         val editorDisplayName = sharedPrefDisplayName.edit()
                         val editorUserType = sharedPrefUserType.edit()
-//                        val editorCaretakerUser = sharedPrefCaretakerUser.edit()
 
-//                        editorID.putString("stringKey2", id)
                         editorPhone.putString("stringKeyPhone", phone)
                         editorPassword.putString("stringKeyPassword", password)
                         editorDisplayName.putString("stringKeyDisplayName", displayName)
                         editorUserType.putString("stringKeyType", "blind")
-//                        editorCaretakerUser.putString("stringKeyCaretakerUser", "$user1,$user2,$user3,$user4")
 
                         editorPhone.apply()
                         editorPassword.apply()
-//                        editorID.apply()
                         editorDisplayName.apply()
                         editorUserType.apply()
-//                        editorCaretakerUser.apply()
 
-//                        val test = sharedPrefCaretakerUser.getString("stringKeyCaretakerUser","not found!")
-//                        Log.d("wtfArray","test : $test ")
-//                        if(test != null){
-//                            val yourArray: List<String> = test.split(",")
-//                            Log.d("wtfArray","yourArray : $yourArray ")
-//                            val user1 = yourArray[0]
-//                            val user2 = yourArray[1]
-//                            val user3 = yourArray[2]
-//                            val user4 = yourArray[3]
-//
-//                            Log.d("wtfArray","After split -> user1 : $user1 ,  user2 : $user2 , user3 : $user3 , user4 : $user4")
-//                        }
+                        viewModel.userType.value = "blind"
 
-//                        view?.findNavController()?.navigate(R.id.action_loginScreen_to_blindFragment)
                        findNavController().navigate(R.id.action_loginScreen_to_blindFragment, null,
                             NavOptions.Builder().setPopUpTo(R.id.loginScreen, true).build())
-//                        val intent = Intent(this@LoginScreen, MainBlind::class.java)
-//                        startActivity(intent)
                         mAlertDialog.dismiss()
                         break
                     }
@@ -364,7 +307,6 @@ class LoginScreen : Fragment() {
         }
         override fun onCancelled(databaseError: DatabaseError) {}
     }
-
 
 }
 

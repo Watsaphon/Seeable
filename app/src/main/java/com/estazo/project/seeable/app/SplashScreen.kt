@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.databinding.FragmentSplashScreenBinding
@@ -21,7 +23,7 @@ class SplashScreen : Fragment() {
 //    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     private lateinit var binding : FragmentSplashScreenBinding
-
+    private val viewModel : UserTypeViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -83,9 +85,6 @@ class SplashScreen : Fragment() {
 
         /** Check user status in app*/
         if(introApp == "No"){
-//            Handler().postDelayed({
-////                view.findNavController().navigate(R.id.action_splashScreen_to_loginScreen)
-//            }, 1000)
             findNavController().navigate(R.id.action_splashScreen_to_introduceAppFragment, null,
                 NavOptions.Builder().setPopUpTo(R.id.splashScreen, true).build())
             Log.i("testss","intro app ja")
@@ -94,11 +93,13 @@ class SplashScreen : Fragment() {
             if(login != "not found!" && userType != "not found!" ){
                 when (userType) {
                     "caretaker" -> {
+                        viewModel.userType.value = "caretaker"
                         findNavController().navigate(R.id.action_splashScreen_to_caretakerFragment, null,
                             NavOptions.Builder().setPopUpTo(R.id.splashScreen, true).build())
                         Log.i("testss","caretker ja")
                     }
                     "blind" -> {
+                        viewModel.userType.value = "blind"
                         findNavController().navigate(R.id.action_splashScreen_to_blindFragment, null,
                             NavOptions.Builder().setPopUpTo(R.id.splashScreen, true).build())
                         Log.i("testss","blind ja")
@@ -107,6 +108,7 @@ class SplashScreen : Fragment() {
             }
             else{
                 Log.i("testss","no user ja")
+                viewModel.userType.value = "not found!"
                 findNavController().navigate(R.id.action_splashScreen_to_loginScreen, null,
                     NavOptions.Builder().setPopUpTo(R.id.splashScreen, true).build())
             }

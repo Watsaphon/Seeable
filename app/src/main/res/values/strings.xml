@@ -250,6 +250,11 @@
     <string name="info_alertSetName">Or you can Change it later.</string>
     <string name="btn_alertSetName">Confirm</string>
 
+    <!--alertFallDetection-->
+    <string name="fallDetection_header">Fall detected!</string>
+    <string name="fallDetection_info1">The event has been sent to caretakers.</string>
+    <string name="fallDetection_info2">Hold the screen if the problem solved.</string>
+    <string name="fallDetection_fine">The system canceled the notification to your caretakers.</string>
     <!--MainPerson-->
     <string name="main_person_header">Main Person</string>
     <string name="main_mapBtn">Open Google map</string>

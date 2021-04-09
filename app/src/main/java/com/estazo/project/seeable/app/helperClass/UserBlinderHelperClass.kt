@@ -91,7 +91,7 @@ data class DeviceBlind(
     var Activity: String = "-",
     var BPM: String = "-",
     var Critical_Condition: Boolean = false,
-    var Fall_Detection: String = "-",
+    var Fall_Detection: String = "no",
     var Health_Status: String = "-"
 )
 
