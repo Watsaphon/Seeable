@@ -49,7 +49,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d("FBMessagingService", "From: ${remoteMessage.from}")
-
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
             Log.d("FBMessagingService", "Message data payload: ${remoteMessage.data}")
@@ -63,9 +62,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
 
+        val id = remoteMessage.notification?.channelId.toString()
         // Check if message contains a notification payload.
         remoteMessage.notification?.let {
+            Log.d("FBMessagingService", "channel id = $id")
             Log.d("FBMessagingService", "Message Notification Body: ${it.body}")
+
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -73,7 +75,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val title = remoteMessage.notification!!.title!!
         val body = remoteMessage.notification!!.body!!
         Log.d("FBMessagingService", "title : $title , body : $body ")
-        sendNotification(title,body)
+        sendNotification(title,body,id)
     }
     // [END receive_message]
 
@@ -98,13 +100,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      *
      * @param messageBody FCM message body received.
      */
-    private fun sendNotification(messageTitle: String,messageBody: String) {
+    private fun sendNotification(messageTitle: String,messageBody: String,id : String) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_ONE_SHOT)
 
-        val channelId = getString(R.string.default_notification_channel_id)
+//        val channelId = getString(R.string.default_notification_channel_id)
+        val channelId = id
+
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.icon_delete_foreground)
@@ -124,7 +128,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+//        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+                notificationManager.notify(channelId.toInt(), notificationBuilder.build())
     }
 //    private lateinit var title: String
 //    private lateinit var message: String

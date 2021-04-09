@@ -73,6 +73,33 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
 
+//        Firebase.messaging.subscribeToTopic("shared_location").addOnCompleteListener { task ->
+//            var msg = getString(R.string.msg_subscribed)
+//            if (!task.isSuccessful) {
+//                msg = getString(R.string.msg_subscribe_failed)
+//            }
+//            Log.d("testNotification", msg)
+//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//        }
+//
+//        Firebase.messaging.subscribeToTopic("call_emergency").addOnCompleteListener { task ->
+//            var msg = "Subscribed to call emergency topic"
+//            if (!task.isSuccessful) {
+//                msg = "Failed to subscribe to call Emergency topic"
+//            }
+//            Log.d("testNotification", msg)
+//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//        }
+//
+//        Firebase.messaging.subscribeToTopic("self-navigate").addOnCompleteListener { task ->
+//            var msg = "Subscribed to Self Navigate topic"
+//            if (!task.isSuccessful) {
+//                msg = "Failed to subscribe to Self Navigate topic"
+//            }
+//            Log.d("testNotification", msg)
+//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//        }
+
     }
 
     override fun onStart() {
