@@ -13,24 +13,25 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-
+import androidx.lifecycle.Observer
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.fall_dectection_dialog.view.*
 import java.util.*
-import androidx.lifecycle.Observer
 
 
 class MainActivity : AppCompatActivity() {
 
-    private var title = ""
-    private var message = ""
-    private lateinit var  mAlertDialog : AlertDialog
-    var textToSpeech: TextToSpeech? = null
 
-    var readRef: DatabaseReference? = null
-    var listener: ValueEventListener? = null
+    private lateinit var  mAlertDialog : AlertDialog
+    private var textToSpeech: TextToSpeech? = null
+
+    private lateinit var database: DatabaseReference
+//    var listener: ValueEventListener? = null
+    private lateinit var listener: ValueEventListener
 
     private val viewModel : UserTypeViewModel by viewModels()
 
@@ -42,23 +43,18 @@ class MainActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         Log.i("MainActivity", "onCreate called ")
 
-        val sharedPrefPhone = getSharedPreferences("value", 0)
-        val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
-        val editorPhone = sharedPrefPhone.edit()
-        val sharedPrefUserType = getSharedPreferences("value", 0)
-        val userType = sharedPrefUserType.getString("stringKeyType","not found!")
-        val editor3 = sharedPrefUserType.edit()
 
         viewModel.userType.observe(this, Observer<String> { typeView ->
-            Log.d("eieiei_Main","type : $typeView")
+            Log.d("checkUser_Main","type : $typeView")
+            when(typeView){
+                "not found!" -> { Toast.makeText(this, "Login Section",Toast.LENGTH_LONG).show() }
+                "caretaker" -> { Toast.makeText(this, "Caretaker Section",Toast.LENGTH_LONG).show() }
+                "blind" -> {
+                    blindSection()
+                    Toast.makeText(this, "Blind Section",Toast.LENGTH_LONG).show()
+                }
+            }
         })
-
-        Log.i("fff","userType : $userType")
-//        when (userType){
-//            "not found!" -> { Toast.makeText(this, "null", Toast.LENGTH_LONG).show() }
-//            "blind" -> { Toast.makeText(this, "blind", Toast.LENGTH_LONG).show() }
-//            "caretaker" -> { Toast.makeText(this, "caretaker", Toast.LENGTH_LONG).show() }
-//        }
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -73,32 +69,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
 
-//        Firebase.messaging.subscribeToTopic("shared_location").addOnCompleteListener { task ->
-//            var msg = getString(R.string.msg_subscribed)
-//            if (!task.isSuccessful) {
-//                msg = getString(R.string.msg_subscribe_failed)
-//            }
-//            Log.d("testNotification", msg)
-//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-//        }
-//
-//        Firebase.messaging.subscribeToTopic("call_emergency").addOnCompleteListener { task ->
-//            var msg = "Subscribed to call emergency topic"
-//            if (!task.isSuccessful) {
-//                msg = "Failed to subscribe to call Emergency topic"
-//            }
-//            Log.d("testNotification", msg)
-//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-//        }
-//
-//        Firebase.messaging.subscribeToTopic("self-navigate").addOnCompleteListener { task ->
-//            var msg = "Subscribed to Self Navigate topic"
-//            if (!task.isSuccessful) {
-//                msg = "Failed to subscribe to Self Navigate topic"
-//            }
-//            Log.d("testNotification", msg)
-//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-//        }
 
     }
 
@@ -111,63 +81,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         Log.i("MainActivity", "onResume called")
         updateUI()
-        val sharedPrefPhone = getSharedPreferences("value", 0)
-        val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
-        val editorPhone = sharedPrefPhone.edit()
-        val sharedPrefUserType = getSharedPreferences("value", 0)
-        val userType = sharedPrefUserType.getString("stringKeyType","not found!")
-        val editorType = sharedPrefUserType.edit()
-        when (userType){
-            "not found!" -> {
-                Toast.makeText(this, "null", Toast.LENGTH_LONG).show()
-//                readRef!!.removeEventListener(listener!!)
-//                editorType.putString("stringKeyType", "not found!")
-//                editorType.apply()
-//                viewModel.userType.value = "not found!"
-            }
-            "blind" -> {
-                Toast.makeText(this, "blind", Toast.LENGTH_LONG).show()
-//                viewModel.userType.value = "blind"
-//                editorType.putString("stringKeyType", "blind")
-//                editorType.apply()
 
-                /**  test */
-//                readRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone/")
-//                listener = readRef!!.child("Device").addValueEventListener(object : ValueEventListener {
-//                override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                    val fallDetections = dataSnapshot.child("fall_Detection").value.toString()
-//                    Log.d("testFD","fallDetections : $fallDetections")
-//                }
-//                override fun onCancelled(error: DatabaseError) {
-//                    Log.d("testFD","onCancelled call")
-//                }
-//            })
-
-//                val firebaseRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone/Device")
-//                firebaseRef.addValueEventListener(object : ValueEventListener {
-//                    override fun onDataChange(snapshot: DataSnapshot) {
-//                        val fallDetections = snapshot.child("fall_Detection").value.toString()
-//                        if(fallDetections == "fall" ){
-//                            alertDialogFallDetection()
-//                        }
-//                        Log.i("testFD","fallDetections : $fallDetections")
-//                    }
-//                    override fun onCancelled(databaseError: DatabaseError) {
-//                    }
-//                })
-//                readRef!!.removeEventListener(listener!!)
-            }
-            "caretaker" -> {
-                Toast.makeText(this, "caretaker", Toast.LENGTH_LONG).show()
-//                viewModel.userType.value = "caretaker"
-//                editorType.putString("stringKeyType", "caretaker")
-//                editorType.apply()
-            }
-        }
-//        if(userType != "blind" && readRef != null){
-//            readRef!!.removeEventListener(listener!!)
-//            Log.d("eieiei","kuy")
-//        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -269,6 +183,50 @@ class MainActivity : AppCompatActivity() {
             //deprecated in API 26
             v.vibrate(300)
         }
+    }
+
+    private fun blindSection(){
+
+        val sharedPrefPhone = getSharedPreferences("value", 0)
+        val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
+
+        viewModel.userType.observe(this, Observer<String> { typeView ->
+            Log.d("checkUser_Main_BS","type : $typeView")
+            when(typeView){
+                "not found!" -> {
+                    if(this::database.isInitialized){
+                        database.child("users_blind/$phone/Device").removeEventListener(listener)
+                        Log.d("checkUser_Main_BS","logout to Login section")
+                    }
+                }
+                "caretaker" -> {
+                    if(this::database.isInitialized){
+                        database.child("users_blind/$phone/Device").removeEventListener(listener)
+                        Log.d("checkUser_Main_BS","login to caretaker section")
+                    }
+                }
+
+            }
+        })
+        /**For java*/
+//        database = FirebaseDatabase.getInstance().reference
+        /**For kotlin*/
+//        database = Firebase.database.reference
+        database = Firebase.database.reference
+        listener = database.child("users_blind/$phone/Device").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                val fallDetections = dataSnapshot.child("fall_Detection").value.toString()
+                Log.d("checkUser_Main_FD", "fallDetections : $fallDetections")
+                    if (fallDetections == "fall") {
+                        alertDialogFallDetection()
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("checkUser_Main_FD","onCancelled call")
+            }
+        })
     }
 
 }
