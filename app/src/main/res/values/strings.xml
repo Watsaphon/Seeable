@@ -255,6 +255,13 @@
     <string name="fallDetection_info1">The event has been sent to caretakers.</string>
     <string name="fallDetection_info2">Hold the screen if the problem solved.</string>
     <string name="fallDetection_fine">The system canceled the notification to your caretakers.</string>
+
+    <!--alertBusSignDetection-->
+    <string name="busSignDetection_header">Bus sign detected!</string>
+    <string name="busSignDetection_info1">If you want to call a bus,</string>
+    <string name="busSignDetection_info2">please hold the screen for 2 seconds
+or double tap the screen to discard.</string>
+<!--    <string name="busSignDetection_fine">The system canceled the notification to your caretakers.</string>-->
     <!--MainPerson-->
     <string name="main_person_header">Main Person</string>
     <string name="main_mapBtn">Open Google map</string>

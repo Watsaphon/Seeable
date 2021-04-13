@@ -250,6 +250,11 @@
     <string name="fallDetection_info2">กรุณาแตะที่หน้าจอค้างไว้เพื่อยกเลิกการแจ้งเตือนอุบัติเหตุแก่ผู้ดูแลภายใน1นาที หากภายใน1นาทีไม่พบการยกเลิกระบบจะแจ้งเตือนอุบัติเหตุแก่ผู้ดูแลของท่านเพื่อทำการช่วยเหลือ
     </string>
     <string name="fallDetection_fine">ระบบยกเลิกการแจ้งเตือนแก่ผู้ดูแล.</string>
+    <!--alertBusSignDetection-->
+    <string name="busSignDetection_header">ตรวจพบป้ายรถเมล์!</string>
+    <string name="busSignDetection_info1">ถ้าหากคุณต้องการเรียกรถเมล์,</string>
+    <string name="busSignDetection_info2">กรุณาแตะที่หน้าจอค้างไว้2วินาทีหรือกด2ครั้งเพื่อปิดหน้าจอนี้</string>
+<!--    <string name="busSignDetection_fine">The system canceled the notification to your caretakers.</string>-->
 
     <!--MainPerson-->
     <string name="main_person_header">คนดูแล</string>

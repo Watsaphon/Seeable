@@ -11,14 +11,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.UserTypeViewModel
 import com.estazo.project.seeable.app.databinding.FragmentSettingCaretakerBinding
+import com.google.firebase.database.FirebaseDatabase
 import java.util.*
-import androidx.lifecycle.Observer
 
 
 class SettingCaretakerFragment : Fragment() {
@@ -126,6 +127,12 @@ class SettingCaretakerFragment : Fragment() {
     private fun logout(){
         viewModel.userType.value = "not found!"
 
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        Log.i("kubkub", "phone : $phone")
+        val ref = FirebaseDatabase.getInstance().reference
+        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "-")
+        ref.updateChildren(childUpdates)
+
         val editorID = sharedPrefID.edit()
         val editorPhone = sharedPrefPhone.edit()
         val editorPassword = sharedPrefPassword.edit()
@@ -146,8 +153,10 @@ class SettingCaretakerFragment : Fragment() {
         editorUserType.apply()
         editorDisplayName.apply()
         editorBlindId.apply()
-                findNavController().navigate(R.id.action_settingCaretakerFragment_to_loginScreen, null,
-                NavOptions.Builder().setPopUpTo(R.id.loginScreen, true).build())
+
+
+        findNavController().navigate(R.id.action_settingCaretakerFragment_to_loginScreen, null,
+            NavOptions.Builder().setPopUpTo(R.id.loginScreen, true).build())
     }
 
     override fun onStart() {

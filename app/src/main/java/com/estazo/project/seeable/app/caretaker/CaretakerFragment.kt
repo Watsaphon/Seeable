@@ -65,6 +65,23 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
                  }
         })
 
+//         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Log.d("testNotification", "Fetching FCM registration token failed", task.exception)
+//                return@OnCompleteListener
+//            }
+//            // Get new FCM registration token
+//            val token = task.result
+//            // Log and toast
+//            val msg = getString(R.string.msg_token_fmt, token)
+//            Log.d("testNotification", msg)
+//            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+//             val ref = FirebaseDatabase.getInstance().reference
+//             val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "$token")
+//             ref.updateChildren(childUpdates)
+//
+//        })
+
      }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

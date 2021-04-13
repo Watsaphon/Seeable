@@ -128,69 +128,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-//        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
-                notificationManager.notify(channelId.toInt(), notificationBuilder.build())
+//         notificationManager.notify(channelId.toInt(), notificationBuilder.build())
+        notificationManager.notify(0, notificationBuilder.build())
     }
-//    private lateinit var title: String
-//    private lateinit var message: String
-//    private lateinit var manager : NotificationManager
-//    var CHANNEL_ID = "CHANNEL"
-
-
-//    override fun onNewToken(token: String) {
-//        super.onNewToken(token)
-//        FirebaseInstanceId.getInstance().token
-//        Log.d("testNotification", "Refreshed token: $token")
-//
-//
-//    }
-
-
-//    override fun onMessageReceived(remoteMessage: RemoteMessage) {
-//        super.onMessageReceived(remoteMessage)
-////         title = remoteMessage.data["title"]!!
-////         message = remoteMessage.data["message"]!!
-//        title = remoteMessage.notification!!.title!!
-//        message = remoteMessage.notification!!.body!!
-//         if (message == null){
-//           message = Objects.requireNonNull(remoteMessage.notification!!.body)!!
-////             this.bar = Objects.requireNonNull(bar, "bar must not be null");
-//
-//        }
-//        manager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//        sendNotification()
-//    }
-//
-//    private fun sendNotification() {
-//        val intent = Intent(applicationContext,MainActivity::class.java)
-//        intent.putExtra("tittle",title)
-//        intent.putExtra("message",message)
-//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//
-//        // Since android Oreo notification channel is needed.
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            val channel = NotificationChannel(CHANNEL_ID,
-//                "push notification", NotificationManager.IMPORTANCE_DEFAULT)
-//
-//
-////            notificationManager.createNotificationChannel(channel)
-//            manager.createNotificationChannel(channel)
-//
-//        }
-//
-//        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
-//            .setContentTitle(title)
-//            .setAutoCancel(true)
-//            .setContentText(message)
-//            .setSmallIcon(R.mipmap.icon_delete_foreground)
-//
-//        var pendingIntent = PendingIntent.getActivity(applicationContext,0,intent, PendingIntent.FLAG_ONE_SHOT)
-//
-//        builder.setContentIntent(pendingIntent)
-//        manager.notify(0,builder.build())
-//
-//    }
-
 
 }

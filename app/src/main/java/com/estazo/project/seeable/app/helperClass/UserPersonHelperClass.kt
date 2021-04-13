@@ -3,26 +3,6 @@ package com.estazo.project.seeable.app.helperClass
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 
-@IgnoreExtraProperties
-data class UserPersonHelperClass(
-    val ID : String ,
-    val Username: String,
-    val  Password: String,
-    val FullName: String,
-    val Phone: String,
-    val partner_id : String
-){ @Exclude
-    fun toMap(): Map<String, Any?> {
-        return mapOf(
-            "id" to ID,
-            "username" to Username,
-            "password" to Password,
-            "fullName" to FullName,
-            "phone" to Phone,
-            "partner_id" to partner_id
-        )
-    }
-}
 
 data class UserPersonHelperClassNew(
     val ID : String ,
@@ -30,7 +10,8 @@ data class UserPersonHelperClassNew(
     val Password: String,
     val DisplayName: String,
     val CriticalEvent: String,
-    val Notification : String
+    val Notification : String,
+    val FCM : String
 ){ @Exclude
 fun toMap(): Map<String, Any?> {
     return mapOf(
@@ -39,7 +20,8 @@ fun toMap(): Map<String, Any?> {
         "password" to Password,
         "displayName" to DisplayName,
         "criticalEvent" to CriticalEvent,
-        "notification" to Notification
+        "notification" to Notification,
+        "FCM" to FCM
     )
 }
 }
@@ -59,11 +41,4 @@ data class DeviceCaretaker(
     var Health_Status: String
 )
 
-data class SavedValue(private var _currentValue: String, var previousValue: String = "") {
-    var currentValue: String
-        get() = _currentValue
-        set(value) {
-            previousValue = _currentValue
-            _currentValue = value
-        }
-}
+

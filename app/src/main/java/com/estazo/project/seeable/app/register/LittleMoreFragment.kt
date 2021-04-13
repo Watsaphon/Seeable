@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -96,7 +95,7 @@ class LittleMoreFragment : Fragment() {
                     val navigation = Navigation("-", "-", "-","-")
 
                     val valueRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")
-                    val rootData = UserBlinderHelperClassNew(ID.toString(), phone, "$password", "not found !")
+                    val rootData = UserBlinderHelperClassNew(ID.toString(), phone, "$password", "not found !","-")
 
 
                     rootRef.child(phone).setValue(rootData).addOnCompleteListener {
@@ -125,6 +124,7 @@ class LittleMoreFragment : Fragment() {
                         phone,
                         "$password",
                         "not found !",
+                        "-",
                         "-",
                         "-")
                     rootRef.child(phone).setValue(rootData).addOnCompleteListener {

@@ -2,6 +2,7 @@ package com.estazo.project.seeable.app
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.*
 import android.speech.tts.TextToSpeech
 import android.util.Log
@@ -19,7 +20,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.android.synthetic.main.fall_dectection_dialog.view.*
+import kotlinx.android.synthetic.main.alert_dialog_fall_dectection.view.*
 import java.util.*
 
 
@@ -30,8 +31,9 @@ class MainActivity : AppCompatActivity() {
     private var textToSpeech: TextToSpeech? = null
 
     private lateinit var database: DatabaseReference
-//    var listener: ValueEventListener? = null
     private lateinit var listener: ValueEventListener
+
+    private lateinit var sharedPrefPhone: SharedPreferences
 
     private val viewModel : UserTypeViewModel by viewModels()
 
@@ -48,25 +50,32 @@ class MainActivity : AppCompatActivity() {
             Log.d("checkUser_Main","type : $typeView")
             when(typeView){
                 "not found!" -> { Toast.makeText(this, "Login Section",Toast.LENGTH_LONG).show() }
-                "caretaker" -> { Toast.makeText(this, "Caretaker Section",Toast.LENGTH_LONG).show() }
+                "caretaker" -> {
+
+                    sharedPrefPhone = getSharedPreferences("value", 0)
+                    val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+                    Toast.makeText(this, "Caretaker Section",Toast.LENGTH_LONG).show()
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            Log.d("testNotification", "Fetching FCM registration token failed", task.exception)
+                            return@OnCompleteListener
+                        }
+                        // Get new FCM registration token
+                        val token = task.result
+                        // Log and toast
+                        val msg = getString(R.string.msg_token_fmt, token)
+                        Log.d("testNotification", msg)
+                        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                        val ref = FirebaseDatabase.getInstance().reference
+                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "$token")
+                        ref.updateChildren(childUpdates)
+                    })
+                }
                 "blind" -> {
                     blindSection()
                     Toast.makeText(this, "Blind Section",Toast.LENGTH_LONG).show()
                 }
             }
-        })
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.d("testNotification", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-            // Get new FCM registration token
-            val token = task.result
-            // Log and toast
-            val msg = getString(R.string.msg_token_fmt, token)
-            Log.d("testNotification", msg)
-            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
 
 
@@ -130,7 +139,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun alertDialogFallDetection() {
         //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.fall_dectection_dialog, null)
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_fall_dectection, null)
         //AlertDialogBuilder
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
