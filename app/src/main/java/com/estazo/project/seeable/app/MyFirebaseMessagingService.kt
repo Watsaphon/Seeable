@@ -64,10 +64,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val id = remoteMessage.notification?.channelId.toString()
         // Check if message contains a notification payload.
+        val channelId : String = remoteMessage.data["channelId"].toString()
         remoteMessage.notification?.let {
-            Log.d("FBMessagingService", "channel id = $id")
-            Log.d("FBMessagingService", "Message Notification Body: ${it.body}")
-
+//            Log.d("FBMessagingService", "channel id = $id")
+            Log.d("FBMessagingService_id", "Message Notification Body: ${it.body}, Message Notification channelId :  $channelId ")
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -75,7 +75,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val title = remoteMessage.notification!!.title!!
         val body = remoteMessage.notification!!.body!!
         Log.d("FBMessagingService", "title : $title , body : $body ")
-        sendNotification(title,body,id)
+        sendNotification(title,body,channelId)
     }
     // [END receive_message]
 
@@ -128,8 +128,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-//         notificationManager.notify(channelId.toInt(), notificationBuilder.build())
-        notificationManager.notify(0, notificationBuilder.build())
+         notificationManager.notify(channelId.toInt(), notificationBuilder.build())
+//        notificationManager.notify(0, notificationBuilder.build())
     }
 
 }

@@ -38,6 +38,19 @@ data class Locations(
     }
 }
 
+data class Notification(
+    var timestamp: String ,
+    var type: String
+) {
+    @Exclude
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "timestamp" to timestamp,
+            "type" to type
+        )
+    }
+}
+
 @IgnoreExtraProperties
 data class Caretaker(
     var user1: String = "-",

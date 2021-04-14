@@ -33,14 +33,13 @@ import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentBlindBinding
 import com.estazo.project.seeable.app.helperClass.Locations
+import com.estazo.project.seeable.app.helperClass.Notification
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.location.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.ktx.messaging
 import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 import java.util.*
 
@@ -123,51 +122,64 @@ class BlindFragment : Fragment() {
 
         binding.blindFragment = this@BlindFragment
 
+        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        val ref = FirebaseDatabase.getInstance().reference
+        val currentTime = Calendar.getInstance().time.toString()
+
         binding.FAB.setOnClickListener {
             view.findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2)
         }
-
         binding.selfNavButton.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigationBlind()
             Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
+
+            Log.d("testCalender","currentTime : $currentTime")
+            val postNotification =  Notification("$currentTime","navigate")
+            val postValues = postNotification.toMap()
+            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+            ref.updateChildren(childUpdates)
         }
         binding.careNavButton.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigationCaretaker()
             Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
+
+            Log.d("testCalender","currentTime : $currentTime")
+            val postNotification =  Notification("$currentTime","navigate")
+            val postValues = postNotification.toMap()
+            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+            ref.updateChildren(childUpdates)
+
         }
         binding.callEmergency.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Call Emergency Activate", TextToSpeech.QUEUE_FLUSH, null)
-//            emergencyCall()
+            emergencyCall()
             Toast.makeText(activity, getString(R.string.button_emergency_call), Toast.LENGTH_SHORT).show()
-            Firebase.messaging.subscribeToTopic("call_emergency").addOnCompleteListener { task ->
-                var msg = "Subscribed to call emergency topic"
-            if (!task.isSuccessful) {
-                msg = "Failed to subscribe to call Emergency topic"
-            }
-            Log.d("testNotification", msg)
-            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-        }
+
+            Log.d("testCalender","currentTime : $currentTime")
+            val postNotification =  Notification("$currentTime","callEmergency")
+            val postValues = postNotification.toMap()
+            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+            ref.updateChildren(childUpdates)
         }
         binding.sendLocation.setOnVeryLongClickListener{
             vibrate()
             Log.d("Debug:","sharedLocationBtn -> CheckPermission : "  + checkPermission().toString())
             Log.d("Debug:", "sharedLocationBtn -> isLocationEnabled : " +  isLocationEnabled().toString())
             textToSpeech!!.speak("send Location Activate", TextToSpeech.QUEUE_FLUSH, null)
-//            getLastLocation()
-//            sendLocation()
-            Firebase.messaging.subscribeToTopic("shared_location").addOnCompleteListener { task ->
-                var msg = getString(R.string.msg_subscribed)
-                if (!task.isSuccessful) {
-                     msg = getString(R.string.msg_subscribe_failed)
-                 }
-                Log.d("testNotification", msg)
-                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-        }
+            getLastLocation()
+            sendLocation()
+
+            Log.d("testCalender","currentTime : $currentTime")
+            val postNotification =  Notification("$currentTime","location")
+            val postValues = postNotification.toMap()
+            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+            ref.updateChildren(childUpdates)
         }
     }
 

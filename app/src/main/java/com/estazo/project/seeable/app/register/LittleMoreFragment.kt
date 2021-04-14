@@ -31,31 +31,7 @@ class LittleMoreFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        radioGroup = findViewById(R.id.select_mode)
-
     }
-
-//    fun addListenerOnButton() {
-//        radioGroup = findViewById(R.id.radio) as RadioGroup
-//        btnDisplay = findViewById(R.id.btnDisplay) as Button
-//        btnDisplay.setOnClickListener(object : OnClickListener() {
-//            fun onClick(v: View?) {
-//
-//                // get selected radio button from radioGroup
-//                val selectedId: Int = radioGroup.getCheckedRadioButtonId()
-//
-//                // find the radiobutton by returned id
-//                radioButton = findViewById(selectedId) as RadioButton
-//                Toast.makeText(
-//                    this@MyAndroidAppActivity,
-//                    radioButton.getText(), Toast.LENGTH_SHORT
-//                ).show()
-//            }
-//        })
-//    }
-
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -67,8 +43,6 @@ class LittleMoreFragment : Fragment() {
         }
 
 
-//        Log.i("LittleMore", "phone : $phone")
-
         // Get radio group selected status and text using button click event
         binding.registerButton.setOnClickListener() {
 
@@ -79,8 +53,6 @@ class LittleMoreFragment : Fragment() {
             // Get the checked radio button id from radio group
             var id: Int = binding.selectMode.checkedRadioButtonId
 
-//            var radioButton  = id as RadioButton
-//            var radioButton : RadioButton  = id
 
             if (id != -1) {
 
@@ -93,6 +65,7 @@ class LittleMoreFragment : Fragment() {
                     val caretaker = Caretaker("-", "-","-", "-")
                     val device = DeviceBlind("-","-",false,"no", "-")
                     val navigation = Navigation("-", "-", "-","-")
+                    val notification = Notification("-", "-")
 
                     val valueRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")
                     val rootData = UserBlinderHelperClassNew(ID.toString(), phone, "$password", "not found !","-")
@@ -103,8 +76,10 @@ class LittleMoreFragment : Fragment() {
                             valueRef.child("Caretaker").setValue(caretaker).addOnCompleteListener {
                                 valueRef.child("Device").setValue(device).addOnCompleteListener {
                                     valueRef.child("Navigation").setValue(navigation).addOnCompleteListener {
-                                        Toast.makeText(activity,getString(R.string.success_regis),Toast.LENGTH_SHORT).show()
-                                        saveRegister()
+                                        valueRef.child("Notification").setValue(notification).addOnCompleteListener {
+                                            Toast.makeText(activity, getString(R.string.success_regis), Toast.LENGTH_SHORT).show()
+                                            saveRegister()
+                                        }
                                     }
                                 }
                             }
