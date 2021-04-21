@@ -1,8 +1,7 @@
 package com.estazo.project.seeable.app
 
 import android.app.AlertDialog
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.*
 import android.os.*
 import android.speech.tts.TextToSpeech
 import android.util.Log
@@ -15,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -22,7 +22,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.alert_dialog_fall_dectection.view.*
 import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,7 +43,8 @@ class MainActivity : AppCompatActivity() {
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         Log.i("MainActivity", "onCreate called ")
-
+        Log.i("kuyjaa","call create mainActivity ")
+        LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, IntentFilter("Msg"))
 
         viewModel.userType.observe(this, Observer<String> { typeView ->
             Log.d("checkUser_Main","type : $typeView")
@@ -79,6 +79,33 @@ class MainActivity : AppCompatActivity() {
         })
 
 
+    }
+
+    private val onNotice: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            val pack = intent.getStringExtra("package")
+            val title = intent.getStringExtra("title")
+            val text = intent.getStringExtra("text")
+//            val ticker = intent.getStringExtra("ticker")
+//            val tr = TableRow(applicationContext)
+//            tr.setLayoutParams(LayoutParams(
+//                TableRow.LayoutParams.MATCH_PARENT,
+//                TableRow.LayoutParams.WRAP_CONTENT
+//                )
+//            )
+//            val textview = TextView(applicationContext)
+//            textview.layoutParams = LayoutParams(
+//                TableRow.LayoutParams.WRAP_CONTENT,
+//                TableRow.LayoutParams.WRAP_CONTENT,
+//                1.0f
+//            )
+//            textview.textSize = 20f
+//            textview.setTextColor(Color.parseColor("#0B0719"))
+//            textview.text = Html.fromHtml("$pack<br><b>$title : </b>$text")
+//            tr.addView(textview)
+//            tab.addView(tr)
+            Log.i("kuyjaa_main","pack :$pack , title : $title , text : $text ")
+        }
     }
 
     override fun onStart() {

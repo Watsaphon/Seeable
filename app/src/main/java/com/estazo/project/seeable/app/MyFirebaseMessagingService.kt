@@ -9,9 +9,11 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import java.util.*
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -35,6 +37,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d("FBMessagingService", "sendRegistrationTokenToServer($token)")
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         // [START_EXCLUDE]
         // There are two types of messages data messages and notification messages. Data messages are handled
@@ -100,7 +103,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      *
      * @param messageBody FCM message body received.
      */
-    private fun sendNotification(messageTitle: String,messageBody: String,id : String) {
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun sendNotification(messageTitle: String, messageBody: String, id : String) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -130,6 +134,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
          notificationManager.notify(channelId.toInt(), notificationBuilder.build())
 //        notificationManager.notify(0, notificationBuilder.build())
+
+        val eiei = Arrays.toString(notificationManager.activeNotifications)
+        Log.i("kaeweiei","activeNotifications : $eiei ")
+
+
     }
 
 }

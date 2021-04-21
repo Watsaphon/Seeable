@@ -1,4 +1,4 @@
-package com.estazo.project.seeable.app.blind
+   package com.estazo.project.seeable.app.blind
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -44,7 +44,7 @@ import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 import java.util.*
 
 
-class BlindFragment : Fragment() {
+   class BlindFragment : Fragment() {
 
 
     private lateinit var  mAlertDialog : AlertDialog
@@ -141,6 +141,7 @@ class BlindFragment : Fragment() {
             val postValues = postNotification.toMap()
             val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
             ref.updateChildren(childUpdates)
+            //view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.careNavButton.setOnVeryLongClickListener{
             vibrate()
@@ -200,6 +201,12 @@ class BlindFragment : Fragment() {
         })
 
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -382,8 +389,15 @@ class BlindFragment : Fragment() {
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")
                     mapIntent.resolveActivity(activity!!.packageManager)?.let {
-                        startActivity(mapIntent)
+                        startActivityForResult(mapIntent,0)
                     }
+
+//                    val navigation = Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=$location&mode=w&avoid=thf"))
+//                    navigation.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+//                    navigation.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
+////                    navigation.setClassName("com.google.android.apps.maps", "com.estazo.project.seeable.app")
+//                    startActivityForResult(navigation,0)
+
                 }
 
             }

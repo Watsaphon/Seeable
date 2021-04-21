@@ -261,7 +261,7 @@
     <string name="busSignDetection_info1">If you want to call a bus,</string>
     <string name="busSignDetection_info2">please hold the screen for 2 seconds
 or double tap the screen to discard.</string>
-<!--    <string name="busSignDetection_fine">The system canceled the notification to your caretakers.</string>-->
+    <!--    <string name="busSignDetection_fine">The system canceled the notification to your caretakers.</string>-->
     <!--MainPerson-->
     <string name="main_person_header">Main Person</string>
     <string name="main_mapBtn">Open Google map</string>
@@ -307,4 +307,6 @@ or double tap the screen to discard.</string>
     <string name="msg_subscribed" translatable="false">Subscribed to share Location topic</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="fcm_message" translatable="false">FCM Message</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

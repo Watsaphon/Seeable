@@ -157,6 +157,9 @@
             app:destination="@id/settingBlindFragment2"
             app:popUpTo="@id/blindFragment"
             />
+        <action
+            android:id="@+id/action_blindFragment_to_navigateBlindFragment"
+            app:destination="@id/navigateBlindFragment" />
     </fragment>
     <fragment
         android:id="@+id/caretakerFragment"
@@ -288,5 +291,11 @@
             android:name="phoneBlind"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/navigateBlindFragment"
+        android:name="com.estazo.project.seeable.app.blind.NavigateBlindFragment"
+        android:label="NavigateBlindFragment"
+        tools:layout="@layout/fragment_navigate_blind"
+        />
 
 </navigation>
