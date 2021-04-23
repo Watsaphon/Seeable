@@ -2,6 +2,7 @@
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -63,7 +64,7 @@ import java.util.*
 
     private lateinit var binding: FragmentBlindBinding
 
-    private lateinit var viewModel : BlindViewModel
+       private lateinit var viewModel : BlindViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,6 +117,8 @@ import java.util.*
 
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i("BlindFragment", "onViewCreated call")
@@ -141,7 +144,7 @@ import java.util.*
             val postValues = postNotification.toMap()
             val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
             ref.updateChildren(childUpdates)
-            //view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
+            view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.careNavButton.setOnVeryLongClickListener{
             vibrate()
@@ -154,7 +157,7 @@ import java.util.*
             val postValues = postNotification.toMap()
             val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
             ref.updateChildren(childUpdates)
-
+            view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.callEmergency.setOnVeryLongClickListener{
             vibrate()
@@ -199,14 +202,23 @@ import java.util.*
                 binding.careNavButton.text = getString(R.string.button_caretaker_navigation) + " to  $caretaker"
             }
         })
-
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, dataIntent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, dataIntent)
+        // Check which request we're responding to
+        Log.i("MainActivity","BlindFragment : onActivityResult call")
 
-    }
+        if (requestCode == 1) {
+               // Make sure the request was successful
+            Log.i("MainActivity","BlindFragment : requestCode success ja")
 
+            if (resultCode == RESULT_OK) {
+                Log.i("MainActivity","BlindFragment : resultCode ok ja")
+                   //OK received detail
+               }
+           }
+       }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -318,7 +330,7 @@ import java.util.*
     private fun isLocationEnabled():Boolean{
         //this function will return to us the state of the location service
         //if the gps or the network provider is enabled then it will return true otherwise it will return false
-        var locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER)
     }
@@ -388,8 +400,10 @@ import java.util.*
                     val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")
+//                    mapIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
                     mapIntent.resolveActivity(activity!!.packageManager)?.let {
-                        startActivityForResult(mapIntent,0)
+                    startActivityForResult(mapIntent,1)
+//                        startActivity(mapIntent)
                     }
 
 //                    val navigation = Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=$location&mode=w&avoid=thf"))

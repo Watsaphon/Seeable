@@ -1,5 +1,6 @@
 package com.estazo.project.seeable.app
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.*
 import android.os.*
@@ -35,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPrefPhone: SharedPreferences
 
     private val viewModel : UserTypeViewModel by viewModels()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -78,7 +81,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
     }
 
     private val onNotice: BroadcastReceiver = object : BroadcastReceiver() {
@@ -86,25 +88,7 @@ class MainActivity : AppCompatActivity() {
             val pack = intent.getStringExtra("package")
             val title = intent.getStringExtra("title")
             val text = intent.getStringExtra("text")
-//            val ticker = intent.getStringExtra("ticker")
-//            val tr = TableRow(applicationContext)
-//            tr.setLayoutParams(LayoutParams(
-//                TableRow.LayoutParams.MATCH_PARENT,
-//                TableRow.LayoutParams.WRAP_CONTENT
-//                )
-//            )
-//            val textview = TextView(applicationContext)
-//            textview.layoutParams = LayoutParams(
-//                TableRow.LayoutParams.WRAP_CONTENT,
-//                TableRow.LayoutParams.WRAP_CONTENT,
-//                1.0f
-//            )
-//            textview.textSize = 20f
-//            textview.setTextColor(Color.parseColor("#0B0719"))
-//            textview.text = Html.fromHtml("$pack<br><b>$title : </b>$text")
-//            tr.addView(textview)
-//            tab.addView(tr)
-            Log.i("kuyjaa_main","pack :$pack , title : $title , text : $text ")
+            Log.i("notificationServiceMain","pack :$pack , title : $title , text : $text ")
         }
     }
 
@@ -112,7 +96,10 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         Log.i("MainActivity", "onStart called")
     }
-
+    override fun onRestart() {
+        super.onRestart()
+        Log.i("MainActivity", "onRestart called")
+    }
     override fun onResume() {
         super.onResume()
         Log.i("MainActivity", "onResume called")
@@ -120,10 +107,41 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.i("MainActivity", "onPause called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("MainActivity", "onStop called")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("MainActivity", "onDestroy called")
+    }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         hideSystemUI()
         Log.d("MainActivity", "onWindowFocusChanged called")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, dataIntent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, dataIntent)
+        // Check which request we're responding to
+        Log.i("MainActivity","MainActivity : onActivityResult call")
+
+        if (requestCode == 1) {
+            // Make sure the request was successful
+            Log.i("MainActivity","MainActivity : requestCode success ja")
+
+            if (resultCode == Activity.RESULT_OK) {
+                Log.i("MainActivity","MainActivity : resultCode ok ja")
+                //OK received detail
+            }
+        }
     }
 
     /** hide navigation and status bar in each activity */
@@ -222,10 +240,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun blindSection(){
-
         val sharedPrefPhone = getSharedPreferences("value", 0)
         val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
-
         viewModel.userType.observe(this, Observer<String> { typeView ->
             Log.d("checkUser_Main_BS","type : $typeView")
             when(typeView){
