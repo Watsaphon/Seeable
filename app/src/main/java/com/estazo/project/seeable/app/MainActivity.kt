@@ -1,9 +1,11 @@
 package com.estazo.project.seeable.app
 
-import android.app.Activity
+import android.annotation.TargetApi
 import android.app.AlertDialog
 import android.content.*
+import android.net.Uri
 import android.os.*
+import android.provider.Settings
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +18,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.estazo.project.seeable.app.R.layout
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -23,6 +26,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.alert_dialog_fall_dectection.view.*
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,12 +41,12 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel : UserTypeViewModel by viewModels()
 
-
+    private  var RC_OVERLAY = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(layout.activity_main)
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         Log.i("MainActivity", "onCreate called ")
@@ -84,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val onNotice: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent) {
+        override fun onReceive(context: Context, intent: Intent) {
             val pack = intent.getStringExtra("package")
             val title = intent.getStringExtra("title")
             val text = intent.getStringExtra("text")
@@ -104,6 +108,24 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         Log.i("MainActivity", "onResume called")
         updateUI()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            openOverlaySettings()
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private fun openOverlaySettings() {
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")
+        )
+        try {
+            startActivityForResult(intent, RC_OVERLAY)
+        } catch (e: ActivityNotFoundException) {
+            Log.e("openOverlaySettings", e.message!!)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
     }
 
@@ -126,22 +148,6 @@ class MainActivity : AppCompatActivity() {
         super.onWindowFocusChanged(hasFocus)
         hideSystemUI()
         Log.d("MainActivity", "onWindowFocusChanged called")
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, dataIntent: Intent?) {
-        super.onActivityResult(requestCode, resultCode, dataIntent)
-        // Check which request we're responding to
-        Log.i("MainActivity","MainActivity : onActivityResult call")
-
-        if (requestCode == 1) {
-            // Make sure the request was successful
-            Log.i("MainActivity","MainActivity : requestCode success ja")
-
-            if (resultCode == Activity.RESULT_OK) {
-                Log.i("MainActivity","MainActivity : resultCode ok ja")
-                //OK received detail
-            }
-        }
     }
 
     /** hide navigation and status bar in each activity */
@@ -184,7 +190,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun alertDialogFallDetection() {
         //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_fall_dectection, null)
+        val mDialogView = LayoutInflater.from(this).inflate(layout.alert_dialog_fall_dectection, null)
         //AlertDialogBuilder
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
@@ -280,5 +286,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
 
 }

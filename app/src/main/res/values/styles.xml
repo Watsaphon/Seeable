@@ -134,4 +134,5 @@
         <item name="android:textColor">@drawable/txt_change_alert_dialog_delete_blind_user</item>
     </style>
 
+
 </resources>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+xmlns:card_view="http://schemas.android.com/apk/res-auto"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+android:layout_height="match_parent"
+    >
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    card_view:cardCornerRadius="45dp"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/criticalEvent"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_round_critical_event"
+        >
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="right"
+            android:layout_marginEnd="15dp"
+            android:src="@mipmap/close_button_foreground"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text=" User : has been fell"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/imgFallDetection"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:src="@mipmap/icon_fall_detection_foreground"
+            />
+<!--        app:srcCompat="@mipmap/icon_fall_detection_foreground"-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal"
+        android:weightSum="2.0"
+        >
+
+        <Button
+            android:id="@+id/callAmbulance"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/yes_button_click"
+            android:text="Call Ambulance"
+            style="@style/alertDialogDelete"
+            />
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
+        <Button
+            android:id="@+id/getLocation"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/no_button_click"
+            android:text="Get Location"
+            style="@style/alertDialogDelete"
+            />
+
+    </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+</FrameLayout>
