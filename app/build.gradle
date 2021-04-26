@@ -28,6 +28,7 @@ android {
     }
     buildFeatures {
         dataBinding true
+        mlModelBinding true
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -36,6 +37,9 @@ android {
 
 dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0-rc1'
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.2.0'
     def lifecycle_version = "2.2.0"
     def nav_version = "2.3.3"
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -119,6 +123,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-messaging-directboot:20.2.0'
+    api 'com.otaliastudios:cameraview:2.7.0'
 
 //    // Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
 //    // When NOT using the BoM, you must specify versions in Firebase library dependencies
