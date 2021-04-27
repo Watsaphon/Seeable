@@ -72,11 +72,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //            Log.d("FBMessagingService", "channel id = $id")
             Log.d("FBMessagingService_id", "Message Notification Body: ${it.body}, Message Notification channelId :  $channelId ")
         }
-
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
         val title = remoteMessage.notification!!.title!!
         val body = remoteMessage.notification!!.body!!
+//        val location = remoteMessage.notification!!.ticker!!
         Log.d("FBMessagingService", "title : $title , body : $body ")
         sendNotification(title,body,channelId)
     }

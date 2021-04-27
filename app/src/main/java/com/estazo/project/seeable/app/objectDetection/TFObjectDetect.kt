@@ -42,13 +42,14 @@ class TFObjectDetect(context: Context) {
                     Log.d("Detect class: ", it)
                     detect_num = maxScore.toString()
                 }
+
 /*
                 ส่งค่าไปที่ใช้ในการเด้ง Dialog
                 0 = ทางม้าลาย, 1 = ป้ายรถเมล์
                 detect_num.toInt()
 
                 ในหน้าที่ทำ navigate เพิ่มอันนี้ดวย
-                lateinit var camera: CameraView
+                lateinit var camera : CameraView
 
                 * ใน onCreate() *
                 camera = findViewById(R.id.camera)
@@ -59,6 +60,7 @@ class TFObjectDetect(context: Context) {
 
                 แล้วเพิ่ม cameraView ใน layout ตั้งขนาดมันให้เป็น 1*1 dp พอ
 */
+
             }
         }
 

@@ -41,7 +41,10 @@ class NotificationService : NotificationListenerService() {
         val regex = "ETA".toRegex()
         val matchResult = regex.find(text)?.value.toString()
 
-        Log.i("notificationService"," pack : $pack , title : $title , text : $text , regEX -> matchResult : $matchResult ")
+
+        Log.i("notificationService"," pack : $pack , title : $title" +
+                " , text : $text , regEX -> matchResult : $matchResult ")
+
 //        if (pack == "com.google.android.apps.maps" && title != "null" && text != "null" && matchResult == "ETA" ){
         if ( title != "null" && text != "null"){
             Log.i("Package", pack)
@@ -52,7 +55,7 @@ class NotificationService : NotificationListenerService() {
             msgrcv.putExtra("title", title)
             msgrcv.putExtra("text", text)
             LocalBroadcastManager.getInstance(context!!).sendBroadcast(msgrcv)
-            if(pack == "com.estazo.project.seeable.app"){
+            if(pack == "com.estazo.project.seeable.app" && title == "critical_Condition"){
                 dialog()
             }
         }

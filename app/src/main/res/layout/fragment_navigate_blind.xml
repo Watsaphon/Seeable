@@ -4,10 +4,12 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".blind.NavigateBlindFragment">
+        tools:context=".blind.NavigateBlindFragment"
+        android:orientation="vertical"
+        >
 
 <!--    <fragment-->
 <!--        android:layout_width="match_parent"-->
@@ -15,30 +17,50 @@ xmlns:tools="http://schemas.android.com/tools">
 <!--        android:id="@+id/NavigateBlindFragment"-->
 <!--        android:name="com.google.android.gms.maps.SupportMapFragment" />-->
 
-        <TextView
-            android:id="@+id/textView3"
+        <io.fotoapparat.view.CameraView
+            android:id="@+id/camera_view"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:gravity="center"
-            android:text="TEST APP JA"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="500dp"
+            />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".blind.NavigateBlindFragment"
+        android:orientation="horizontal"
+        >
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_camera"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Close Google Map"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            app:layout_constraintVertical_bias="0.107" />
+            app:fabSize="normal"
+            android:src="@mipmap/icon_setlocation_foreground"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="32dp"
+            android:layout_centerHorizontal="true"
+            app:backgroundTint="@android:color/white"/>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_flash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            android:src="@mipmap/icon_setlocation_foreground"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="32dp"
+            app:backgroundTint="@android:color/white"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_switch_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            android:src="@mipmap/icon_setlocation_foreground"
+            android:layout_margin="32dp"
+            app:backgroundTint="@android:color/white"/>
+
+    </LinearLayout>
+    </LinearLayout>
 
 </layout>
