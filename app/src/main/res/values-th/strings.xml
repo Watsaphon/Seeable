@@ -254,7 +254,10 @@
     <string name="busSignDetection_header">ตรวจพบป้ายรถเมล์!</string>
     <string name="busSignDetection_info1">ถ้าหากคุณต้องการเรียกรถเมล์,</string>
     <string name="busSignDetection_info2">กรุณาแตะที่หน้าจอค้างไว้2วินาทีหรือกด2ครั้งเพื่อปิดหน้าจอนี้</string>
-<!--    <string name="busSignDetection_fine">The system canceled the notification to your caretakers.</string>-->
+    <!--alertCrosswalkDetection-->
+    <string name="crosswalkDetection_header">ตรวจพบทางม้าลาย!</string>
+    <string name="crosswalkDetection_info1">ถ้าหากคุณต้องการความช่วยเหลือ,</string>
+    <string name="crosswalkDetection_info2">กรุณาแตะที่หน้าจอค้างไว้2วินาที</string>
 
     <!--MainPerson-->
     <string name="main_person_header">คนดูแล</string>

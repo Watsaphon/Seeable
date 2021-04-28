@@ -117,8 +117,6 @@ import java.util.*
 
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i("BlindFragment", "onViewCreated call")
@@ -134,16 +132,16 @@ import java.util.*
             view.findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2)
         }
         binding.selfNavButton.setOnVeryLongClickListener{
-            vibrate()
-            textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
-            navigationBlind()
-            Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
-
-            Log.d("testCalender","currentTime : $currentTime")
-            val postNotification =  Notification("$currentTime","navigate")
-            val postValues = postNotification.toMap()
-            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
-            ref.updateChildren(childUpdates)
+//            vibrate()
+//            textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
+//            navigationBlind()
+//            Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
+//
+//            Log.d("testCalender","currentTime : $currentTime")
+//            val postNotification =  Notification("$currentTime","navigate")
+//            val postValues = postNotification.toMap()
+//            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+//            ref.updateChildren(childUpdates)
             view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.careNavButton.setOnVeryLongClickListener{
@@ -304,28 +302,34 @@ import java.util.*
             Toast.makeText(activity,"$text",Toast.LENGTH_SHORT).show()
         }
     }
+
     private fun checkPermission():Boolean {
         //this function will return a boolean
         //true: if we have permission
         //false if not
-        if(
-            ActivityCompat.checkSelfPermission(requireActivity(),
+        if(ActivityCompat.checkSelfPermission(requireActivity(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
             ActivityCompat.checkSelfPermission(requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED||
             ActivityCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED
-        ){
+                Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED||
+            ActivityCompat.checkSelfPermission(requireActivity(),
+                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED||
+            ActivityCompat.checkSelfPermission(requireActivity(),
+                Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED||
+            ActivityCompat.checkSelfPermission(requireActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
             return true
         }
         return false
     }
+
     private fun requestPermission(){
         //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
         ActivityCompat.requestPermissions(requireActivity(), arrayOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.CALL_PHONE), PERMISSION_ID)
+            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_ID)
     }
     private fun isLocationEnabled():Boolean{
         //this function will return to us the state of the location service
