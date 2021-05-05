@@ -10,10 +10,11 @@ import java.io.ByteArrayOutputStream
 
 
 class TFLiteDetection(context: Context) {
+
     val model = ModelMlV2.newInstance(context)
     var detect_num = -1
 
-    fun detect(frame: Frame) {
+     fun detect(frame: Frame) {
 
         val out = ByteArrayOutputStream()
         val yuv = YuvImage(frame.getData(), ImageFormat.NV21,
@@ -59,7 +60,7 @@ class TFLiteDetection(context: Context) {
 
                 แล้วเพิ่ม cameraView ใน layout ตั้งขนาดมันให้เป็น 1*1 dp พอ
 */
-//                Log.d("Score","detect_num(float) : $test  , detect_num(int) :$detect_num")
+                Log.d("Score","detect_num(float) : $test  , detect_num(int) :$detect_num")
 
 //                BlindFragment().let {
 //                    it.onTextUpdate(detect_num)
@@ -70,8 +71,5 @@ class TFLiteDetection(context: Context) {
 
         model.close()
     }
-
-
-
 
 }

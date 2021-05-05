@@ -132,16 +132,16 @@ import java.util.*
             view.findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2)
         }
         binding.selfNavButton.setOnVeryLongClickListener{
-//            vibrate()
-//            textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
-//            navigationBlind()
-//            Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
-//
-//            Log.d("testCalender","currentTime : $currentTime")
-//            val postNotification =  Notification("$currentTime","navigate")
-//            val postValues = postNotification.toMap()
-//            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
-//            ref.updateChildren(childUpdates)
+            vibrate()
+            textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
+            navigationBlind()
+            Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
+
+            Log.d("testCalender","currentTime : $currentTime")
+            val postNotification =  Notification("$currentTime","navigate")
+            val postValues = postNotification.toMap()
+            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+            ref.updateChildren(childUpdates)
             view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.careNavButton.setOnVeryLongClickListener{

@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         hideSystemUI()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         Log.i("MainActivity", "onCreate called ")
-        Log.i("kuyjaa","call create mainActivity ")
         LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, IntentFilter("Msg"))
 
         viewModel.userType.observe(this, Observer<String> { typeView ->
@@ -81,6 +80,21 @@ class MainActivity : AppCompatActivity() {
                 "blind" -> {
                     blindSection()
                     Toast.makeText(this, "Blind Section",Toast.LENGTH_LONG).show()
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            Log.d("testNotification", "Fetching FCM registration token failed", task.exception)
+                            return@OnCompleteListener
+                        }
+                        // Get new FCM registration token
+                        val token = task.result
+                        // Log and toast
+                        val msg = getString(R.string.msg_token_fmt, token)
+                        Log.d("testNotification", msg)
+                        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//                        val ref = FirebaseDatabase.getInstance().reference
+//                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "$token")
+//                        ref.updateChildren(childUpdates)
+                    })
                 }
             }
         })

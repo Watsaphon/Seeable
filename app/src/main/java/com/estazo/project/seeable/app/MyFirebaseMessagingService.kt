@@ -13,7 +13,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import java.util.*
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -133,11 +132,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
          notificationManager.notify(channelId.toInt(), notificationBuilder.build())
-//        notificationManager.notify(0, notificationBuilder.build())
-
-        val eiei = Arrays.toString(notificationManager.activeNotifications)
-        Log.i("kaeweiei","activeNotifications : $eiei ")
-
 
     }
 

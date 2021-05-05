@@ -7,9 +7,9 @@ import android.util.TypedValue
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.estazo.project.seeable.app.NotificationService
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentNavigateBlindBinding
+import com.estazo.project.seeable.app.objectDetection.TFLiteDetection
 import kotlinx.android.synthetic.main.alert_dialog_critical_event.view.*
 
 
@@ -30,11 +30,11 @@ class NavigateBlindFragment : Fragment() {
         Log.i("NavigateBlindFragment", "onCreateView call")
 
 
-
         binding.camera.setLifecycleOwner(activity)
 
-        binding.camera.addFrameProcessor {
-            NotificationService().detect(it)
+        binding.camera.addFrameProcessor{ frame ->
+            TFLiteDetection(requireActivity()).detect(frame)
+//            NotificationService().detect(frame)
         }
 
         binding.exit.setOnClickListener{
@@ -47,20 +47,20 @@ class NavigateBlindFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         Log.i("NavigateBlindFragment", "onStart call")
+        binding.camera.open()
 
     }
 
     override fun onResume() {
         super.onResume()
         Log.i("NavigateBlindFragment", "onResume call")
-        binding.camera.open()
     }
 
 
     override fun onPause() {
         super.onPause()
         Log.i("NavigateBlindFragment", "onPause call")
-        binding.camera.close()
+//        binding.camera.close()
 
     }
 
@@ -73,7 +73,7 @@ class NavigateBlindFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("NavigateBlindFragment", "onDestroyView call")
-        binding.camera.destroy()
+//        binding.camera.destroy()
     }
 
     private fun alertDialogBusSignDetection() {

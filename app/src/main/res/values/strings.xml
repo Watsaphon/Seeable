@@ -265,6 +265,9 @@ or double tap the screen to discard.</string>
     <string name="crosswalkDetection_header">Crosswalk detected!</string>
     <string name="crosswalkDetection_info1">If you need help,</string>
     <string name="crosswalkDetection_info2">please hold the screen for 2 seconds.</string>
+    <!--alertGoToApp-->
+    <string name="gotoApp_header">Navigation has been set</string>
+    <string name="gotoApp_subHeader">Press to go back to the app.</string>
     <!--MainPerson-->
     <string name="main_person_header">Main Person</string>
     <string name="main_mapBtn">Open Google map</string>
