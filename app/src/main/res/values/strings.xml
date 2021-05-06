@@ -259,12 +259,14 @@
     <!--alertBusSignDetection-->
     <string name="busSignDetection_header">Bus sign detected!</string>
     <string name="busSignDetection_info1">If you want to call a bus,</string>
-    <string name="busSignDetection_info2">please hold the screen for 2 seconds
-or double tap the screen to discard.</string>
+    <string name="busSignDetection_info2">please hold the screen for 2 seconds the screen to discard.</string>
+    <string name="busSignDetection_speak">If you want to call a bus , please hold the screen for 2 seconds the screen to discard.</string>
     <!--alertCrosswalkDetection-->
     <string name="crosswalkDetection_header">Crosswalk detected!</string>
     <string name="crosswalkDetection_info1">If you need help,</string>
     <string name="crosswalkDetection_info2">please hold the screen for 2 seconds.</string>
+    <string name="crosswalkDetection_speak">If you need help,please hold the screen for 2 seconds.</string>
+
     <!--alertGoToApp-->
     <string name="gotoApp_header">Navigation has been set</string>
     <string name="gotoApp_subHeader">Press to go back to the app.</string>

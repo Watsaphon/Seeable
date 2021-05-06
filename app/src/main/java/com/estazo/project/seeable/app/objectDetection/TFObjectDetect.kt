@@ -3,6 +3,7 @@ package com.estazo.project.seeable.app.objectDetection
 import android.content.Context
 import android.graphics.*
 import android.util.Log
+import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.ml.ModelMlV2
 import com.otaliastudios.cameraview.frame.Frame
 import org.tensorflow.lite.support.image.TensorImage
@@ -15,6 +16,8 @@ class TFLiteDetection(context: Context) {
     var detect_num = -1
 
      fun detect(frame: Frame) {
+
+         MainActivity().alertDialogCrosswalkDetection()
 
         val out = ByteArrayOutputStream()
         val yuv = YuvImage(frame.getData(), ImageFormat.NV21,
@@ -39,9 +42,19 @@ class TFLiteDetection(context: Context) {
             detect_num = maxScore.toInt()
             val test = maxScore
             if (maxScore > 0.9) {
-                maxPosition?.let { classes.floatArray[it].toString() }?.let {
+                maxPosition?.let { classes.floatArray[it].toString() }?.let {it ->
                     Log.d("Score", "it : $it")
                     detect_num = maxScore.toInt()
+                    when(it) {
+                        "0.0" -> {Log.d("Score","crosswalk detect")
+                        MainActivity().alertDialogCrosswalkDetection()
+                            MainActivity().let {
+                                it.onTextUpdate(it.toString())
+                            }
+                        }
+                        "1.0"->{Log.d("Score"," bus sign detect") }
+                        else -> {Log.d("Score"," not found")}
+                    }
                 }
 /*
                 ส่งค่าไปที่ใช้ในการเด้ง Dialog
@@ -60,7 +73,7 @@ class TFLiteDetection(context: Context) {
 
                 แล้วเพิ่ม cameraView ใน layout ตั้งขนาดมันให้เป็น 1*1 dp พอ
 */
-                Log.d("Score","detect_num(float) : $test  , detect_num(int) :$detect_num")
+//                Log.d("Score","detect_num(float) : $test  , detect_num(int) :$detect_num")
 
 //                BlindFragment().let {
 //                    it.onTextUpdate(detect_num)
@@ -71,5 +84,7 @@ class TFLiteDetection(context: Context) {
 
         model.close()
     }
+
+
 
 }

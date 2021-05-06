@@ -1,4 +1,4 @@
-   package com.estazo.project.seeable.app.blind
+package com.estazo.project.seeable.app.blind
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -46,7 +46,6 @@ import java.util.*
 
 
    class BlindFragment : Fragment() {
-
 
     private lateinit var  mAlertDialog : AlertDialog
     private lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -223,40 +222,37 @@ import java.util.*
         Log.i("BlindFragment", "onDestroyView call")
     }
 
-    @SuppressLint("MissingPermission", "DefaultLocale")
-    private fun sendLocation(){
-        Log.d("Debug_sendLocation:" ,"sendLocation call" )
-        fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
-            val location: Location? = task.result
-            newLocationData()
-            if(location == null){
-                Log.i("Debug_sendLocation","call if")
-                newLocationData()
-            }else{
-                val link = java.lang.String.format("%f,%f", location.latitude,location.longitude)
-                Log.i("Debug_sendLocation","call else")
-                Log.d("Debug_sendLocation:" ,"link : $link" )
-                Log.d("Debug_sendLocation:" ,"location : $location" )
-
-                val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
-                val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
-                val currentID = sharedPrefID.getString("stringKey2", "not found!")
-                val currentDisplayName = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!")
-
-                Log.d("Debug_sendLocation","$currentPhone, $currentPassword ,$currentID, $currentDisplayName")
-
-                val ref = FirebaseDatabase.getInstance().reference
-                val postLocation =  Locations(location.latitude,location.longitude)
-                val postValues = postLocation.toMap()
-                val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Location" to postValues)
-                ref.updateChildren(childUpdates)
-            }
-        }
-    }
+    private fun checkPermission():Boolean {
+           //this function will return a boolean
+           //true: if we have permission
+           //false if not
+           if(ActivityCompat.checkSelfPermission(requireActivity(),
+                   Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+               ActivityCompat.checkSelfPermission(requireActivity(),
+                   Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED||
+               ActivityCompat.checkSelfPermission(requireActivity(),
+                   Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED||
+               ActivityCompat.checkSelfPermission(requireActivity(),
+                   Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED||
+               ActivityCompat.checkSelfPermission(requireActivity(),
+                   Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED||
+               ActivityCompat.checkSelfPermission(requireActivity(),
+                   Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+               return true
+           }
+           return false
+       }
+    private fun requestPermission(){
+           //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
+           ActivityCompat.requestPermissions(requireActivity(), arrayOf(
+               Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
+               Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,
+               Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_ID)
+       }
 
     /** Config location */
     @SuppressLint("MissingPermission")
-    private fun getLastLocation(){
+    fun getLastLocation(){
         Log.d("Debug:" ,"getLastLocation call" )
         if(checkPermission()){
             if(isLocationEnabled()){
@@ -278,7 +274,7 @@ import java.util.*
         }
     }
     private fun newLocationData(){
-        var locationRequest =  LocationRequest()
+        val locationRequest =  LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 0
         locationRequest.fastestInterval = 0
@@ -302,35 +298,6 @@ import java.util.*
             Toast.makeText(activity,"$text",Toast.LENGTH_SHORT).show()
         }
     }
-
-    private fun checkPermission():Boolean {
-        //this function will return a boolean
-        //true: if we have permission
-        //false if not
-        if(ActivityCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-            ActivityCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED||
-            ActivityCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED||
-            ActivityCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED||
-            ActivityCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED||
-            ActivityCompat.checkSelfPermission(requireActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-            return true
-        }
-        return false
-    }
-
-    private fun requestPermission(){
-        //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
-        ActivityCompat.requestPermissions(requireActivity(), arrayOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_ID)
-    }
     private fun isLocationEnabled():Boolean{
         //this function will return to us the state of the location service
         //if the gps or the network provider is enabled then it will return true otherwise it will return false
@@ -345,6 +312,37 @@ import java.util.*
             }
         }
     }
+
+    @SuppressLint("MissingPermission", "DefaultLocale")
+    fun sendLocation(){
+           Log.d("Debug_sendLocation:" ,"sendLocation call" )
+           fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
+               val location: Location? = task.result
+               newLocationData()
+               if(location == null){
+                   Log.i("Debug_sendLocation","call if")
+                   newLocationData()
+               }else{
+                   val link = java.lang.String.format("%f,%f", location.latitude,location.longitude)
+                   Log.i("Debug_sendLocation","call else")
+                   Log.d("Debug_sendLocation:" ,"link : $link" )
+                   Log.d("Debug_sendLocation:" ,"location : $location" )
+
+                   val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
+                   val currentPassword = sharedPrefPassword.getString("stringKeyPassword", "not found!")
+                   val currentID = sharedPrefID.getString("stringKey2", "not found!")
+                   val currentDisplayName = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!")
+
+                   Log.d("Debug_sendLocation","$currentPhone, $currentPassword ,$currentID, $currentDisplayName")
+
+                   val ref = FirebaseDatabase.getInstance().reference
+                   val postLocation =  Locations(location.latitude,location.longitude)
+                   val postValues = postLocation.toMap()
+                   val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Location" to postValues)
+                   ref.updateChildren(childUpdates)
+               }
+           }
+       }
 
 
     /** function press and hold button for few seconds */

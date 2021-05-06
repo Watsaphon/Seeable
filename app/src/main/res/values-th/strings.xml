@@ -253,11 +253,13 @@
     <!--alertBusSignDetection-->
     <string name="busSignDetection_header">ตรวจพบป้ายรถเมล์!</string>
     <string name="busSignDetection_info1">ถ้าหากคุณต้องการเรียกรถเมล์,</string>
-    <string name="busSignDetection_info2">กรุณาแตะที่หน้าจอค้างไว้2วินาทีหรือกด2ครั้งเพื่อปิดหน้าจอนี้</string>
+    <string name="busSignDetection_info2">กรุณาแตะที่หน้าจอค้างไว้2วินาทีเพื่อปิดหน้าจอนี้</string>
+    <string name="busSignDetection_speak">ถ้าหากคุณต้องการเรียกรถเมล์ กรุณาแตะที่หน้าจอค้างไว้2วินาทีเพื่อปิดหน้าจอนี</string>
     <!--alertCrosswalkDetection-->
     <string name="crosswalkDetection_header">ตรวจพบทางม้าลาย!</string>
     <string name="crosswalkDetection_info1">ถ้าหากคุณต้องการความช่วยเหลือ,</string>
     <string name="crosswalkDetection_info2">กรุณาแตะที่หน้าจอค้างไว้2วินาที</string>
+    <string name="crosswalkDetection_speak">ถ้าหากคุณต้องการความช่วยเหลือ กรุณาแตะที่หน้าจอค้างไว้2วินาที</string>
     <!--alertGoToApp-->
     <string name="gotoApp_header">ตั้งต่าการนำทางเสร็จสิ้น</string>
     <string name="gotoApp_subHeader">แตะที่หน้าจอเพื่อกลับเข้าใช้งานแอพพลิเคชั่นอีกครั้ง.</string>
