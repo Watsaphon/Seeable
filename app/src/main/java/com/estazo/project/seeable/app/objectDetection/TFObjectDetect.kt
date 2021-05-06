@@ -3,7 +3,7 @@ package com.estazo.project.seeable.app.objectDetection
 import android.content.Context
 import android.graphics.*
 import android.util.Log
-import com.estazo.project.seeable.app.MainActivity
+import com.estazo.project.seeable.app.blind.NavigateBlindFragment
 import com.estazo.project.seeable.app.ml.ModelMlV2
 import com.otaliastudios.cameraview.frame.Frame
 import org.tensorflow.lite.support.image.TensorImage
@@ -16,8 +16,6 @@ class TFLiteDetection(context: Context) {
     var detect_num = -1
 
      fun detect(frame: Frame) {
-
-         MainActivity().alertDialogCrosswalkDetection()
 
         val out = ByteArrayOutputStream()
         val yuv = YuvImage(frame.getData(), ImageFormat.NV21,
@@ -45,14 +43,22 @@ class TFLiteDetection(context: Context) {
                 maxPosition?.let { classes.floatArray[it].toString() }?.let {it ->
                     Log.d("Score", "it : $it")
                     detect_num = maxScore.toInt()
+                    val msg : String = it
                     when(it) {
-                        "0.0" -> {Log.d("Score","crosswalk detect")
-                        MainActivity().alertDialogCrosswalkDetection()
-                            MainActivity().let {
-                                it.onTextUpdate(it.toString())
+                        "0.0" -> {
+                            Log.d("Score","crosswalk detect")
+                                NavigateBlindFragment().let {
+                                Log.d("Score","msg = $msg")
+                                it.receiveIMG(msg)
                             }
                         }
-                        "1.0"->{Log.d("Score"," bus sign detect") }
+                        "1.0"->{
+                            Log.d("Score"," bus sign detect")
+                            NavigateBlindFragment().let {
+                                Log.d("Score","msg = $msg")
+                                it.receiveIMG(msg)
+                            }
+                        }
                         else -> {Log.d("Score"," not found")}
                     }
                 }
@@ -83,7 +89,9 @@ class TFLiteDetection(context: Context) {
         }
 
         model.close()
+
     }
+
 
 
 

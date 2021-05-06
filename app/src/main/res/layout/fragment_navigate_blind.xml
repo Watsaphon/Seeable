@@ -11,17 +11,12 @@ xmlns:tools="http://schemas.android.com/tools">
         android:orientation="vertical"
         >
 
-<!--    <fragment-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:id="@+id/NavigateBlindFragment"-->
-<!--        android:name="com.google.android.gms.maps.SupportMapFragment" />-->
-
         <com.otaliastudios.cameraview.CameraView
             android:id="@+id/camera"
-            android:layout_width="411dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:keepScreenOn="true"
+            android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -29,33 +24,7 @@ xmlns:tools="http://schemas.android.com/tools">
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                tools:context=".blind.NavigateBlindFragment"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:gravity="bottom|center"-->
-<!--                >-->
 
-<!--                <Button-->
-<!--                    android:id="@+id/exit"-->
-<!--                    android:layout_width="100dp"-->
-<!--                    android:layout_height="50dp"-->
-<!--                    android:layout_marginBottom="20dp"-->
-<!--                    android:text="Exit"-->
-<!--                    />-->
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/exit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fabSize="normal"
-                android:src="@mipmap/icon_setlocation_foreground"
-                android:layout_gravity="bottom|center"
-                app:backgroundTint="@android:color/white"
-                />
-
-<!--            </LinearLayout>-->
         </com.otaliastudios.cameraview.CameraView>
 
 

@@ -38,7 +38,7 @@ import kotlinx.android.synthetic.main.alert_dialog_fall_dectection.view.*
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), UpdateMyText {
+class MainActivity : AppCompatActivity() {
 
 
     private lateinit var  mAlertDialog : AlertDialog
@@ -265,59 +265,6 @@ class MainActivity : AppCompatActivity(), UpdateMyText {
                 Log.i("testfd","cancel ja")
             }
         }, 30000) //change 5000 with a specific time you want
-
-//
-//        val mDialogView = LayoutInflater.from(this).inflate(layout.alert_dialog_fall_dectection, null)
-//        val dialogBuilder = AlertDialog.Builder(this).setView(mDialogView)
-//
-//
-//        Log.i("dialog","dialog call")
-//        val dialog: AlertDialog = dialogBuilder.create()
-//        val dialogWindow: Window = dialog.window!!
-//        val dialogWindowAttributes: WindowManager.LayoutParams = dialogWindow.attributes
-//
-//        val lp = WindowManager.LayoutParams()
-//        lp.copyFrom(dialogWindowAttributes)
-//        lp.width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 280f, resources.displayMetrics).toInt()
-//        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-//        dialogWindow.attributes = lp
-//
-//        dialogWindow.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
-//        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-//        dialog.show()
-//
-//        dialog.setCanceledOnTouchOutside(false)
-//        dialog.setCancelable(false)
-//        textToSpeech = TextToSpeech(this, TextToSpeech.OnInitListener { status ->
-//            if (status != TextToSpeech.ERROR) {
-//                textToSpeech!!.language = Locale.US
-//                textToSpeech!!.speak(getString(R.string.fallDetection_info2), TextToSpeech.QUEUE_FLUSH, null);
-//            }
-//        })
-//
-//        mDialogView.fallDetection.setOnVeryLongClickListener{
-//            vibrate()
-//            val tts = getString(R.string.fallDetection_fine)
-//            textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
-//            val ref = FirebaseDatabase.getInstance().reference
-//            val sharedPrefPhone = getSharedPreferences("value", 0)
-//            val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
-//            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Device/fall_Detection" to "no")
-//            ref.updateChildren(childUpdates)
-//            dialog.dismiss()
-//        }
-//
-//        Handler().postDelayed({
-//            if (dialog.isShowing) {
-//                dialog.dismiss()
-//                Log.i("testfd","no cancel ja")
-//                getLastLocation()
-//                sendLocation()
-//            }
-//            else{
-//                Log.i("testfd","cancel ja")
-//            }
-//        }, 30000) //change 5000 with a specific time you want
     }
 
 
@@ -511,7 +458,50 @@ class MainActivity : AppCompatActivity(), UpdateMyText {
         }
     }
 
-    fun alertDialogCrosswalkDetection() {
+    fun checkDetection( detect : String ){
+        if (detect != null){
+            Log.i("Score","MainActivity call -> detect : $detect")
+            if(detect == "crosswalk" ){
+                Log.i("Score","MainActivity detect = crosswalk")
+                alertDialogCrosswalkDetection()
+            }
+            else if(detect == "bussign"){
+                Log.i("Score","MainActivity detect = bussign")
+                alertDialogBusSignDetection()
+            }
+        }else {
+            Log.i("Score","null kuy")
+        }
+
+    }
+
+    private fun alertDialogBusSignDetection() {
+        //Inflate the dialog with custom view
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_bus_sign_detection, null)
+        //AlertDialogBuilder
+        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
+        //show dialog
+        mAlertDialog  = mBuilder.show()
+        mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        mAlertDialog.setCanceledOnTouchOutside(false)
+        mAlertDialog.setCancelable(false)
+
+        textToSpeech = TextToSpeech(this, TextToSpeech.OnInitListener { status ->
+            if (status != TextToSpeech.ERROR) {
+                textToSpeech!!.language = Locale.US
+                textToSpeech!!.speak(getString(R.string.busSignDetection_speak), TextToSpeech.QUEUE_FLUSH, null)
+            }
+        })
+        textToSpeech!!.setSpeechRate(0.9f)
+
+        mDialogView.busSignDetection.setOnVeryLongClickListener{
+            vibrate()
+            mAlertDialog.dismiss()
+        }
+
+    }
+
+    private fun alertDialogCrosswalkDetection() {
         //Inflate the dialog with custom view
         val mDialogView = LayoutInflater.from(this).inflate(layout.alert_dialog_crosswalk_detection, null)
         //AlertDialogBuilder
@@ -538,53 +528,6 @@ class MainActivity : AppCompatActivity(), UpdateMyText {
         }
 
     }
-
-    private fun alertDialogBusSignDetection() {
-        //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_bus_sign_detection, null)
-        //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
-        //show dialog
-        mAlertDialog  = mBuilder.show()
-        mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        mAlertDialog.setCanceledOnTouchOutside(false)
-        mAlertDialog.setCancelable(false)
-
-        textToSpeech = TextToSpeech(this, TextToSpeech.OnInitListener { status ->
-            if (status != TextToSpeech.ERROR) {
-                textToSpeech!!.language = Locale.US
-                textToSpeech!!.speak(getString(R.string.busSignDetection_speak), TextToSpeech.QUEUE_FLUSH, null)
-            }
-        })
-        textToSpeech!!.setSpeechRate(0.9f)
-
-        mDialogView.busSignDetection.setOnVeryLongClickListener{
-            vibrate()
-//            val tts = getString(R.string.fallDetection_fine)
-//            textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
-            mAlertDialog.dismiss()
-        }
-
-    }
-
-    override fun onTextUpdate(string: String?) {
-        if (string != null) {
-            Log.d("onTextUpdate: ", string)
-            updateText(string)
-        }
-    }
-
-    private fun updateText(string: String?){
-        msg = string
-        when(msg) {
-            "0.0" -> { alertDialogCrosswalkDetection() }
-            "1.0"->{ alertDialogBusSignDetection() }
-            else -> {Log.d("Score"," not found")}
-        }
-    }
-
 }
 
-interface UpdateMyText{
-    fun onTextUpdate(string: String?)
-}
+

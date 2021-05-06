@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentNavigateBlindBinding
 import com.estazo.project.seeable.app.objectDetection.TFLiteDetection
@@ -44,9 +45,12 @@ class NavigateBlindFragment : Fragment() {
 //            NotificationService().detect(frame)
         }
 
-        binding.exit.setOnClickListener{
-            requireActivity().onBackPressed()
-        }
+//        binding.exit.setOnClickListener{
+//            requireActivity().onBackPressed()
+//        }
+
+//        alertDialogBusSignDetection()
+//        alertDialogCrosswalkDetection()
 
         return binding.root
     }
@@ -84,6 +88,72 @@ class NavigateBlindFragment : Fragment() {
         binding.camera.destroy()
     }
 
+    fun receiveIMG(msg : String){
+            if(msg != null){
+                binding.camera.close()
+                binding.camera.destroy()
+                Log.i("Score","receiveIMG msg = $msg")
+//                if (this::mAlertDialog.isInitialized) {
+//                    if (mAlertDialog.isShowing){
+//                        Log.i("Score","if mAlertDialog.isShowing")
+//                        /**nothing do*/
+//                    }
+//                    else {
+//                        Log.i("Score","else ja")
+//                        when (msg) {
+//                            "0.0" -> {
+//                                Log.i("Score","in when msg = $msg ")
+//                                alertDialogCrosswalkDetection()
+//                            }
+//                            "1.0"->{
+//                                Log.i("Score","in when msg = $msg ")
+//                                alertDialogBusSignDetection()
+//                            }
+//                        }
+//                    }
+                when (msg) {
+                            "0.0" -> {
+                                Log.i("Score","1 in when msg = $msg ")
+//                                MainActivity().let {
+//                                    Log.i("Score","2 in when msg = $msg ")
+//                                    it.checkDetection("crosswalk")
+//                                }
+                                checkDetection("crosswalk")
+                                alertDialogCrosswalkDetection()
+                            }
+                            "1.0"->{
+                                Log.i("Score","3 in when msg = $msg ")
+                                MainActivity().let {
+                                    Log.i("Score","4 in when msg = $msg ")
+                                    it.checkDetection("bussign")
+                                }
+//                                Log.i("Score","in when msg = $msg ")
+//                                checkDetection("bussign")
+//                                alertDialogBusSignDetection()
+                            }
+                }
+            }
+    }
+
+    private fun checkDetection( detect : String ){
+        if(detect == "crosswalk" ){
+            Log.i("Score","detect = crosswalk")
+            alertDialogCrosswalkDetection()
+        }
+        else if(detect == "bussign"){
+            Log.i("Score","detect = bussign")
+            alertDialogBusSignDetection()
+        }
+//        if (!mAlertDialog.isShowing){
+//            Log.i("checkdt"," no dialog alert")
+//        }
+//        else{
+//            Log.i("checkdt","have dialog alert")
+//
+//        }
+
+    }
+
     private fun alertDialogBusSignDetection() {
         //Inflate the dialog with custom view
         val mDialogView = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_bus_sign_detection, null)
@@ -114,16 +184,16 @@ class NavigateBlindFragment : Fragment() {
 
     private fun alertDialogCrosswalkDetection() {
         //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_crosswalk_detection, null)
+        val mDialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.alert_dialog_crosswalk_detection, null)
         //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(activity).setView(mDialogView)
+        val mBuilder = AlertDialog.Builder(requireActivity()).setView(mDialogView)
         //show dialog
         mAlertDialog  = mBuilder.show()
         mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
 
-        textToSpeech = TextToSpeech(activity, TextToSpeech.OnInitListener { status ->
+        textToSpeech = TextToSpeech(requireActivity(), TextToSpeech.OnInitListener { status ->
             if (status != TextToSpeech.ERROR) {
                 textToSpeech!!.language = Locale.US
                 textToSpeech!!.speak(getString(R.string.crosswalkDetection_speak), TextToSpeech.QUEUE_FLUSH, null)
@@ -168,6 +238,11 @@ class NavigateBlindFragment : Fragment() {
         }
     }
 
+
+
 }
 
+//interface receiveIMG(msg : String){
+//
+//}
 
