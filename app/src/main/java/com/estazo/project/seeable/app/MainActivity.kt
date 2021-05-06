@@ -95,6 +95,8 @@ class MainActivity : AppCompatActivity() {
                     })
                 }
                 "blind" -> {
+                    val sharedPrefPhone = getSharedPreferences("value", 0)
+                    val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
                     blindSection()
                     Toast.makeText(this, "Blind Section",Toast.LENGTH_LONG).show()
                     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -108,9 +110,9 @@ class MainActivity : AppCompatActivity() {
                         val msg = getString(R.string.msg_token_fmt, token)
                         Log.d("testNotification", msg)
                         Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-//                        val ref = FirebaseDatabase.getInstance().reference
-//                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "$token")
-//                        ref.updateChildren(childUpdates)
+                        val ref = FirebaseDatabase.getInstance().reference
+                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "$token")
+                        ref.updateChildren(childUpdates)
                     })
                 }
             }

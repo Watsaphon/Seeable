@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentNavigateBlindBinding
 import com.estazo.project.seeable.app.objectDetection.TFLiteDetection
@@ -93,42 +92,15 @@ class NavigateBlindFragment : Fragment() {
                 binding.camera.close()
                 binding.camera.destroy()
                 Log.i("Score","receiveIMG msg = $msg")
-//                if (this::mAlertDialog.isInitialized) {
-//                    if (mAlertDialog.isShowing){
-//                        Log.i("Score","if mAlertDialog.isShowing")
-//                        /**nothing do*/
-//                    }
-//                    else {
-//                        Log.i("Score","else ja")
-//                        when (msg) {
-//                            "0.0" -> {
-//                                Log.i("Score","in when msg = $msg ")
-//                                alertDialogCrosswalkDetection()
-//                            }
-//                            "1.0"->{
-//                                Log.i("Score","in when msg = $msg ")
-//                                alertDialogBusSignDetection()
-//                            }
-//                        }
-//                    }
                 when (msg) {
                             "0.0" -> {
-                                Log.i("Score","1 in when msg = $msg ")
-//                                MainActivity().let {
-//                                    Log.i("Score","2 in when msg = $msg ")
-//                                    it.checkDetection("crosswalk")
-//                                }
+                                Log.i("Score","in when msg = $msg ")
                                 checkDetection("crosswalk")
-                                alertDialogCrosswalkDetection()
+//                                alertDialogCrosswalkDetection()
                             }
                             "1.0"->{
-                                Log.i("Score","3 in when msg = $msg ")
-                                MainActivity().let {
-                                    Log.i("Score","4 in when msg = $msg ")
-                                    it.checkDetection("bussign")
-                                }
-//                                Log.i("Score","in when msg = $msg ")
-//                                checkDetection("bussign")
+                                Log.i("Score","in when msg = $msg ")
+                                checkDetection("bussign")
 //                                alertDialogBusSignDetection()
                             }
                 }
