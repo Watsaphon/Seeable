@@ -179,60 +179,7 @@ class NavigateBlindFragment : Fragment() {
     }
 
     private fun checkDetection(detect: String) {
-//        viewModel.detect.value = "$detect"
-        val a = viewModel.detect.hasActiveObservers()
-        val b = viewModel.detect.hasObservers()
-        Log.i("Score", "checkDetection call")
-//        binding.camera.close()
-//        binding.camera.destroy()
-//        binding.camera.setLifecycleOwner(null)
-//        (binding.root as LinearLayout).removeAllViews()
-
-        if (detect == "0.0") {
-            Log.i("Score", "detect = crosswalk")
-//            binding.test.text = detect
-//            alertDialogCrosswalkDetection()
-//            if (isAlreadyFound){
-//
-//            }else{
-//                isAlreadyFound = true
-//                val intent = Intent(requireContext(),NewActivity::class.java)
-//                requireContext().startActivity(intent)
-//            }
-
-
-            val a = viewModel.detect.hasActiveObservers()
-            val b = viewModel.detect.hasObservers()
-            if (viewModel != null) {
-                viewModel.detect.postValue(detect)
-            }
-        } else if (detect == "1.0") {
-            val a = viewModel.detect.hasActiveObservers()
-            val b = viewModel.detect.hasObservers()
-            Log.i("Score", "detect = bussign")
-
-//            if (isAlreadyFound){
-//
-//            }else{
-//                isAlreadyFound = true
-//                val intent = Intent(requireContext(),NewActivity::class.java)
-//                requireContext().startActivity(intent)
-//            }
-//            binding.test.text = detect
-//            alertDialogBusSignDetection()
-
-            if (viewModel != null) {
-                var a = viewModel.detect.hasActiveObservers()
-                var b = viewModel.detect.hasObservers()
-                viewModel.detect.postValue(detect)
-                 a = viewModel.detect.hasActiveObservers()
-                 b = viewModel.detect.hasObservers()
-
-            } else {
-                viewModel.detect.value = "$detect"
-                viewModel.detect.postValue(detect)
-            }
-        }
+        viewModel.detect.postValue(detect)
     }
 
     private fun alertDialogBusSignDetection() {
