@@ -38,8 +38,7 @@ import kotlinx.android.synthetic.main.alert_dialog_fall_dectection.view.*
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(), UpdateMyText {
 
     private lateinit var  mAlertDialog : AlertDialog
     private var textToSpeech: TextToSpeech? = null
@@ -50,6 +49,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPrefPhone: SharedPreferences
 
     private val viewModel : UserTypeViewModel by viewModels()
+
+    private lateinit var sharedPrefNavigate : SharedPreferences
 
     var msg: String? = ""
 
@@ -95,8 +96,7 @@ class MainActivity : AppCompatActivity() {
                     })
                 }
                 "blind" -> {
-                    val sharedPrefPhone = getSharedPreferences("value", 0)
-                    val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
+
                     blindSection()
                     Toast.makeText(this, "Blind Section",Toast.LENGTH_LONG).show()
                     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -110,9 +110,13 @@ class MainActivity : AppCompatActivity() {
                         val msg = getString(R.string.msg_token_fmt, token)
                         Log.d("testNotification", msg)
                         Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+
+                        val sharedPrefPhone = getSharedPreferences("value", 0)
+                        val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
                         val ref = FirebaseDatabase.getInstance().reference
-                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "$token")
+                        val childUpdates = hashMapOf<String, Any>("users_blind/$phone/FCM" to "$token")
                         ref.updateChildren(childUpdates)
+
                     })
                 }
             }
@@ -144,6 +148,7 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             openOverlaySettings()
         }
+
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -175,6 +180,10 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.i("MainActivity", "onDestroy called")
+        sharedPrefNavigate = getSharedPreferences("value", 0)
+        val editor = sharedPrefNavigate.edit()
+        editor.putString("stringKeyNavigate", "not found!")
+        editor.apply()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -460,7 +469,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun checkDetection( detect : String ){
+    override fun checkDetection( detect : String ){
         if (detect != null){
             Log.i("Score","MainActivity call -> detect : $detect")
             if(detect == "crosswalk" ){
@@ -530,6 +539,11 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
+}
+interface UpdateMyText {
+    fun checkDetection(detect: String)
 }
 
 

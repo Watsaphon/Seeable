@@ -159,7 +159,8 @@
             />
         <action
             android:id="@+id/action_blindFragment_to_navigateBlindFragment"
-            app:destination="@id/navigateBlindFragment" />
+            app:destination="@id/navigateBlindFragment"
+            app:popUpTo="@id/blindFragment" />
     </fragment>
     <fragment
         android:id="@+id/caretakerFragment"

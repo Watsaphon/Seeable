@@ -45,7 +45,7 @@ import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 import java.util.*
 
 
-   class BlindFragment : Fragment() {
+class BlindFragment : Fragment() {
 
     private lateinit var  mAlertDialog : AlertDialog
     private lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -55,6 +55,7 @@ import java.util.*
     private lateinit var sharedPrefPassword: SharedPreferences
     private lateinit var sharedPrefID: SharedPreferences
     private lateinit var sharedPrefDisplayName: SharedPreferences
+    private lateinit var sharedPrefNavigate: SharedPreferences
 
     //Declaring the needed Variables
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -63,7 +64,7 @@ import java.util.*
 
     private lateinit var binding: FragmentBlindBinding
 
-       private lateinit var viewModel : BlindViewModel
+    private lateinit var viewModel : BlindViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +77,7 @@ import java.util.*
         sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
         val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
         getTitleLocation(phone)
+
 
     }
 
@@ -93,6 +95,7 @@ import java.util.*
         sharedPrefPassword = requireActivity().getSharedPreferences("value", 0)
         sharedPrefID = requireActivity().getSharedPreferences("value", 0)
         sharedPrefDisplayName = requireActivity().getSharedPreferences("value", 0)
+
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         requestPermission()
@@ -127,6 +130,13 @@ import java.util.*
         val ref = FirebaseDatabase.getInstance().reference
         val currentTime = Calendar.getInstance().time.toString()
 
+        sharedPrefNavigate = requireActivity().getSharedPreferences("value", 0)
+        val navigate = sharedPrefNavigate.getString("stringKeyNavigate","not found!")
+        Log.i("MainActivity", " in blind navigate = $navigate ")
+        if(navigate == "active"){
+            view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
+        }
+
         binding.FAB.setOnClickListener {
             view.findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2)
         }
@@ -141,19 +151,19 @@ import java.util.*
             val postValues = postNotification.toMap()
             val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
             ref.updateChildren(childUpdates)
-            view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
+//            view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.careNavButton.setOnVeryLongClickListener{
-            vibrate()
-            textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
-            navigationCaretaker()
-            Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
-
-            Log.d("testCalender","currentTime : $currentTime")
-            val postNotification =  Notification("$currentTime","navigate")
-            val postValues = postNotification.toMap()
-            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
-            ref.updateChildren(childUpdates)
+//            vibrate()
+//            textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
+//            navigationCaretaker()
+//            Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
+//
+//            Log.d("testCalender","currentTime : $currentTime")
+//            val postNotification =  Notification("$currentTime","navigate")
+//            val postValues = postNotification.toMap()
+//            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+//            ref.updateChildren(childUpdates)
             view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.callEmergency.setOnVeryLongClickListener{

@@ -3,6 +3,7 @@ package com.estazo.project.seeable.app
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
@@ -18,7 +19,9 @@ import kotlinx.android.synthetic.main.alert_dialog_go_to_app.view.*
 
 
 class NotificationService : NotificationListenerService() {
+
     private lateinit var context: Context
+    private lateinit var sharedPrefNavigate : SharedPreferences
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
@@ -133,6 +136,12 @@ class NotificationService : NotificationListenerService() {
         mDialogView.gotoAppEvent.setOnClickListener{
             Log.i("alertDialogBack","click layout ja")
             dialog.dismiss()
+
+            sharedPrefNavigate = getSharedPreferences("value", 0)
+            val editor = sharedPrefNavigate.edit()
+            editor.putString("stringKeyNavigate", "active")
+            editor.apply()
+
             val launchIntent = packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")
             startActivity(launchIntent)
         }

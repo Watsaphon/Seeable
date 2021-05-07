@@ -3,24 +3,24 @@ package com.estazo.project.seeable.app.blind.settingBlind
 import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import java.util.*
-import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.UserTypeViewModel
 import com.estazo.project.seeable.app.databinding.FragmentSettingBlindBinding
-import androidx.lifecycle.Observer
-
+import com.google.firebase.database.FirebaseDatabase
+import java.util.*
 
 
 class SettingBlindFragment : Fragment() {
@@ -131,6 +131,12 @@ class SettingBlindFragment : Fragment() {
 
     private fun gotoLogout(){
         viewModel.userType.value = "not found!"
+
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        Log.i("kubkub", "phone : $phone")
+        val ref = FirebaseDatabase.getInstance().reference
+        val childUpdates = hashMapOf<String, Any>("users_blind/$phone/FCM" to "-")
+        ref.updateChildren(childUpdates)
 
         val editorID = sharedPrefID.edit()
         val editorPhone = sharedPrefPhone.edit()
