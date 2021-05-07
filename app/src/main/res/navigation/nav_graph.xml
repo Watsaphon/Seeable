@@ -297,6 +297,19 @@
         android:name="com.estazo.project.seeable.app.blind.NavigateBlindFragment"
         android:label="NavigateBlindFragment"
         tools:layout="@layout/fragment_navigate_blind"
-        />
+        >
+        <action
+            android:id="@+id/action_navigateBlindFragment_to_alertFragment"
+            app:destination="@id/alertFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/alertFragment"
+        android:name="com.estazo.project.seeable.app.blind.AlertFragment"
+        android:label="fragment_alert"
+        tools:layout="@layout/fragment_alert" >
+        <argument
+            android:name="detect"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

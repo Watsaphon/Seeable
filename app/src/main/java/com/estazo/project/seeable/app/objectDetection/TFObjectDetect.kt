@@ -3,7 +3,6 @@ package com.estazo.project.seeable.app.objectDetection
 import android.content.Context
 import android.graphics.*
 import android.util.Log
-import com.estazo.project.seeable.app.blind.NavigateBlindFragment
 import com.estazo.project.seeable.app.ml.ModelMlV2
 import com.otaliastudios.cameraview.frame.Frame
 import org.tensorflow.lite.support.image.TensorImage
@@ -50,7 +49,7 @@ class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) 
                         "0.0" -> {
                             Log.d("Score", "crosswalk detect")
                             onDetect?.invoke(it)
-                            //                            อันนี้อ่ะผิด เพราะว่ามันไปสร้าง instance ของ NavigateBlindFragment มาใหม่
+//                            อันนี้อ่ะผิด เพราะว่ามันไปสร้าง instance ของ NavigateBlindFragment มาใหม่
 //                            NavigateBlindFragment().let {
 //                                Log.d("Score", "msg = $msg")
 //                                it.receiveIMG(msg)

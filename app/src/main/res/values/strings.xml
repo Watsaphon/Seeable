@@ -264,8 +264,9 @@
     <!--alertCrosswalkDetection-->
     <string name="crosswalkDetection_header">Crosswalk detected!</string>
     <string name="crosswalkDetection_info1">If you need help,</string>
-    <string name="crosswalkDetection_info2">please hold the screen for 2 seconds.</string>
-    <string name="crosswalkDetection_speak">If you need help,please hold the screen for 2 seconds.</string>
+    <string name="crosswalkDetection_info2">please triple tap the screen.but if you need to discard this screen,double tap the screen.</string>
+    <string name="crosswalkDetection_speak">If you need help,please triple tap the screen.but if you need to discard this screen,double tap the screen.</string>
+    <string name="crosswalkDetection_help"> Please help me to cross the street </string>
 
     <!--alertGoToApp-->
     <string name="gotoApp_header">Navigation has been set</string>
