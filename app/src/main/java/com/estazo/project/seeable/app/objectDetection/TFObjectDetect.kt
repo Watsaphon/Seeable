@@ -10,16 +10,18 @@ import org.tensorflow.lite.support.image.TensorImage
 import java.io.ByteArrayOutputStream
 
 
-class TFLiteDetection(context: Context) {
+class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) {
 
     val model = ModelMlV2.newInstance(context)
     var detect_num = -1
 
-     fun detect(frame: Frame) {
+    fun detect(frame: Frame) {
 
         val out = ByteArrayOutputStream()
-        val yuv = YuvImage(frame.getData(), ImageFormat.NV21,
-            frame.size.width, frame.size.height, null)
+        val yuv = YuvImage(
+            frame.getData(), ImageFormat.NV21,
+            frame.size.width, frame.size.height, null
+        )
 
         yuv.compressToJpeg(Rect(0, 0, frame.size.width, frame.size.height), 90, out)
         val imageBytes: ByteArray = out.toByteArray()
@@ -40,26 +42,34 @@ class TFLiteDetection(context: Context) {
             detect_num = maxScore.toInt()
             val test = maxScore
             if (maxScore > 0.9) {
-                maxPosition?.let { classes.floatArray[it].toString() }?.let {it ->
+                maxPosition?.let { classes.floatArray[it].toString() }?.let { it ->
                     Log.d("Score", "it : $it")
                     detect_num = maxScore.toInt()
-                    val msg : String = it
-                    when(it) {
+                    val msg: String = it
+                    when (it) {
                         "0.0" -> {
-                            Log.d("Score","crosswalk detect")
-                                NavigateBlindFragment().let {
-                                Log.d("Score","msg = $msg")
-                                it.receiveIMG(msg)
-                            }
+                            Log.d("Score", "crosswalk detect")
+                            onDetect?.invoke(it)
+                            //                            อันนี้อ่ะผิด เพราะว่ามันไปสร้าง instance ของ NavigateBlindFragment มาใหม่
+//                            NavigateBlindFragment().let {
+//                                Log.d("Score", "msg = $msg")
+//                                it.receiveIMG(msg)
+//                            }
                         }
-                        "1.0"->{
-                            Log.d("Score"," bus sign detect")
-                            NavigateBlindFragment().let {
-                                Log.d("Score","msg = $msg")
-                                it.receiveIMG(msg)
-                            }
+                        "1.0" -> {
+                            Log.d("Score", " bus sign detect")
+                            onDetect?.invoke(it)
+
+
+//                            อันนี้อ่ะผิด เพราะว่ามันไปสร้าง instance ของ NavigateBlindFragment มาใหม่
+//                            NavigateBlindFragment().let {
+//                                Log.d("Score", "msg = $msg")
+//                                it.receiveIMG(msg)
+//                            }
                         }
-                        else -> {Log.d("Score"," not found")}
+                        else -> {
+                            Log.d("Score", " not found")
+                        }
                     }
                 }
 /*
@@ -91,8 +101,6 @@ class TFLiteDetection(context: Context) {
         model.close()
 
     }
-
-
 
 
 }

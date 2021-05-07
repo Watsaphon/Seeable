@@ -13,7 +13,7 @@ class NavigateBlindViewModel : ViewModel() {
         detect.value = "none"
     }
 
-    fun detectDialog(): LiveData<String> {
+    fun detectDialog(): MutableLiveData<String> {
 //        userDisplay.value = listOf()
         return detect
     }

@@ -2,6 +2,7 @@ package com.estazo.project.seeable.app.blind
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.*
 import android.speech.tts.TextToSpeech
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -26,15 +28,13 @@ class NavigateBlindFragment : Fragment() {
 
 
     private lateinit var binding: FragmentNavigateBlindBinding
-    private lateinit var  mAlertDialog : AlertDialog
+    private lateinit var mAlertDialog: AlertDialog
     private var textToSpeech: TextToSpeech? = null
     private lateinit var sharedPrefNavigate: SharedPreferences
 
-    private var detect = ""
-    private var alert : Boolean = false
+    private var alert: Boolean = false
 
-    private lateinit var viewModel : NavigateBlindViewModel
-
+    private lateinit var viewModel: NavigateBlindViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,8 @@ class NavigateBlindFragment : Fragment() {
                 val editor = sharedPrefNavigate.edit()
                 editor.putString("stringKeyNavigate", "not found!")
                 editor.apply()
-                val launchIntent = requireActivity().packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")
+                val launchIntent =
+                    requireActivity().packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")
                 startActivity(launchIntent)
 
             }
@@ -55,9 +56,14 @@ class NavigateBlindFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_navigate_blind, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_navigate_blind, container, false)
         Log.i("NavigateBlindFragment", "onCreateView call")
 
 
@@ -68,21 +74,6 @@ class NavigateBlindFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.i("NavigateBlindFragment", "onActivityCreated call")
-//        viewModel = ViewModelProviders.of(this).get(NavigateBlindViewModel::class.java)
-        viewModel = ViewModelProvider(this).get(NavigateBlindViewModel::class.java)
-
-        viewModel.detectDialog().observe(viewLifecycleOwner,Observer<String> {detect ->
-            Log.i("NavigateBlindFragment", "viewModel detect = $detect")
-            binding.test.text = " detect si wa"
-            if(detect == "0.0"){
-                binding.test.text = detect
-                alertDialogCrosswalkDetection()
-            }
-            else if(detect == "1.0"){
-                binding.test.text = detect
-                alertDialogBusSignDetection()
-            }
-        })
 
     }
 
@@ -90,23 +81,49 @@ class NavigateBlindFragment : Fragment() {
         super.onStart()
         Log.i("NavigateBlindFragment", "onStart call")
 
-        binding.camera.setLifecycleOwner(activity)
-        binding.camera.addFrameProcessor{ frame ->
-            TFLiteDetection(requireActivity()).detect(frame)
-        }
 
-        binding.camera.open()
     }
 
     override fun onResume() {
         super.onResume()
-        Log.i("NavigateBlindFragment", "onResume call detect = $detect ")
+//        Log.i("NavigateBlindFragment", "onResume call detect = $detect ")
 //        alertDialogCrosswalkDetection()
 
 //        binding.camera.open()
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //        viewModel = ViewModelProviders.of(this).get(NavigateBlindViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(NavigateBlindViewModel::class.java)
+
+        viewModel.detectDialog().observe(viewLifecycleOwner, Observer<String> { detect ->
+            Log.i("NavigateBlindFragment", "viewModel detect = $detect")
+            binding.test.text = " detect si wa"
+            if (detect == "0.0") {
+                binding.test.text = detect
+                alertDialogCrosswalkDetection()
+            } else if (detect == "1.0") {
+                binding.test.text = detect
+                alertDialogBusSignDetection()
+            }
+        })
+//        viewModel.detect.postValue("1.0")
+        binding.camera.setLifecycleOwner(null)
+        binding.camera.addFrameProcessor { frame ->
+            TFLiteDetection(requireContext(), onDetect = {
+                onDetect(it)
+            }).detect(frame)
+        }
+
+        binding.camera.open()
+
+    }
+
+    fun onDetect(s: String) {
+        receiveIMG(s)
+    }
 
     override fun onPause() {
         super.onPause()
@@ -127,11 +144,11 @@ class NavigateBlindFragment : Fragment() {
 
     }
 
-    fun receiveIMG(msg : String){
-            if(msg != null){
-                Log.i("Score","receiveIMG msg = $msg")
+    fun receiveIMG(msg: String) {
+        if (msg != null) {
+            Log.i("Score", "receiveIMG msg = $msg")
 //                viewModel.detect.value = "$msg"
-                checkDetection("$msg")
+            checkDetection("$msg")
 //                detect = msg
 //                when (msg) {
 //                            "0.0" -> {
@@ -145,50 +162,79 @@ class NavigateBlindFragment : Fragment() {
 //                                alertDialogBusSignDetection()
 //                            }
 //                }
-            }
+        }
     }
 
-    private fun checkDetection( detect : String ){
+    private fun checkDetection(detect: String) {
         Log.i("Score", "checkDetection call")
-        if(detect == "crosswalk" ) {
+        if (detect == "0.0") {
             Log.i("Score", "detect = crosswalk")
-            viewModel.detect.value = "$detect"
-        }
-        else if(detect == "bussign"){
-            Log.i("Score","detect = bussign")
-            viewModel.detect.value = "$detect"
+//            binding.test.text = detect
+//            alertDialogCrosswalkDetection()
+            binding.camera.close()
+            val intent = Intent(requireContext(),NewActivity::class.java)
+            requireContext().startActivity(intent)
 
+//            if (viewModel!=null) {
+//                viewModel.detect.value = "$detect"
+//                viewModel.detect.postValue(detect)
+//            }
+        } else if (detect == "1.0") {
+            binding.camera.close()
+            Log.i("Score", "detect = bussign")
+
+            val intent = Intent(requireContext(),NewActivity::class.java)
+            requireContext().startActivity(intent)
+
+//            binding.test.text = detect
+//            alertDialogBusSignDetection()
+
+//            if (viewModel!=null){
+//                viewModel.detect.value = "$detect"
+//                viewModel.detect.postValue(detect)
+//
+//            }else {
+//                viewModel.detect.value = "$detect"
+//                viewModel.detect.postValue(detect)
+//            }
         }
     }
 
     private fun alertDialogBusSignDetection() {
-        Log.i("checkdt","in alert")
+        Toast.makeText(requireContext(),"asdfasdfasdf",Toast.LENGTH_SHORT).show()
+        Log.i("checkdt", "in alert")
         //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(activity).inflate(R.layout.alert_dialog_bus_sign_detection, null)
+        val mDialogView =
+            LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_bus_sign_detection, null)
         //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(activity).setView(mDialogView)
+        val mBuilder = AlertDialog.Builder(requireContext()).setView(mDialogView)
         //show dialog
-        Log.i("checkdt","set view already")
+        Log.i("checkdt", "set view already")
 
         mAlertDialog = mBuilder.show()
-        Log.i("checkdt","show ja")
+        Log.i("checkdt", "show ja")
         mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
-        Log.i("checkdt","set other")
+        mAlertDialog.show()
+        Log.i("checkdt", "set other")
 
         textToSpeech = TextToSpeech(context, TextToSpeech.OnInitListener { status ->
             if (status != TextToSpeech.ERROR) {
                 textToSpeech!!.language = Locale.US
-                textToSpeech!!.speak(getString(R.string.busSignDetection_speak), TextToSpeech.QUEUE_FLUSH, null)
+                textToSpeech!!.speak(
+                    getString(R.string.busSignDetection_speak),
+                    TextToSpeech.QUEUE_FLUSH,
+                    null
+                )
             }
         })
-        Log.i("checkdt","set tts")
+        Log.i("checkdt", "set tts")
 
         textToSpeech!!.setSpeechRate(0.9f)
-        Log.i("checkdt","use tts")
+        Log.i("checkdt", "use tts")
 
-        mDialogView.busSignDetection.setOnVeryLongClickListener{
+        mDialogView.busSignDetection.setOnVeryLongClickListener {
             vibrate()
 //            val tts = getString(R.string.fallDetection_fine)
 //            textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
@@ -197,7 +243,7 @@ class NavigateBlindFragment : Fragment() {
             alert = false
 
         }
-        Log.i("checkdt","end ja")
+        Log.i("checkdt", "end ja")
 
 
 //        val alertDialogBuilder = AlertDialog.Builder(context)
@@ -225,24 +271,29 @@ class NavigateBlindFragment : Fragment() {
 
     private fun alertDialogCrosswalkDetection() {
         //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.alert_dialog_crosswalk_detection, null)
+        val mDialogView = LayoutInflater.from(requireActivity())
+            .inflate(R.layout.alert_dialog_crosswalk_detection, null)
         //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(requireActivity()).setView(mDialogView)
+        val mBuilder = AlertDialog.Builder(requireContext()).setView(mDialogView)
         //show dialog
-        val mAlertDialog  = mBuilder.show()
+        val mAlertDialog = mBuilder.show()
         mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
 
-        textToSpeech = TextToSpeech(requireActivity(), TextToSpeech.OnInitListener { status ->
+        textToSpeech = TextToSpeech(requireContext(), TextToSpeech.OnInitListener { status ->
             if (status != TextToSpeech.ERROR) {
                 textToSpeech!!.language = Locale.US
-                textToSpeech!!.speak(getString(R.string.crosswalkDetection_speak), TextToSpeech.QUEUE_FLUSH, null)
+                textToSpeech!!.speak(
+                    getString(R.string.crosswalkDetection_speak),
+                    TextToSpeech.QUEUE_FLUSH,
+                    null
+                )
             }
         })
         textToSpeech!!.setSpeechRate(0.9f)
 
-        mDialogView.crosswalkDetection.setOnVeryLongClickListener{
+        mDialogView.crosswalkDetection.setOnVeryLongClickListener {
             vibrate()
 //            val tts = getString(R.string.fallDetection_fine)
 //            textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
@@ -267,19 +318,18 @@ class NavigateBlindFragment : Fragment() {
             }
         })
     }
+
     /** function vibrations */
-    private fun vibrate(){
+    private fun vibrate() {
         // Vibrate for 300 milliseconds
         val v = requireActivity().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             v.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE))
-        }
-        else {
+        } else {
             //deprecated in API 26
             v.vibrate(300)
         }
     }
-
 
 
 }
