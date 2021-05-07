@@ -2,7 +2,6 @@ package com.estazo.project.seeable.app.blind
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.*
 import android.speech.tts.TextToSpeech
@@ -11,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
@@ -98,7 +98,8 @@ class NavigateBlindFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //        viewModel = ViewModelProviders.of(this).get(NavigateBlindViewModel::class.java)
         viewModel = ViewModelProvider(this).get(NavigateBlindViewModel::class.java)
-
+        var a = viewModel.detect.hasActiveObservers()
+        var b = viewModel.detect.hasObservers()
         viewModel.detectDialog().observe(viewLifecycleOwner, Observer<String> { detect ->
             Log.i("NavigateBlindFragment", "viewModel detect = $detect")
             binding.test.text = " detect si wa"
@@ -110,15 +111,24 @@ class NavigateBlindFragment : Fragment() {
                 alertDialogBusSignDetection()
             }
         })
-//        viewModel.detect.postValue("1.0")
-        binding.camera.setLifecycleOwner(null)
+        a = viewModel.detect.hasActiveObservers()
+        b = viewModel.detect.hasObservers()
+
+
+//        binding.camera.setLifecycleOwner(viewLifecycleOwner)
+        val tfLiteDetection = TFLiteDetection(requireContext()) {
+            receiveIMG(it)
+        }
         binding.camera.addFrameProcessor { frame ->
             TFLiteDetection(requireContext(), onDetect = {
                 receiveIMG(it)
             }).detect(frame)
+//            tfLiteDetection.detect(frame)
         }
 
         binding.camera.open()
+        a = viewModel.detect.hasActiveObservers()
+        b = viewModel.detect.hasObservers()
 
     }
 
@@ -146,6 +156,8 @@ class NavigateBlindFragment : Fragment() {
     }
 
     fun receiveIMG(msg: String) {
+       val a = viewModel.detect.hasActiveObservers()
+       val b = viewModel.detect.hasObservers()
         if (msg != null) {
             Log.i("Score", "receiveIMG msg = $msg")
 //                viewModel.detect.value = "$msg"
@@ -167,56 +179,69 @@ class NavigateBlindFragment : Fragment() {
     }
 
     private fun checkDetection(detect: String) {
+//        viewModel.detect.value = "$detect"
+        val a = viewModel.detect.hasActiveObservers()
+        val b = viewModel.detect.hasObservers()
         Log.i("Score", "checkDetection call")
+//        binding.camera.close()
+//        binding.camera.destroy()
+//        binding.camera.setLifecycleOwner(null)
+//        (binding.root as LinearLayout).removeAllViews()
+
         if (detect == "0.0") {
             Log.i("Score", "detect = crosswalk")
 //            binding.test.text = detect
 //            alertDialogCrosswalkDetection()
-            binding.camera.close()
-            if (isAlreadyFound){
-
-            }else{
-                isAlreadyFound = true
-                val intent = Intent(requireContext(),NewActivity::class.java)
-                requireContext().startActivity(intent)
-            }
-
-
-//            if (viewModel!=null) {
-//                viewModel.detect.value = "$detect"
-//                viewModel.detect.postValue(detect)
+//            if (isAlreadyFound){
+//
+//            }else{
+//                isAlreadyFound = true
+//                val intent = Intent(requireContext(),NewActivity::class.java)
+//                requireContext().startActivity(intent)
 //            }
+
+
+            val a = viewModel.detect.hasActiveObservers()
+            val b = viewModel.detect.hasObservers()
+            if (viewModel != null) {
+                viewModel.detect.postValue(detect)
+            }
         } else if (detect == "1.0") {
-            binding.camera.close()
+            val a = viewModel.detect.hasActiveObservers()
+            val b = viewModel.detect.hasObservers()
             Log.i("Score", "detect = bussign")
 
-            if (isAlreadyFound){
-
-            }else{
-                isAlreadyFound = true
-                val intent = Intent(requireContext(),NewActivity::class.java)
-                requireContext().startActivity(intent)
-            }
+//            if (isAlreadyFound){
+//
+//            }else{
+//                isAlreadyFound = true
+//                val intent = Intent(requireContext(),NewActivity::class.java)
+//                requireContext().startActivity(intent)
+//            }
 //            binding.test.text = detect
 //            alertDialogBusSignDetection()
 
-//            if (viewModel!=null){
-//                viewModel.detect.value = "$detect"
-//                viewModel.detect.postValue(detect)
-//
-//            }else {
-//                viewModel.detect.value = "$detect"
-//                viewModel.detect.postValue(detect)
-//            }
+            if (viewModel != null) {
+                var a = viewModel.detect.hasActiveObservers()
+                var b = viewModel.detect.hasObservers()
+                viewModel.detect.postValue(detect)
+                 a = viewModel.detect.hasActiveObservers()
+                 b = viewModel.detect.hasObservers()
+
+            } else {
+                viewModel.detect.value = "$detect"
+                viewModel.detect.postValue(detect)
+            }
         }
     }
 
     private fun alertDialogBusSignDetection() {
-        Toast.makeText(requireContext(),"asdfasdfasdf",Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "asdfasdfasdf", Toast.LENGTH_SHORT).show()
         Log.i("checkdt", "in alert")
         //Inflate the dialog with custom view
         val mDialogView =
-            LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_bus_sign_detection, null)
+            LayoutInflater.from(requireContext())
+                .inflate(R.layout.alert_dialog_bus_sign_detection, null)
         //AlertDialogBuilder
         val mBuilder = AlertDialog.Builder(requireContext()).setView(mDialogView)
         //show dialog

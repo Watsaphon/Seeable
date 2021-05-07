@@ -22,7 +22,6 @@ class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) 
             frame.getData(), ImageFormat.NV21,
             frame.size.width, frame.size.height, null
         )
-
         yuv.compressToJpeg(Rect(0, 0, frame.size.width, frame.size.height), 90, out)
         val imageBytes: ByteArray = out.toByteArray()
         val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
@@ -49,7 +48,7 @@ class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) 
                     when (it) {
                         "0.0" -> {
                             Log.d("Score", "crosswalk detect")
-                            onDetect?.invoke(it)
+                            onDetect.invoke(it)
                             //                            อันนี้อ่ะผิด เพราะว่ามันไปสร้าง instance ของ NavigateBlindFragment มาใหม่
 //                            NavigateBlindFragment().let {
 //                                Log.d("Score", "msg = $msg")
@@ -58,7 +57,7 @@ class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) 
                         }
                         "1.0" -> {
                             Log.d("Score", " bus sign detect")
-                            onDetect?.invoke(it)
+                            onDetect.invoke(it)
 
 
 //                            อันนี้อ่ะผิด เพราะว่ามันไปสร้าง instance ของ NavigateBlindFragment มาใหม่
