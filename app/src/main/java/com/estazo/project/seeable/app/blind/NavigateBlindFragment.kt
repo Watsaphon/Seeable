@@ -35,6 +35,7 @@ class NavigateBlindFragment : Fragment() {
     private var alert: Boolean = false
 
     private lateinit var viewModel: NavigateBlindViewModel
+    private var isAlreadyFound = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,7 +114,7 @@ class NavigateBlindFragment : Fragment() {
         binding.camera.setLifecycleOwner(null)
         binding.camera.addFrameProcessor { frame ->
             TFLiteDetection(requireContext(), onDetect = {
-                onDetect(it)
+                receiveIMG(it)
             }).detect(frame)
         }
 
@@ -172,8 +173,14 @@ class NavigateBlindFragment : Fragment() {
 //            binding.test.text = detect
 //            alertDialogCrosswalkDetection()
             binding.camera.close()
-            val intent = Intent(requireContext(),NewActivity::class.java)
-            requireContext().startActivity(intent)
+            if (isAlreadyFound){
+
+            }else{
+                isAlreadyFound = true
+                val intent = Intent(requireContext(),NewActivity::class.java)
+                requireContext().startActivity(intent)
+            }
+
 
 //            if (viewModel!=null) {
 //                viewModel.detect.value = "$detect"
@@ -183,9 +190,13 @@ class NavigateBlindFragment : Fragment() {
             binding.camera.close()
             Log.i("Score", "detect = bussign")
 
-            val intent = Intent(requireContext(),NewActivity::class.java)
-            requireContext().startActivity(intent)
+            if (isAlreadyFound){
 
+            }else{
+                isAlreadyFound = true
+                val intent = Intent(requireContext(),NewActivity::class.java)
+                requireContext().startActivity(intent)
+            }
 //            binding.test.text = detect
 //            alertDialogBusSignDetection()
 
@@ -330,7 +341,5 @@ class NavigateBlindFragment : Fragment() {
             v.vibrate(300)
         }
     }
-
-
 }
 
