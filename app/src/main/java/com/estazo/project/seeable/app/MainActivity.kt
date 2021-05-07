@@ -481,7 +481,7 @@ class MainActivity : AppCompatActivity(), UpdateMyText {
                 alertDialogBusSignDetection()
             }
         }else {
-            Log.i("Score","null kuy")
+            Log.i("Score","null")
         }
 
     }
