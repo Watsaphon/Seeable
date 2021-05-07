@@ -29,6 +29,7 @@ class NavigateBlindFragment : Fragment() {
     private var alert: Boolean = false
 
     private lateinit var viewModel: NavigateBlindViewModel
+    private var isAlreadyFound = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -161,26 +162,24 @@ class NavigateBlindFragment : Fragment() {
 //            binding.test.text = detect
 //            alertDialogCrosswalkDetection()
             binding.camera.close()
-
-            val action = NavigateBlindFragmentDirections.actionNavigateBlindFragmentToAlertFragment("crosswalk")
-            findNavController().navigate(action)
-
-//            findNavController().navigate(R.id.action_navigateBlindFragment_to_alertFragment)
-
-//            val intent = Intent(requireContext(),NewActivity::class.java)
-//            requireContext().startActivity(intent)
-
-//            if (viewModel!=null) {
-//                viewModel.detect.value = "$detect"
-//                viewModel.detect.postValue(detect)
-//            }
-
-        } else if (detect == "1.0") {
+            if (isAlreadyFound){ }
+            else{
+                isAlreadyFound = true
+                val action = NavigateBlindFragmentDirections.actionNavigateBlindFragmentToAlertFragment("crosswalk")
+                findNavController().navigate(action)
+            }
+        }
+        else if (detect == "1.0") {
             binding.camera.close()
             Log.i("Score", "detect = bussign")
+            if (isAlreadyFound){ }
+            else{
+                isAlreadyFound = true
+                val action = NavigateBlindFragmentDirections.actionNavigateBlindFragmentToAlertFragment("bussign")
+                findNavController().navigate(action)
+            }
 
-            val action = NavigateBlindFragmentDirections.actionNavigateBlindFragmentToAlertFragment("bussign")
-            findNavController().navigate(action)
+
 
 //            val intent = Intent(requireContext(),NewActivity::class.java)
 //            requireContext().startActivity(intent)
