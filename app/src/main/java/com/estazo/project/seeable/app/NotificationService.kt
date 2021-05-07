@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -16,12 +17,14 @@ import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.android.synthetic.main.alert_dialog_critical_event.view.*
 import kotlinx.android.synthetic.main.alert_dialog_go_to_app.view.*
+import java.util.*
 
 
 class NotificationService : NotificationListenerService() {
 
     private lateinit var context: Context
     private lateinit var sharedPrefNavigate : SharedPreferences
+    var textToSpeech: TextToSpeech? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
@@ -98,6 +101,7 @@ class NotificationService : NotificationListenerService() {
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
 
+
         mDialogView.callAmbulance.setOnClickListener{
             Log.i("dialog","click call Ambulance ja")
             dialog.dismiss()
@@ -132,6 +136,12 @@ class NotificationService : NotificationListenerService() {
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
 
+        textToSpeech = TextToSpeech(this, TextToSpeech.OnInitListener { status ->
+            if (status != TextToSpeech.ERROR) {
+                textToSpeech!!.language = Locale.US
+                textToSpeech!!.speak(getString(R.string.gotoApp_speak), TextToSpeech.QUEUE_FLUSH, null)
+            } })
+        textToSpeech!!.setSpeechRate(0.9f)
 
         mDialogView.gotoAppEvent.setOnClickListener{
             Log.i("alertDialogBack","click layout ja")

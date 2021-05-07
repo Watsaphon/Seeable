@@ -271,6 +271,7 @@
     <!--alertGoToApp-->
     <string name="gotoApp_header">Navigation has been set</string>
     <string name="gotoApp_subHeader">Press to go back to the app.</string>
+    <string name="gotoApp_speak">Navigation has been set , Please press the screen to go back at seeable.</string>
     <!--MainPerson-->
     <string name="main_person_header">Main Person</string>
     <string name="main_mapBtn">Open Google map</string>

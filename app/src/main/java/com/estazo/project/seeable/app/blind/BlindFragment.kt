@@ -78,7 +78,6 @@ class BlindFragment : Fragment() {
         val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
         getTitleLocation(phone)
 
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -112,9 +111,6 @@ class BlindFragment : Fragment() {
             alertDialogSetName()
         }
 
-//        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
-//        getTitleLocation(phone)
-
         return fragmentBinding.root
 
     }
@@ -136,7 +132,6 @@ class BlindFragment : Fragment() {
         if(navigate == "active"){
             view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
-
         binding.FAB.setOnClickListener {
             view.findNavController().navigate(R.id.action_blindFragment_to_settingBlindFragment2)
         }
@@ -154,17 +149,17 @@ class BlindFragment : Fragment() {
 //            view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.careNavButton.setOnVeryLongClickListener{
-//            vibrate()
-//            textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
-//            navigationCaretaker()
-//            Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
-//
-//            Log.d("testCalender","currentTime : $currentTime")
-//            val postNotification =  Notification("$currentTime","navigate")
-//            val postValues = postNotification.toMap()
-//            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
-//            ref.updateChildren(childUpdates)
-            view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
+            vibrate()
+            textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
+            navigationCaretaker()
+            Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
+
+            Log.d("testCalender","currentTime : $currentTime")
+            val postNotification =  Notification("$currentTime","navigate")
+            val postValues = postNotification.toMap()
+            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+            ref.updateChildren(childUpdates)
+//            view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.callEmergency.setOnVeryLongClickListener{
             vibrate()
@@ -273,7 +268,7 @@ class BlindFragment : Fragment() {
                     }else{
                         Log.d("Debug:" ,"getLastLocation() -> Your Location : Long: "+ location.longitude + " , Lat: " + location.latitude )
                         val text = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n"
-                        Toast.makeText(activity,"$text",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, text,Toast.LENGTH_SHORT).show()
                     }
                 }
             }else{
@@ -301,11 +296,11 @@ class BlindFragment : Fragment() {
     }
     private val locationCallback = object : LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult) {
-            var lastLocation: Location = locationResult.lastLocation
+            val lastLocation: Location = locationResult.lastLocation
             Log.d("Debug:","onLocationResult -> your last location: latitude = "+ lastLocation.latitude.toString()+", longitude = "+ lastLocation.longitude.toString())
             val text = "You Last Location is : Long: "+ lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n"
 
-            Toast.makeText(activity,"$text",Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, text,Toast.LENGTH_SHORT).show()
         }
     }
     private fun isLocationEnabled():Boolean{
@@ -353,7 +348,6 @@ class BlindFragment : Fragment() {
                }
            }
        }
-
 
     /** function press and hold button for few seconds */
     private fun View.setOnVeryLongClickListener(listener: () -> Unit) {

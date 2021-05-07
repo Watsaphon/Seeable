@@ -265,6 +265,8 @@
     <!--alertGoToApp-->
     <string name="gotoApp_header">ตั้งต่าการนำทางเสร็จสิ้น</string>
     <string name="gotoApp_subHeader">แตะที่หน้าจอเพื่อกลับเข้าใช้งานแอพพลิเคชั่นอีกครั้ง.</string>
+    <string name="gotoApp_speak">ตั้งต่าการนำทางเสร็จสิ้น กรุณาแตะที่หน้าจอเพื่อกลับไปที่แอพพลิเคชั่นอีกครั้ง.</string>
+
     <!--MainPerson-->
     <string name="main_person_header">คนดูแล</string>
     <string name="main_mapBtn">เปิดดูแผนที่</string>

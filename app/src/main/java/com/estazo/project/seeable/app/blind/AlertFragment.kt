@@ -9,6 +9,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentAlertBinding
 import kotlinx.android.synthetic.main.alert_dialog_bus_sign_detection.view.*
@@ -88,10 +89,8 @@ class AlertFragment : Fragment() {
 
         mDialogView.busSignDetection.setOnVeryLongClickListener {
             vibrate()
-//            val tts = getString(R.string.fallDetection_fine)
-//            textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
+            findNavController().navigate(R.id.action_alertFragment_to_blindFragment2)
             mAlertDialog.dismiss()
-            requireActivity().onBackPressed()
         }
         Log.i("checkdt", "end ja")
 
@@ -151,13 +150,14 @@ class AlertFragment : Fragment() {
                         vibrate()
                         val tts = getString(R.string.crosswalkDetection_help)
                         textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
+                        findNavController().navigate(R.id.action_alertFragment_to_blindFragment2)
                         mAlertDialog.dismiss()
-                        requireActivity().onBackPressed() }
+                        }
                         /** Double tap*/
                         else if (numberOfTaps == 2) { handler.postDelayed(Runnable {
                         vibrate()
+                        findNavController().navigate(R.id.action_alertFragment_to_blindFragment2)
                         mAlertDialog.dismiss()
-                        requireActivity().onBackPressed()
                         }, ViewConfiguration.getDoubleTapTimeout().toLong()) }
                     }
                 }

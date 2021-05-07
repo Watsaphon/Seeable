@@ -1,9 +1,7 @@
 package com.estazo.project.seeable.app.blind
 
-import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,11 +20,7 @@ class NavigateBlindFragment : Fragment() {
 
 
     private lateinit var binding: FragmentNavigateBlindBinding
-    private lateinit var mAlertDialog: AlertDialog
-    private var textToSpeech: TextToSpeech? = null
     private lateinit var sharedPrefNavigate: SharedPreferences
-
-    private var alert: Boolean = false
 
     private lateinit var viewModel: NavigateBlindViewModel
     private var isAlreadyFound = false
@@ -42,25 +36,17 @@ class NavigateBlindFragment : Fragment() {
                 val editor = sharedPrefNavigate.edit()
                 editor.putString("stringKeyNavigate", "not found!")
                 editor.apply()
-                val launchIntent =
-                    requireActivity().packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")
+                val launchIntent = requireActivity().packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")
                 startActivity(launchIntent)
-
             }
         })
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_navigate_blind, container, false)
         Log.i("NavigateBlindFragment", "onCreateView call")
-
-
 
         return binding.root
     }
@@ -80,8 +66,7 @@ class NavigateBlindFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        Log.i("NavigateBlindFragment", "onResume call detect = $detect ")
-//        alertDialogCrosswalkDetection()
+        Log.i("NavigateBlindFragment", "onResume call")
 
         binding.camera.open()
 
@@ -103,14 +88,12 @@ class NavigateBlindFragment : Fragment() {
 ////                alertDialogBusSignDetection()
 //            }
         })
-//        viewModel.detect.postValue("1.0")
         binding.camera.setLifecycleOwner(null)
         binding.camera.addFrameProcessor { frame ->
             TFLiteDetection(requireContext(), onDetect = {it ->
                 receiveIMG(it)
             }).detect(frame)
         }
-
         binding.camera.open()
 
     }
@@ -132,26 +115,16 @@ class NavigateBlindFragment : Fragment() {
         super.onDestroyView()
         Log.i("NavigateBlindFragment", "onDestroyView call")
         binding.camera.destroy()
-
+        sharedPrefNavigate = requireActivity().getSharedPreferences("value", 0)
+        val editor = sharedPrefNavigate.edit()
+        editor.putString("stringKeyNavigate", "not found!")
+        editor.apply()
     }
 
-    fun receiveIMG(msg: String) {
+    private fun receiveIMG(msg: String) {
         if (msg != null) {
             Log.i("Score", "receiveIMG msg = $msg")
             checkDetection("$msg")
-//                detect = msg
-//                when (msg) {
-//                            "0.0" -> {
-//                                Log.i("Score","in when msg = $msg ")
-//                                checkDetection("crosswalk")
-//                                alertDialogCrosswalkDetection()
-//                            }
-//                            "1.0"->{
-//                                Log.i("Score","in when msg = $msg ")
-//                                checkDetection("bussign")
-//                                alertDialogBusSignDetection()
-//                            }
-//                }
         }
     }
 
@@ -159,8 +132,6 @@ class NavigateBlindFragment : Fragment() {
         Log.i("Score", "checkDetection call")
         if (detect == "0.0") {
             Log.i("Score", "detect = crosswalk")
-//            binding.test.text = detect
-//            alertDialogCrosswalkDetection()
             binding.camera.close()
             if (isAlreadyFound){ }
             else{
@@ -179,107 +150,8 @@ class NavigateBlindFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
-
-
-//            val intent = Intent(requireContext(),NewActivity::class.java)
-//            requireContext().startActivity(intent)
-
-//            binding.test.text = detect
-//            alertDialogBusSignDetection()
-
-//            if (viewModel!=null){
-//                viewModel.detect.value = "$detect"
-//                viewModel.detect.postValue(detect)
-//
-//            }else {
-//                viewModel.detect.value = "$detect"
-//                viewModel.detect.postValue(detect)
-//            }
         }
     }
-
-        /**ย้ายไปอีกหน้า*/
-//    private fun alertDialogBusSignDetection() {
-//        Toast.makeText(requireContext(),"asdfasdfasdf",Toast.LENGTH_SHORT).show()
-//        Log.i("checkdt", "in alert")
-//        //Inflate the dialog with custom view
-//        val mDialogView =
-//            LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_bus_sign_detection, null)
-//        //AlertDialogBuilder
-//        val mBuilder = AlertDialog.Builder(requireContext()).setView(mDialogView)
-//        //show dialog
-//        Log.i("checkdt", "set view already")
-//
-//        mAlertDialog = mBuilder.show()
-//        Log.i("checkdt", "show ja")
-//        mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-//        mAlertDialog.setCanceledOnTouchOutside(false)
-//        mAlertDialog.setCancelable(false)
-//        mAlertDialog.show()
-//        Log.i("checkdt", "set other")
-//
-//        textToSpeech = TextToSpeech(context, TextToSpeech.OnInitListener { status ->
-//            if (status != TextToSpeech.ERROR) {
-//                textToSpeech!!.language = Locale.US
-//                textToSpeech!!.speak(
-//                    getString(R.string.busSignDetection_speak),
-//                    TextToSpeech.QUEUE_FLUSH,
-//                    null
-//                )
-//            }
-//        })
-//        Log.i("checkdt", "set tts")
-//
-//        textToSpeech!!.setSpeechRate(0.9f)
-//        Log.i("checkdt", "use tts")
-//
-//        mDialogView.busSignDetection.setOnVeryLongClickListener {
-//            vibrate()
-////            val tts = getString(R.string.fallDetection_fine)
-////            textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
-//            mAlertDialog.dismiss()
-//
-//            alert = false
-//
-//        }
-//        Log.i("checkdt", "end ja")
-//
-//    }
-
-//    private fun alertDialogCrosswalkDetection() {
-//        //Inflate the dialog with custom view
-//        val mDialogView = LayoutInflater.from(requireActivity())
-//            .inflate(R.layout.alert_dialog_crosswalk_detection, null)
-//        //AlertDialogBuilder
-//        val mBuilder = AlertDialog.Builder(requireContext()).setView(mDialogView)
-//        //show dialog
-//        val mAlertDialog = mBuilder.show()
-//        mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-//        mAlertDialog.setCanceledOnTouchOutside(false)
-//        mAlertDialog.setCancelable(false)
-//
-//        textToSpeech = TextToSpeech(requireContext(), TextToSpeech.OnInitListener { status ->
-//            if (status != TextToSpeech.ERROR) {
-//                textToSpeech!!.language = Locale.US
-//                textToSpeech!!.speak(
-//                    getString(R.string.crosswalkDetection_speak),
-//                    TextToSpeech.QUEUE_FLUSH,
-//                    null
-//                )
-//            }
-//        })
-//        textToSpeech!!.setSpeechRate(0.9f)
-//
-//        mDialogView.crosswalkDetection.setOnVeryLongClickListener {
-//            vibrate()
-////            val tts = getString(R.string.fallDetection_fine)
-////            textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
-//            mAlertDialog.dismiss()
-//            alert = false
-//        }
-//
-//    }
-
 
 }
 

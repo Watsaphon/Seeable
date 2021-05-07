@@ -71,28 +71,6 @@ class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) 
                         }
                     }
                 }
-/*
-                ส่งค่าไปที่ใช้ในการเด้ง Dialog
-                0 = ทางม้าลาย, 1 = ป้ายรถเมล์
-                detect_num.toInt()
-
-                ในหน้าที่ทำ navigate เพิ่มอันนี้ดวย
-                lateinit var camera : CameraView
-
-                * ใน onCreate() *
-                camera = findViewById(R.id.camera)
-                camera.setLifecycleOwner(this)
-                cameraA.addFrameProcessor {
-                    TFLiteDetection(this@*ActivityName*).detect(it)
-                }
-
-                แล้วเพิ่ม cameraView ใน layout ตั้งขนาดมันให้เป็น 1*1 dp พอ
-*/
-//                Log.d("Score","detect_num(float) : $test  , detect_num(int) :$detect_num")
-
-//                BlindFragment().let {
-//                    it.onTextUpdate(detect_num)
-//                }
 
             }
         }

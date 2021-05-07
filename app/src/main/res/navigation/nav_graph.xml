@@ -310,6 +310,9 @@
         <argument
             android:name="detect"
             app:argType="string" />
+        <action
+            android:id="@+id/action_alertFragment_to_blindFragment2"
+            app:destination="@id/blindFragment" />
     </fragment>
 
 </navigation>
