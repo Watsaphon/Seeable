@@ -275,6 +275,9 @@ class MainActivity : AppCompatActivity() {
                 val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
                 val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Device/fall_Detection" to "no")
                 ref.updateChildren(childUpdates)
+                val childUpdates2 = hashMapOf<String, Any>("users_blind/$phone/Device/critical_Condition" to true)
+                ref.updateChildren(childUpdates2)
+
             }
             else{
                 Log.i("testfd","cancel ja")
@@ -475,6 +478,14 @@ class MainActivity : AppCompatActivity() {
                 val postValues = postLocation.toMap()
                 val childUpdates = hashMapOf<String, Any>("users_blind/$currentPhone/Location" to postValues)
                 ref.updateChildren(childUpdates)
+                val latitude : String = location.latitude.toString()
+                val longitude : String = location.longitude.toString()
+
+                val childUpdates3 = hashMapOf<String, Any>("users_blind/$currentPhone/Device/critical_Condition_Location" to "$latitude,$longitude")
+                ref.updateChildren(childUpdates3)
+                val childUpdates4 = hashMapOf<String, Any>("users_blind/$currentPhone/Device/critical_Condition" to false)
+                ref.updateChildren(childUpdates4)
+
             }
         }
     }

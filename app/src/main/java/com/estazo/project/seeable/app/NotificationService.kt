@@ -46,6 +46,9 @@ class NotificationService : NotificationListenerService() {
         val regexNavigation = "navigation".toRegex()
         val checkNavigation = regexNavigation.find(title)?.value.toString()
 
+        val regexCritical = "Critical".toRegex()
+        val checkCritical = regexCritical.find(title)?.value.toString()
+
         Log.i("notificationService"," pack : $pack , title : $title" +
                 " , text : $text , regEX -> matchResult : $matchResult , checkNavigation : $checkNavigation ")
 
@@ -58,7 +61,7 @@ class NotificationService : NotificationListenerService() {
             msgrcv.putExtra("title", title)
             msgrcv.putExtra("text", text)
             LocalBroadcastManager.getInstance(context!!).sendBroadcast(msgrcv)
-            if(pack == "com.estazo.project.seeable.app" && title == "critical_Condition"){
+            if(pack == "com.estazo.project.seeable.app" && checkCritical == "Critical"){
                 dialog()
             }
             if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation"){
