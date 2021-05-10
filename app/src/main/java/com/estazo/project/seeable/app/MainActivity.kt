@@ -32,13 +32,11 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.android.synthetic.main.alert_dialog_bus_sign_detection.view.*
-import kotlinx.android.synthetic.main.alert_dialog_crosswalk_detection.view.*
 import kotlinx.android.synthetic.main.alert_dialog_fall_dectection.view.*
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), UpdateMyText {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var  mAlertDialog : AlertDialog
     private var textToSpeech: TextToSpeech? = null
@@ -52,7 +50,7 @@ class MainActivity : AppCompatActivity(), UpdateMyText {
 
     private lateinit var sharedPrefNavigate : SharedPreferences
 
-    var msg: String? = ""
+    private var blind : Boolean = false
 
     //Declaring the needed Variables
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -96,8 +94,6 @@ class MainActivity : AppCompatActivity(), UpdateMyText {
                     })
                 }
                 "blind" -> {
-
-                    blindSection()
                     Toast.makeText(this, "Blind Section",Toast.LENGTH_LONG).show()
                     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                         if (!task.isSuccessful) {
@@ -116,6 +112,7 @@ class MainActivity : AppCompatActivity(), UpdateMyText {
                         val ref = FirebaseDatabase.getInstance().reference
                         val childUpdates = hashMapOf<String, Any>("users_blind/$phone/FCM" to "$token")
                         ref.updateChildren(childUpdates)
+                        blindSection()
 
                     })
                 }
@@ -175,6 +172,13 @@ class MainActivity : AppCompatActivity(), UpdateMyText {
     override fun onStop() {
         super.onStop()
         Log.i("MainActivity", "onStop called")
+        val sharedPrefPhone = getSharedPreferences("value", 0)
+        val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
+        if(blind){
+            viewModel.userType.removeObservers(this)
+            database.child("users_blind/$phone/Device").removeEventListener(listener)
+            Log.d("checkUser_Main_BS"," remove observer and database")
+        }
     }
 
     override fun onDestroy() {
@@ -318,15 +322,21 @@ class MainActivity : AppCompatActivity(), UpdateMyText {
                     if(this::database.isInitialized){
                         database.child("users_blind/$phone/Device").removeEventListener(listener)
                         Log.d("checkUser_Main_BS","logout to Login section")
+                        blind = false
                     }
                 }
                 "caretaker" -> {
                     if(this::database.isInitialized){
                         database.child("users_blind/$phone/Device").removeEventListener(listener)
                         Log.d("checkUser_Main_BS","login to caretaker section")
+                        blind = false
+
                     }
                 }
-
+                "blind" -> {
+                    Log.d("checkUser_Main_BS","login to blind section")
+                    blind = true
+                }
             }
         })
         /**For java*/
@@ -469,81 +479,7 @@ class MainActivity : AppCompatActivity(), UpdateMyText {
         }
     }
 
-    override fun checkDetection( detect : String ){
-        if (detect != null){
-            Log.i("Score","MainActivity call -> detect : $detect")
-            if(detect == "crosswalk" ){
-                Log.i("Score","MainActivity detect = crosswalk")
-                alertDialogCrosswalkDetection()
-            }
-            else if(detect == "bussign"){
-                Log.i("Score","MainActivity detect = bussign")
-                alertDialogBusSignDetection()
-            }
-        }else {
-            Log.i("Score","null")
-        }
-
-    }
-
-    private fun alertDialogBusSignDetection() {
-        //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_bus_sign_detection, null)
-        //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
-        //show dialog
-        mAlertDialog  = mBuilder.show()
-        mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        mAlertDialog.setCanceledOnTouchOutside(false)
-        mAlertDialog.setCancelable(false)
-
-        textToSpeech = TextToSpeech(this, TextToSpeech.OnInitListener { status ->
-            if (status != TextToSpeech.ERROR) {
-                textToSpeech!!.language = Locale.US
-                textToSpeech!!.speak(getString(R.string.busSignDetection_speak), TextToSpeech.QUEUE_FLUSH, null)
-            }
-        })
-        textToSpeech!!.setSpeechRate(0.9f)
-
-        mDialogView.busSignDetection.setOnVeryLongClickListener{
-            vibrate()
-            mAlertDialog.dismiss()
-        }
-
-    }
-
-    private fun alertDialogCrosswalkDetection() {
-        //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(this).inflate(layout.alert_dialog_crosswalk_detection, null)
-        //AlertDialogBuilder
-        val mBuilder = AlertDialog.Builder(this).setView(mDialogView)
-        //show dialog
-        mAlertDialog  = mBuilder.show()
-        mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        mAlertDialog.setCanceledOnTouchOutside(false)
-        mAlertDialog.setCancelable(false)
-
-        textToSpeech = TextToSpeech(this, TextToSpeech.OnInitListener { status ->
-            if (status != TextToSpeech.ERROR) {
-                textToSpeech!!.language = Locale.US
-                textToSpeech!!.speak(getString(R.string.crosswalkDetection_speak), TextToSpeech.QUEUE_FLUSH, null)
-            }
-        })
-        textToSpeech!!.setSpeechRate(0.9f)
-
-        mDialogView.crosswalkDetection.setOnVeryLongClickListener{
-            vibrate()
-//            val tts = getString(R.string.fallDetection_fine)
-//            textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
-            mAlertDialog.dismiss()
-        }
-
-    }
-
-
 }
-interface UpdateMyText {
-    fun checkDetection(detect: String)
-}
+
 
 
