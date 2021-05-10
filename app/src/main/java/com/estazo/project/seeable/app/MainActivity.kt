@@ -282,7 +282,7 @@ class MainActivity : AppCompatActivity() {
             else{
                 Log.i("testfd","cancel ja")
             }
-        }, 30000) //change 5000 with a specific time you want
+        }, 30000) //change 30000 second with a specific time you want
     }
 
 
@@ -483,8 +483,10 @@ class MainActivity : AppCompatActivity() {
 
                 val childUpdates3 = hashMapOf<String, Any>("users_blind/$currentPhone/Device/critical_Condition_Location" to "$latitude,$longitude")
                 ref.updateChildren(childUpdates3)
+                Handler().postDelayed({
                 val childUpdates4 = hashMapOf<String, Any>("users_blind/$currentPhone/Device/critical_Condition" to false)
                 ref.updateChildren(childUpdates4)
+                }, 2000) //change 2 second with a specific time you want
 
             }
         }

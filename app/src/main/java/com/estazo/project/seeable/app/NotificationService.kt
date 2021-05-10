@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
@@ -15,6 +16,12 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.alert_dialog_critical_event.view.*
 import kotlinx.android.synthetic.main.alert_dialog_go_to_app.view.*
 import java.util.*
@@ -25,6 +32,9 @@ class NotificationService : NotificationListenerService() {
     private lateinit var context: Context
     private lateinit var sharedPrefNavigate : SharedPreferences
     var textToSpeech: TextToSpeech? = null
+    private var phone: String = ""
+    private lateinit var database: DatabaseReference
+    private lateinit var listener: ValueEventListener
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
@@ -63,6 +73,11 @@ class NotificationService : NotificationListenerService() {
             LocalBroadcastManager.getInstance(context!!).sendBroadcast(msgrcv)
             if(pack == "com.estazo.project.seeable.app" && checkCritical == "Critical"){
                 dialog()
+//                val regexCritical = "Critical".toRegex()
+//                val checkCritical = regexCritical.find(text)?.value.toString()
+
+                val info = text.substring(5)
+                phone = info
             }
             if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation"){
                 Log.i("notificationService", "OK JA")
@@ -108,11 +123,43 @@ class NotificationService : NotificationListenerService() {
         mDialogView.callAmbulance.setOnClickListener{
             Log.i("dialog","click call Ambulance ja")
             dialog.dismiss()
+            val emergency = "1112"
+            val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", emergency, null))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
 
         mDialogView.getLocation.setOnClickListener{
-            Log.i("dialog","click get Location ja")
+            Log.i("dialog","click get Location ja , phone :$phone")
             dialog.dismiss()
+            var location =  ""
+
+            database = Firebase.database.reference
+            listener = database.child("users_blind/$phone/Device").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        val locationFB = dataSnapshot.child("critical_Condition_Location").value.toString()
+                        Log.i("dialog","location = $locationFB")
+//                        location = locationFB
+                        /** open google map */
+                        // Navigation : current place direct to gmmIntentUri
+                        val gmmIntentUri = Uri.parse("google.navigation:q=$locationFB&mode=w&avoid=thf")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                        mapIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        mapIntent.setPackage("com.google.android.apps.maps")
+                        startActivity(mapIntent)
+
+                        database.child("users_blind/$phone/Device").removeEventListener(listener)
+
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("checkUser_Main_FD","onCancelled call")
+                }
+            })
+
+//            database.child("users_blind/$phone/Device").removeEventListener(listener)
+
         }
 
     }
