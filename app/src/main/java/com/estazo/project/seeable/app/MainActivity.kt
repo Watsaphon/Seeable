@@ -22,6 +22,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Observer
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.estazo.project.seeable.app.R.layout
@@ -118,6 +119,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        if (!NotificationManagerCompat.getEnabledListenerPackages (applicationContext).contains(applicationContext.packageName)) {
+            Toast.makeText(this, R.string.enable_notifications_access, Toast.LENGTH_LONG).show()
+            //service is not enabled try to enabled by calling...
+            val intent =  Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            applicationContext.startActivity(intent)
+        }
+
 
     }
 

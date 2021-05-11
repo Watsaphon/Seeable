@@ -5,14 +5,13 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
-android:layout_height="match_parent"
-    >
+android:layout_height="match_parent">
+
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     card_view:cardCornerRadius="45dp"
-
     >
 
     <LinearLayout
@@ -33,17 +32,39 @@ android:layout_height="match_parent"
 <!--            android:src="@mipmap/close_button_foreground"-->
 <!--            tools:ignore="RtlHardcoded" />-->
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:fontFamily="@font/roboto"
-            android:gravity="center"
-            android:text=" User : has been fell"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            >
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="@string/critical_username"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/titleInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:text="@string/critical_title"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
 
         <ImageView
@@ -73,7 +94,7 @@ android:layout_height="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/yes_button_click"
-            android:text="Call Ambulance"
+            android:text="@string/critical_call_ambulance"
             style="@style/alertDialogDelete"
             />
 
@@ -87,7 +108,7 @@ android:layout_height="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/no_button_click"
-            android:text="Get Location"
+            android:text="@string/critical_get_location"
             style="@style/alertDialogDelete"
             />
 

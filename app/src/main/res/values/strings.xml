@@ -22,6 +22,8 @@
     <string name="button_shared_locatoin">Send Location</string>
     <string name="locatoin_null">Please set your location before use Navigation.</string>
     <string name="check_setName">Please fill your name.</string>
+    <string name="enable_notifications_access">Please Enable Notification Access at Seeable.</string>
+
 
     <!--SettingBlind-->
     <string name="header_SettingBlind">Setting</string>
@@ -272,6 +274,13 @@
     <string name="gotoApp_header">Navigation has been set</string>
     <string name="gotoApp_subHeader">Press to go back to the app.</string>
     <string name="gotoApp_speak">Navigation has been set , Please press the screen to go back at seeable.</string>
+
+    <!--alertCritical-->
+    <string name="critical_username">User</string>
+    <string name="critical_title">: has been fell</string>
+    <string name="critical_call_ambulance">Call Ambulance</string>
+    <string name="critical_get_location">Get Location</string>
+
     <!--MainPerson-->
     <string name="main_person_header">Main Person</string>
     <string name="main_mapBtn">Open Google map</string>
@@ -317,6 +326,7 @@
     <string name="msg_subscribed" translatable="false">Subscribed to share Location topic</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="fcm_message" translatable="false">FCM Message</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
 </resources>

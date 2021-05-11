@@ -22,6 +22,9 @@
     <string name="button_shared_locatoin">ส่งตำแหน่งที่อยู่ปัจจุบัน</string>
     <string name="locatoin_null">กรุณาตั้งค่าที่อยู่ที่จะเดินทางก่อนเริ่มการใช้งานการเดินทาง</string>
     <string name="check_setName">กรุณากรอกชื่อของคุณ</string>
+    <string name="enable_notifications_access">กรุณาเปิดใช้งานการเข้าถึงการแจ้งเตือนที่ Seeable . </string>
+
+
 
     <!--SettingBlind-->
     <string name="header_SettingBlind">การตั้งค่า</string>
@@ -64,7 +67,7 @@
     <string name="header_AccountSettingDeleteCaretaker">ลบบัญชีผู้ใช้งาน</string>
     <string name="subheader_AccountSettingEditCaretaker">คำเตือน</string>
     <string name="info_AccountSettingEditCaretaker">คุณต้องการลบบัญชีผู้ใช้งานจริงๆใช่ไหม
-        ถ้าคุณลบบัญชีผู้ใช้งานแล้ว คุณจะสูญเสียข้อมูลและทุกอย่างในแอพพลิเคชั่น กรุณากรอกรหัสผ่านและกดปุ่มลบเพื่อยืนยันการลบบัญชีผู้ใช้งาน
+        ถ้าคุณลบบัญชีผู้ใช้งานแล้ว คุณจะสูญเสียข้อมูลและทุกอย่างในแอปพลิเคชัน กรุณากรอกรหัสผ่านและกดปุ่มลบเพื่อยืนยันการลบบัญชีผู้ใช้งาน
     </string>
     <string name="wrong_password_AccountSettingEditCaretaker">รหัสผ่านไม่ถูกต้อง</string>
     <string name="empty_password_AccountSettingEditCaretaker">กรุณากรอกรหัสผ่านของคุณ</string>
@@ -140,7 +143,7 @@
     <string name="header_DeleteAccountBlind">ลบบัญชีผู้ใช้งาน</string>
     <string name="subheader_DeleteAccountBlind">คำเตือน</string>
     <string name="warning_DeleteAccountBlind">คุณต้องการลบบัญชีผู้ใช้งานจริงๆใช่ไหม
-        ถ้าคุณลบบัญชีผู้ใช้งานแล้ว คุณจะสูญเสียข้อมูลและทุกอย่างในแอพพลิเคชั่น กรุณากรอกรหัสผ่านและกดปุ่มลบเพื่อยืนยันการลบบัญชีผู้ใช้งาน</string>
+        ถ้าคุณลบบัญชีผู้ใช้งานแล้ว คุณจะสูญเสียข้อมูลและทุกอย่างในแอปพลิเคชัน กรุณากรอกรหัสผ่านและกดปุ่มลบเพื่อยืนยันการลบบัญชีผู้ใช้งาน</string>
     <string name="hint_DeleteAccountBlind">รหัสผ่าน...</string>
     <string name="btn_DeleteAccountBlind">ลบบัญชีผู้ใช้งาน</string>
 
@@ -148,7 +151,7 @@
 
     <!--SendOTP-->
     <string name="header_SendOTP">ลงทะเบียน</string>
-    <string name="subheader_SendOTP">กรุณากรอกเบอร์โทรศัพท์เพื่อลงทะเบียน แอพพลิเคชั่นจะส่งรหัสOTPเพื่อยืนยันผู้ใช้งาน</string>
+    <string name="subheader_SendOTP">กรุณากรอกเบอร์โทรศัพท์เพื่อลงทะเบียน แอปพลิเคชันจะส่งรหัสOTPเพื่อยืนยันผู้ใช้งาน</string>
     <string name="button_SendOTP">ส่ง OTP</string>
 
     <!--VerifyOTP-->
@@ -197,7 +200,7 @@
 
     <!--About Page-->
     <string name="heading_about">SeeAble คืออะไร </string>
-    <string name="content_1">SeeAble เป็นแอพที่ช่วยคนตาบอดในการเตือนอันตรายและอุปสรรคและทำให้คนที่มองไม่เห็นมีความปลอดภัยมากขึ้น เมื่อเราเห็นอันตรายหรืออุปสรรค. เรา "แจ้งเตือน" ด้วยเสียงถึงคุณ เมื่อคุณประสบอุบัติเหตุและล้มลงอุปกรณ์จะโทรขอความช่วยเหลือ! คนอื่น ๆ สามารถช่วยคุณได้ทันเวลา แอพพลิเคชั่นสามารถแสดงข้อมูลและติดต่อในแอพได้ แอพนพลิเคชั่นี้ยังสามารถเรียกรถพยาบาลเมื่อเกิดอุบัติเหตุฉุกเฉิน</string>
+    <string name="content_1">SeeAble เป็นแอพที่ช่วยคนตาบอดในการเตือนอันตรายและอุปสรรคและทำให้คนที่มองไม่เห็นมีความปลอดภัยมากขึ้น เมื่อเราเห็นอันตรายหรืออุปสรรค. เรา "แจ้งเตือน" ด้วยเสียงถึงคุณ เมื่อคุณประสบอุบัติเหตุและล้มลงอุปกรณ์จะโทรขอความช่วยเหลือ! คนอื่น ๆ สามารถช่วยคุณได้ทันเวลา แอปพลิเคชันสามารถแสดงข้อมูลและติดต่อในแอพได้ แอพนพลิเคชั่นี้ยังสามารถเรียกรถพยาบาลเมื่อเกิดอุบัติเหตุฉุกเฉิน</string>
     <string name="content_2">ภาษาที่รองรับ :ไทย,อังกฤษ</string>
 
     <!--LoginScreen-->
@@ -213,7 +216,7 @@
 
     <!--alertPairing-->
     <string name="pairing_header">ไม่พบคนตาบอดที่จับคู่!</string>
-    <string name="pairing_subHeader">คุณต้องจับคู่กับคนตาบอดอย่างน้อย 1 คน เพื่อเริ่มการใช้งานแอพพลิเคชั่น</string>
+    <string name="pairing_subHeader">คุณต้องจับคู่กับคนตาบอดอย่างน้อย 1 คน เพื่อเริ่มการใช้งานแอปพลิเคชัน</string>
     <string name="pairing_text_box">กรุณากรอก ID ของคนตาบอดเพื่อเริ่มการจับคู่</string>
     <string name="pairing_hint">ใส่ID ของคนตาบอดที่นี่...</string>
     <string name="pairing_summitBtn">ยืนยัน</string>
@@ -232,7 +235,7 @@
 
     <!--alertHomeLocation-->
     <string name="homeLocation_header">ที่อยู่บ้าน</string>
-    <string name="homeLocation_subHeader">เพื่อให้คุณสามารถใช้งานแอพพลิเคชั่นนี้ได้อย่างมีประสิทธิภาพสูงสุด กรุณาตั้งค่าที่อยู่บ้านของคุณก่อนที่จะเริ่มการใช้งานแอพพลิเคชั่นในส่วนที่เหลือทั้งหมด</string>
+    <string name="homeLocation_subHeader">เพื่อให้คุณสามารถใช้งานแอปพลิเคชันนี้ได้อย่างมีประสิทธิภาพสูงสุด กรุณาตั้งค่าที่อยู่บ้านของคุณก่อนที่จะเริ่มการใช้งานแอปพลิเคชันในส่วนที่เหลือทั้งหมด</string>
     <string name="homeLocation_text_box">กรุณาตั้งค่าที่อยู่บ้านเพื่อเริ่มการใช้งาน</string>
     <string name="homeLocation_setup">ตั้งค่า</string>
     <string name="homeLocation_logoutBtn">ออกจากระบบ</string>
@@ -250,11 +253,13 @@
     <string name="fallDetection_info2">กรุณาแตะที่หน้าจอค้างไว้เพื่อยกเลิกการแจ้งเตือนอุบัติเหตุแก่ผู้ดูแลภายใน1นาที หากภายใน1นาทีไม่พบการยกเลิกระบบจะแจ้งเตือนอุบัติเหตุแก่ผู้ดูแลของท่านเพื่อทำการช่วยเหลือ
     </string>
     <string name="fallDetection_fine">ระบบยกเลิกการแจ้งเตือนแก่ผู้ดูแล.</string>
+
     <!--alertBusSignDetection-->
     <string name="busSignDetection_header">ตรวจพบป้ายรถเมล์!</string>
     <string name="busSignDetection_info1">ถ้าหากคุณต้องการเรียกรถเมล์,</string>
     <string name="busSignDetection_info2">กรุณาแตะที่หน้าจอค้างไว้2วินาทีเพื่อปิดหน้าจอนี้</string>
     <string name="busSignDetection_speak">ถ้าหากคุณต้องการเรียกรถเมล์ กรุณาแตะที่หน้าจอค้างไว้2วินาทีเพื่อปิดหน้าจอนี</string>
+
     <!--alertCrosswalkDetection-->
     <string name="crosswalkDetection_header">ตรวจพบทางม้าลาย!</string>
     <string name="crosswalkDetection_info1">ถ้าหากคุณต้องการความช่วยเหลือ,</string>
@@ -264,8 +269,14 @@
 
     <!--alertGoToApp-->
     <string name="gotoApp_header">ตั้งต่าการนำทางเสร็จสิ้น</string>
-    <string name="gotoApp_subHeader">แตะที่หน้าจอเพื่อกลับเข้าใช้งานแอพพลิเคชั่นอีกครั้ง.</string>
-    <string name="gotoApp_speak">ตั้งต่าการนำทางเสร็จสิ้น กรุณาแตะที่หน้าจอเพื่อกลับไปที่แอพพลิเคชั่นอีกครั้ง.</string>
+    <string name="gotoApp_subHeader">แตะที่หน้าจอเพื่อกลับเข้าใช้งานแอปพลิเคชันอีกครั้ง.</string>
+    <string name="gotoApp_speak">ตั้งต่าการนำทางเสร็จสิ้น กรุณาแตะที่หน้าจอเพื่อกลับไปที่แอปพลิเคชันอีกครั้ง.</string>
+
+    <!--alertCritical-->
+    <string name="critical_username">ผู้ใช้งาน</string>
+    <string name="critical_title">: ได้ล้มลงไปสู้พื้น</string>
+    <string name="critical_call_ambulance">โทรเรียกรถพยาบาล</string>
+    <string name="critical_get_location">ขอตำแหน่งที่อยู่ปัจจุบัน</string>
 
     <!--MainPerson-->
     <string name="main_person_header">คนดูแล</string>
@@ -290,20 +301,19 @@
     <string name="empty_title">กรุณาตั้งชื่อตำแหน่งก่อนที่กดยืนยัน</string>
     <string name="search_btn">ยืนยันที่อยู่</string>
 
-
     <!--InroduceApp-->
     <string name="header_intro">Seeable คืออะไร</string>
     <string name="language_intro">EN | TH</string>
     <string name="next_intro_btn">ต่อไป ></string>
     <string name="skip_intro_btn">ข้าม</string>
-    <string name="subheading_slide_page_1">SeeAble เป็นแอพพลิเคชั่นที่ช่วยแจ้งเตือนอันตรายและสิ่งกีดขวางให้กับคนตาบอด</string>
-    <string name="content_page_1">แอพพลิเคชั่นนี้จะช่วยให้คนตาบอดมีความปลอดภัยเพิ่มมากขึ้น</string>
+    <string name="subheading_slide_page_1">SeeAble เป็นแอปพลิเคชันที่ช่วยแจ้งเตือนอันตรายและสิ่งกีดขวางให้กับคนตาบอด</string>
+    <string name="content_page_1">แอปพลิเคชันนี้จะช่วยให้คนตาบอดมีความปลอดภัยเพิ่มมากขึ้น</string>
     <string name="subheading_slide_page_2">เมื่อเราตรวจพบอันตรายหรือสิ่งกีดขวาง เราจะแจ้งเตือนคุณด้วยเสียงและบอกสิ่งที่จำเป็นต่อคนตาบอด</string>
     <string name="content_page_2">ภาษาที่รองรับ : ไทย,อังกฤษ</string>
     <string name="subheading_slide_page_3">เมื่อคุณเกิดอุบัติเหตุและล้มลง อุปกรณ์จะโทรออกเพื่อขอความช่วยเหลือและส่งข้อความแจ้งเตือนให้แก่ผู้ดูแล</string>
     <string name="content_page_3">ข้อมูลทั้งหมดรวมถึงเหตุการณ์ต่างๆและสถานการณ์วิกฤตจะถูกส่งไปยังผู้ดูแลที่คุณผูกไว้</string>
-    <string name="subheading_slide_page_4">คนตาบอดสามารถใช้แอพพลิเคชั่นเพื่อโทรออกและนำทางกลับไปสู่บ้านได้</string>
-    <string name="content_page_4">แอพพลิเคชั่นจะมีปุ่มไว้สำหรับให้คนตาบอดใช้เพื่อโทรออก,นำทางกลับบ้านหรือส่งข้อมูลเหตุการณ์ต่างๆให้กับผู้ดูแลได้</string>
+    <string name="subheading_slide_page_4">คนตาบอดสามารถใช้แอปพลิเคชันเพื่อโทรออกและนำทางกลับไปสู่บ้านได้</string>
+    <string name="content_page_4">แอปพลิเคชันจะมีปุ่มไว้สำหรับให้คนตาบอดใช้เพื่อโทรออก,นำทางกลับบ้านหรือส่งข้อมูลเหตุการณ์ต่างๆให้กับผู้ดูแลได้</string>
     <string name="subheading_slide_page_5">ผู้ดูแลจะได้รับข้อมูลเหตุการณ์หรือสถานะของคนตาบอดที่ผูกกันไว้</string>
     <string name="content_page_5">ผู้ดูแลสามารถดูข้อมูลและข้อมูลเหตุการณ์ที่ส่งมาจากคนตาบอดและตอบกลับหรือช่วยเหลือคนตาบอดได้</string>
 </resources>

@@ -31,10 +31,14 @@ class NotificationService : NotificationListenerService() {
 
     private lateinit var context: Context
     private lateinit var sharedPrefNavigate : SharedPreferences
+
     var textToSpeech: TextToSpeech? = null
     private var phone: String = ""
     private lateinit var database: DatabaseReference
     private lateinit var listener: ValueEventListener
+
+    private lateinit var language : String
+    private lateinit var sharedPrefLanguage: SharedPreferences
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
@@ -72,12 +76,15 @@ class NotificationService : NotificationListenerService() {
             msgrcv.putExtra("text", text)
             LocalBroadcastManager.getInstance(context!!).sendBroadcast(msgrcv)
             if(pack == "com.estazo.project.seeable.app" && checkCritical == "Critical"){
-                dialog()
-//                val regexCritical = "Critical".toRegex()
-//                val checkCritical = regexCritical.find(text)?.value.toString()
 
                 val info = text.substring(5)
                 phone = info
+
+                val username = title.split(":".toRegex()).toTypedArray()
+                val name  = username[0]
+                Log.i("notificationServiceInfo","username :$username , name : $name")
+                dialog(name)
+
             }
             if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation"){
                 Log.d("notificationServiceInfo", "OK JA")
@@ -97,7 +104,7 @@ class NotificationService : NotificationListenerService() {
         Log.i("notificationService"," call destroy")
     }
 
-    private fun dialog() {
+    private fun dialog(name: String) {
 
         val dialogBuilder = AlertDialog.Builder(this)
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_critical_event, null)
@@ -121,6 +128,18 @@ class NotificationService : NotificationListenerService() {
         dialog.setCancelable(false)
         dialog.show()
 
+        sharedPrefLanguage = getSharedPreferences("value", 0)
+        language = sharedPrefLanguage.getString("stringKey", "not found!").toString()
+
+        when(language){
+            "en"->{mDialogView.titleInfo.text = ": has been fell"
+                mDialogView.callAmbulance.text = "Call Ambulance"
+                mDialogView.getLocation.text = "Get Location"}
+            "th"->{ mDialogView.titleInfo.text = ": ได้ล้มลงไปสู่พื้น"
+                mDialogView.callAmbulance.text = "โทรเรียกรถพยาบาล"
+                mDialogView.getLocation.text = "ขอตำแหน่งที่อยู่ปัจจุบัน"}
+        }
+        mDialogView.username.text = name
 
         mDialogView.callAmbulance.setOnClickListener{
             Log.i("dialog","click call Ambulance ja")
@@ -134,7 +153,6 @@ class NotificationService : NotificationListenerService() {
         mDialogView.getLocation.setOnClickListener{
             Log.i("dialog","click get Location ja , phone :$phone")
             dialog.dismiss()
-            var location =  ""
 
             database = Firebase.database.reference
             listener = database.child("users_blind/$phone/Device").addValueEventListener(object : ValueEventListener {
@@ -159,8 +177,6 @@ class NotificationService : NotificationListenerService() {
                     Log.d("checkUser_Main_FD","onCancelled call")
                 }
             })
-
-//            database.child("users_blind/$phone/Device").removeEventListener(listener)
 
         }
 
@@ -187,6 +203,17 @@ class NotificationService : NotificationListenerService() {
         dialogWindow.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
+
+        sharedPrefLanguage = getSharedPreferences("value", 0)
+        language = sharedPrefLanguage.getString("stringKey", "not found!").toString()
+
+        when(language){
+            "en"->{mDialogView.title.text = "Navigation has been set"
+                mDialogView.subtitle.text = "Press to go back to the app."
+               }
+            "th"->{mDialogView.title.text = "ตั้งค่าการนำทางเสร็จสิ้น"
+                mDialogView.subtitle.text = "แตะที่หน้าจอเพื่อกลับเข้าใช้งานแอปพลิเคชันอีกครั้ง."}
+        }
 
         textToSpeech = TextToSpeech(this, TextToSpeech.OnInitListener { status ->
             if (status != TextToSpeech.ERROR) {
