@@ -59,7 +59,7 @@ class NotificationService : NotificationListenerService() {
         val regexCritical = "Critical".toRegex()
         val checkCritical = regexCritical.find(title)?.value.toString()
 
-        Log.i("notificationService"," pack : $pack , title : $title" +
+        Log.d("notificationServiceInfo"," pack : $pack , title : $title" +
                 " , text : $text , regEX -> matchResult : $matchResult , checkNavigation : $checkNavigation ")
 
         if ( title != "null" && text != "null"){
@@ -80,7 +80,7 @@ class NotificationService : NotificationListenerService() {
                 phone = info
             }
             if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation"){
-                Log.i("notificationService", "OK JA")
+                Log.d("notificationServiceInfo", "OK JA")
                 alertDialogBack()
             }
         }
@@ -88,8 +88,8 @@ class NotificationService : NotificationListenerService() {
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
         Log.i("notificationService", "Notification Removed")
-        val launchIntent = packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")
-        startActivity(launchIntent)
+//        val launchIntent = packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")
+//        startActivity(launchIntent)
     }
 
     override fun onDestroy() {
@@ -117,6 +117,8 @@ class NotificationService : NotificationListenerService() {
 
         dialogWindow.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
         dialog.show()
 
 
