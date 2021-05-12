@@ -4,20 +4,29 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <permission
         android:name="in.wptrafficanalyzer.locationattouchedpositionv2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="in.wptrafficanalyzer.locationattouchedpositionv2.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -31,57 +40,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Register.LittleMore"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Register.SendOTP"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Register.SignedIn"
-            android:screenOrientation="portrait"/>
+
         <activity
-            android:name=".Register.VerificationOTP"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".IntroduceApp"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SearchLocation"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Register.GoogleRegisterPerson"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Register.GoogleRegisterBlind"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".GoogleMapScreen"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".MainActivityPerson"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Login.LoginScreen"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Login.SignoutByGmail"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Login.SigninByGmail"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".CameraTest"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".AboutScreen"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".SettingScreen"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Register.SelectRegister"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".SplashScreen"
-            android:configChanges="orientation|screenSize"
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -89,16 +51,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Register.RegisterPerson"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".Register.RegisterBlind"
-            android:configChanges="orientation|screenSize" />
-        <activity
-            android:name=".MainActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -109,6 +61,21 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
+        <!-- [START firebase_service] -->
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service> <!-- [END firebase_service] -->
+        <service
+            android:name=".NotificationService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

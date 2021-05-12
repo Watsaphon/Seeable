@@ -7,4 +7,7 @@
     <!--   theme UI controls like checkboxes and text fields -->
     <color name="colorAccent">#42B0FF</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="txtDisplay">#3DADFF</color>
+    <color name="addButton">#90caf9</color>
+
 </resources>

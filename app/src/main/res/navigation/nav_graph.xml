@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_caretaker"
+    app:startDestination="@id/splashScreen"
+    >
+<!--    app:startDestination="@id/splashScreen"-->
+    <fragment
+        android:id="@+id/settingCaretakerFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.SettingCaretakerFragment"
+        android:label="SettingCaretakerFragment"
+        tools:layout="@layout/fragment_setting_caretaker"
+        >
+        <action
+            android:id="@+id/action_settingCaretakerFragment_to_blindListFragment"
+            app:destination="@id/blindListFragment" />
+        <action
+            android:id="@+id/action_settingCaretakerFragment_to_accountSettingFragment"
+            app:destination="@id/accountSettingFragment" />
+        <action
+            android:id="@+id/action_settingCaretakerFragment_to_loginScreen"
+            app:destination="@id/loginScreen"
+            app:popUpTo="@id/loginScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/blindListFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.BlindListFragment"
+        android:label="BlindListFragment"
+        tools:layout="@layout/fragment_blind_list"
+        >
+        <action
+            android:id="@+id/action_blindListFragment_to_addBlindUserFragment"
+            app:destination="@id/addBlindUserFragment" />
+        <action
+            android:id="@+id/action_blindListFragment_to_blindInformationFragment"
+            app:destination="@id/blindInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountSettingFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingFragment"
+        android:label="AccountSettingFragment"
+        tools:layout="@layout/fragment_account_setting"
+        >
+        <action
+            android:id="@+id/action_accountSettingFragment_to_accountSettingChangePasswordFragment"
+            app:destination="@id/accountSettingChangePasswordFragment" />
+        <action
+            android:id="@+id/action_accountSettingFragment_to_accountSettingDeleteFragment"
+            app:destination="@id/accountSettingDeleteFragment" />
+        <action
+            android:id="@+id/action_accountSettingFragment_to_accountSettingEditFragment"
+            app:destination="@id/accountSettingEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountSettingChangePasswordFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingChangePasswordFragment"
+        android:label="AccountSettingChangePasswordFragment"
+        tools:layout="@layout/fragment_account_setting_change_password"
+        />
+    <fragment
+        android:id="@+id/accountSettingDeleteFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingDeleteFragment"
+        android:label="AccountSettingDeleteFragment"
+        tools:layout="@layout/fragment_account_setting_delete"
+        >
+        <action
+            android:id="@+id/action_accountSettingDeleteFragment_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountSettingEditFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingEditFragment"
+        android:label="AccountSettingEditFragment"
+        tools:layout="@layout/fragment_account_setting_edit"
+        />
+    <fragment
+        android:id="@+id/addBlindUserFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.AddBlindUserFragment"
+        android:label="AddBlindUserFragment"
+        tools:layout="@layout/fragment_add_blind_user"
+        >
+        <action
+            android:id="@+id/action_addBlindUserFragment_to_verificationBlindFragment"
+            app:destination="@id/verificationBlindFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationBlindFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.VerificationBlindFragment"
+        android:label="VerificationBlindFragment"
+        tools:layout="@layout/fragment_verification_blind"
+        >
+        <action
+            android:id="@+id/action_verificationBlindFragment_to_caretakerFragment"
+            app:destination="@id/caretakerFragment"
+            app:popUpTo="@id/blindListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/blindInformationFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.BlindInformationFragment"
+        android:label="BlindInformationFragment"
+        tools:layout="@layout/fragment_blind_information"
+        >
+        <argument
+            android:name="phoneBlind"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_blindInformationFragment_to_searchLocationCaretakerFragment"
+            app:destination="@id/searchLocationCaretakerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.estazo.project.seeable.app.SplashScreen"
+        android:label="activity_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreen_to_caretakerFragment"
+            app:destination="@id/caretakerFragment"
+            app:popUpTo="@id/splashScreen" />
+        <action
+            android:id="@+id/action_splashScreen_to_loginScreen"
+            app:destination="@id/loginScreen"
+            app:popUpTo="@id/splashScreen" />
+        <action
+            android:id="@+id/action_splashScreen_to_blindFragment"
+            app:destination="@id/blindFragment"
+            app:popUpTo="@id/splashScreen" />
+        <action
+            android:id="@+id/action_splashScreen_to_introduceAppFragment"
+            app:destination="@id/introduceAppFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginScreen"
+        android:name="com.estazo.project.seeable.app.login.LoginScreen"
+        android:label="fragment_login_screen"
+        tools:layout="@layout/fragment_login_screen" >
+        <action
+            android:id="@+id/action_loginScreen_to_caretakerFragment"
+            app:destination="@id/caretakerFragment"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginScreen_to_blindFragment"
+            app:destination="@id/blindFragment"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginScreen_to_sendOTP"
+            app:destination="@id/sendOTP"
+            app:popUpTo="@id/loginScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/blindFragment"
+        android:name="com.estazo.project.seeable.app.blind.BlindFragment"
+        android:label="fragment_blind"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_blind" >
+        <action
+            android:id="@+id/action_blindFragment_to_settingBlindFragment2"
+            app:destination="@id/settingBlindFragment2"
+            app:popUpTo="@id/blindFragment"
+            />
+        <action
+            android:id="@+id/action_blindFragment_to_navigateBlindFragment"
+            app:destination="@id/navigateBlindFragment"
+            app:popUpTo="@id/blindFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/caretakerFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.CaretakerFragment"
+        android:label="fragment_caretaker"
+        tools:layout="@layout/fragment_caretaker" >
+        <action
+            android:id="@+id/action_caretakerFragment_to_settingCaretakerFragment"
+            app:destination="@id/settingCaretakerFragment"
+            app:popUpTo="@id/caretakerFragment" />
+        <action
+            android:id="@+id/action_caretakerFragment_to_addBlindUserFragment"
+            app:destination="@id/addBlindUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingBlindFragment2"
+        android:name="com.estazo.project.seeable.app.blind.settingBlind.SettingBlindFragment"
+        android:label="SettingBlindFragment"
+        tools:layout="@layout/fragment_setting_blind"
+        >
+        <action
+            android:id="@+id/action_settingBlindFragment2_to_accountBlindFragment"
+            app:destination="@id/accountBlindFragment" />
+        <action
+            android:id="@+id/action_settingBlindFragment2_to_searchLocationFragment"
+            app:destination="@id/searchLocationFragment" />
+        <action
+            android:id="@+id/action_settingBlindFragment2_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/introduceAppFragment"
+        android:name="com.estazo.project.seeable.app.login.IntroduceAppFragment"
+        android:label="fragment_introduce_app"
+        tools:layout="@layout/fragment_introduce_app" >
+        <action
+            android:id="@+id/action_introduceAppFragment_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/sendOTP"
+        android:name="com.estazo.project.seeable.app.register.SendOTPFragment"
+        android:label="SendOTP"
+        tools:layout="@layout/fragment_send_o_t_p"
+        >
+        <action
+            android:id="@+id/action_sendOTP_to_verificationOTP"
+            app:destination="@id/verificationOTP" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationOTP"
+        android:name="com.estazo.project.seeable.app.register.VerificationOTPFragment"
+        android:label="VerificationOTP"
+        tools:layout="@layout/fragment_verification_o_t_p"
+        >
+        <action
+            android:id="@+id/action_verificationOTP_to_littleMore"
+            app:destination="@id/littleMore" />
+        <argument
+            android:name="mobile"
+            app:argType="string" />
+        <argument
+            android:name="OTP"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/littleMore"
+        android:name="com.estazo.project.seeable.app.register.LittleMoreFragment"
+        android:label="LittleMore"
+        tools:layout="@layout/fragment_little_more"
+        >
+        <argument
+            android:name="mobile"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_littleMore_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountBlindFragment"
+        android:name="com.estazo.project.seeable.app.blind.settingBlind.AccountBlindFragment"
+        android:label="AccountBlindFragment"
+        tools:layout="@layout/fragment_account_blind"
+        >
+        <action
+            android:id="@+id/action_accountBlindFragment_to_changePasswordAccountBlindFragment"
+            app:destination="@id/changePasswordAccountBlindFragment" />
+        <action
+            android:id="@+id/action_accountBlindFragment_to_deleteAccountBlindFragment"
+            app:destination="@id/deleteAccountBlindFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordAccountBlindFragment"
+        android:name="com.estazo.project.seeable.app.blind.settingBlind.ChangePasswordAccountBlindFragment"
+        android:label="ChangePasswordAccountBlindFragment"
+        tools:layout="@layout/fragment_change_password_account_blind"
+        >
+        <action
+            android:id="@+id/action_changePasswordAccountBlindFragment_to_blindFragment"
+            app:destination="@id/blindFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deleteAccountBlindFragment"
+        android:name="com.estazo.project.seeable.app.blind.settingBlind.DeleteAccountBlindFragment"
+        android:label="DeleteAccountBlindFragment"
+        tools:layout="@layout/fragment_delete_account_blind"
+        >
+        <action
+            android:id="@+id/action_deleteAccountBlindFragment_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchLocationFragment"
+        android:name="com.estazo.project.seeable.app.blind.settingBlind.SearchLocationFragment"
+        android:label="SearchLocationFragment"
+        tools:layout="@layout/fragment_search_location"
+        >
+        <action
+            android:id="@+id/action_searchLocationFragment_to_blindFragment"
+            app:destination="@id/blindFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchLocationCaretakerFragment"
+        android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.SearchLocationCaretakerFragment"
+        android:label="SearchLocationCaretakerFragment"
+        tools:layout="@layout/fragment_search_location_caretaker"
+        >
+        <argument
+            android:name="phoneBlind"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigateBlindFragment"
+        android:name="com.estazo.project.seeable.app.blind.NavigateBlindFragment"
+        android:label="NavigateBlindFragment"
+        tools:layout="@layout/fragment_navigate_blind"
+        >
+        <action
+            android:id="@+id/action_navigateBlindFragment_to_alertFragment"
+            app:destination="@id/alertFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/alertFragment"
+        android:name="com.estazo.project.seeable.app.blind.AlertFragment"
+        android:label="fragment_alert"
+        tools:layout="@layout/fragment_alert" >
+        <argument
+            android:name="detect"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_alertFragment_to_blindFragment2"
+            app:destination="@id/blindFragment" />
+    </fragment>
+
+</navigation>

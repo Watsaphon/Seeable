@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="SplashTheme" parent="AppTheme">
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@drawable/splash_screen</item>
@@ -16,26 +16,26 @@
 
     <style name="CustomSelfNavButton1" parent = "@android:style/Widget.Button">
         <item name="android:padding">20dp</item>
-        <item name="android:drawable">@drawable/button_custom</item>
+        <item name="android:drawable">@drawable/setting_button</item>
         <item name="android:background">#6CCC4A</item>
     </style>
 
     <style name="CustomCareNavButton" parent = "@android:style/Widget.Button">
         <item name="android:padding">20dp</item>
-        <item name="android:drawable">@drawable/button_custom</item>
+        <item name="android:drawable">@drawable/setting_button</item>
         <item name="android:background">@android:color/holo_orange_light</item>
     </style>
 
     <style name="CustomCallEmergency" parent = "@android:style/Widget.Button">
         <item name="android:padding">20dp</item>
-        <item name="android:drawable">@drawable/button_custom</item>
+        <item name="android:drawable">@drawable/setting_button</item>
         <item name="android:background">@android:color/holo_red_light</item>
 
     </style>
 
     <style name="CustomSendLocation" parent = "@android:style/Widget.Button">
         <item name="android:padding">20dp</item>
-        <item name="android:drawable">@drawable/button_custom</item>
+        <item name="android:drawable">@drawable/setting_button</item>
         <item name="android:background">@android:color/holo_blue_light</item>
     </style>
 
@@ -49,6 +49,90 @@
         <item name="android:background">@drawable/under_line_black</item>
     </style>
 
+    <style name="UnderLineSetting">
+        <item name="android:textColor">#3498db</item>
+        <item name="android:background">@drawable/under_line_setting</item>
+    </style>
+
+    <style name="settingBlindButton">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textColor">@drawable/text_change_button</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:background">@null</item>
+
+    </style>
+
+    <style name="AccountBlind_Name">
+        <item name="android:textColor">#3DADFF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AccountBlind_Info">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">18dp</item>
+
+    </style>
+
+    <style name="AccountBlind_Button">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ChangePassword_txt">
+        <item name="android:textColor">#404040</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Listname_blind">
+        <item name="android:background">@drawable/round_list_name</item>
+    </style>
+
+    <style name="deleteAccountButton">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textColor">@drawable/delete_account_button</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="required">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textColor">#FF0000</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="alertDialogDelete">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@drawable/txt_change_alert_dialog_delete_blind_user</item>
+    </style>
 
 
 </resources>

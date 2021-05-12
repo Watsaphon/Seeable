@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CaretakerFragment"
+    tools:context=".caretaker.CaretakerFragment"
+    >
+
+    <data>
+        <variable
+            name="caretakerFragment"
+            type="com.estazo.project.seeable.app.caretaker.CaretakerFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <View
+                android:id="@+id/vector_3"
+                android:layout_width="360dp"
+                android:layout_height="80dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:background="@drawable/vector_3"
+                android:elevation="0dp" />
+
+            <View
+                android:id="@+id/setting"
+                android:layout_width="66dp"
+                android:layout_height="74dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="51dp"
+                android:layout_marginBottom="-5dp"
+                android:background="@drawable/setting_button"
+                />
+
+            <View
+                android:id="@+id/notify"
+                android:layout_width="56dp"
+                android:layout_height="66dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="61dp"
+                android:layout_marginBottom="5dp"
+                android:background="@mipmap/notify_icon_foreground" />
+
+
+            <ImageButton
+                android:id="@+id/activity_walking"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="178dp"
+                android:background="@mipmap/activity_walking_foreground"
+                />
+
+            <ImageButton
+                android:id="@+id/health_status"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="179dp"
+                android:background="@mipmap/health_status_foreground" />
+
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="500px"
+                android:layout_height="500px"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="50px"
+                android:layout_marginTop="119dp"
+                android:layout_marginEnd="50px"
+                app:srcCompat="@mipmap/bpm_example_foreground" />
+
+            <TextView
+                android:id="@+id/bpm_number"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_alignStart="@+id/imageView5"
+                android:layout_alignTop="@+id/imageView5"
+                android:layout_alignEnd="@+id/imageView5"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="70dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="---"
+                android:textSize="70sp" />
+
+            <TextView
+                android:id="@+id/unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bpm_number"
+                android:layout_alignBottom="@+id/imageView5"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="140dp"
+                android:layout_marginBottom="30dp"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="BPM"
+                android:textColor="#E31B1B"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="108px"
+                android:layout_height="108px"
+                android:layout_above="@+id/vector_3"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="25dp"
+                app:srcCompat="@mipmap/listname_foreground" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                style="@style/Listname_blind"
+                android:layout_width="wrap_content"
+                android:layout_height="108px"
+                android:layout_above="@+id/vector_3"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="25dp"
+                android:layout_toEndOf="@+id/profileImage" />
+
+            <TextView
+                android:id="@+id/loading"
+                android:layout_width="250dp"
+                android:layout_height="108px"
+                android:layout_above="@+id/vector_3"
+                android:layout_toEndOf="@+id/profileImage"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="25dp"
+                android:text="Loading..."
+                android:fontFamily="serif"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="20sp"
+                />
+            <!--            <TextView-->
+<!--                android:id="@+id/user2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                visibility="gone"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:id="@+id/user3"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                visibility="gone"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:id="@+id/user4"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                visibility="gone"-->
+<!--                />-->
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "566674484831-ne7f8m7m3k55kkkbmfbqligj4vmovt1f.apps.googleusercontent.com",
+          "client_id": "566674484831-i9mu04f50kuu3ap5k5rk8u7qnh8lpke6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.estazo.project.seeable.app",
-            "certificate_hash": "544a31a2c21c569514515538e3b9cecd578c79a0"
+            "certificate_hash": "62ced4c13d1686881ed9c3bfd79de947eb458ef7"
           }
         },
         {
@@ -28,6 +28,22 @@
           "android_info": {
             "package_name": "com.estazo.project.seeable.app",
             "certificate_hash": "e0abc3b1ab7d296206de4efc15a8b0ffa763d251"
+          }
+        },
+        {
+          "client_id": "566674484831-ne7f8m7m3k55kkkbmfbqligj4vmovt1f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.estazo.project.seeable.app",
+            "certificate_hash": "544a31a2c21c569514515538e3b9cecd578c79a0"
+          }
+        },
+        {
+          "client_id": "566674484831-qs5nr9bandm44sp1c74i9mumki0b4ins.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.estazo.project.seeable.app",
+            "certificate_hash": "2b2b03ae5b539658c7a3fca6bc3f102d28a8773a"
           }
         },
         {
@@ -44,7 +60,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "566674484831-fdmbpi1p8puljjsun9a1tu3r8o266lfg.apps.googleusercontent.com",
+              "client_id": "566674484831-boloq55e4fgmsi86ludcp175kvcmke99.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

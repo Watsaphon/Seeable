@@ -14,27 +14,158 @@
     <string name="blinder_button_desc">Blind</string>
     <string name="person_button_desc">Caretaker</string>
     <string name="loading_spinner">Loading...</string>
-    <string name="required">(Required)</string>
-
 
     <!--MainActivity-->
     <string name="button_self_navigation">Self-Navigate</string>
     <string name="button_caretaker_navigation">Caretaker-Navigate</string>
     <string name="button_emergency_call">Call Emergency</string>
     <string name="button_shared_locatoin">Send Location</string>
+    <string name="locatoin_null">Please set your location before use Navigation.</string>
+    <string name="check_setName">Please fill your name.</string>
+    <string name="enable_notifications_access">Please Enable Notification Access at Seeable.</string>
 
 
+    <!--SettingBlind-->
+    <string name="header_SettingBlind">Setting</string>
+    <string name="button_change_language_blind">Languages</string>
+    <string name="button_account">Account</string>
+    <string name="button_set_location">Set Location</string>
+    <string name="button_manage_user">Manage Caretaker User</string>
+    <string name="button_delete_account">Delete Account</string>
+    <string name="button_log_out_blind">Log out</string>
 
+    <!--SettingCaretaker-->
+    <string name="header_SettingCaretaker">Setting</string>
+    <string name="button_change_language_caretaker">Languages</string>
+    <string name="button_blind_list_caretaker">Blind List</string>
+    <string name="button_account_setting">Account Setting</string>
+    <string name="button_about">About</string>
+    <string name="button_log_out_caretaker">Logout</string>
+
+    <!--AccountSettingCaretaker-->
+    <string name="header_AccountSettingCaretaker">Account setting</string>
+    <string name="button_edit_displayName_caretaker">Edit Display name</string>
+    <string name="button_change_password_caretaker">Change password</string>
+    <string name="button_delete_account_caretaker">Delete Account</string>
+
+    <!--AccountSettingEditCaretaker-->
+    <string name="header_AccountSettingEditCaretaker">Edit Display name</string>
+    <string name="edit_displayName_AccountSettingEditCaretaker">Display Name</string>
+    <string name="empty_displayName_AccountSettingEditCaretaker">Please! enter your display name</string>
+    <string name="successfully_AccountSettingEditCaretaker">Display name changed successfully!</string>
+    <string name="save_AccountSettingEditCaretaker">Save</string>
+
+    <!--AccountSettingChangePasswordCaretaker-->
+    <string name="header_AccountSettingChangePasswordCaretaker">Change password</string>
+    <string name="edit_oldPassword_AccountSettingChangePasswordCaretaker">Old password</string>
+    <string name="edit_newPassword_AccountSettingChangePasswordCaretaker">New password</string>
+    <string name="edit_confirm_AccountSettingChangePasswordCaretaker">Confirm password</string>
+    <string name="save_AccountSettingChangePasswordCaretaker">Save</string>
+
+    <!--AccountSettingDeleteCaretaker-->
+    <string name="header_AccountSettingDeleteCaretaker">Delete Account</string>
+    <string name="subheader_AccountSettingEditCaretaker">Caution</string>
+    <string name="info_AccountSettingEditCaretaker">Are you really sure to delete the account?
+        If you delete account, you will lost all of your progress and data. Type your password and
+        press “Delete account” to confirm</string>
+    <string name="wrong_password_AccountSettingEditCaretaker">Password is incorrect</string>
+    <string name="empty_password_AccountSettingEditCaretaker">Please! enter your password</string>
+    <string name="delete_AccountSettingEditCaretaker">Delete account</string>
+
+    <!--BlindListCaretaker-->
+    <string name="header_BlindListCaretaker">Blind list</string>
+    <string name="add_BlindListCaretaker">+ ADD</string>
+
+    <!--AddBlindUser-->
+    <string name="header_AddBlindUser">Add new blind</string>
+    <string name="button_AddBlindUser">Send OTP</string>
+    <string name="empty_AddBlindUser">Please enter phone</string>
+    <string name="txt_AddBlindUser">To add new blind, type blind’s number to receive 6-digit OTP code via SMS.
+        Then enter the OTP code to confirm request.</string>
+
+    <!--VerificationBlindFragment-->
+    <string name="header_VerificationBlindFragment">OTP Confirmation</string>
+    <string name="subHeader_VerificationBlindFragment">Please enter 6 digit OTP from blind’s phone to confirm to add new blind</string>
+    <string name="button_VerificationBlindFragment">Submit</string>
+
+    <!--BlindInformationFragment-->
+    <string name="header_BlindInformationFragment">Blind Information</string>
+    <string name="name_BlindInformationFragment">Name : </string>
+    <string name="displayName_BlindInformationFragment"> not found! </string>
+    <string name="phone_BlindInformationFragment">Phone : 012XXXXXXX</string>
+    <string name="role_BlindInformationFragment">Role : Blind</string>
+    <string name="nav_BlindInformationFragment">Navigation List</string>
+    <string name="add_BlindInformationFragment">ADD +</string>
+    <string name="update_empty_BlindInformationFragment">Please fill your new name.</string>
+    <string name="update_same_BlindInformationFragment">The new name can\'t be the same as your old name.</string>
+    <string name="update_success_BlindInformationFragment">Update name successfully.</string>
+    <string name="edit_blind_BlindInformationFragment">you can\'t edit this blind destination.</string>
+    <string name="delete_blind_BlindInformationFragment">you can\'t delete this blind destination.</string>
+
+    <!--NavigationEditFragment-->
+    <string name="header_NavigationEditFragment">Navigation Edit</string>
+
+    <!--AccountBlind-->
+    <string name="header_AccountBlind">Account Setting</string>
+    <string name="name_AccountBlind">Name : </string>
+    <string name="displayName_AccountBlind">not found ! </string>
+    <string name="phone_AccountBlind">Phone : 012XXXXXXX</string>
+    <string name="role_AccountBlind">Role : Blind</string>
+    <string name="btn_edit_AccountBlind">Edit name</string>
+    <string name="btn_pass_AccountBlind">Change password</string>
+    <string name="btn_delete_AccountBlind">Delete user</string>
+
+    <!--EditNameAccountBlind-->
+    <string name="header_editDisplayName">Edit name</string>
+    <string name="hint_editDisplayName"> username</string>
+    <string name="btn_editDisplayName">Save</string>
+    <string name="check_same_editDisplayName">Old name and new name cannot be same</string>
+    <string name="check_null_editDisplayName">Please enter new name</string>
+
+    <!--ChangePasswordAccountBlind-->
+    <string name="header_ChangePassword">Change password</string>
+    <string name="text_currentPassword">Current password</string>
+    <string name="text_newPassword">New password</string>
+    <string name="btn_ChangePassword">Save</string>
+    <string name="required_ChangePassword">(Required)</string>
+    <string name="checkNull_current_ChangePassword">Please fill your current password.</string>
+    <string name="checkNull_new_ChangePassword">Please fill your new password.</string>
+    <string name="check_current_ChangePassword">Your current password is incorrect.</string>
+    <string name="check_new_ChangePassword">The new password cannot be the same as the old password.</string>
+
+    <string name="old_empty_ChangePassword"> Please! fill your old password </string>
+    <string name="new_empty_ChangePassword">Please! fill your new password</string>
+    <string name="confirm_empty_ChangePassword">Please! fill your confirm password</string>
+    <string name="old_incorrect_ChangePassword">your old password is incorrect</string>
+    <string name="newPassword_incorrect_ChangePassword">The new password does not match the confirmation</string>
+    <string name="password_same_ChangePassword">New password must difference from old password</string>
+    <string name="successfully_ChangePassword">Password changed successfully!</string>
+
+    <!--deleteAccountBlind-->
+    <string name="header_DeleteAccountBlind">Delete account</string>
+    <string name="subheader_DeleteAccountBlind">Caution</string>
+    <string name="warning_DeleteAccountBlind">Are you really sure to delete the account?
+        If you delete account, you will lost all of your progress and data. Type your password and
+        press “Delete account” to confirm</string>
+    <string name="hint_DeleteAccountBlind">Password...</string>
+    <string name="btn_DeleteAccountBlind">Delete account</string>
+    <string name="checkPassword_DeleteAccountBlind">Your password is incorrect.</string>
+
+    /**START_REGISTER*/
     <!--SendOTP-->
     <string name="header_SendOTP">Registration</string>
     <string name="subheader_SendOTP">Please type your phone number to register. The app will send OTP code to confirm the account</string>
     <string name="button_SendOTP">Send OTP</string>
-
+    <string name="empty_SendOTP">Enter Phone</string>
+    <string name="completed_SendOTP">Verification completed</string>
+    <string name="failed_SendOTP">Verification failed</string>
+    <string name="sent_SendOTP">Code sent</string>
     <!--VerifyOTP-->
     <string name="header_VerifyOTP">OTP Confirmation</string>
-    <string name="subheader_VerifyOTP">Please enter 6 digit OTP in your phone to proceed</string>
+    <string name="subHeader_VerifyOTP">Please enter 6 digit OTP in your phone to proceed</string>
+    <string name="empty_VerifyOTP">Please Enter verification code</string>
     <string name="button_VerifyOTP">Submit</string>
-
+    <string name="incorrect_VerifyOTP">Incorrect OTP</string>
     <!--LittleMore-->
     <string name="header_LittleMore">Little more...</string>
     <string name="subheader_LittleMore">Select mode</string>
@@ -42,8 +173,10 @@
     <string name="blind_LittleMore">Blind</string>
     <string name="care_LittleMore">Caretaker</string>
     <string name="hint_LittleMore">Password...</string>
-
     <string name="btn_LittleMore">Register</string>
+    <string name="empty_LittleMore">Please fill your password</string>
+    <string name="select_LittleMore">Please Select mode</string>
+    /**END_REGISTER*/
 
     <!--SelectRegister-->
     <string name="select_register_header">Choose Section</string>
@@ -101,6 +234,16 @@
     <string name="pairing_addnewBtn">Start Pairing</string>
     <string name="pairing_exitBtn">Exit</string>
 
+    <!--alertDeleteBlindUser-->
+    <string name="deleteBlind_header">Delete</string>
+    <string name="deleteBlind_subHeader">Do you want to remove this user from the blind list?</string>
+    <string name="deleteBlind_confirm">Confirm</string>
+    <string name="deleteBlind_cancel">Cancel</string>
+
+    <!--alertLastUser-->
+    <string name="alertLastUser_info">You need at least 1 blind to use caretaker mode.</string>
+
+
     <!--alertHomeLocation-->
     <string name="homeLocation_header">Home Location</string>
     <string name="homeLocation_subHeader">So that you can use this application most effectively.
@@ -111,6 +254,39 @@
     <string name="homeLocation_logoutBtn">Log Out</string>
     <string name="homeLocation_exitBtn">Exit</string>
 
+    <!--alertSetName-->
+    <string name="header_alertSetName">Add display name</string>
+    <string name="info_alertSetName">Or you can Change it later.</string>
+    <string name="btn_alertSetName">Confirm</string>
+
+    <!--alertFallDetection-->
+    <string name="fallDetection_header">Fall detected!</string>
+    <string name="fallDetection_info1">The event has been sent to caretakers.</string>
+    <string name="fallDetection_info2">Hold the screen if the problem solved.</string>
+    <string name="fallDetection_fine">The system canceled the notification to your caretakers.</string>
+
+    <!--alertBusSignDetection-->
+    <string name="busSignDetection_header">Bus sign detected!</string>
+    <string name="busSignDetection_info1">If you want to call a bus,</string>
+    <string name="busSignDetection_info2">please hold the screen for 2 seconds the screen to discard.</string>
+    <string name="busSignDetection_speak">If you want to call a bus , please hold the screen for 2 seconds the screen to discard.</string>
+    <!--alertCrosswalkDetection-->
+    <string name="crosswalkDetection_header">Crosswalk detected!</string>
+    <string name="crosswalkDetection_info1">If you need help,</string>
+    <string name="crosswalkDetection_info2">please triple tap the screen.but if you need to discard this screen,double tap the screen.</string>
+    <string name="crosswalkDetection_speak">If you need help,please triple tap the screen.but if you need to discard this screen,double tap the screen.</string>
+    <string name="crosswalkDetection_help"> Please help me to cross the street </string>
+
+    <!--alertGoToApp-->
+    <string name="gotoApp_header">Navigation has been set</string>
+    <string name="gotoApp_subHeader">Press to go back to the app.</string>
+    <string name="gotoApp_speak">Navigation has been set , Please press the screen to go back at seeable.</string>
+
+    <!--alertCritical-->
+    <string name="critical_username">User</string>
+    <string name="critical_title">: has been fell</string>
+    <string name="critical_call_ambulance">Call Ambulance</string>
+    <string name="critical_get_location">Get Location</string>
 
     <!--MainPerson-->
     <string name="main_person_header">Main Person</string>
@@ -131,7 +307,12 @@
 
     <!--SearchLocation-->
     <string name="search_box">Search...</string>
+    <string name="title_box">set title of location (Required)</string>
+    <string name="empty_mark">Please mark your location before click confirm</string>
+    <string name="empty_title">"Please set title of your location before click confirm</string>
     <string name="search_btn">Confirm Location</string>
+    <string name="search_update">Update location to :</string>
+
 
     <!--InroduceApp-->
     <string name="header_intro">What is Seeable ?</string>
@@ -148,4 +329,13 @@
     <string name="content_page_4">The app has buttons to let blinds can use for call, navigate or send event to caretaker.</string>
     <string name="subheading_slide_page_5">Caretakers receive event or status of blind person that in cover</string>
     <string name="content_page_5">Caretakers can see data and event that sent from blinds and response or help them.</string>
+
+    <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
+    <string name="msg_subscribe_failed" translatable="false">Failed to subscribe to share Location topic</string>
+    <string name="msg_subscribed" translatable="false">Subscribed to share Location topic</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="fcm_message" translatable="false">FCM Message</string>
+
+
+
 </resources>
