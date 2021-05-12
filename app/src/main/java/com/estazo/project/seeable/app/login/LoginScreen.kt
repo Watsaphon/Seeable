@@ -17,17 +17,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.SplashScreen
 import com.estazo.project.seeable.app.UserTypeViewModel
-import com.estazo.project.seeable.app.databinding.FragmentBlindBinding
 import com.estazo.project.seeable.app.databinding.FragmentLoginScreenBinding
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -40,9 +35,6 @@ class LoginScreen : Fragment() {
 
     private lateinit var binding: FragmentLoginScreenBinding
 
-    private lateinit var sharedPrefLanguage: SharedPreferences
-    private lateinit var auth: FirebaseAuth
-
     private lateinit var sharedPrefIntroApp: SharedPreferences
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPassword: SharedPreferences
@@ -51,27 +43,31 @@ class LoginScreen : Fragment() {
     private lateinit var sharedPrefUserType: SharedPreferences
     private lateinit var sharedPrefCaretakerUser: SharedPreferences
     private lateinit var sharedPrefEmptyList: SharedPreferences
+    private lateinit var sharedPrefLanguage: SharedPreferences
+
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var  mAlertDialog : AlertDialog
+
     private val viewModel : UserTypeViewModel by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Log.i("LoginScreen", "call onCreate")
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 // in here you can do logic when backPress is clicked
                 requireActivity().finishAffinity()
             }
         })
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login_screen, container, false)
-
         auth = FirebaseAuth.getInstance()
+        Log.i("LoginScreen", "call onCreateView")
 
         /** check first time use app */
         sharedPrefIntroApp = requireActivity().getSharedPreferences("value", 0)
@@ -109,36 +105,27 @@ class LoginScreen : Fragment() {
             binding.enTh.text = ssb
         }
 
-
-        /** check status */
-        val stringValue = sharedPrefLanguage.getString("stringKey", "not found!")
-        val stringValue2 = sharedPrefID.getString("stringKey2", "not found!")
-        Log.i("CheckUserID_login", "Current User ID  : $stringValue2")
-        Log.i("CheckLanguage_splash", "LoginScreen now language : $stringValue")
-
-        binding.loginFinishButton.setOnClickListener(View.OnClickListener { login() })
-        binding.regisButton.setOnClickListener(View.OnClickListener { register() })
-        binding.enTh.setOnClickListener(View.OnClickListener { changeLanguage() })
+        binding.loginFinishButton.setOnClickListener { login() }
+        binding.regisButton.setOnClickListener { register() }
+        binding.enTh.setOnClickListener { changeLanguage() }
 
         return binding.root
-        
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.i("LoginScreen", "call onViewCreated")
     }
 
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        Log.d("LoginScreen", "onStart currentUser is :$currentUser ")
+        Log.i("LoginScreen", "call -> onStart currentUser is :$currentUser ")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("LoginScreen", " onResumed ")
-
+        Log.i("LoginScreen", "call onResumed")
     }
 
     private fun register() {
@@ -156,7 +143,6 @@ class LoginScreen : Fragment() {
     /** change Language TH and EN  */
     private fun changeLanguage(){
         val language = sharedPrefLanguage.getString("stringKey", "not found!")
-        Log.i("CheckLanguage", "Now Language is :$language ")
         var locale: Locale? = null
         val editor = sharedPrefLanguage.edit()
         if (language=="en") {
@@ -184,7 +170,6 @@ class LoginScreen : Fragment() {
         //show dialog
         mAlertDialog  = mBuilder.show()
         mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-//        mAlertDialog.window!!.setLayout(400,300)
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
     }
@@ -196,25 +181,23 @@ class LoginScreen : Fragment() {
             val loginTel = binding.telBox.text.toString()
             val loginPassword = binding.passwordBox.text.toString()
             var count = 0
-            Log.i("LoginScreen_count","Before adding listener, count=$count")
+            Log.d("LoginScreen_count","Before adding listener, count=$count")
             if (dataSnapshot.exists()) {
                 for (snapshot in dataSnapshot.children) {
                     val phone = snapshot.child("phone").value.toString()
                     val password = snapshot.child("password").value.toString()
 
-                    Log.i("LoginScreen_count","In onDataChange, count=$count")
-                    Log.i("LoginScreen_count", "Username : $loginTel , Password : $loginPassword")
-                    Log.i("LoginScreen_count", "Database info :$phone,$password ")
+                    Log.d("LoginScreen_count","In onDataChange, count=$count")
+                    Log.d("LoginScreen_count", "Username : $loginTel , Password : $loginPassword")
+                    Log.d("LoginScreen_count", "Database info :$phone,$password ")
 
                     if (loginTel == phone && loginPassword == password){
                         val editorPhone = sharedPrefPhone.edit()
                         val editorPassword = sharedPrefPassword.edit()
                         val editorUserType = sharedPrefUserType.edit()
-
                         editorPhone.putString("stringKeyPhone", phone)
                         editorPassword.putString("stringKeyPassword", password)
                         editorUserType.putString("stringKeyType", "caretaker")
-
                         editorPhone.apply()
                         editorPassword.apply()
                         editorUserType.apply()
@@ -234,7 +217,7 @@ class LoginScreen : Fragment() {
                     }
                     ++count
                 }
-                Log.i("login_page_count","After adding listener, count=$count")
+                Log.d("LoginScreen_count","After adding listener, count=$count")
                 val countDatabase = dataSnapshot.childrenCount.toInt()
                 if(count==countDatabase){
                     /**if not found user in user_person -> find in users_blind */
@@ -252,17 +235,16 @@ class LoginScreen : Fragment() {
             val loginTel = binding.telBox.text.toString()
             val loginPassword = binding.passwordBox.text.toString()
             var count = 0
-            Log.i("LoginScreen_checkLogin","Before adding listener, count=$count")
+            Log.d("LoginScreen_count","Before adding listener, count=$count")
             if (dataSnapshot.exists()) {
                 for (snapshot in dataSnapshot.children) {
-//                    val id = snapshot.child("id").value.toString()
                     val phone = snapshot.child("phone").value.toString()
                     val password = snapshot.child("password").value.toString()
                     val displayName = snapshot.child("displayName").value.toString()
 
-                    Log.i("LoginScreen_checkLogin","In onDataChange, count=$count")
-                    Log.i("LoginScreen_checkLogin", "Username : $loginTel , Password : $loginPassword")
-                    Log.i("LoginScreen_checkLogin", "Database info :  $phone,$password ")
+                    Log.d("LoginScreen_count","In onDataChange, count=$count")
+                    Log.d("LoginScreen_count", "Username : $loginTel , Password : $loginPassword")
+                    Log.d("LoginScreen_count", "Database info :  $phone,$password ")
 
                     if (loginTel == phone && loginPassword == password){
                         Toast.makeText(activity, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
@@ -270,12 +252,10 @@ class LoginScreen : Fragment() {
                         val editorPassword = sharedPrefPassword.edit()
                         val editorDisplayName = sharedPrefDisplayName.edit()
                         val editorUserType = sharedPrefUserType.edit()
-
                         editorPhone.putString("stringKeyPhone", phone)
                         editorPassword.putString("stringKeyPassword", password)
                         editorDisplayName.putString("stringKeyDisplayName", displayName)
                         editorUserType.putString("stringKeyType", "blind")
-
                         editorPhone.apply()
                         editorPassword.apply()
                         editorDisplayName.apply()
@@ -295,11 +275,11 @@ class LoginScreen : Fragment() {
                     }
                     ++count
                 }
-                Log.i("LoginScreen_checkLogin","After adding listener, count=$count")
+                Log.i("LoginScreen_count","After adding listener, count=$count")
                 val countDatabase = dataSnapshot.childrenCount.toInt()
                 if(count==countDatabase){
-                    Log.i("LoginScreen_checkLogin","check count database, count=$countDatabase")
-                    Log.i("LoginScreen_checkLogin","check count for loop, count=$count")
+                    Log.d("LoginScreen_count","check count database, count=$countDatabase")
+                    Log.d("LoginScreen_count","check count for loop, count=$count")
                     Toast.makeText(activity, getString(R.string.login_incorrect), Toast.LENGTH_SHORT).show()
                     mAlertDialog.dismiss()
                 }

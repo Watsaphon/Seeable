@@ -4,20 +4,18 @@ import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentBlindInformationBinding
-import com.estazo.project.seeable.app.helperClass.Blind
-import com.estazo.project.seeable.app.register.LittleMoreFragmentArgs
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -32,14 +30,13 @@ class BlindInformationFragment : Fragment() {
 
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var sharedPrefPhone: SharedPreferences
+
     private lateinit var phoneCaretaker  : String
     private lateinit var language : String
-
+    private lateinit var phoneBlind : String
     private lateinit var selectPhoneBlind: String
     private lateinit var selectUsernameBlind: String
     private lateinit var  positionBlindUser : String
-
-    private lateinit var phoneBlind : String
 
     private lateinit var  mAlertDialog : AlertDialog
 
@@ -56,9 +53,7 @@ class BlindInformationFragment : Fragment() {
             val mobile = BlindInformationFragmentArgs.fromBundle(it).phoneBlind
             phoneBlind = mobile
         }
-        Log.i("BlindInformation", "phoneBlind : $phoneBlind")
-//        val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phoneBlind")
-//        query.addListenerForSingleValueEvent(valueEventListener)
+        Log.d("BlindInformation", "phoneBlind : $phoneBlind")
 
     }
 
@@ -116,10 +111,10 @@ class BlindInformationFragment : Fragment() {
         val ref = FirebaseDatabase.getInstance().reference
 
         binding.editBlind.setOnClickListener{
-            Toast.makeText(activity,"you can't edit this blind destination ",Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity,R.string.edit_blind_BlindInformationFragment,Toast.LENGTH_SHORT).show()
         }
         binding.deleteBlind.setOnClickListener{
-            Toast.makeText(activity,"you can't delete this blind destination ",Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity,R.string.delete_blind_BlindInformationFragment,Toast.LENGTH_SHORT).show()
         }
         binding.editCare.setOnClickListener{
             alertDialogLoading()
@@ -145,19 +140,14 @@ class BlindInformationFragment : Fragment() {
     private fun updateDisplayName() {
         binding.editName.visibility = View.VISIBLE
         binding.saveBtn.visibility = View.VISIBLE
-
         binding.displayName.visibility = View.GONE
         binding.editNameButton.visibility = View.GONE
-
         // Set the focus to the edit text.
         binding.editName.requestFocus()
-
     }
 
     private fun addDisplayName() {
-        val oldName : String = selectUsernameBlind
-        var updateName : String  = ""
-        updateName =  binding.editName.text.toString()
+        var updateName: String = binding.editName.text.toString()
 
         when {
             updateName.isEmpty() -> {
@@ -194,22 +184,16 @@ class BlindInformationFragment : Fragment() {
     private var valueEventListener: ValueEventListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
-
-                val titleBlind =
-                    dataSnapshot.child("Navigation/title_Navigate_blindUser").value.toString()
-                val locationBlind =
-                    dataSnapshot.child("Navigation/navigate_blindUser").value.toString()
-                val titleCaretaker =
-                    dataSnapshot.child("Navigation/title_Navigate_careUser").value.toString()
-                val locationCaretaker =
-                    dataSnapshot.child("Navigation/navigate_careUser").value.toString()
-                Log.i("BlindInformation", "titleBlind : $titleBlind , locationBlind : $locationBlind ," +
+                val titleBlind = dataSnapshot.child("Navigation/title_Navigate_blindUser").value.toString()
+                val locationBlind = dataSnapshot.child("Navigation/navigate_blindUser").value.toString()
+                val titleCaretaker = dataSnapshot.child("Navigation/title_Navigate_careUser").value.toString()
+                val locationCaretaker = dataSnapshot.child("Navigation/navigate_careUser").value.toString()
+                Log.d("BlindInformation", "titleBlind : $titleBlind , locationBlind : $locationBlind ," +
                         " titleCaretaker : $titleCaretaker , locationCaretaker : $locationCaretaker ")
                 var numUser : Int = 0
                 if(titleBlind != "-" && locationBlind != "-" ){
                     binding.blindNavigate.visibility = View.VISIBLE
                     binding.titleLocationBlind.text = "$titleBlind (only Blind)"
-//                    ++numUser
                 }
                 if(titleCaretaker != "-" && locationCaretaker != "-" ){
                     binding.careNavigate.visibility = View.VISIBLE
@@ -253,7 +237,6 @@ class BlindInformationFragment : Fragment() {
         Log.i("BlindInformation", "onDestroyView call")
         if (this::mAlertDialog.isInitialized) {
             if (mAlertDialog.isShowing) {
-                Log.i("pppp", "alert is showing in if")
                 mAlertDialog.dismiss()
             }
         }

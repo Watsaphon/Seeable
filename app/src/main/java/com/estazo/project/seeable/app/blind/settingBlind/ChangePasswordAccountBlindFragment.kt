@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -20,34 +18,27 @@ class ChangePasswordAccountBlindFragment : Fragment() {
 
     private lateinit var binding : FragmentChangePasswordAccountBlindBinding
 
-//    private lateinit var editCurrentPassword : EditText
-//    private lateinit var editNewPassword : EditText
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPassword: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.fragment_change_password_account_blind)
-//        editCurrentPassword = findViewById(R.id.editCurrentPassword)
-//        editNewPassword = findViewById(R.id.editNewPassword)
-
+        Log.i("CPAccountBlindFragment", "onCreate call")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_change_password_account_blind, container, false)
+        Log.i("CPAccountBlindFragment", "onCreateView call")
 
         sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
         sharedPrefPassword = requireActivity().getSharedPreferences("value", 0)
-
         binding.backButton.setOnClickListener{
             requireActivity().onBackPressed()
         }
-
         binding.saveChangePassword.setOnClickListener{
             saveChangePassword()
         }
-
         return binding.root
     }
 
@@ -60,17 +51,12 @@ class ChangePasswordAccountBlindFragment : Fragment() {
         Log.d("savePassword","phone :$currentPhone , password : $password , editCurrent :$editCurrent , editNew :$editNew ")
 
         if( password == editCurrent && password != editNew && editCurrent != editNew && editNew.isNotBlank() && editCurrent.isNotBlank() ){
-
             val ref = FirebaseDatabase.getInstance().reference
-            ref.child("users_blind/$currentPhone/password").setValue("$editNew")
-
+            ref.child("users_blind/$currentPhone/password").setValue(editNew)
             val editor = sharedPrefPassword.edit()
-            editor.putString("stringKeyPassword","$editNew")
+            editor.putString("stringKeyPassword", editNew)
             editor.apply()
-
             findNavController().navigate(R.id.action_changePasswordAccountBlindFragment_to_blindFragment)
-
-
         }
         else if(editCurrent.isBlank()){
             Toast.makeText(activity,R.string.checkNull_current_ChangePassword, Toast.LENGTH_SHORT).show()
@@ -84,7 +70,6 @@ class ChangePasswordAccountBlindFragment : Fragment() {
         else if( editNew == editCurrent){
             Toast.makeText(activity,R.string.check_new_ChangePassword, Toast.LENGTH_SHORT).show()
         }
-
     }
 
     override fun onStop() {
@@ -92,6 +77,5 @@ class ChangePasswordAccountBlindFragment : Fragment() {
         binding.editCurrentPassword.text.clear()
         binding.editNewPassword.text.clear()
     }
-
 
 }

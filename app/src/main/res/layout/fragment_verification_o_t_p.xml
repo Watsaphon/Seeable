@@ -72,7 +72,7 @@ tools:context=".register.VerificationOTPFragment">
             android:layout_marginEnd="59dp"
             android:fontFamily="@font/roboto"
             android:gravity="center"
-            android:text="@string/subheader_VerifyOTP"
+            android:text="@string/subHeader_VerifyOTP"
             android:textColor="#000000"
             android:textStyle="bold" />
 

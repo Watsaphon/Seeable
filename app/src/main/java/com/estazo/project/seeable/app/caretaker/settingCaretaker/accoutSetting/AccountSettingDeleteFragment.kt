@@ -1,26 +1,27 @@
 package com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
+import com.estazo.project.seeable.app.UserTypeViewModel
 import com.estazo.project.seeable.app.databinding.FragmentAccountSettingDeleteBinding
-import com.estazo.project.seeable.app.login.LoginScreen
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 
 class AccountSettingDeleteFragment : Fragment() {
 
     private lateinit var binding : FragmentAccountSettingDeleteBinding
+
+    private val viewModel : UserTypeViewModel by activityViewModels()
 
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPassword: SharedPreferences
@@ -35,6 +36,7 @@ class AccountSettingDeleteFragment : Fragment() {
     private lateinit var id : String
     private lateinit var displayName : String
     private lateinit var userType: String
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -63,46 +65,39 @@ class AccountSettingDeleteFragment : Fragment() {
                 confirmPassword.isEmpty() -> {
                     Toast.makeText(context, getString(R.string. empty_password_AccountSettingEditCaretaker), Toast.LENGTH_SHORT).show()
                 }
-                password == confirmPassword -> {
-                    val query = FirebaseDatabase.getInstance().getReference("users_caretaker").child("$phone")
-                    query.addListenerForSingleValueEvent(valueEventListener)
-                }
+                password == confirmPassword -> { deleteAccount() }
                 else -> {
                     Toast.makeText(context, getString(R.string.wrong_password_AccountSettingEditCaretaker), Toast.LENGTH_SHORT).show()
                 }
             }
         }
-
         return binding.root
     }
 
 
-    /**remove user from realtime database (users_caretaker) */
-    private var valueEventListener: ValueEventListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            if (dataSnapshot.exists()) {
-                dataSnapshot.ref.removeValue()
-                logout()
-            }
-        }
-        override fun onCancelled(databaseError: DatabaseError) {}
-    }
+    private fun deleteAccount(){
+        viewModel.userType.value = "not found!"
 
-    private fun logout() {
-        val editorID = sharedPrefID.edit()
+        val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
+        val password = sharedPrefPassword.getString("stringKeyPassword","not found!")
+
+        Log.d("deleteAccount"," password : $password , confirmPassword :$confirmPassword ")
+
+        val ref = FirebaseDatabase.getInstance().reference
+        ref.child("users_caretaker/$currentPhone").removeValue()
+
         val editorPhone = sharedPrefPhone.edit()
         val editorPassword = sharedPrefPassword.edit()
+        val editorID = sharedPrefID.edit()
         val editorDisplay = sharedPrefDisplayName.edit()
         val editorUserType = sharedPrefUserType.edit()
         val editorBlindId = sharedPrefBlindId.edit()
-
-        editorID.putString("stringKey2", "not found!")
         editorPhone.putString("stringKeyPhone", "not found!")
         editorPassword.putString("stringKeyPassword", "not found!")
+        editorID.putString("stringKey2", "not found!")
         editorDisplay.putString("stringKeyDisplayName", "not found!")
         editorUserType.putString("stringKeyType", "not found!")
         editorBlindId.putString("stringKeyBlindId", "not found!")
-
         editorID.apply()
         editorPhone.apply()
         editorPassword.apply()
@@ -110,9 +105,7 @@ class AccountSettingDeleteFragment : Fragment() {
         editorUserType.apply()
         editorBlindId.apply()
 
-        val intent = Intent(activity, LoginScreen::class.java)
-        startActivity(intent)
-
+        findNavController().navigate(R.id.action_accountSettingDeleteFragment_to_loginScreen)
     }
 
 }

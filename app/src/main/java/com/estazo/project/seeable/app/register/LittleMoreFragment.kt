@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,17 +32,18 @@ class LittleMoreFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i("LittleMoreFragment","call onCreate")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_little_more, container, false)
+        Log.i("LittleMoreFragment","call onCreateView")
 
         arguments?.let {
             val mobile = LittleMoreFragmentArgs.fromBundle(it).mobile
             phone = mobile
         }
-
 
         // Get radio group selected status and text using button click event
         binding.registerButton.setOnClickListener() {
@@ -51,16 +53,13 @@ class LittleMoreFragment : Fragment() {
            val password : String = binding.setPassword.text.toString()
 
             // Get the checked radio button id from radio group
-            var id: Int = binding.selectMode.checkedRadioButtonId
-
+            val id: Int = binding.selectMode.checkedRadioButtonId
 
             if (id != -1) {
-
                 if (binding.selectBlind.isChecked && password.isNotEmpty() ) {
                     alertDialogLoading()
                     val rootRef = FirebaseDatabase.getInstance().getReference("users_blind")
                     val ID = rootRef.push().key
-
                     val location = Locations(0.00000000, 0.00000000)
                     val caretaker = Caretaker("-", "-","-", "-")
                     val device = DeviceBlind("-","-",false,"no", "-")
@@ -69,7 +68,6 @@ class LittleMoreFragment : Fragment() {
 
                     val valueRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")
                     val rootData = UserBlinderHelperClassNew(ID.toString(), phone, "$password", "not found !","-")
-
 
                     rootRef.child(phone).setValue(rootData).addOnCompleteListener {
                         valueRef.child("Location").setValue(location).addOnCompleteListener {
@@ -112,17 +110,16 @@ class LittleMoreFragment : Fragment() {
                     }
                 }
                 else if (password.isEmpty()) {
-                    Toast.makeText(activity, "Please fill your password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, R.string.empty_LittleMore, Toast.LENGTH_SHORT).show()
                 }
             }
             else {
                 // If no radio button checked in this radio group
-                Toast.makeText(activity, "Please Select mode", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, R.string.select_LittleMore, Toast.LENGTH_SHORT).show()
             }
         }
 
         binding.setPassword.addTextChangedListener(phoneTextWatcher)
-
 
         return binding.root
     }
@@ -162,8 +159,6 @@ class LittleMoreFragment : Fragment() {
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
     }
-
-
 
 }
 

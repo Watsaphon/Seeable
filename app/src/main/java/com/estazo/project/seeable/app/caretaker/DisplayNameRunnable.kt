@@ -1,8 +1,6 @@
 package com.estazo.project.seeable.app.caretaker
 
 import android.util.Log
-import android.view.View
-import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -38,34 +36,34 @@ class DisplayNameRunnable(val phone : String, val list : List<String> ) : Runnab
             val info1 = user1.split("/".toRegex()).toTypedArray()
             phone1 = info1[0]
             name1 = info1[1]
-            Log.i("checkCon","user1 call if").toString()
+            Log.d("checkCon","user1 call if").toString()
         }
         if (size >= 2){
             user2 = user[1]
             val info2 = user2.split("/".toRegex()).toTypedArray()
             phone2 = info2[0]
             name2 = info2[1]
-            Log.i("checkCon","user2 call if").toString()
+            Log.d("checkCon","user2 call if").toString()
         }
         if (size >= 3){
             user3 = user[2]
             val info3 = user3.split("/".toRegex()).toTypedArray()
             phone3 = info3[0]
             name3 = info3[1]
-            Log.i("checkCon","user3 call if").toString()
+            Log.d("checkCon","user3 call if").toString()
         }
         if (size >= 4){
             user4= user[3].replace("]","")
             val info4 = user4.split("/".toRegex()).toTypedArray()
             phone4 = info4[0]
             name4 = info4[1]
-            Log.i("checkCon","user4 call if").toString()
+            Log.d("checkCon","user4 call if").toString()
         }
 
-        Log.i("nameRunnable","Runable ->  list : $list  , phoneList : $phoneList")
-        Log.i("nameRunnable","Runable -> size : $size , user1 : $user1 , user2 : $user2 , user3 : $user3 , user4 : $user4")
-        Log.i("nameRunnable","Runable -> phone1 : $phone1 , phone2 : $phone2 , phone3 : $phone3 , phone4 : $phone4 ")
-        Log.i("nameRunnable","Runable -> name1 : $name1 , name2 : $name2 , name3 : $name3 , name4 : $name4 ")
+        Log.d("nameRunnable","Runable ->  list : $list  , phoneList : $phoneList")
+        Log.d("nameRunnable","Runable -> size : $size , user1 : $user1 , user2 : $user2 , user3 : $user3 , user4 : $user4")
+        Log.d("nameRunnable","Runable -> phone1 : $phone1 , phone2 : $phone2 , phone3 : $phone3 , phone4 : $phone4 ")
+        Log.d("nameRunnable","Runable -> name1 : $name1 , name2 : $name2 , name3 : $name3 , name4 : $name4 ")
 
         if(user1 != "-/-"){
             val firebaseBlind1 = FirebaseDatabase.getInstance().getReference("users_blind/$phone1")
@@ -84,7 +82,6 @@ class DisplayNameRunnable(val phone : String, val list : List<String> ) : Runnab
                 }
                 override fun onCancelled(databaseError: DatabaseError) {}
             })
-
         }
         if(user2 != "-/-"){
             val firebaseBlind2 = FirebaseDatabase.getInstance().getReference("users_blind/$phone2")
@@ -103,7 +100,6 @@ class DisplayNameRunnable(val phone : String, val list : List<String> ) : Runnab
                 }
                 override fun onCancelled(databaseError: DatabaseError) {}
             })
-
         }
         if(user3 != "/--"){
             val firebaseBlind3 = FirebaseDatabase.getInstance().getReference("users_blind/$phone3")
@@ -141,7 +137,6 @@ class DisplayNameRunnable(val phone : String, val list : List<String> ) : Runnab
                 override fun onCancelled(databaseError: DatabaseError) {}
             })
         }
-
     }
 }
 

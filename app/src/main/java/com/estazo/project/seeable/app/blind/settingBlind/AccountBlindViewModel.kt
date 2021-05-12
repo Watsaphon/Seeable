@@ -18,16 +18,13 @@ class AccountBlindViewModel : ViewModel() {
 
     fun getDisplayName(phone: String) {
         var displayUser = "-"
-        Log.i("test","phone : $phone")
-        var firebaseRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")
+        Log.d("test","phone : $phone")
+        val firebaseRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")
         firebaseRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 displayUser = snapshot.child("displayName").value.toString()
-
                 userDisplay.value = displayUser
-                Log.i("test","displayUser : $displayUser")
-
-
+                Log.d("test","displayUser : $displayUser")
             }
             override fun onCancelled(databaseError: DatabaseError) {
             }

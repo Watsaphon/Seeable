@@ -37,6 +37,7 @@ import kotlinx.android.synthetic.main.alert_dialog_fall_dectection.view.*
 import java.util.*
 
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var  mAlertDialog : AlertDialog
@@ -46,16 +47,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var listener: ValueEventListener
 
     private lateinit var sharedPrefPhone: SharedPreferences
+    private lateinit var sharedPrefNavigate : SharedPreferences
 
     private val viewModel : UserTypeViewModel by viewModels()
-
-    private lateinit var sharedPrefNavigate : SharedPreferences
 
     private var blind : Boolean = false
 
     //Declaring the needed Variables
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    val PERMISSION_ID = 1010
+    private val PERMISSION_ID = 1010
     private  var RC_OVERLAY = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         viewModel.userType.observe(this, Observer<String> { typeView ->
-            Log.d("checkUser_Main","type : $typeView")
+            Log.d("checkTypeMainActivity","type : $typeView")
             when(typeView){
                 "not found!" -> { Toast.makeText(this, "Login Section",Toast.LENGTH_LONG).show() }
                 "caretaker" -> {
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                         Log.d("testNotification", msg)
                         Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                         val ref = FirebaseDatabase.getInstance().reference
-                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "$token")
+                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to token)
                         ref.updateChildren(childUpdates)
                     })
                 }
@@ -111,10 +111,9 @@ class MainActivity : AppCompatActivity() {
                         val sharedPrefPhone = getSharedPreferences("value", 0)
                         val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
                         val ref = FirebaseDatabase.getInstance().reference
-                        val childUpdates = hashMapOf<String, Any>("users_blind/$phone/FCM" to "$token")
+                        val childUpdates = hashMapOf<String, Any>("users_blind/$phone/FCM" to token)
                         ref.updateChildren(childUpdates)
                         blindSection()
-
                     })
                 }
             }
@@ -127,7 +126,6 @@ class MainActivity : AppCompatActivity() {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             applicationContext.startActivity(intent)
         }
-
 
     }
 
@@ -171,7 +169,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        Log.i("MainActivity", "onActivityResult called")
     }
 
     override fun onPause() {
@@ -203,7 +201,7 @@ class MainActivity : AppCompatActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         hideSystemUI()
-        Log.d("MainActivity", "onWindowFocusChanged called")
+        Log.i("MainActivity", "onWindowFocusChanged called")
     }
 
     /** hide navigation and status bar in each activity */
@@ -277,7 +275,7 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed({
             if (mAlertDialog.isShowing) {
                 mAlertDialog.dismiss()
-                Log.i("testfd","no cancel ja")
+                Log.d("checkFD","blind not cancel -> send notification to caretaker")
                 getLastLocation()
                 sendLocation()
                 val ref = FirebaseDatabase.getInstance().reference
@@ -290,7 +288,7 @@ class MainActivity : AppCompatActivity() {
 
             }
             else{
-                Log.i("testfd","cancel ja")
+                Log.d("checkFD","blind OK")
             }
         }, 30000) //change 30000 second with a specific time you want
     }
@@ -301,10 +299,11 @@ class MainActivity : AppCompatActivity() {
         setOnTouchListener(object : View.OnTouchListener {
             private val longClickDuration = 2000L
             private val handler = Handler()
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if (event?.action == MotionEvent.ACTION_DOWN) {
+            @SuppressLint("ClickableViewAccessibility")
+            override fun onTouch(v: View, event: MotionEvent): Boolean {
+                if (event.action == MotionEvent.ACTION_DOWN) {
                     handler.postDelayed({ listener.invoke() }, longClickDuration)
-                } else if (event?.action == MotionEvent.ACTION_UP) {
+                } else if (event.action == MotionEvent.ACTION_UP) {
                     handler.removeCallbacksAndMessages(null)
                 }
                 return true
@@ -329,25 +328,25 @@ class MainActivity : AppCompatActivity() {
         val sharedPrefPhone = getSharedPreferences("value", 0)
         val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
         viewModel.userType.observe(this, Observer<String> { typeView ->
-            Log.d("checkUser_Main_BS","type : $typeView")
+            Log.d("checkTypeMainActivityBS","type : $typeView")
             when(typeView){
                 "not found!" -> {
                     if(this::database.isInitialized){
                         database.child("users_blind/$phone/Device").removeEventListener(listener)
-                        Log.d("checkUser_Main_BS","logout to Login section")
+                        Log.d("checkTypeMainActivityBS","logout to Login section")
                         blind = false
                     }
                 }
                 "caretaker" -> {
                     if(this::database.isInitialized){
                         database.child("users_blind/$phone/Device").removeEventListener(listener)
-                        Log.d("checkUser_Main_BS","login to caretaker section")
+                        Log.d("checkTypeMainActivityBS","login to caretaker section")
                         blind = false
 
                     }
                 }
                 "blind" -> {
-                    Log.d("checkUser_Main_BS","login to blind section")
+                    Log.d("checkTypeMainActivityBS","login to blind section")
                     blind = true
                 }
             }
@@ -373,10 +372,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    /**this function will return a boolean , true: if we have permission , false if not*/
     private fun checkPermission():Boolean {
-        //this function will return a boolean
-        //true: if we have permission
-        //false if not
         if(ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
             ActivityCompat.checkSelfPermission(this,
@@ -393,8 +390,9 @@ class MainActivity : AppCompatActivity() {
         }
         return false
     }
+
+    /**this function will allows us to tell the user to requesut the necessary permission if they are not granted*/
     private fun requestPermission(){
-        //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
         ActivityCompat.requestPermissions(this, arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.CALL_PHONE, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO,
@@ -414,7 +412,7 @@ class MainActivity : AppCompatActivity() {
                     }else{
                         Log.d("Debug:" ,"getLastLocation() -> Your Location : Long: "+ location.longitude + " , Lat: " + location.latitude )
                         val text = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n"
-                        Toast.makeText(this,"$text",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, text,Toast.LENGTH_SHORT).show()
                     }
                 }
             }else{
@@ -446,7 +444,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("Debug:","onLocationResult -> your last location: latitude = "+ lastLocation.latitude.toString()+", longitude = "+ lastLocation.longitude.toString())
             val text = "You Last Location is : Long: "+ lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n"
 
-            Toast.makeText(this@MainActivity,"$text",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, text,Toast.LENGTH_SHORT).show()
         }
     }
     private fun isLocationEnabled():Boolean{

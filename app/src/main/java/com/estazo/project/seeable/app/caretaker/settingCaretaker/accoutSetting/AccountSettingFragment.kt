@@ -1,11 +1,11 @@
 package com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentAccountSettingBinding
@@ -22,7 +22,6 @@ class AccountSettingFragment : Fragment() {
         binding.backButton.setOnClickListener{
             requireActivity().onBackPressed()
         }
-
         binding.editBtn.setOnClickListener{view : View ->
             view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingEditFragment)
         }
@@ -32,9 +31,7 @@ class AccountSettingFragment : Fragment() {
         binding.deleteBtn.setOnClickListener{view : View ->
             view.findNavController().navigate(R.id.action_accountSettingFragment_to_accountSettingDeleteFragment)
         }
-
         return binding.root
-
     }
 
 

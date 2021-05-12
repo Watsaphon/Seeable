@@ -77,14 +77,12 @@ class BlindFragment : Fragment() {
         sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
         val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
         getTitleLocation(phone)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val fragmentBinding = FragmentBlindBinding.inflate(inflater, container, false)
         binding = fragmentBinding
-//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_blind, container, false)
 
         Log.i("BlindFragment", "onCreateView call")
         checkPermission()
@@ -94,7 +92,6 @@ class BlindFragment : Fragment() {
         sharedPrefPassword = requireActivity().getSharedPreferences("value", 0)
         sharedPrefID = requireActivity().getSharedPreferences("value", 0)
         sharedPrefDisplayName = requireActivity().getSharedPreferences("value", 0)
-
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         requestPermission()
@@ -128,7 +125,7 @@ class BlindFragment : Fragment() {
 
         sharedPrefNavigate = requireActivity().getSharedPreferences("value", 0)
         val navigate = sharedPrefNavigate.getString("stringKeyNavigate","not found!")
-        Log.i("MainActivity", " in blind navigate = $navigate ")
+        val editor = sharedPrefNavigate.edit()
         if(navigate == "active"){
             view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
@@ -141,12 +138,13 @@ class BlindFragment : Fragment() {
             navigationBlind()
             Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
 
-            Log.d("testCalender","currentTime : $currentTime")
-            val postNotification =  Notification("$currentTime","navigate")
+            editor.putString("stringKeyNavigate", "active")
+            editor.apply()
+
+            val postNotification =  Notification(currentTime,"navigate")
             val postValues = postNotification.toMap()
             val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
             ref.updateChildren(childUpdates)
-//            view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.careNavButton.setOnVeryLongClickListener{
             vibrate()
@@ -154,12 +152,13 @@ class BlindFragment : Fragment() {
             navigationCaretaker()
             Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
 
-            Log.d("testCalender","currentTime : $currentTime")
-            val postNotification =  Notification("$currentTime","navigate")
+            editor.putString("stringKeyNavigate", "active")
+            editor.apply()
+
+            val postNotification =  Notification(currentTime,"navigate")
             val postValues = postNotification.toMap()
             val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
             ref.updateChildren(childUpdates)
-//            view.findNavController().navigate(R.id.action_blindFragment_to_navigateBlindFragment)
         }
         binding.callEmergency.setOnVeryLongClickListener{
             vibrate()
@@ -167,8 +166,7 @@ class BlindFragment : Fragment() {
             emergencyCall()
             Toast.makeText(activity, getString(R.string.button_emergency_call), Toast.LENGTH_SHORT).show()
 
-            Log.d("testCalender","currentTime : $currentTime")
-            val postNotification =  Notification("$currentTime","callEmergency")
+            val postNotification =  Notification(currentTime,"callEmergency")
             val postValues = postNotification.toMap()
             val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
             ref.updateChildren(childUpdates)
@@ -182,7 +180,7 @@ class BlindFragment : Fragment() {
             sendLocation()
 
             Log.d("testCalender","currentTime : $currentTime")
-            val postNotification =  Notification("$currentTime","location")
+            val postNotification =  Notification(currentTime,"location")
             val postValues = postNotification.toMap()
             val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
             ref.updateChildren(childUpdates)
@@ -209,14 +207,13 @@ class BlindFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, dataIntent: Intent?) {
         super.onActivityResult(requestCode, resultCode, dataIntent)
         // Check which request we're responding to
-        Log.i("MainActivity","BlindFragment : onActivityResult call")
-
+        Log.i("BlindFragment","BlindFragment : onActivityResult call")
         if (requestCode == 1) {
                // Make sure the request was successful
-            Log.i("MainActivity","BlindFragment : requestCode success ja")
+            Log.d("BlindFragment","BlindFragment : requestCode success ja")
 
             if (resultCode == RESULT_OK) {
-                Log.i("MainActivity","BlindFragment : resultCode ok ja")
+                Log.d("BlindFragment","BlindFragment : resultCode ok ja")
                    //OK received detail
                }
            }
@@ -228,9 +225,6 @@ class BlindFragment : Fragment() {
     }
 
     private fun checkPermission():Boolean {
-           //this function will return a boolean
-           //true: if we have permission
-           //false if not
            if(ActivityCompat.checkSelfPermission(requireActivity(),
                    Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                ActivityCompat.checkSelfPermission(requireActivity(),
@@ -325,7 +319,6 @@ class BlindFragment : Fragment() {
                val location: Location? = task.result
                newLocationData()
                if(location == null){
-                   Log.i("Debug_sendLocation","call if")
                    newLocationData()
                }else{
                    val link = java.lang.String.format("%f,%f", location.latitude,location.longitude)
@@ -399,27 +392,16 @@ class BlindFragment : Fragment() {
                     val tts = getString(R.string.locatoin_null)
                     textToSpeech!!.speak(tts, TextToSpeech.QUEUE_FLUSH, null)
                     Toast.makeText(activity, R.string.locatoin_null,Toast.LENGTH_SHORT).show()
-
                 }
                 else{
                     // Navigation : current place direct to gmmIntentUri
                     val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                     mapIntent.setPackage("com.google.android.apps.maps")
-//                    mapIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
                     mapIntent.resolveActivity(activity!!.packageManager)?.let {
                     startActivityForResult(mapIntent,1)
-//                        startActivity(mapIntent)
                     }
-
-//                    val navigation = Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=$location&mode=w&avoid=thf"))
-//                    navigation.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-//                    navigation.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity")
-////                    navigation.setClassName("com.google.android.apps.maps", "com.estazo.project.seeable.app")
-//                    startActivityForResult(navigation,0)
-
                 }
-
             }
         }
         override fun onCancelled(databaseError: DatabaseError) {}
@@ -457,7 +439,6 @@ class BlindFragment : Fragment() {
     }
 
     private fun getTitleLocation(phone:String){
-        Log.d("testName","phone : $phone")
         val firebaseRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone/Navigation")
         firebaseRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -465,7 +446,6 @@ class BlindFragment : Fragment() {
                 val locationBlind = snapshot.child("navigate_blindUser").value.toString()
                 val titleCaretaker = snapshot.child("title_Navigate_careUser").value.toString()
                 val locationCaretaker = snapshot.child("navigate_careUser").value.toString()
-                Log.d("testName ","titleBlind : $titleBlind , titleCaretaker : $titleCaretaker")
                 if(titleBlind != "-" && locationBlind != "-" ){
                     viewModel.titleBlind.value = titleBlind
                     binding.selfNavButton.text = getString(R.string.button_self_navigation) + " to  $titleBlind"
@@ -488,7 +468,6 @@ class BlindFragment : Fragment() {
             }
         })
     }
-
 
     /** AlertDialog to set DisplayName in user_bind  */
     private fun alertDialogSetName() {
@@ -520,7 +499,6 @@ class BlindFragment : Fragment() {
             ssbTH.setSpan(fcsSky, 13, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             subHeader.text = ssbTH
         }
-
         //confirm button click of custom layout
         mDialogView.dialogConfirmBtn.setOnClickListener {
             val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
@@ -534,7 +512,6 @@ class BlindFragment : Fragment() {
                 val ref = FirebaseDatabase.getInstance().reference
                 ref.child("users_blind/$currentPhone/displayName").setValue(name)
                 val editor = sharedPrefDisplayName.edit()
-//                editor.putString("stringKeyDisplayName", name)
                 editor.putString("stringKeyDisplayName", "not found!")
                 editor.apply()
                 mAlertDialog.dismiss()
@@ -544,6 +521,5 @@ class BlindFragment : Fragment() {
             mAlertDialog.dismiss()
         }
     }
-
 
 }

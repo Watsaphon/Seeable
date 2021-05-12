@@ -1,8 +1,6 @@
 package com.estazo.project.seeable.app.caretaker
 
 import android.util.Log
-import androidx.fragment.app.activityViewModels
-import com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.BlindListViewModel
 import com.estazo.project.seeable.app.helperClass.Blind
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,22 +15,10 @@ class UpdateListBlindUserRunnable(val phone : String ) : Runnable {
             firebaseRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        var user1 = snapshot.child("user1").value.toString()
-                        var user2 = snapshot.child("user2").value.toString()
-                        var user3 = snapshot.child("user3").value.toString()
-                        var user4 = snapshot.child("user4").value.toString()
-                        val splitFBUser1 = user1.split("/".toRegex()).toTypedArray()
-                        val phoneFBUser1 = splitFBUser1[0]
-                        val nameFBUser1 = splitFBUser1[1]
-                        val splitFBUser2 = user2.split("/".toRegex()).toTypedArray()
-                        val phoneFBUser2 = splitFBUser2[0]
-                        val nameFBUser2 = splitFBUser2[1]
-                        val splitFBUser3 = user3.split("/".toRegex()).toTypedArray()
-                        val phoneFBUser3 = splitFBUser3[0]
-                        val nameFBUser3 = splitFBUser3[1]
-                        val splitFBUser4 = user4.split("/".toRegex()).toTypedArray()
-                        val phoneFBUser4 = splitFBUser4[0]
-                        val nameFBUser4 = splitFBUser4[1]
+                        val user1 = snapshot.child("user1").value.toString()
+                        val user2 = snapshot.child("user2").value.toString()
+                        val user3 = snapshot.child("user3").value.toString()
+                        val user4 = snapshot.child("user4").value.toString()
                         when{
                             /**update blind user for 4 user */
                             user1 == "-/-" && user2 != "-/-" && user3 != "-/-" && user4 != "-/-" -> {

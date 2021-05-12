@@ -23,8 +23,6 @@ data class UserBlinderHelperClassNew(
     }
 }
 
-
-
 data class Locations(
     var Latitude: Double ,
     var Longitude: Double

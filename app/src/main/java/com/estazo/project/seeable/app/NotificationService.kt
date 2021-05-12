@@ -30,21 +30,22 @@ import java.util.*
 class NotificationService : NotificationListenerService() {
 
     private lateinit var context: Context
-    private lateinit var sharedPrefNavigate : SharedPreferences
 
     var textToSpeech: TextToSpeech? = null
-    private var phone: String = ""
+
     private lateinit var database: DatabaseReference
     private lateinit var listener: ValueEventListener
 
-    private lateinit var language : String
+    private lateinit var sharedPrefNavigate : SharedPreferences
     private lateinit var sharedPrefLanguage: SharedPreferences
+    private lateinit var language : String
+    private var phone: String = ""
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
-        Log.i("notificationService"," call create class NotificationService")
+        Log.i("notificationService"," call onCreate() -> create class NotificationService")
 
     }
 
@@ -63,31 +64,27 @@ class NotificationService : NotificationListenerService() {
         val regexCritical = "Critical".toRegex()
         val checkCritical = regexCritical.find(title)?.value.toString()
 
-        Log.d("notificationServiceInfo"," pack : $pack , title : $title" +
-                " , text : $text , regEX -> matchResult : $matchResult , checkNavigation : $checkNavigation ")
-
         if ( title != "null" && text != "null"){
-            Log.i("Package", pack)
-            Log.i("Title", title)
-            Log.i("Text", text)
-            val msgrcv = Intent("Msg")
-            msgrcv.putExtra("package", pack)
-            msgrcv.putExtra("title", title)
-            msgrcv.putExtra("text", text)
-            LocalBroadcastManager.getInstance(context!!).sendBroadcast(msgrcv)
+            Log.d("notificationServiceInfo", "Package : $pack , Title : $title , Text : $text" +
+                    ", regEX -> matchResult : $matchResult , checkNavigation : $checkNavigation")
+            val msgNS = Intent("Msg")
+            msgNS.putExtra("package", pack)
+            msgNS.putExtra("title", title)
+            msgNS.putExtra("text", text)
+            LocalBroadcastManager.getInstance(context).sendBroadcast(msgNS)
             if(pack == "com.estazo.project.seeable.app" && checkCritical == "Critical"){
-
+                Log.d("notificationServiceInfo", "call critical alertDialog")
                 val info = text.substring(5)
                 phone = info
 
-                val username = title.split(":".toRegex()).toTypedArray()
-                val name  = username[0]
-                Log.i("notificationServiceInfo","username :$username , name : $name")
-                dialog(name)
+                val nameInTitle = title.split(":".toRegex()).toTypedArray()
+                val name  = nameInTitle[0]
+                Log.d("notificationServiceInfo","nameInTitle :$nameInTitle , name : $name")
+                alertDialogCritical(name)
 
             }
             if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation"){
-                Log.d("notificationServiceInfo", "OK JA")
+                Log.d("notificationServiceInfo", "call go back alertDialog")
                 alertDialogBack()
             }
         }
@@ -95,8 +92,6 @@ class NotificationService : NotificationListenerService() {
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
         Log.i("notificationService", "Notification Removed")
-//        val launchIntent = packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")
-//        startActivity(launchIntent)
     }
 
     override fun onDestroy() {
@@ -104,14 +99,12 @@ class NotificationService : NotificationListenerService() {
         Log.i("notificationService"," call destroy")
     }
 
-    private fun dialog(name: String) {
-
+    private fun alertDialogCritical(name: String) {
         val dialogBuilder = AlertDialog.Builder(this)
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_critical_event, null)
-
         dialogBuilder.setView(mDialogView)
 
-        Log.i("dialog","dialog call")
+        Log.d("dialogNS"," call alertDialogCritical")
         val dialog: AlertDialog = dialogBuilder.create()
         val dialogWindow: Window = dialog.window!!
         val dialogWindowAttributes: WindowManager.LayoutParams = dialogWindow.attributes
@@ -142,7 +135,7 @@ class NotificationService : NotificationListenerService() {
         mDialogView.username.text = name
 
         mDialogView.callAmbulance.setOnClickListener{
-            Log.i("dialog","click call Ambulance ja")
+            Log.d("dialogNS_C","click call Ambulance ")
             dialog.dismiss()
             val emergency = "1112"
             val intent = Intent(Intent.ACTION_CALL, Uri.fromParts("tel", emergency, null))
@@ -151,7 +144,7 @@ class NotificationService : NotificationListenerService() {
         }
 
         mDialogView.getLocation.setOnClickListener{
-            Log.i("dialog","click get Location ja , phone :$phone")
+            Log.d("dialogNS_C","click get Location -> phone :$phone")
             dialog.dismiss()
 
             database = Firebase.database.reference
@@ -160,9 +153,7 @@ class NotificationService : NotificationListenerService() {
                     if (dataSnapshot.exists()) {
                         val locationFB = dataSnapshot.child("critical_Condition_Location").value.toString()
                         Log.i("dialog","location = $locationFB")
-//                        location = locationFB
                         /** open google map */
-                        // Navigation : current place direct to gmmIntentUri
                         val gmmIntentUri = Uri.parse("google.navigation:q=$locationFB&mode=w&avoid=thf")
                         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                         mapIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -174,7 +165,7 @@ class NotificationService : NotificationListenerService() {
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
-                    Log.d("checkUser_Main_FD","onCancelled call")
+                    Log.d("dialogNS","onCancelled call")
                 }
             })
 
@@ -183,13 +174,11 @@ class NotificationService : NotificationListenerService() {
     }
 
     private fun alertDialogBack() {
-
         val dialogBuilder = AlertDialog.Builder(this)
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.alert_dialog_go_to_app, null)
-
         dialogBuilder.setView(mDialogView)
 
-        Log.i("dialog","dialog call")
+        Log.d("dialogNS","call alertDialogBack")
         val dialog: AlertDialog = dialogBuilder.create()
         val dialogWindow: Window = dialog.window!!
         val dialogWindowAttributes: WindowManager.LayoutParams = dialogWindow.attributes
@@ -223,12 +212,12 @@ class NotificationService : NotificationListenerService() {
         textToSpeech!!.setSpeechRate(0.9f)
 
         mDialogView.gotoAppEvent.setOnClickListener{
-            Log.i("alertDialogBack","click layout ja")
+            Log.d("dialogNS_GBA","click layout ja")
             dialog.dismiss()
 
             sharedPrefNavigate = getSharedPreferences("value", 0)
             val editor = sharedPrefNavigate.edit()
-            editor.putString("stringKeyNavigate", "active")
+            editor.putString("dialogNS", "active")
             editor.apply()
 
             val launchIntent = packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")

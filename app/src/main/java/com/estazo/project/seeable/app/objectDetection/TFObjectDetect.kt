@@ -11,8 +11,8 @@ import java.io.ByteArrayOutputStream
 
 class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) {
 
-    val model = ModelMlV2.newInstance(context)
-    var detect_num = -1
+    private val model = ModelMlV2.newInstance(context)
+    private var detect_num = -1
 
     fun detect(frame: Frame) {
 
@@ -47,7 +47,7 @@ class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) 
                     when (it) {
                         "0.0" -> {
                             Log.d("Score", "crosswalk detect")
-                            onDetect?.invoke(it)
+                            onDetect.invoke(it)
 //                            อันนี้อ่ะผิด เพราะว่ามันไปสร้าง instance ของ NavigateBlindFragment มาใหม่
 //                            NavigateBlindFragment().let {
 //                                Log.d("Score", "msg = $msg")
@@ -56,9 +56,7 @@ class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) 
                         }
                         "1.0" -> {
                             Log.d("Score", " bus sign detect")
-                            onDetect?.invoke(it)
-
-
+                            onDetect.invoke(it)
 //                            อันนี้อ่ะผิด เพราะว่ามันไปสร้าง instance ของ NavigateBlindFragment มาใหม่
 //                            NavigateBlindFragment().let {
 //                                Log.d("Score", "msg = $msg")

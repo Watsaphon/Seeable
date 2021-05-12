@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -64,7 +63,7 @@ class SettingBlindFragment : Fragment() {
         sharedPrefCaretakerUser = requireActivity().getSharedPreferences("value", 0)
 
         viewModel.userType.observe(viewLifecycleOwner, Observer { typeView ->
-            Log.d("eieiei_blind","type : $typeView")
+            Log.d("checkViewModel","type : $typeView")
         })
 
     return binding.root
@@ -80,10 +79,6 @@ class SettingBlindFragment : Fragment() {
         }
         binding.locationBtn.setOnClickListener {
             searchLocation()
-        }
-        binding.manageUserBtn.setOnClickListener {
-//            manageCaretaker()
-            Toast.makeText(activity," manage Caretaker User",Toast.LENGTH_SHORT).show()
         }
         binding.logoutBtn.setOnClickListener {
             gotoLogout()

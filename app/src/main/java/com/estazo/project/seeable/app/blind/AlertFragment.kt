@@ -6,7 +6,6 @@ import android.os.*
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -28,49 +27,43 @@ class AlertFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Log.i("AlertFragment", "onCreate call")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alert,container, false)
-
+        Log.i("AlertFragment", "onCreateView call")
         arguments?.let {
             val detect = AlertFragmentArgs.fromBundle(it).detect
             check = detect
         }
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.i("AlertFragment", "onViewCreated call")
         when(check){
             "crosswalk" -> {alertDialogCrosswalkDetection()}
             "bussign" -> {alertDialogBusSignDetection()}
         }
-
     }
 
 
     private fun alertDialogBusSignDetection() {
-        Toast.makeText(requireContext(),"asdfasdfasdf",Toast.LENGTH_SHORT).show()
-        Log.i("checkdt", "in alert")
         //Inflate the dialog with custom view
         val mDialogView =
             LayoutInflater.from(requireContext()).inflate(R.layout.alert_dialog_bus_sign_detection, null)
         //AlertDialogBuilder
         val mBuilder = AlertDialog.Builder(requireContext()).setView(mDialogView)
-        //show dialog
-        Log.i("checkdt", "set view already")
 
+        //show dialog
         mAlertDialog = mBuilder.show()
-        Log.i("checkdt", "show ja")
         mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)
         mAlertDialog.show()
-        Log.i("checkdt", "set other")
 
         textToSpeech = TextToSpeech(context, TextToSpeech.OnInitListener { status ->
             if (status != TextToSpeech.ERROR) {
@@ -82,24 +75,19 @@ class AlertFragment : Fragment() {
                 )
             }
         })
-        Log.i("checkdt", "set tts")
-
         textToSpeech!!.setSpeechRate(0.9f)
-        Log.i("checkdt", "use tts")
 
         mDialogView.busSignDetection.setOnVeryLongClickListener {
             vibrate()
             findNavController().navigate(R.id.action_alertFragment_to_blindFragment2)
             mAlertDialog.dismiss()
         }
-        Log.i("checkdt", "end ja")
 
     }
 
     private fun alertDialogCrosswalkDetection() {
         //Inflate the dialog with custom view
-        val mDialogView = LayoutInflater.from(requireActivity())
-            .inflate(R.layout.alert_dialog_crosswalk_detection, null)
+        val mDialogView = LayoutInflater.from(requireActivity()).inflate(R.layout.alert_dialog_crosswalk_detection, null)
         //AlertDialogBuilder
         val mBuilder = AlertDialog.Builder(requireContext()).setView(mDialogView)
         //show dialog
@@ -166,9 +154,6 @@ class AlertFragment : Fragment() {
         })
     }
 
-
-
-
     /** function press and hold button for few seconds */
     private fun View.setOnVeryLongClickListener(listener: () -> Unit) {
         setOnTouchListener(object : View.OnTouchListener {
@@ -198,20 +183,3 @@ class AlertFragment : Fragment() {
     }
 
 }
-
-///** Double tab within a span of 0.5 sec */
-//abstract class DoubleClickListener : View.OnClickListener {
-//    var lastClickTime: Long = 0
-//    override fun onClick(v: View?) {
-//        val clickTime = System.currentTimeMillis()
-//        if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA) {
-//            onDoubleClick(v)
-//        }
-//        lastClickTime = clickTime
-//    }
-//
-//    abstract fun onDoubleClick(v: View?)
-//    companion object {
-//        private const val DOUBLE_CLICK_TIME_DELTA: Long = 300 //milliseconds
-//    }
-//}

@@ -1,15 +1,11 @@
 package com.estazo.project.seeable.app.blind.settingBlind
 
-import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.MainActivity
 import com.estazo.project.seeable.app.R
-import com.estazo.project.seeable.app.caretaker.CaretakerViewModel
 import com.estazo.project.seeable.app.databinding.FragmentAccountBlindBinding
 import com.google.firebase.database.FirebaseDatabase
 
@@ -28,13 +23,6 @@ class AccountBlindFragment : Fragment() {
 
     private lateinit var viewModel: AccountBlindViewModel
 
-//    private lateinit var back : View
-//    private lateinit var displayName : TextView
-//    private lateinit var phone : TextView
-//    private lateinit var editName : Button
-//    private lateinit var changePass : Button
-//    private lateinit var deleteUser : Button
-
     private lateinit var sharedPrefLanguage: SharedPreferences
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefDisplayName: SharedPreferences
@@ -42,21 +30,11 @@ class AccountBlindFragment : Fragment() {
     private lateinit var displayName : String
     private lateinit var phone : String
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.fragment_account_blind)
-
-//        back = findViewById(R.id.back_button)
-//        displayName = findViewById(R.id.displayName)
-//        phone = findViewById(R.id.phone)
-//        editName = findViewById(R.id.editName)
-//        changePass = findViewById(R.id.changePassword)
-//        deleteUser = findViewById(R.id.deleteUser)
-
-
-
+        Log.i("AccountBlindFragment", "onCreate call")
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -70,7 +48,6 @@ class AccountBlindFragment : Fragment() {
         phone = currentPhone.toString()
         val currentDisplay = sharedPrefDisplayName.getString("stringKeyDisplayName","not found!")
         val language = sharedPrefLanguage.getString("stringKey", "not found!")
-
         if(language == "en"){
             binding.phone.text = "Phone : $currentPhone"
             binding.displayName.text = currentDisplay
@@ -82,13 +59,12 @@ class AccountBlindFragment : Fragment() {
 
         Log.d("accountB","currentPhone :$currentPhone , currentDisplay : $currentDisplay")
 
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Log.i("AccountBlindFragment", "onViewCreated call")
         binding.backButton.setOnClickListener{
             requireActivity().onBackPressed()
         }
@@ -110,38 +86,30 @@ class AccountBlindFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        Log.i("AccountBlindFragment", "onActivityCreated call")
         viewModel = ViewModelProvider(this).get(AccountBlindViewModel::class.java)
-//        val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
         if (phone.isNotEmpty()) {
-            viewModel.getDisplayName("$phone")
+            viewModel.getDisplayName(phone)
         }
-
-
         viewModel.userDisplay.observe(viewLifecycleOwner, Observer<String>{user ->
             Log.i("resume","user : $user")
             binding.displayName.text = user
             displayName = user
         })
-
     }
 
     private fun updateDisplayName() {
         binding.editName.visibility = View.VISIBLE
         binding.saveBtn.visibility = View.VISIBLE
-
         binding.displayName.visibility = View.GONE
         binding.editNameButton.visibility = View.GONE
-
         // Set the focus to the edit text.
         binding.editName.requestFocus()
-
     }
 
     private fun addDisplayName() {
         var updateName : String  = ""
         updateName =  binding.editName.text.toString()
-
         when {
             updateName.isEmpty() -> {
                 Toast.makeText(activity,R.string.update_empty_BlindInformationFragment, Toast.LENGTH_LONG).show()
@@ -152,24 +120,15 @@ class AccountBlindFragment : Fragment() {
             else -> {
                 displayName = updateName
                 binding.displayName.text = updateName
-
                 val ref = FirebaseDatabase.getInstance().reference
                 val childUpdates = hashMapOf<String,Any>("users_blind/$phone/displayName" to updateName)
                 ref.updateChildren(childUpdates)
-//                val childUpdates2 = hashMapOf<String, Any>("users_caretaker/$phoneCaretaker/Blind/user$positionBlindUser" to "$selectPhoneBlind/$updateName")
-//                ref.updateChildren(childUpdates2)
-
                 binding.editName.visibility = View.GONE
                 binding.saveBtn.visibility = View.GONE
-
                 binding.displayName.visibility = View.VISIBLE
                 binding.editNameButton.visibility = View.VISIBLE
-
-
                 binding.editName.text.clear()
-
                 Toast.makeText(activity,R.string.update_success_BlindInformationFragment, Toast.LENGTH_LONG).show()
-
             }
         }
     }

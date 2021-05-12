@@ -10,12 +10,11 @@ import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import com.estazo.project.seeable.app.R
 
-//import library for PagerAdapter
+
+/**import library for PagerAdapter*/
 class SliderAdapter(var context: Context) : PagerAdapter() {
     private var layoutInflater: LayoutInflater? = null
 
-    //Array List
-//    private val header = intArrayOf(R.string.heading_slide, R.string.heading_slide, R.string.heading_slide, R.string.heading_slide)
     private val subHeader = intArrayOf(
         R.string.subheading_slide_page_1,
         R.string.subheading_slide_page_2,

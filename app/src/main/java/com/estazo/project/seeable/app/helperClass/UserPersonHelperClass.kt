@@ -12,20 +12,20 @@ data class UserPersonHelperClassNew(
     val CriticalEvent: String,
     val Notification : String,
     val FCM : String
-){ @Exclude
-fun toMap(): Map<String, Any?> {
-    return mapOf(
-        "id" to ID,
-        "phone" to Phone,
-        "password" to Password,
-        "displayName" to DisplayName,
-        "criticalEvent" to CriticalEvent,
-        "notification" to Notification,
-        "FCM" to FCM
-    )
+){
+    @Exclude
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "id" to ID,
+            "phone" to Phone,
+            "password" to Password,
+            "displayName" to DisplayName,
+            "criticalEvent" to CriticalEvent,
+            "notification" to Notification,
+            "FCM" to FCM
+        )
+    }
 }
-}
-
 
 @IgnoreExtraProperties
 data class Blind(
@@ -34,6 +34,7 @@ data class Blind(
     var user3: String ,
     var user4: String
 )
+
 @IgnoreExtraProperties
 data class DeviceCaretaker(
     var Activity: String ,

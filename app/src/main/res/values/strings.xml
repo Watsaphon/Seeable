@@ -99,10 +99,11 @@
     <string name="update_empty_BlindInformationFragment">Please fill your new name.</string>
     <string name="update_same_BlindInformationFragment">The new name can\'t be the same as your old name.</string>
     <string name="update_success_BlindInformationFragment">Update name successfully.</string>
+    <string name="edit_blind_BlindInformationFragment">you can\'t edit this blind destination.</string>
+    <string name="delete_blind_BlindInformationFragment">you can\'t delete this blind destination.</string>
 
     <!--NavigationEditFragment-->
     <string name="header_NavigationEditFragment">Navigation Edit</string>
-
 
     <!--AccountBlind-->
     <string name="header_AccountBlind">Account Setting</string>
@@ -150,17 +151,21 @@
     <string name="btn_DeleteAccountBlind">Delete account</string>
     <string name="checkPassword_DeleteAccountBlind">Your password is incorrect.</string>
 
+    /**START_REGISTER*/
     <!--SendOTP-->
     <string name="header_SendOTP">Registration</string>
     <string name="subheader_SendOTP">Please type your phone number to register. The app will send OTP code to confirm the account</string>
     <string name="button_SendOTP">Send OTP</string>
-
+    <string name="empty_SendOTP">Enter Phone</string>
+    <string name="completed_SendOTP">Verification completed</string>
+    <string name="failed_SendOTP">Verification failed</string>
+    <string name="sent_SendOTP">Code sent</string>
     <!--VerifyOTP-->
     <string name="header_VerifyOTP">OTP Confirmation</string>
-    <string name="subheader_VerifyOTP">Please enter 6 digit OTP in your phone to proceed</string>
+    <string name="subHeader_VerifyOTP">Please enter 6 digit OTP in your phone to proceed</string>
     <string name="empty_VerifyOTP">Please Enter verification code</string>
     <string name="button_VerifyOTP">Submit</string>
-
+    <string name="incorrect_VerifyOTP">Incorrect OTP</string>
     <!--LittleMore-->
     <string name="header_LittleMore">Little more...</string>
     <string name="subheader_LittleMore">Select mode</string>
@@ -168,8 +173,10 @@
     <string name="blind_LittleMore">Blind</string>
     <string name="care_LittleMore">Caretaker</string>
     <string name="hint_LittleMore">Password...</string>
-
     <string name="btn_LittleMore">Register</string>
+    <string name="empty_LittleMore">Please fill your password</string>
+    <string name="select_LittleMore">Please Select mode</string>
+    /**END_REGISTER*/
 
     <!--SelectRegister-->
     <string name="select_register_header">Choose Section</string>
@@ -304,6 +311,8 @@
     <string name="empty_mark">Please mark your location before click confirm</string>
     <string name="empty_title">"Please set title of your location before click confirm</string>
     <string name="search_btn">Confirm Location</string>
+    <string name="search_update">Update location to :</string>
+
 
     <!--InroduceApp-->
     <string name="header_intro">What is Seeable ?</string>

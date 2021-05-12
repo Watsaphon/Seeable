@@ -1,6 +1,5 @@
 package com.estazo.project.seeable.app.device
 
-import android.content.SharedPreferences
 import android.util.Log
 import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
@@ -14,7 +13,7 @@ class BPMRunnable(val callback: TextView, private val currentBlindPhone : String
 
     override fun run() {
         Log.d("selectItem","currentBlindPhone : $currentBlindPhone")
-        var bpm : String = "Running"
+        lateinit var bpm : String
         if(currentBlindPhone != "-"){
             firebaseRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -26,6 +25,5 @@ class BPMRunnable(val callback: TextView, private val currentBlindPhone : String
                 }
             })
         }
-
     }
 }

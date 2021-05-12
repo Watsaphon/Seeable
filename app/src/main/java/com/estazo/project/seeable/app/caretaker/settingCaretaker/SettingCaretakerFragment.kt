@@ -26,8 +26,7 @@ class SettingCaretakerFragment : Fragment() {
 
     private lateinit var binding : FragmentSettingCaretakerBinding
 
-    private lateinit var sharedPrefLanguage: SharedPreferences
-    private lateinit var language : String
+    private val viewModel : UserTypeViewModel by activityViewModels()
 
     private lateinit var sharedPrefPhone: SharedPreferences
     private lateinit var sharedPrefPassword: SharedPreferences
@@ -35,23 +34,23 @@ class SettingCaretakerFragment : Fragment() {
     private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefUserType : SharedPreferences
     private lateinit var sharedPrefBlindId : SharedPreferences
+    private lateinit var sharedPrefLanguage: SharedPreferences
+    private lateinit var language : String
 
-    private val viewModel : UserTypeViewModel by activityViewModels()
-//    private val caretakerViewModel: CaretakerViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.i("SettingCaretaker", "onAttach call")
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i("SettingCaretaker", "onCreate call")
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_caretaker, container, false)
-//        val fragmentBinding = FragmentSettingCaretakerBinding.inflate(inflater, container, false)
-//        binding = fragmentBinding
         Log.i("SettingCaretaker", "onCreateView call")
 
         sharedPrefLanguage = requireActivity().getSharedPreferences("value", 0)
@@ -64,10 +63,9 @@ class SettingCaretakerFragment : Fragment() {
         sharedPrefUserType = requireActivity().getSharedPreferences("value", 0)
         sharedPrefBlindId = requireActivity().getSharedPreferences("value", 0)
 
-        Log.i("SettingCaretaker", " language : $language")
 
         viewModel.userType.observe(viewLifecycleOwner, Observer { typeView ->
-            Log.d("eieiei_care","type : $typeView")
+            Log.d("checkViewModel","type : $typeView")
         })
 
         return binding.root
@@ -75,12 +73,13 @@ class SettingCaretakerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.i("SettingCaretaker", "onViewCreated call")
+
         binding.backButton.setOnClickListener{
             requireActivity().onBackPressed()
         }
 
         binding.langBtn.setOnClickListener{
-//        (activity as MainActivityPerson).changeLanguage()
             changeLanguage()
         }
         
@@ -95,6 +94,7 @@ class SettingCaretakerFragment : Fragment() {
         binding.logoutBtn.setOnClickListener{
         logout()
         }
+
     }
 
 
@@ -128,8 +128,8 @@ class SettingCaretakerFragment : Fragment() {
         viewModel.userType.value = "not found!"
 
         val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
-        Log.i("kubkub", "phone : $phone")
         val ref = FirebaseDatabase.getInstance().reference
+
         val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "-")
         ref.updateChildren(childUpdates)
 
@@ -154,7 +154,6 @@ class SettingCaretakerFragment : Fragment() {
         editorDisplayName.apply()
         editorBlindId.apply()
 
-
         findNavController().navigate(R.id.action_settingCaretakerFragment_to_loginScreen, null,
             NavOptions.Builder().setPopUpTo(R.id.loginScreen, true).build())
     }
@@ -163,26 +162,32 @@ class SettingCaretakerFragment : Fragment() {
         super.onStart()
         Log.i("SettingCaretaker", "onStart call")
     }
+
     override fun onResume() {
         super.onResume()
         Log.i("SettingCaretaker", "onResume call")
     }
+
     override fun onPause() {
         super.onPause()
         Log.i("SettingCaretaker", "onPause call")
     }
+
     override fun onStop() {
         super.onStop()
         Log.i("SettingCaretaker", "onStop call")
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("SettingCaretaker", "onDestroyView call")
     }
+
     override fun onDestroy() {
         super.onDestroy()
         Log.i("SettingCaretaker", "onDestroy call")
     }
+
     override fun onDetach() {
         super.onDetach()
         Log.i("SettingCaretaker", "onDetach call")

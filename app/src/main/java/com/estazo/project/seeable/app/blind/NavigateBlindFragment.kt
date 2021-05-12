@@ -18,11 +18,12 @@ import com.estazo.project.seeable.app.objectDetection.TFLiteDetection
 
 class NavigateBlindFragment : Fragment() {
 
-
     private lateinit var binding: FragmentNavigateBlindBinding
+
     private lateinit var sharedPrefNavigate: SharedPreferences
 
     private lateinit var viewModel: NavigateBlindViewModel
+
     private var isAlreadyFound = false
 
 
@@ -36,84 +37,50 @@ class NavigateBlindFragment : Fragment() {
                 val editor = sharedPrefNavigate.edit()
                 editor.putString("stringKeyNavigate", "not found!")
                 editor.apply()
-                val launchIntent =
-                    requireActivity().packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")
+                val launchIntent = requireActivity().packageManager.getLaunchIntentForPackage("com.estazo.project.seeable.app")
                 startActivity(launchIntent)
             }
         })
-
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_navigate_blind, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_navigate_blind, container, false)
         Log.i("NavigateBlindFragment", "onCreateView call")
-
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.i("NavigateBlindFragment", "onActivityCreated call")
-
     }
 
     override fun onStart() {
         super.onStart()
         Log.i("NavigateBlindFragment", "onStart call")
-
-
     }
 
     override fun onResume() {
         super.onResume()
         Log.i("NavigateBlindFragment", "onResume call")
-
         binding.camera.open()
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //        viewModel = ViewModelProviders.of(this).get(NavigateBlindViewModel::class.java)
         viewModel = ViewModelProvider(this).get(NavigateBlindViewModel::class.java)
-        var a = viewModel.detect.hasActiveObservers()
-        var b = viewModel.detect.hasObservers()
         viewModel.detectDialog().observe(viewLifecycleOwner, Observer<String> { detect ->
             Log.i("NavigateBlindFragment", "viewModel detect = $detect")
-//            binding.test.text = " detect si wa"
-//            if (detect == "0.0") {
-//                binding.test.text = detect
-////                alertDialogCrosswalkDetection()
-//            } else if (detect == "1.0") {
-//                binding.test.text = detect
-////                alertDialogBusSignDetection()
-//            }
         })
         binding.camera.setLifecycleOwner(null)
         binding.camera.addFrameProcessor { frame ->
-            TFLiteDetection(requireContext(), onDetect = { it ->
-                receiveIMG(it)
-            }).detect(frame)
-//            tfLiteDetection.detect(frame)
+            TFLiteDetection(requireContext(), onDetect = {
+                receiveIMG(it) }).detect(frame)
         }
-//        //        binding.camera.setLifecycleOwner(viewLifecycleOwner)
-//        val tfLiteDetection = TFLiteDetection(requireContext()) {
-//            receiveIMG(it)
-//        }
         binding.camera.open()
-        a = viewModel.detect.hasActiveObservers()
-        b = viewModel.detect.hasObservers()
-
-    }
-
-    fun onDetect(s: String) {
-        receiveIMG(s)
+         val a = viewModel.detect.hasActiveObservers()
+         val b = viewModel.detect.hasObservers()
+        Log.d("NavigateBlindFragment", "check observer viewModel.detect.hasActiveObservers() : $a , viewModel.detect.hasObservers() : $b")
     }
 
     override fun onPause() {
@@ -125,7 +92,6 @@ class NavigateBlindFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         Log.i("NavigateBlindFragment", "OnStop call")
-
     }
 
     override fun onDestroyView() {
@@ -138,26 +104,24 @@ class NavigateBlindFragment : Fragment() {
         editor.apply()
     }
 
-    fun receiveIMG(msg: String) {
-        val a = viewModel.detect.hasActiveObservers()
-        val b = viewModel.detect.hasObservers()
+    private fun receiveIMG(msg: String) {
+//        val a = viewModel.detect.hasActiveObservers()
+//        val b = viewModel.detect.hasObservers()
         if (msg != null) {
-            Log.i("Score", "receiveIMG msg = $msg")
+            Log.d("Score", "receiveIMG msg = $msg")
             checkDetection("$msg")
         }
     }
 
     private fun checkDetection(detect: String) {
-//        viewModel.detect.value = "$detect"
-        val a = viewModel.detect.hasActiveObservers()
-        val b = viewModel.detect.hasObservers()
-        Log.i("Score", "checkDetection call")
-
+//        val a = viewModel.detect.hasActiveObservers()
+//        val b = viewModel.detect.hasObservers()
+        Log.d("Score", "checkDetection call")
         if (detect == "0.0") {
             Log.i("Score", "detect = crosswalk")
             binding.camera.close()
-            val a = viewModel.detect.hasActiveObservers()
-            val b = viewModel.detect.hasObservers()
+//            val a = viewModel.detect.hasActiveObservers()
+//            val b = viewModel.detect.hasObservers()
             if (viewModel != null) {
                 viewModel.detect.postValue(detect)
             }
@@ -170,25 +134,24 @@ class NavigateBlindFragment : Fragment() {
             }
         } else if (detect == "1.0") {
             binding.camera.close()
-            val a = viewModel.detect.hasActiveObservers()
-            val b = viewModel.detect.hasObservers()
-            Log.i("Score", "detect = bussign")
+//            val a = viewModel.detect.hasActiveObservers()
+//            val b = viewModel.detect.hasObservers()
+            Log.d("Score", "detect = bussign")
             if (viewModel != null) {
-                var a = viewModel.detect.hasActiveObservers()
-                var b = viewModel.detect.hasObservers()
+//                var a = viewModel.detect.hasActiveObservers()
+//                var b = viewModel.detect.hasObservers()
                 viewModel.detect.postValue(detect)
-                a = viewModel.detect.hasActiveObservers()
-                b = viewModel.detect.hasObservers()
-
-            } else {
+//                a = viewModel.detect.hasActiveObservers()
+//                b = viewModel.detect.hasObservers()
+            }
+            else {
                 viewModel.detect.value = "$detect"
                 viewModel.detect.postValue(detect)
             }
             if (isAlreadyFound) {
             } else {
                 isAlreadyFound = true
-                val action =
-                    NavigateBlindFragmentDirections.actionNavigateBlindFragmentToAlertFragment("bussign")
+                val action = NavigateBlindFragmentDirections.actionNavigateBlindFragmentToAlertFragment("bussign")
                 findNavController().navigate(action)
             }
         }

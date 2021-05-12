@@ -64,7 +64,11 @@
         android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingDeleteFragment"
         android:label="AccountSettingDeleteFragment"
         tools:layout="@layout/fragment_account_setting_delete"
-        />
+        >
+        <action
+            android:id="@+id/action_accountSettingDeleteFragment_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
     <fragment
         android:id="@+id/accountSettingEditFragment"
         android:name="com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting.AccountSettingEditFragment"

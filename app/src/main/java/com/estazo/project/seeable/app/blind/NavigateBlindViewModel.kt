@@ -1,7 +1,6 @@
 package com.estazo.project.seeable.app.blind
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -14,7 +13,6 @@ class NavigateBlindViewModel : ViewModel() {
     }
 
     fun detectDialog(): MutableLiveData<String> {
-//        userDisplay.value = listOf()
         return detect
     }
 

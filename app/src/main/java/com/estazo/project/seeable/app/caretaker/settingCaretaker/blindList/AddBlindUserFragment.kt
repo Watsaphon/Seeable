@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.estazo.project.seeable.app.R
@@ -26,20 +26,22 @@ class AddBlindUserFragment : Fragment() {
 
     private lateinit var binding : FragmentAddBlindUserBinding
 
+    private val verificationViewModel : VerificationViewModel by activityViewModels()
+
     private lateinit var auth: FirebaseAuth
+
     private var mCallback: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
+
     private lateinit var verificationCode: String
+
     private lateinit var  mAlertDialog : AlertDialog
 
-    private val verificationViewModel : VerificationViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i("AddBlindUserFragment", "onCreate call")
-
         auth = FirebaseAuth.getInstance()
-        StartFirebaseLogin()
-
+        startFirebaseLogin()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -92,40 +94,28 @@ class AddBlindUserFragment : Fragment() {
         override fun afterTextChanged(s: Editable) {}
     }
 
-    private fun StartFirebaseLogin() {
+    private fun startFirebaseLogin() {
         mCallback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
                 dismissAlertDialogLoading()
-                Toast.makeText(activity, "verification completed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,  R.string.completed_SendOTP, Toast.LENGTH_SHORT).show()
             }
-
             override fun onVerificationFailed(e: FirebaseException) {
                 dismissAlertDialogLoading()
-                Toast.makeText(activity, "verification failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, R.string.failed_SendOTP, Toast.LENGTH_SHORT).show()
             }
-
             override fun onCodeSent(s: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
                 super.onCodeSent(s, forceResendingToken)
                 verificationCode = s
-
                 dismissAlertDialogLoading()
-                Toast.makeText(activity, "Code sent", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,  R.string.sent_SendOTP, Toast.LENGTH_SHORT).show()
                 verificationViewModel.verifyOTP(binding.telOTP.text.toString(), s)
                 view!!.findNavController().navigate(R.id.action_addBlindUserFragment_to_verificationBlindFragment)
-                Log.i("Verification","verificationCode : $verificationCode , s : $s")
-//                val intent = Intent(activity, VerificationOTP::class.java)
-//                intent.putExtra("mobile",binding.telOTP.text.toString())
-//                intent.putExtra("OTP",verificationCode)
-//                dismissAlertDialogLoading()
-//                startActivity(intent)
-//                Toast.makeText(activity, "Code sent", Toast.LENGTH_SHORT).show()
+                Log.d("Verification","verificationCode : $verificationCode , s : $s")
             }
         }
     }
 
-//    private fun updateUserNameToBlindList(user : List<String>) {
-//        verificationViewModel.verifyOTP(user)
-//    }
 
     /** AlertDialog to loading  */
     private fun alertDialogLoading() {
@@ -136,7 +126,6 @@ class AddBlindUserFragment : Fragment() {
             .setView(mDialogView)
         //show dialog
         mAlertDialog  = mBuilder.show()
-//        mAlertDialog.window!!.setLayout(400,300)
         mAlertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         mAlertDialog.setCanceledOnTouchOutside(false)
         mAlertDialog.setCancelable(false)

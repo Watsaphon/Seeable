@@ -104,19 +104,6 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             style="@style/UnderLineSetting" />
 
-        <Button
-            android:id="@+id/manageUserBtn"
-            android:layout_width="310dp"
-            android:layout_height="50dp"
-            android:drawableStart="@mipmap/icon_managecare_foreground"
-            android:text="@string/button_manage_user"
-            style="@style/settingBlindButton"
-            />
-        <TextView
-            android:id="@+id/ul4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/UnderLineSetting" />
 
         <Button
             android:id="@+id/logoutBtn"
@@ -127,7 +114,7 @@ android:orientation="vertical">
             style="@style/settingBlindButton"
             />
         <TextView
-            android:id="@+id/ul6"
+            android:id="@+id/ul4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/UnderLineSetting" />

@@ -99,6 +99,8 @@
     <string name="update_empty_BlindInformationFragment">กรุณากรอกชื่อใหม่ของคุณ</string>
     <string name="update_same_BlindInformationFragment">ชื่อใหม่จะต้องไม่ซ้ำเก่าชื่อเก่าของคุณ</string>
     <string name="update_success_BlindInformationFragment">อัพเดทชื่อเสร็จสิ้น</string>
+    <string name="edit_blind_BlindInformationFragment">คุณไม่สามารถแก้ไขจุดหมายปลางทางของฝั่งคนตาบอดได้</string>
+    <string name="delete_blind_BlindInformationFragment">คุณไม่สามารถลบจุดหมายปลางทางของฝั่งคนตาบอดได้</string>
 
     <!--NavigationEditFragment-->
     <string name="header_NavigationEditFragment">แก้ไขการนำทาง</string>
@@ -149,17 +151,21 @@
 
     <string name="checkPassword_DeleteAccountBlind">รหัสผ่านของคุณไม่ถูกต้อง</string>
 
+    /**START_REGISTER*/
     <!--SendOTP-->
     <string name="header_SendOTP">ลงทะเบียน</string>
     <string name="subheader_SendOTP">กรุณากรอกเบอร์โทรศัพท์เพื่อลงทะเบียน แอปพลิเคชันจะส่งรหัสOTPเพื่อยืนยันผู้ใช้งาน</string>
     <string name="button_SendOTP">ส่ง OTP</string>
-
+    <string name="empty_SendOTP">กรุณากรอกเเบอร์โทรศัพท์</string>
+    <string name="completed_SendOTP">ยืนยันตัวตนสำเร็จ</string>
+    <string name="failed_SendOTP">ยืนยันตัวตนล้มเหลว</string>
+    <string name="sent_SendOTP">รหัสผ่านถูกส่งเรียบร้อยแล้ว</string>
     <!--VerifyOTP-->
     <string name="header_VerifyOTP">ยืนยันรหัส OTP</string>
-    <string name="subheader_VerifyOTP">กรุณาใส่รัหสผ่าน6หลักบนโทรศัพท์เพื่อดำเนินการต่อ</string>
+    <string name="subHeader_VerifyOTP">กรุณาใส่รัหสผ่าน6หลักบนโทรศัพท์เพื่อดำเนินการต่อ</string>
     <string name="empty_VerifyOTP">กรุณากรอกรหัสยืนยัน</string>
     <string name="button_VerifyOTP">ยืนยัน</string>
-
+    <string name="incorrect_VerifyOTP">รหัสOTPไม่ถูกต้อง</string>
     <!--LittleMore-->
     <string name="header_LittleMore">เพิ่มเติม...</string>
     <string name="subheader_LittleMore">เลือกโหมดการทำงาน</string>
@@ -168,6 +174,9 @@
     <string name="care_LittleMore">ผู้ดูแล</string>
     <string name="hint_LittleMore">รหัสผ่าน...</string>
     <string name="btn_LittleMore">ลงทะเบียน</string>
+    <string name="empty_LittleMore">กรุณากรอกเเบอร์โทรศัพท์</string>
+    <string name="select_LittleMore">กรุณาเลือกรูปแบบการใช้งาน</string>
+    /**END_REGISTER*/
 
     <!--SelectRegister-->
     <string name="select_register_header">เลือกผู้ลงทะเบียน</string>
@@ -300,6 +309,7 @@
     <string name="empty_mark">กรุณาปักหมุดตำแหน่งก่อนกดยืนยัน</string>
     <string name="empty_title">กรุณาตั้งชื่อตำแหน่งก่อนที่กดยืนยัน</string>
     <string name="search_btn">ยืนยันที่อยู่</string>
+    <string name="search_update">อัพเดทที่อยู่เป็น :</string>
 
     <!--InroduceApp-->
     <string name="header_intro">Seeable คืออะไร</string>

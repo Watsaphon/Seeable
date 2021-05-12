@@ -3,12 +3,12 @@ package com.estazo.project.seeable.app.caretaker.settingCaretaker.accoutSetting
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentAccountSettingChangePasswordBinding
 import com.google.firebase.database.DataSnapshot
@@ -29,6 +29,7 @@ class AccountSettingChangePasswordFragment : Fragment() {
     private lateinit var newPassword  : String
     private lateinit var confirmPassword  : String
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account_setting_change_password ,container, false)
@@ -47,7 +48,7 @@ class AccountSettingChangePasswordFragment : Fragment() {
             oldPassword = binding.editOldPassword.text.toString()
             newPassword = binding.editNewPassword.text.toString()
             confirmPassword = binding.editConfirmPassword.text.toString()
-            Log.i("changePassword","oldPassword : $oldPassword , newPassword : $newPassword ," +
+            Log.d("changePassword","oldPassword : $oldPassword , newPassword : $newPassword ," +
                     " confirmPassword :$confirmPassword , passwordPref : $passwordPref  ")
             when {
                 oldPassword.isEmpty() -> {
@@ -85,10 +86,8 @@ class AccountSettingChangePasswordFragment : Fragment() {
                     Toast.makeText(activity,R.string.successfully_AccountSettingEditCaretaker, Toast.LENGTH_SHORT).show()
                     requireActivity().onBackPressed()
                 }
-
             }
         }
-
         return binding.root
     }
 
@@ -99,9 +98,8 @@ class AccountSettingChangePasswordFragment : Fragment() {
                 passwordPref = sharedPrefPhone.getString("stringKeyPassword", "not found!").toString()
                 newPassword = binding.editNewPassword.text.toString()
                 val ref = FirebaseDatabase.getInstance().reference
-                val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/password" to "$newPassword")
+                val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/password" to newPassword)
                 ref.updateChildren(childUpdates)
-
             }
         }
         override fun onCancelled(databaseError: DatabaseError) {}

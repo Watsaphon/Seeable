@@ -7,14 +7,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.databinding.FragmentSearchLocationCaretakerBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -34,16 +33,16 @@ class SearchLocationCaretakerFragment : Fragment() , OnMapReadyCallback {
     private lateinit var binding : FragmentSearchLocationCaretakerBinding
 
     private lateinit var map : GoogleMap
+
     var markLocation : String = ""
+    private lateinit var phoneBlind : String
     private lateinit var lat : String
     private lateinit var long : String
 
     private lateinit var  mAlertDialog : AlertDialog
-    private lateinit var phoneBlind : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
             val mobile = SearchLocationCaretakerFragmentArgs.fromBundle(it).phoneBlind
             phoneBlind = mobile
@@ -53,19 +52,15 @@ class SearchLocationCaretakerFragment : Fragment() , OnMapReadyCallback {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_location_caretaker, container,false)
-
         if (getString(R.string.map_key).isEmpty()) {
             Toast.makeText(activity, "Add your own API key in MapWithMarker/app/secure.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show()
         }
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-
         mapFragment.getMapAsync(this)
 
         binding.svLocation.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
             override fun onQueryTextSubmit(p0: String?): Boolean {
-
                 // Clears the previously touched position
                 map.clear()
 
@@ -75,7 +70,7 @@ class SearchLocationCaretakerFragment : Fragment() , OnMapReadyCallback {
                     val geocoder = Geocoder(activity)
                     try {
                         addressList = geocoder.getFromLocationName(location, 1)
-                        Log.i("checkhome5","$addressList")
+                        Log.i("checkGoogleMap_5","$addressList")
                     } catch (e: IOException) {
                     }
                     if (addressList != null) {
@@ -88,13 +83,12 @@ class SearchLocationCaretakerFragment : Fragment() , OnMapReadyCallback {
                             long = latLng.longitude.toString()
                             map.addMarker(MarkerOptions().position(latLng).title(location))
                             map.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-                            Log.i("checkhome3"," latLng : $latLng")
+                            Log.d("checkGoogleMap_3"," latLng : $latLng")
                             markLocation = ("$lat,$long")
-                            Log.i("checkhome4"," homeLocation : $markLocation")
+                            Log.d("checkGoogleMap_4"," homeLocation : $markLocation")
                         }
                     }
-                    Log.i("checkhome6","$addressList")
-
+                    Log.d("checkGoogleMap_6","$addressList")
                 }
                 return false
             }
@@ -105,19 +99,20 @@ class SearchLocationCaretakerFragment : Fragment() , OnMapReadyCallback {
 
         binding.searchBtn.setOnClickListener{
             alertDialogLoading()
-            if(markLocation  == "" ){
-                mAlertDialog.dismiss()
-                Toast.makeText(activity,R.string.empty_mark, Toast.LENGTH_SHORT).show()
-            }
-            else if(binding.titleBox.text.toString().isEmpty()){
-                mAlertDialog.dismiss()
-                Toast.makeText(activity,R.string.empty_title, Toast.LENGTH_SHORT).show()
-            }
-            else{
-                Toast.makeText(activity,"Update location to : $markLocation", Toast.LENGTH_SHORT).show()
-
-                val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phoneBlind/Navigation")
-                query.addListenerForSingleValueEvent(valueEventListener)
+            when {
+                markLocation  == "" -> {
+                    mAlertDialog.dismiss()
+                    Toast.makeText(activity,R.string.empty_mark, Toast.LENGTH_SHORT).show()
+                }
+                binding.titleBox.text.toString().isEmpty() -> {
+                    mAlertDialog.dismiss()
+                    Toast.makeText(activity,R.string.empty_title, Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(activity,"Update location to : $markLocation", Toast.LENGTH_SHORT).show()
+                    val query = FirebaseDatabase.getInstance().getReference("users_blind").child("$phoneBlind/Navigation")
+                    query.addListenerForSingleValueEvent(valueEventListener)
+                }
             }
         }
 
@@ -152,11 +147,11 @@ class SearchLocationCaretakerFragment : Fragment() , OnMapReadyCallback {
             // Setting the position for the marker
             markerOptions.position(latLng)
 
-            // Setting the title for the marker.
-            // This will be displayed on taping the marker
+            // Setting the title for the marker. This will be displayed on taping the marker
             markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
             lat = latLng.latitude.toString()
             long = latLng.longitude.toString()
+
             // Clears the previously touched position
             googleMap.clear()
 
@@ -166,26 +161,22 @@ class SearchLocationCaretakerFragment : Fragment() , OnMapReadyCallback {
             // Placing a marker on the touched position
             googleMap.addMarker(markerOptions)
 
-            Log.i("checkhome1"," latLng : $latLng")
+            Log.d("checkGoogleMap_1"," latLng : $latLng")
             markLocation = ("$lat,$long")
-            Log.i("checkhome2"," markLocation : $markLocation")
+            Log.d("checkGoogleMap_2"," markLocation : $markLocation")
         }
     }
 
     /**receive value from realtime database (users_blind) and check Login */
     private var valueEventListener: ValueEventListener = object : ValueEventListener {
-
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             if (dataSnapshot.exists()) {
-
                 val ref = FirebaseDatabase.getInstance().reference
                 val childUpdates = hashMapOf<String, Any>("users_blind/$phoneBlind/Navigation/navigate_careUser" to "$markLocation")
                 ref.updateChildren(childUpdates)
-
                 val title = binding.titleBox.text.toString()
                 val childUpdates2 = hashMapOf<String, Any>("users_blind/$phoneBlind/Navigation/title_Navigate_careUser" to "$title")
                 ref.updateChildren(childUpdates2)
-
                 requireActivity().onBackPressed()
             }
         }
@@ -214,21 +205,23 @@ class SearchLocationCaretakerFragment : Fragment() , OnMapReadyCallback {
         super.onStop()
         Log.i("SearchLocationCaretaker", "onStop call")
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("SearchLocationCaretaker", "onDestroyView call")
         if (this::mAlertDialog.isInitialized) {
             if (mAlertDialog.isShowing) {
-                Log.i("pppp", "alert is showing in if")
                 mAlertDialog.dismiss()
             }
         }
 
     }
+
     override fun onDestroy() {
         super.onDestroy()
         Log.i("SearchLocationCaretaker", "onDestroy call")
     }
+
     override fun onDetach() {
         super.onDetach()
         Log.i("SearchLocationCaretaker", "onDetach call")
