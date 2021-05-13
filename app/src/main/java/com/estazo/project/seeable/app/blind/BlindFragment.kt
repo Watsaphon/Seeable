@@ -137,28 +137,28 @@ class BlindFragment : Fragment() {
             textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigationBlind()
             Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
-
-            editor.putString("stringKeyNavigate", "active")
-            editor.apply()
-
-            val postNotification =  Notification(currentTime,"navigate")
-            val postValues = postNotification.toMap()
-            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
-            ref.updateChildren(childUpdates)
+//            sharedPrefNavigate = requireActivity().getSharedPreferences("value", 0)
+//            val editor = sharedPrefNavigate.edit()
+//            editor.putString("stringKeyNavigate", "active")
+//            editor.apply()
+//            val postNotification =  Notification(currentTime,"navigate")
+//            val postValues = postNotification.toMap()
+//            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+//            ref.updateChildren(childUpdates)
         }
         binding.careNavButton.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigationCaretaker()
             Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
-
-            editor.putString("stringKeyNavigate", "active")
-            editor.apply()
-
-            val postNotification =  Notification(currentTime,"navigate")
-            val postValues = postNotification.toMap()
-            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
-            ref.updateChildren(childUpdates)
+//
+//            editor.putString("stringKeyNavigate", "active")
+//            editor.apply()
+//
+//            val postNotification =  Notification(currentTime,"navigate")
+//            val postValues = postNotification.toMap()
+//            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+//            ref.updateChildren(childUpdates)
         }
         binding.callEmergency.setOnVeryLongClickListener{
             vibrate()
@@ -394,6 +394,21 @@ class BlindFragment : Fragment() {
                     Toast.makeText(activity, R.string.locatoin_null,Toast.LENGTH_SHORT).show()
                 }
                 else{
+                    sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+                    sharedPrefNavigate = requireActivity().getSharedPreferences("value", 0)
+
+                    val editor = sharedPrefNavigate.edit()
+                    editor.putString("stringKeyNavigate", "active")
+                    editor.apply()
+
+                    val ref = FirebaseDatabase.getInstance().reference
+                    val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+                    val currentTime = Calendar.getInstance().time.toString()
+                    val postNotification =  Notification(currentTime,"navigate")
+                    val postValues = postNotification.toMap()
+                    val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+                    ref.updateChildren(childUpdates)
+
                     // Navigation : current place direct to gmmIntentUri
                     val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
@@ -424,6 +439,21 @@ class BlindFragment : Fragment() {
                     Toast.makeText(activity, R.string.locatoin_null,Toast.LENGTH_SHORT).show()
                 }
                 else{
+                    sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+                    sharedPrefNavigate = requireActivity().getSharedPreferences("value", 0)
+
+                    val editor = sharedPrefNavigate.edit()
+                    editor.putString("stringKeyNavigate", "active")
+                    editor.apply()
+
+                    val ref = FirebaseDatabase.getInstance().reference
+                    val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+                    val currentTime = Calendar.getInstance().time.toString()
+                    val postNotification =  Notification(currentTime,"navigate")
+                    val postValues = postNotification.toMap()
+                    val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+                    ref.updateChildren(childUpdates)
+
                     // Navigation : current place direct to gmmIntentUri
                     val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)

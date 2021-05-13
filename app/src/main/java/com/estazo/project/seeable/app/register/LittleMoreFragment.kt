@@ -62,12 +62,13 @@ class LittleMoreFragment : Fragment() {
                     val ID = rootRef.push().key
                     val location = Locations(0.00000000, 0.00000000)
                     val caretaker = Caretaker("-", "-","-", "-")
-                    val device = DeviceBlind("-","-",false,"no", "-")
+                    val device = DeviceBlind("-","-",false,"-",
+                        "no","-","-")
                     val navigation = Navigation("-", "-", "-","-")
                     val notification = Notification("-", "-")
 
                     val valueRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone")
-                    val rootData = UserBlinderHelperClassNew(ID.toString(), phone, "$password", "not found !","-")
+                    val rootData = UserBlinderHelperClassNew(ID.toString(), phone, "$password", "-")
 
                     rootRef.child(phone).setValue(rootData).addOnCompleteListener {
                         valueRef.child("Location").setValue(location).addOnCompleteListener {
@@ -82,7 +83,6 @@ class LittleMoreFragment : Fragment() {
                                 }
                             }
                         }
-
                     }
                 }
                 else if (binding.selectCare.isChecked && password.isNotEmpty()) {
@@ -96,7 +96,7 @@ class LittleMoreFragment : Fragment() {
                         ID.toString(),
                         phone,
                         "$password",
-                        "not found !",
+                        "-",
                         "-",
                         "-",
                         "-")
