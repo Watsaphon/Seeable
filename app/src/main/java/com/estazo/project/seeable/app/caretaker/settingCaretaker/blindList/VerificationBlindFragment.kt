@@ -178,6 +178,7 @@ class VerificationBlindFragment : Fragment() {
                 val phone = snapshot.child("phone").value.toString()
                 val name = snapshot.child("displayName").value.toString()
                 addBlindUser(phoneCaretaker,phone,name)
+                addCaretakerUser(phoneCaretaker,phone)
             }
             override fun onCancelled(databaseError: DatabaseError) {
             }
@@ -226,6 +227,42 @@ class VerificationBlindFragment : Fragment() {
                     else -> {
                         Log.i("12345","User Not Found.")
                     }
+                }
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        })
+    }
+
+    private fun addCaretakerUser(phoneCaretaker : String , phoneBlind : String) {
+        var firebaseRef = FirebaseDatabase.getInstance().getReference("users_blind/$phoneBlind/Caretaker")
+        firebaseRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user1 = snapshot.child("user1").value.toString()
+                val user2 = snapshot.child("user2").value.toString()
+                val user3 = snapshot.child("user3").value.toString()
+                val user4 = snapshot.child("user4").value.toString()
+                when{
+                    user1 == "-" ->{
+                        firebaseRef.updateChildren(hashMapOf<String, Any>("user1" to "$phoneCaretaker"))
+                    }
+                    user1 != "-" && user1 == phoneCaretaker ->{
+                        firebaseRef.updateChildren(hashMapOf<String, Any>("user1" to "$phoneCaretaker"))
+                    }
+                    user2 == "-" ->{
+                        firebaseRef.updateChildren(hashMapOf<String, Any>("user2" to "$phoneCaretaker"))
+                    }
+                    user2 != "-" && user1 == phoneCaretaker ->{
+                        firebaseRef.updateChildren(hashMapOf<String, Any>("user2" to "$phoneCaretaker"))}
+                    user3 == "-" ->{
+                        firebaseRef.updateChildren(hashMapOf<String, Any>("user3" to "$phoneCaretaker"))
+                    }
+                    user3 != "-" && user1 == phoneCaretaker ->{
+                        firebaseRef.updateChildren(hashMapOf<String, Any>("user3" to "$phoneCaretaker"))}
+                    user4 == "-" ->{
+                        firebaseRef.updateChildren(hashMapOf<String, Any>("user4" to "$phoneCaretaker"))}
+                    user4 != "-" && user1 == phoneCaretaker ->{
+                        firebaseRef.updateChildren(hashMapOf<String, Any>("user4" to "$phoneCaretaker"))}
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {

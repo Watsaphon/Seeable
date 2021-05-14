@@ -38,6 +38,8 @@ class NotificationService : NotificationListenerService() {
 
     private lateinit var sharedPrefNavigate : SharedPreferences
     private lateinit var sharedPrefLanguage: SharedPreferences
+    private lateinit var sharedPrefUserType: SharedPreferences
+
     private lateinit var language : String
     private var phone: String = ""
 
@@ -83,7 +85,11 @@ class NotificationService : NotificationListenerService() {
                 alertDialogCritical(name)
 
             }
-            if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation"){
+
+            sharedPrefUserType = getSharedPreferences("value", 0)
+            val userType = sharedPrefUserType.getString("stringKeyType","not found!")
+
+            if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation" && userType == "Blind" ){
                 Log.d("notificationServiceInfo", "call go back alertDialog")
                 alertDialogBack()
             }

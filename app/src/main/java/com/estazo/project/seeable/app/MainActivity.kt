@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                         Log.d("testNotification", msg)
                         Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                         val ref = FirebaseDatabase.getInstance().reference
-                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to token)
+                        val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "$token")
                         ref.updateChildren(childUpdates)
                     })
                 }
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                         val sharedPrefPhone = getSharedPreferences("value", 0)
                         val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
                         val ref = FirebaseDatabase.getInstance().reference
-                        val childUpdates = hashMapOf<String, Any>("users_blind/$phone/FCM" to token)
+                        val childUpdates = hashMapOf<String, Any>("users_blind/$phone/FCM" to "$token")
                         ref.updateChildren(childUpdates)
                         blindSection()
                     })

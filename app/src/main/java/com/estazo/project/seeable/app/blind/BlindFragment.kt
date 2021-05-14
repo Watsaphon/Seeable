@@ -137,28 +137,12 @@ class BlindFragment : Fragment() {
             textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigationBlind()
             Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
-//            sharedPrefNavigate = requireActivity().getSharedPreferences("value", 0)
-//            val editor = sharedPrefNavigate.edit()
-//            editor.putString("stringKeyNavigate", "active")
-//            editor.apply()
-//            val postNotification =  Notification(currentTime,"navigate")
-//            val postValues = postNotification.toMap()
-//            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
-//            ref.updateChildren(childUpdates)
         }
         binding.careNavButton.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigationCaretaker()
             Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
-//
-//            editor.putString("stringKeyNavigate", "active")
-//            editor.apply()
-//
-//            val postNotification =  Notification(currentTime,"navigate")
-//            val postValues = postNotification.toMap()
-//            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
-//            ref.updateChildren(childUpdates)
         }
         binding.callEmergency.setOnVeryLongClickListener{
             vibrate()
