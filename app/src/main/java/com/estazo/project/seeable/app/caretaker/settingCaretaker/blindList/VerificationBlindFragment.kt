@@ -249,19 +249,19 @@ class VerificationBlindFragment : Fragment() {
                     user1 != "-" && user1 == phoneCaretaker ->{
                         firebaseRef.updateChildren(hashMapOf<String, Any>("user1" to "$phoneCaretaker"))
                     }
-                    user2 == "-" ->{
+                    user1 != "-" && user2 == "-" ->{
                         firebaseRef.updateChildren(hashMapOf<String, Any>("user2" to "$phoneCaretaker"))
                     }
-                    user2 != "-" && user1 == phoneCaretaker ->{
+                    user1 != "-" && user2 != "-" && user2 == phoneCaretaker ->{
                         firebaseRef.updateChildren(hashMapOf<String, Any>("user2" to "$phoneCaretaker"))}
-                    user3 == "-" ->{
+                    user1 != "-" && user2 != "-" && user3 == "-" ->{
                         firebaseRef.updateChildren(hashMapOf<String, Any>("user3" to "$phoneCaretaker"))
                     }
-                    user3 != "-" && user1 == phoneCaretaker ->{
+                    user1 != "-" && user2 != "-" && user3 != "-" && user3 == phoneCaretaker ->{
                         firebaseRef.updateChildren(hashMapOf<String, Any>("user3" to "$phoneCaretaker"))}
-                    user4 == "-" ->{
+                    user1 != "-" && user2 != "-" && user3 != "-" && user4 == "-" ->{
                         firebaseRef.updateChildren(hashMapOf<String, Any>("user4" to "$phoneCaretaker"))}
-                    user4 != "-" && user1 == phoneCaretaker ->{
+                    user1 != "-" && user2 != "-" && user3 != "-" && user4 != "-" && user4 == phoneCaretaker ->{
                         firebaseRef.updateChildren(hashMapOf<String, Any>("user4" to "$phoneCaretaker"))}
                 }
             }
