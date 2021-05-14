@@ -89,7 +89,7 @@ class NotificationService : NotificationListenerService() {
             sharedPrefUserType = getSharedPreferences("value", 0)
             val userType = sharedPrefUserType.getString("stringKeyType","not found!")
 
-            if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation" && userType == "Blind" ){
+            if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation" && userType == "blind" ){
                 Log.d("notificationServiceInfo", "call go back alertDialog")
                 alertDialogBack()
             }

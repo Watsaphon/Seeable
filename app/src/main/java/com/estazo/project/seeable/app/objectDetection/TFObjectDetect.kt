@@ -39,7 +39,7 @@ class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) 
         if (maxScore != null) {
             detect_num = maxScore.toInt()
             val test = maxScore
-            if (maxScore > 0.9) {
+            if (maxScore > 0.95) {
                 maxPosition?.let { classes.floatArray[it].toString() }?.let { it ->
                     Log.d("Score", "it : $it")
                     detect_num = maxScore.toInt()
