@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                         // Log and toast
                         val msg = getString(R.string.msg_token_fmt, token)
                         Log.d("testNotification", msg)
-                        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                         val ref = FirebaseDatabase.getInstance().reference
                         val childUpdates = hashMapOf<String, Any>("users_caretaker/$phone/FCM" to "$token")
                         ref.updateChildren(childUpdates)
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                         // Log and toast
                         val msg = getString(R.string.msg_token_fmt, token)
                         Log.d("testNotification", msg)
-                        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
 
                         val sharedPrefPhone = getSharedPreferences("value", 0)
                         val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")

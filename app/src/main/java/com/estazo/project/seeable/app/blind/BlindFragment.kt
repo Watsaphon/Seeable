@@ -37,10 +37,9 @@ import com.estazo.project.seeable.app.helperClass.Locations
 import com.estazo.project.seeable.app.helperClass.Notification
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.location.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 import java.util.*
 
@@ -66,6 +65,9 @@ class BlindFragment : Fragment() {
 
     private lateinit var viewModel : BlindViewModel
 
+    private lateinit var database: DatabaseReference
+    private lateinit var listener: ValueEventListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
@@ -74,9 +76,9 @@ class BlindFragment : Fragment() {
                 requireActivity().finishAffinity()
             }
         })
-        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
-        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
-        getTitleLocation(phone)
+//        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+//        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+//        getTitleLocation(phone)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -103,10 +105,15 @@ class BlindFragment : Fragment() {
         })
         textToSpeech!!.setSpeechRate(0.9f)
 
+        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        getTitleLocation(phone)
+
         val displayName = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!")
         if(displayName == "-"){
             alertDialogSetName()
         }
+
 
         return fragmentBinding.root
 
@@ -206,6 +213,9 @@ class BlindFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("BlindFragment", "onDestroyView call")
+        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        database.child("users_caretaker/$phone/Blind").removeEventListener(listener)
     }
 
     private fun checkPermission():Boolean {
@@ -453,32 +463,34 @@ class BlindFragment : Fragment() {
     }
 
     private fun getTitleLocation(phone:String){
-        val firebaseRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone/Navigation")
-        firebaseRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val titleBlind = snapshot.child("title_Navigate_blindUser").value.toString()
-                val locationBlind = snapshot.child("navigate_blindUser").value.toString()
-                val titleCaretaker = snapshot.child("title_Navigate_careUser").value.toString()
-                val locationCaretaker = snapshot.child("navigate_careUser").value.toString()
-                if(titleBlind != "-" && locationBlind != "-" ){
-                    viewModel.titleBlind.value = titleBlind
-                    binding.selfNavButton.text = getString(R.string.button_self_navigation) + " to  $titleBlind"
-                }
-                else{
-                    viewModel.titleBlind.value = "-"
-                    binding.selfNavButton.text = getString(R.string.button_self_navigation)
+        database = Firebase.database.reference
+        listener = database.child("users_blind/$phone/Navigation").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val titleBlind = dataSnapshot.child("title_Navigate_blindUser").value.toString()
+                    val locationBlind = dataSnapshot.child("navigate_blindUser").value.toString()
+                    val titleCaretaker = dataSnapshot.child("title_Navigate_careUser").value.toString()
+                    val locationCaretaker = dataSnapshot.child("navigate_careUser").value.toString()
+                    if(titleBlind != "-" && locationBlind != "-" ){
+                        viewModel.titleBlind.value = titleBlind
+                        binding.selfNavButton.text = getString(R.string.button_self_navigation) + " to  $titleBlind"
+                    }
+                    else{
+                        viewModel.titleBlind.value = "-"
+                        binding.selfNavButton.text = getString(R.string.button_self_navigation)
 
-                }
-                if(titleCaretaker != "-" && locationCaretaker != "-" ){
-                    viewModel.titleCaretaker.value = titleCaretaker
-                    binding.careNavButton.text = getString(R.string.button_caretaker_navigation) + " to  $titleCaretaker"
-                }
-                else{
-                    viewModel.titleCaretaker.value = "-"
-                    binding.careNavButton.text = getString(R.string.button_caretaker_navigation)
+                    }
+                    if(titleCaretaker != "-" && locationCaretaker != "-" ){
+                        viewModel.titleCaretaker.value = titleCaretaker
+                        binding.careNavButton.text = getString(R.string.button_caretaker_navigation) + " to  $titleCaretaker"
+                    }
+                    else{
+                        viewModel.titleCaretaker.value = "-"
+                        binding.careNavButton.text = getString(R.string.button_caretaker_navigation)
+                    }
                 }
             }
-            override fun onCancelled(databaseError: DatabaseError) {
+            override fun onCancelled(error: DatabaseError) {
             }
         })
     }

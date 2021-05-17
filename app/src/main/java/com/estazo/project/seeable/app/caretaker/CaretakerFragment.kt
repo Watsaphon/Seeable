@@ -1,8 +1,10 @@
  package com.estazo.project.seeable.app.caretaker
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -50,6 +53,7 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
      private lateinit var database: DatabaseReference
      private lateinit var listener: ValueEventListener
 
+     val PERMISSION_ID = 1010
 
      override fun onAttach(context: Context) {
          super.onAttach(context)
@@ -75,7 +79,8 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
         val fragmentBinding = FragmentCaretakerBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         binding.setting.isEnabled = false
-
+        checkPermission()
+        requestPermission()
         sharedPrefBlindId = requireActivity().getSharedPreferences("value", 0)
         currentBlindId = sharedPrefBlindId.getString("stringKeyBlindId", "not found!").toString()
         queryUser("$phone")
@@ -176,6 +181,17 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 
     }
 
+     private fun checkPermission():Boolean {
+         if(ActivityCompat.checkSelfPermission(requireActivity(),
+                 Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
+             return true
+         }
+         return false
+     }
+     private fun requestPermission(){
+         ActivityCompat.requestPermissions(requireActivity(), arrayOf(
+             Manifest.permission.CALL_PHONE), PERMISSION_ID)
+     }
      override fun onStart() {
          super.onStart()
          Log.i("CaretakerFragment", "onStart call")
