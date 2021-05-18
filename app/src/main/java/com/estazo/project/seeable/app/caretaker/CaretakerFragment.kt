@@ -216,6 +216,11 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
             var buttonDrawable: Drawable = binding.healthStatus.background
             buttonDrawable = DrawableCompat.wrap(buttonDrawable)
             when(status){
+                "-"->{
+                    Log.i("selectItem","status : $status")
+                    DrawableCompat.setTint(buttonDrawable, Color.rgb(128,128,128))
+                    binding.healthStatus.background = buttonDrawable
+                }
                 "Tired" -> { /**ส้มขี้*/
                     Log.i("selectItem","status : $status")
                     DrawableCompat.setTint(buttonDrawable, Color.rgb(200, 145, 80))
@@ -242,6 +247,11 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
             var buttonDrawable: Drawable = binding.activityWalking.background
             buttonDrawable = DrawableCompat.wrap(buttonDrawable)
             when(activity){
+                "-"->{
+                    Log.i("selectItem","activity : $activity")
+                    DrawableCompat.setTint(buttonDrawable, Color.rgb(128,128,128))
+                    binding.activityWalking.background = buttonDrawable
+                }
                 "Idle" -> {
                     /**ฟ้า*/
                     Log.i("selectItem","activity : $activity")
