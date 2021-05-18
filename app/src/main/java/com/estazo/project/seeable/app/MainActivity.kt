@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity() {
         val phone = sharedPrefPhone.getString("stringKeyPhone","not found!")
         if(blind){
             viewModel.userType.removeObservers(this)
-            database.child("users_blind/$phone/Device").removeEventListener(listener)
+            database.child("users_blind/$phone/Device/fall_Detection").removeEventListener(listener)
             Log.d("checkUser_Main_BS"," remove observer and database")
         }
     }
@@ -332,14 +332,14 @@ class MainActivity : AppCompatActivity() {
             when(typeView){
                 "not found!" -> {
                     if(this::database.isInitialized){
-                        database.child("users_blind/$phone/Device").removeEventListener(listener)
+                        database.child("users_blind/$phone/Device/fall_Detection").removeEventListener(listener)
                         Log.d("checkTypeMainActivityBS","logout to Login section")
                         blind = false
                     }
                 }
                 "caretaker" -> {
                     if(this::database.isInitialized){
-                        database.child("users_blind/$phone/Device").removeEventListener(listener)
+                        database.child("users_blind/$phone/Device/fall_Detection").removeEventListener(listener)
                         Log.d("checkTypeMainActivityBS","login to caretaker section")
                         blind = false
 
@@ -356,10 +356,10 @@ class MainActivity : AppCompatActivity() {
         /**For kotlin*/
 //        database = Firebase.database.reference
         database = Firebase.database.reference
-        listener = database.child("users_blind/$phone/Device").addValueEventListener(object : ValueEventListener {
+        listener = database.child("users_blind/$phone/Device/fall_Detection").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if (dataSnapshot.exists()) {
-                val fallDetections = dataSnapshot.child("fall_Detection").value.toString()
+                val fallDetections = dataSnapshot.value.toString()
                 Log.d("checkUser_Main_FD", "fallDetections : $fallDetections")
                     if (fallDetections == "fall") {
                         alertDialogFallDetection()
