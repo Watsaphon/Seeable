@@ -12,6 +12,8 @@ class CaretakerViewModel : ViewModel() {
     var userTel = MutableLiveData<List<String>>()
     var userDisplay = MutableLiveData<List<String>>()
 
+    var healthStatus = MutableLiveData<String>()
+    var activity = MutableLiveData<String>()
     // The current user
      val _currentUser = MutableLiveData<Int>()
 
