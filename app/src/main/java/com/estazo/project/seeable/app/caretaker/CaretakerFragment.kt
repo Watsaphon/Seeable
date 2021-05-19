@@ -12,6 +12,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -39,7 +42,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 
 
- class CaretakerFragment : Fragment() {
+ class CaretakerFragment : Fragment(), Animation.AnimationListener {
 
      private lateinit var binding: FragmentCaretakerBinding
 
@@ -61,6 +64,9 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
      private lateinit var listener: ValueEventListener
 
      val PERMISSION_ID = 1010
+
+     private lateinit var animationSequence: Animation
+     private lateinit var animation1: AlphaAnimation
 
      override fun onAttach(context: Context) {
          super.onAttach(context)
@@ -151,7 +157,6 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
                     val activityThread = Thread(ActivityRunnable(binding.activityWalkingText,viewModel._currentBlindPhone.value.toString()))
                     activityThread.start()
 
-//                    database = Firebase.database.reference
                     val blind = viewModel._currentBlindPhone.value.toString()
                     listener = database.child("users_blind/$blind/Device").addValueEventListener(object : ValueEventListener {
                             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -167,7 +172,6 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
                             }
                         })
                     Log.d("selectItem","itemPo: $itemPo , selectItemPo: $selectItemPo , itemPosition : $itemPosition")
-
                 }
             }
         })
@@ -212,6 +216,7 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
              }
         })
 
+
         viewModel.healthStatus.observe(viewLifecycleOwner, Observer<String>{status ->
             var buttonDrawable: Drawable = binding.healthStatus.background
             buttonDrawable = DrawableCompat.wrap(buttonDrawable)
@@ -242,7 +247,9 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
                     binding.healthStatus.background = buttonDrawable
                 }
             }
+
         })
+
         viewModel.activity.observe(viewLifecycleOwner, Observer<String>{activity ->
             var buttonDrawable: Drawable = binding.activityWalking.background
             buttonDrawable = DrawableCompat.wrap(buttonDrawable)
@@ -266,7 +273,32 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
                 }
             }
         })
+
+        animation1 = AlphaAnimation(0.0f, 1.0f)
+        animation1.duration = 3000
+        animation1.startOffset = 500
+
+        animationSequence = AnimationUtils.loadAnimation(context,R.anim.sequential)
+        animationSequence.setAnimationListener(this)
+
+        binding.heart.startAnimation(animation1)
+        binding.walking.startAnimation(animationSequence)
+
     }
+
+     override fun onAnimationStart(animation: Animation?) {
+         Log.i(" onAnimation","start")
+     }
+     override fun onAnimationEnd(animation: Animation?) {
+         Log.i(" onAnimation","end")
+         binding.heart.startAnimation(animation1)
+         binding.walking.startAnimation(animationSequence)
+     }
+     override fun onAnimationRepeat(animation: Animation?) {
+         Log.i(" onAnimation","repeat")
+         binding.heart.startAnimation(animation1)
+         binding.walking.startAnimation(animationSequence)
+     }
 
      private fun checkPermission():Boolean {
          if(ActivityCompat.checkSelfPermission(requireActivity(),

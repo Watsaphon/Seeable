@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="30dp"
+    android:height="30dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+  <path
+      android:name="heartSVG"
+      android:pathData="M376,30C348.217,30 322.745,38.804 300.293,56.168C278.768,72.815 264.437,94.018 256,109.436C247.563,94.017 233.232,72.815 211.707,56.168C189.255,38.804 163.783,30 136,30C58.468,30 -0,93.417 -0,177.514C-0,268.368 72.943,330.529 183.369,424.632C202.121,440.613 223.376,458.727 245.468,478.046C248.38,480.596 252.12,482 256,482C259.88,482 263.62,480.596 266.532,478.047C288.626,458.725 309.88,440.612 328.643,424.622C439.057,330.529 512,268.368 512,177.514C512,93.417 453.532,30 376,30Z"
+      android:strokeWidth="1"
+      android:fillColor="#FFFFFF"
+      android:strokeColor="#00000000"
+
+      android:fillType="evenOdd"
+      android:strokeLineCap="round"
+      />
+</vector>

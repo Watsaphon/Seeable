@@ -104,13 +104,22 @@
                 android:layout_marginBottom="179dp"
                 android:background="@drawable/bg_round_health_status">
 
+<!--                <ImageView-->
+<!--                    android:id="@+id/heart"-->
+<!--                    android:layout_width="64dp"-->
+<!--                    android:layout_height="64dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    app:srcCompat="@mipmap/icon_health_status_heart_foreground" />-->
+
+
                 <ImageView
                     android:id="@+id/heart"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
-                    app:srcCompat="@mipmap/icon_health_status_heart_foreground" />
+                    app:srcCompat="@drawable/ic_animation_heart" />
 
                 <TextView
                     android:id="@+id/health_status_head"
