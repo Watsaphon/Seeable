@@ -8,8 +8,7 @@ data class UserBlinderHelperClassNew(
     val ID: String,
     val Phone: String,
     val Password: String,
-    val DisplayName: String,
-    val Notification: String
+    val DisplayName: String
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -17,8 +16,7 @@ data class UserBlinderHelperClassNew(
             "id" to ID,
             "phone" to Phone,
             "password" to Password,
-            "displayName" to DisplayName,
-            "notification" to Notification
+            "displayName" to DisplayName
         )
     }
 }
@@ -69,11 +67,13 @@ data class Caretaker(
 
 @IgnoreExtraProperties
 data class DeviceBlind(
-    var Activity: String = "-",
-    var BPM: String = "-",
-    var Critical_Condition: Boolean = false,
-    var Fall_Detection: String = "no",
-    var Health_Status: String = "-"
+    var activity: String = "-",
+    var bpm: String = "-",
+    var critical_Condition: Boolean = false,
+    var critical_Condition_Location : String = "-",
+    var fall_Detection: String = "no",
+    var fall_Detection_Location : String = "",
+    var health_Status: String = "-"
 )
 
 @IgnoreExtraProperties

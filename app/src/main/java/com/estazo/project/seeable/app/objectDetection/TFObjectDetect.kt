@@ -30,20 +30,16 @@ class TFLiteDetection(context: Context, private val onDetect: (String) -> Unit) 
 
         // Runs model inference and gets result.
         val outputs = model.process(normalizedInputImageTensor)
-        val locations = outputs.locationsAsTensorBuffer
         val classes = outputs.classesAsTensorBuffer
         val scores = outputs.scoresAsTensorBuffer
-        val numberOfDetections = outputs.numberOfDetectionsAsTensorBuffer
         val maxScore = scores.floatArray.max()
         val maxPosition = maxScore?.let { scores.floatArray.indexOf(it) }
         if (maxScore != null) {
             detect_num = maxScore.toInt()
-            val test = maxScore
-            if (maxScore > 0.9) {
+            if (maxScore > 0.95) {
                 maxPosition?.let { classes.floatArray[it].toString() }?.let { it ->
                     Log.d("Score", "it : $it")
                     detect_num = maxScore.toInt()
-                    val msg: String = it
                     when (it) {
                         "0.0" -> {
                             Log.d("Score", "crosswalk detect")

@@ -37,10 +37,9 @@ import com.estazo.project.seeable.app.helperClass.Locations
 import com.estazo.project.seeable.app.helperClass.Notification
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.location.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.alert_dialog_set_name.view.*
 import java.util.*
 
@@ -57,7 +56,6 @@ class BlindFragment : Fragment() {
     private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefNavigate: SharedPreferences
 
-    //Declaring the needed Variables
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
     var textToSpeech: TextToSpeech? = null
@@ -66,17 +64,17 @@ class BlindFragment : Fragment() {
 
     private lateinit var viewModel : BlindViewModel
 
+    private lateinit var database: DatabaseReference
+    private lateinit var listener: ValueEventListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // in here you can do logic when backPress is clicked
+                //do logic when backPress is clicked
                 requireActivity().finishAffinity()
             }
         })
-        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
-        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
-        getTitleLocation(phone)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -103,10 +101,15 @@ class BlindFragment : Fragment() {
         })
         textToSpeech!!.setSpeechRate(0.9f)
 
+        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        getTitleLocation(phone)
+
         val displayName = sharedPrefDisplayName.getString("stringKeyDisplayName", "not found!")
         if(displayName == "-"){
             alertDialogSetName()
         }
+
 
         return fragmentBinding.root
 
@@ -137,28 +140,12 @@ class BlindFragment : Fragment() {
             textToSpeech!!.speak("Self-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigationBlind()
             Toast.makeText(activity, getString(R.string.button_self_navigation), Toast.LENGTH_SHORT).show()
-
-            editor.putString("stringKeyNavigate", "active")
-            editor.apply()
-
-            val postNotification =  Notification(currentTime,"navigate")
-            val postValues = postNotification.toMap()
-            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
-            ref.updateChildren(childUpdates)
         }
         binding.careNavButton.setOnVeryLongClickListener{
             vibrate()
             textToSpeech!!.speak("Caretaker-Navigation Activate", TextToSpeech.QUEUE_FLUSH, null)
             navigationCaretaker()
             Toast.makeText(activity, getString(R.string.button_caretaker_navigation), Toast.LENGTH_SHORT).show()
-
-            editor.putString("stringKeyNavigate", "active")
-            editor.apply()
-
-            val postNotification =  Notification(currentTime,"navigate")
-            val postValues = postNotification.toMap()
-            val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
-            ref.updateChildren(childUpdates)
         }
         binding.callEmergency.setOnVeryLongClickListener{
             vibrate()
@@ -222,6 +209,9 @@ class BlindFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.i("BlindFragment", "onDestroyView call")
+        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+        database.child("users_caretaker/$phone/Blind").removeEventListener(listener)
     }
 
     private fun checkPermission():Boolean {
@@ -242,7 +232,7 @@ class BlindFragment : Fragment() {
            return false
        }
     private fun requestPermission(){
-           //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
+           //this function will allows us to tell the user to request the necessary permsiion if they are not garented
            ActivityCompat.requestPermissions(requireActivity(), arrayOf(
                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
                Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,
@@ -394,6 +384,21 @@ class BlindFragment : Fragment() {
                     Toast.makeText(activity, R.string.locatoin_null,Toast.LENGTH_SHORT).show()
                 }
                 else{
+                    sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+                    sharedPrefNavigate = requireActivity().getSharedPreferences("value", 0)
+
+                    val editor = sharedPrefNavigate.edit()
+                    editor.putString("stringKeyNavigate", "active")
+                    editor.apply()
+
+                    val ref = FirebaseDatabase.getInstance().reference
+                    val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+                    val currentTime = Calendar.getInstance().time.toString()
+                    val postNotification =  Notification(currentTime,"navigate")
+                    val postValues = postNotification.toMap()
+                    val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+                    ref.updateChildren(childUpdates)
+
                     // Navigation : current place direct to gmmIntentUri
                     val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
@@ -424,6 +429,21 @@ class BlindFragment : Fragment() {
                     Toast.makeText(activity, R.string.locatoin_null,Toast.LENGTH_SHORT).show()
                 }
                 else{
+                    sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
+                    sharedPrefNavigate = requireActivity().getSharedPreferences("value", 0)
+
+                    val editor = sharedPrefNavigate.edit()
+                    editor.putString("stringKeyNavigate", "active")
+                    editor.apply()
+
+                    val ref = FirebaseDatabase.getInstance().reference
+                    val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+                    val currentTime = Calendar.getInstance().time.toString()
+                    val postNotification =  Notification(currentTime,"navigate")
+                    val postValues = postNotification.toMap()
+                    val childUpdates = hashMapOf<String, Any>("users_blind/$phone/Notification" to postValues)
+                    ref.updateChildren(childUpdates)
+
                     // Navigation : current place direct to gmmIntentUri
                     val gmmIntentUri = Uri.parse("google.navigation:q=$location&mode=w&avoid=thf")
                     val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
@@ -439,32 +459,34 @@ class BlindFragment : Fragment() {
     }
 
     private fun getTitleLocation(phone:String){
-        val firebaseRef = FirebaseDatabase.getInstance().getReference("users_blind/$phone/Navigation")
-        firebaseRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val titleBlind = snapshot.child("title_Navigate_blindUser").value.toString()
-                val locationBlind = snapshot.child("navigate_blindUser").value.toString()
-                val titleCaretaker = snapshot.child("title_Navigate_careUser").value.toString()
-                val locationCaretaker = snapshot.child("navigate_careUser").value.toString()
-                if(titleBlind != "-" && locationBlind != "-" ){
-                    viewModel.titleBlind.value = titleBlind
-                    binding.selfNavButton.text = getString(R.string.button_self_navigation) + " to  $titleBlind"
-                }
-                else{
-                    viewModel.titleBlind.value = "-"
-                    binding.selfNavButton.text = getString(R.string.button_self_navigation)
+        database = Firebase.database.reference
+        listener = database.child("users_blind/$phone/Navigation").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val titleBlind = dataSnapshot.child("title_Navigate_blindUser").value.toString()
+                    val locationBlind = dataSnapshot.child("navigate_blindUser").value.toString()
+                    val titleCaretaker = dataSnapshot.child("title_Navigate_careUser").value.toString()
+                    val locationCaretaker = dataSnapshot.child("navigate_careUser").value.toString()
+                    if(titleBlind != "-" && locationBlind != "-" ){
+                        viewModel.titleBlind.value = titleBlind
+                        binding.selfNavButton.text = getString(R.string.button_self_navigation) + " to  $titleBlind"
+                    }
+                    else{
+                        viewModel.titleBlind.value = "-"
+                        binding.selfNavButton.text = getString(R.string.button_self_navigation)
 
-                }
-                if(titleCaretaker != "-" && locationCaretaker != "-" ){
-                    viewModel.titleCaretaker.value = titleCaretaker
-                    binding.careNavButton.text = getString(R.string.button_caretaker_navigation) + " to  $titleCaretaker"
-                }
-                else{
-                    viewModel.titleCaretaker.value = "-"
-                    binding.careNavButton.text = getString(R.string.button_caretaker_navigation)
+                    }
+                    if(titleCaretaker != "-" && locationCaretaker != "-" ){
+                        viewModel.titleCaretaker.value = titleCaretaker
+                        binding.careNavButton.text = getString(R.string.button_caretaker_navigation) + " to  $titleCaretaker"
+                    }
+                    else{
+                        viewModel.titleCaretaker.value = "-"
+                        binding.careNavButton.text = getString(R.string.button_caretaker_navigation)
+                    }
                 }
             }
-            override fun onCancelled(databaseError: DatabaseError) {
+            override fun onCancelled(error: DatabaseError) {
             }
         })
     }
@@ -499,7 +521,6 @@ class BlindFragment : Fragment() {
             ssbTH.setSpan(fcsSky, 13, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             subHeader.text = ssbTH
         }
-        //confirm button click of custom layout
         mDialogView.dialogConfirmBtn.setOnClickListener {
             val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
             val editName : EditText = mDialogView.findViewById(R.id.addDisplayName)

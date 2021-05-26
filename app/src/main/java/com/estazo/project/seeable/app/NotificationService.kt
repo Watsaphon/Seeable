@@ -16,10 +16,8 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
+import com.estazo.project.seeable.app.helperClass.Notification
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.alert_dialog_critical_event.view.*
@@ -28,6 +26,8 @@ import java.util.*
 
 
 class NotificationService : NotificationListenerService() {
+
+    val ref = FirebaseDatabase.getInstance().reference
 
     private lateinit var context: Context
 
@@ -38,6 +38,9 @@ class NotificationService : NotificationListenerService() {
 
     private lateinit var sharedPrefNavigate : SharedPreferences
     private lateinit var sharedPrefLanguage: SharedPreferences
+    private lateinit var sharedPrefUserType: SharedPreferences
+    private lateinit var sharedPrefPhone: SharedPreferences
+
     private lateinit var language : String
     private var phone: String = ""
 
@@ -83,7 +86,11 @@ class NotificationService : NotificationListenerService() {
                 alertDialogCritical(name)
 
             }
-            if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation"){
+
+            sharedPrefUserType = getSharedPreferences("value", 0)
+            val userType = sharedPrefUserType.getString("stringKeyType","not found!")
+
+            if(pack == "com.estazo.project.seeable.app" && checkNavigation == "navigation" && userType == "blind" ){
                 Log.d("notificationServiceInfo", "call go back alertDialog")
                 alertDialogBack()
             }
@@ -91,7 +98,18 @@ class NotificationService : NotificationListenerService() {
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
-        Log.i("notificationService", "Notification Removed")
+        //CHeck if app's package is google map
+        if(sbn.packageName.equals("com.google.android.apps.maps")){
+            sharedPrefPhone = getSharedPreferences("value", 0)
+            val phoneNumber = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
+            Log.i("notificationService", "Sending navigate end : " + sbn.packageName + "to: " + "users_blind/$phoneNumber/Notification")
+            val currentTime = Calendar.getInstance().time.toString()
+            val postNotification =  Notification(currentTime,"navigateEnd")
+            val postValues = postNotification.toMap()
+            val childUpdates = hashMapOf<String, Any>("users_blind/$phoneNumber/Notification" to postValues)
+            ref.updateChildren(childUpdates)
+        }
+        Log.i("notificationService", "Notification Removed: " + sbn.packageName)
     }
 
     override fun onDestroy() {

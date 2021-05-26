@@ -1,17 +1,26 @@
- package com.estazo.project.seeable.app.caretaker
+package com.estazo.project.seeable.app.caretaker
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -21,7 +30,9 @@ import androidx.navigation.fragment.findNavController
 import com.estazo.project.seeable.app.R
 import com.estazo.project.seeable.app.caretaker.settingCaretaker.blindList.BlindListViewModel
 import com.estazo.project.seeable.app.databinding.FragmentCaretakerBinding
+import com.estazo.project.seeable.app.device.ActivityRunnable
 import com.estazo.project.seeable.app.device.BPMRunnable
+import com.estazo.project.seeable.app.device.HealthStatusRunnable
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -31,17 +42,19 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
 
 
- class CaretakerFragment : Fragment() {
+ class CaretakerFragment : Fragment(), Animation.AnimationListener {
 
      private lateinit var binding: FragmentCaretakerBinding
 
      private lateinit var viewModel : CaretakerViewModel
+//     private val viewModel : CaretakerViewModel by activityViewModels()
      private val blindListViewModel : BlindListViewModel by activityViewModels()
 
      private lateinit var sharedPrefPhone: SharedPreferences
      private lateinit var phone : String
      private lateinit var sharedPrefBlindId : SharedPreferences
      private lateinit var currentBlindId : String
+     private lateinit var previousBlindId : String
 
      private var phoneUser1 : String = "-"
 
@@ -50,6 +63,10 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
      private lateinit var database: DatabaseReference
      private lateinit var listener: ValueEventListener
 
+     val PERMISSION_ID = 1010
+
+     private lateinit var animationSequence: Animation
+     private lateinit var animation1: AlphaAnimation
 
      override fun onAttach(context: Context) {
          super.onAttach(context)
@@ -75,7 +92,8 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
         val fragmentBinding = FragmentCaretakerBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         binding.setting.isEnabled = false
-
+        checkPermission()
+        requestPermission()
         sharedPrefBlindId = requireActivity().getSharedPreferences("value", 0)
         currentBlindId = sharedPrefBlindId.getString("stringKeyBlindId", "not found!").toString()
         queryUser("$phone")
@@ -90,6 +108,7 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
          binding.setting.setOnClickListener{view : View  ->
              view.findNavController().navigate(R.id.action_caretakerFragment_to_settingCaretakerFragment)
          }
+
      }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -116,6 +135,10 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
                     Toast.makeText(activity,"Not Selection", Toast.LENGTH_LONG).show()
                 }
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    database = Firebase.database.reference
+                    database.child("users_blind/$currentBlindId/Device/activity").removeEventListener(listener)
+                    database.child("users_blind/$currentBlindId/Device/health_Status").removeEventListener(listener)
+
                     val itemPo = parent?.getItemAtPosition(position).toString()
                     val selectItemPo   = parent?.selectedItemPosition.toString()
                     /** for store data in ViewModel*/
@@ -125,9 +148,29 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
                     val editorBlindId = sharedPrefBlindId.edit()
                     editorBlindId.putString("stringKeyBlindId", "$itemPosition")
                     editorBlindId.apply()
+
                     viewModel._currentBlindPhone.value = viewModel.userTel.value?.get(itemPosition).toString()
                     val bpmThread = Thread(BPMRunnable(binding.bpmNumber,viewModel._currentBlindPhone.value.toString()))
                     bpmThread.start()
+                    val healthStatusThread = Thread(HealthStatusRunnable(binding.healthStatusText,viewModel._currentBlindPhone.value.toString()))
+                    healthStatusThread.start()
+                    val activityThread = Thread(ActivityRunnable(binding.activityWalkingText,viewModel._currentBlindPhone.value.toString()))
+                    activityThread.start()
+
+                    val blind = viewModel._currentBlindPhone.value.toString()
+                    listener = database.child("users_blind/$blind/Device").addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    val activity = dataSnapshot.child("activity").value.toString()
+                                    val status = dataSnapshot.child("health_Status").value.toString()
+                                    viewModel.activity.value = activity
+                                    viewModel.healthStatus.value = status
+                                    Log.d(" testja", "activity : $activity , status : $status")
+                                }
+                            }
+                            override fun onCancelled(error: DatabaseError) {
+                            }
+                        })
                     Log.d("selectItem","itemPo: $itemPo , selectItemPo: $selectItemPo , itemPosition : $itemPosition")
                 }
             }
@@ -159,7 +202,6 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
              if(list.isNotEmpty() && user1 != "-/-" ) {
                  Log.d("checkViewModel_L","userList not empty ja , checkList : $checkList , user1 : $user1")
                  binding.setting.isEnabled = true
-
                  if (this::mAlertDialog.isInitialized){
                      if (mAlertDialog.isShowing){
                          mAlertDialog.dismiss()
@@ -174,8 +216,101 @@ import kotlinx.android.synthetic.main.alert_dialog_pairing.view.*
              }
         })
 
+
+        viewModel.healthStatus.observe(viewLifecycleOwner, Observer<String>{status ->
+            var buttonDrawable: Drawable = binding.healthStatus.background
+            buttonDrawable = DrawableCompat.wrap(buttonDrawable)
+            when(status){
+                "-"->{
+                    Log.i("selectItem","status : $status")
+                    DrawableCompat.setTint(buttonDrawable, Color.rgb(128,128,128))
+                    binding.healthStatus.background = buttonDrawable
+                }
+                "Tired" -> { /**ส้มขี้*/
+                    Log.i("selectItem","status : $status")
+                    DrawableCompat.setTint(buttonDrawable, Color.rgb(200, 145, 80))
+                    binding.healthStatus.background = buttonDrawable
+                }
+                "Exhausted" -> { /**ม่วง*/
+                    Log.i("selectItem","status : $status")
+                    DrawableCompat.setTint(buttonDrawable, Color.rgb(144, 77, 255))
+                    binding.healthStatus.background = buttonDrawable
+                }
+                "Normal" -> { /**เขียว*/
+                    Log.i("selectItem","status : $status")
+                    DrawableCompat.setTint(buttonDrawable, Color.rgb(84, 201, 129))
+                    binding.healthStatus.background = buttonDrawable
+                }
+                "Danger" -> { /**แดง*/
+                    Log.i("selectItem","status : $status")
+                    DrawableCompat.setTint(buttonDrawable, Color.rgb(255, 87, 77))
+                    binding.healthStatus.background = buttonDrawable
+                }
+            }
+
+        })
+
+        viewModel.activity.observe(viewLifecycleOwner, Observer<String>{activity ->
+            var buttonDrawable: Drawable = binding.activityWalking.background
+            buttonDrawable = DrawableCompat.wrap(buttonDrawable)
+            when(activity){
+                "-"->{
+                    Log.i("selectItem","activity : $activity")
+                    DrawableCompat.setTint(buttonDrawable, Color.rgb(128,128,128))
+                    binding.activityWalking.background = buttonDrawable
+                }
+                "Idle" -> {
+                    /**ฟ้า*/
+                    Log.i("selectItem","activity : $activity")
+                    DrawableCompat.setTint(buttonDrawable, Color.rgb(61, 173, 255))
+                    binding.activityWalking.background = buttonDrawable
+                }
+                "Walking" -> {
+                    /**เหลือง*/
+                    Log.i("selectItem","activity : $activity")
+                    DrawableCompat.setTint(buttonDrawable, Color.rgb(239, 202, 67))
+                    binding.activityWalking.background = buttonDrawable
+                }
+            }
+        })
+
+        animation1 = AlphaAnimation(0.0f, 1.0f)
+        animation1.duration = 3000
+        animation1.startOffset = 500
+
+        animationSequence = AnimationUtils.loadAnimation(context,R.anim.sequential)
+        animationSequence.setAnimationListener(this)
+
+        binding.heart.startAnimation(animation1)
+        binding.walking.startAnimation(animationSequence)
+
     }
 
+     override fun onAnimationStart(animation: Animation?) {
+         Log.i(" onAnimation","start")
+     }
+     override fun onAnimationEnd(animation: Animation?) {
+         Log.i(" onAnimation","end")
+         binding.heart.startAnimation(animation1)
+         binding.walking.startAnimation(animationSequence)
+     }
+     override fun onAnimationRepeat(animation: Animation?) {
+         Log.i(" onAnimation","repeat")
+         binding.heart.startAnimation(animation1)
+         binding.walking.startAnimation(animationSequence)
+     }
+
+     private fun checkPermission():Boolean {
+         if(ActivityCompat.checkSelfPermission(requireActivity(),
+                 Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
+             return true
+         }
+         return false
+     }
+     private fun requestPermission(){
+         ActivityCompat.requestPermissions(requireActivity(), arrayOf(
+             Manifest.permission.CALL_PHONE), PERMISSION_ID)
+     }
      override fun onStart() {
          super.onStart()
          Log.i("CaretakerFragment", "onStart call")
