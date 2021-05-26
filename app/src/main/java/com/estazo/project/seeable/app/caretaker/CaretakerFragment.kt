@@ -1,4 +1,4 @@
- package com.estazo.project.seeable.app.caretaker
+package com.estazo.project.seeable.app.caretaker
 
 import android.Manifest
 import android.app.AlertDialog

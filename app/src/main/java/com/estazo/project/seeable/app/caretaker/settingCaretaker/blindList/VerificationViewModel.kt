@@ -19,7 +19,6 @@ class VerificationViewModel : ViewModel() {
     }
 
     fun verifyOTP(phone :String , code : String) {
-//        updateUserNameEvent.value = user
         mobile.value = phone
         otp.value = code
         Log.d("VerificationViewModel"," mobile :$mobile , otp :$otp")

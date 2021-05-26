@@ -56,7 +56,6 @@ class BlindFragment : Fragment() {
     private lateinit var sharedPrefDisplayName: SharedPreferences
     private lateinit var sharedPrefNavigate: SharedPreferences
 
-    //Declaring the needed Variables
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val PERMISSION_ID = 1010
     var textToSpeech: TextToSpeech? = null
@@ -72,13 +71,10 @@ class BlindFragment : Fragment() {
         super.onCreate(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // in here you can do logic when backPress is clicked
+                //do logic when backPress is clicked
                 requireActivity().finishAffinity()
             }
         })
-//        sharedPrefPhone = requireActivity().getSharedPreferences("value", 0)
-//        val phone = sharedPrefPhone.getString("stringKeyPhone", "not found!").toString()
-//        getTitleLocation(phone)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -236,7 +232,7 @@ class BlindFragment : Fragment() {
            return false
        }
     private fun requestPermission(){
-           //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
+           //this function will allows us to tell the user to request the necessary permsiion if they are not garented
            ActivityCompat.requestPermissions(requireActivity(), arrayOf(
                Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
                Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,
@@ -525,7 +521,6 @@ class BlindFragment : Fragment() {
             ssbTH.setSpan(fcsSky, 13, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             subHeader.text = ssbTH
         }
-        //confirm button click of custom layout
         mDialogView.dialogConfirmBtn.setOnClickListener {
             val currentPhone = sharedPrefPhone.getString("stringKeyPhone", "not found!")
             val editName : EditText = mDialogView.findViewById(R.id.addDisplayName)

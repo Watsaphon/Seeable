@@ -111,10 +111,6 @@ class VerificationBlindFragment : Fragment() {
             else{
                 Toast.makeText(activity, R.string.empty_VerifyOTP,Toast.LENGTH_SHORT).show()
             }
-//            checkOTP = "$c1$c2$c3$c4$c5$c6"
-//            val credential = PhoneAuthProvider.getCredential(codeOTP, checkOTP)
-//            Log.i("VerificationBlind","codeOTP : $codeOTP , checkOTP : $checkOTP")
-//            signInWithPhone(credential,mobile)
         }
 
     }
